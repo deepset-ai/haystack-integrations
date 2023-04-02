@@ -9,7 +9,7 @@ authors:
 pypi:
 repo: https://github.com/recrudesce/haystack_translate_node
 type: Custom Node
-report_issue:
+report_issue: https://github.com/recrudesce/haystack_translate_node/issues
 ---
 
 ## Include in your pipeline as follows:
