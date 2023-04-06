@@ -6,12 +6,12 @@ authors:
       socials:
         github: https://github.com/recrudesce
         twitter: https://twitter.com/recrudesce
-    - name: Florian Brand
+    - name: Xceron
       socials:
         github: https://github.com/Xceron
-repo: [url of GitHub repo if exists ](https://github.com/recrudesce/haystack_lemmatize_node)
+repo: https://github.com/recrudesce/haystack_lemmatize_node
 type: Custom Node
-report_issue: [https://github.com/recrudesce/haystack_lemmatize_node/issues](https://github.com/recrudesce/haystack_lemmatize_node/issues)
+report_issue: https://github.com/recrudesce/haystack_lemmatize_node/issues
 ---
 ## WHat is Lemmatization
 Lemmatization is a text pre-processing technique used in natural language processing (NLP) models to break a word down to its root meaning to identify similarities. For example, a lemmatization algorithm would reduce the word better to its root word, or lemme, good.
