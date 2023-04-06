@@ -4,11 +4,11 @@ description: A lemmatizing node for documents which can potentially reduce token
 authors:
     - name: recrudesce
       socials:
-        github: https://github.com/recrudesce
-        twitter: https://twitter.com/recrudesce
+        github: recrudesce
+        twitter: recrudesce
     - name: Xceron
       socials:
-        github: https://github.com/Xceron
+        github: Xceron
 repo: https://github.com/recrudesce/haystack_lemmatize_node
 type: Custom Node
 report_issue: https://github.com/recrudesce/haystack_lemmatize_node/issues
