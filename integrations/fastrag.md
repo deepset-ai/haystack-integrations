@@ -17,6 +17,9 @@ It includes custom nodes such as:
 - Image Generators
 - Knoweldge Graph Creator
 - Document Shapers 
+- Reader with FiD implementation
+- Efficient document vector store (PLAID)
+- Benchmarking scripts
 
 ## 📍 Installation
 
