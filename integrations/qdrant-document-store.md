@@ -51,6 +51,51 @@ document_store = QdrantDocumentStore(
 The list of parameters accepted by `QdrantDocumentStore` is complementary to those used in the
 official [Python Qdrant client](https://github.com/qdrant/qdrant_client).
 
+### Using local in-memory / disk-persisted mode
+
+Qdrant Python client, from version 1.1.1, supports local in-memory/disk-persisted mode. That's 
+a good choice for any test scenarios and quick experiments in which you do not plan to store
+lots of vectors. In such a case spinning a Docker container might be even not required. 
+
+The local mode was also implemented in `qdrant-haystack` integration.
+
+#### In-memory storage
+
+In case you want to have a transient storage, for example in case of automated tests launched
+during your CI/CD pipeline, using Qdrant Local mode with in-memory storage might be a preferred
+option. It might be simply enabled by passing `:memory:` as first parameter, while creating an
+instance of `QdrantDocumentStore`.
+
+```python
+from qdrant_haystack import QdrantDocumentStore
+
+document_store = QdrantDocumentStore(
+    ":memory:",
+    index="Document",
+    embedding_dim=512,
+    recreate_index=True,
+    hnsw_config={"m": 16, "ef_construct": 64}  # Optional
+)
+```
+
+#### On disk storage
+
+However, if you prefer to keep the vectors between different runs of your application, it
+might be better to use on disk storage and pass the path that should be used to persist
+the data.
+
+```python
+from qdrant_haystack import QdrantDocumentStore
+
+document_store = QdrantDocumentStore(
+    path="/home/qdrant/storage_local",
+    index="Document",
+    embedding_dim=512,
+    recreate_index=True,
+    hnsw_config={"m": 16, "ef_construct": 64}  # Optional
+)
+```
+
 ### Connecting to Qdrant Cloud cluster
 
 If you prefer not to manage your own Qdrant instance, [Qdrant Cloud](https://cloud.qdrant.io/)
