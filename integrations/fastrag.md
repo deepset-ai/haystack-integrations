@@ -1,4 +1,5 @@
 ---
+layout: integration
 name: fastRAG
 description: A research framework designed to facilitate the building of retrieval augmented generative pipelines.
 authors:

@@ -1,4 +1,5 @@
 ---
+layout: integration
 name: Azure Translate Node
 description: TranslateAnswer and TranslateQuery Nodes that use the Azure Translate endpoint
 authors:

@@ -1,4 +1,5 @@
 ---
+layout: integration
 name: Qdrant Document Store
 description: Use the Qdrant vector database with Haystack
 authors:

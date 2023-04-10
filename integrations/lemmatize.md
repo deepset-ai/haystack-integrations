@@ -1,4 +1,5 @@
 ---
+layout: integration
 name: Document Lemmatizer
 description: A lemmatizing node for documents which can potentially reduce token use by up to 30%.
 authors:
