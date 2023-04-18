@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Basic Agent Memory Tppl
+name: Basic Agent Memory
 description: A working memory that stores the Agent's conversation memory
 authors:
     - name: Roland Tannous
