@@ -14,7 +14,9 @@ repo: https://github.com/recrudesce/haystack_lemmatize_node
 type: Custom Node
 report_issue: https://github.com/recrudesce/haystack_lemmatize_node/issues
 ---
-## What is Lemmatization
+
+## Lemmatization
+
 Lemmatization is a text pre-processing technique used in natural language processing (NLP) models to break a word down to its root meaning to identify similarities. For example, a lemmatization algorithm would reduce the word better to its root word, or lemme, good.
 
 This node can be placed within a pipeline to lemmatize documents returned by a Retriever, prior to adding them as context to a prompt (for a PromptNode or similar).
@@ -28,11 +30,13 @@ The process of lemmatizing the document content can potentially reduce the amoun
 ### After Lemmatization:
 ![image](https://user-images.githubusercontent.com/6450799/230404246-a8488a57-73bd-4420-9f1b-8a080b84121b.png)
 
-## How to Use
+## Installation
 
 Clone the repo to a directory, change to that directory, then perform a `pip install '.'`.  This will install the package to your Python libraries.
 
-Then, include it in your pipeline - example as follows:
+## Usage
+
+Include it in your pipeline - example as follows:
 
 ```python
 import logging

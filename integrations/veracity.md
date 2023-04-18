@@ -10,15 +10,19 @@ repo: https://github.com/Xceron/haystack_veracity_node
 type: Custom Node
 report_issue: https://github.com/Xceron/haystack_veracity_node/issues
 ---
+# Veracity Node
+
 This Node checks whether the given input is correctly answered by the given context (as judged by the given LLM). One example usage is together with [Haystack Memory](https://github.com/rolandtannous/haystack-memory): After the memory is retrieved, the given model checks whether the output is satisfying the question.
 
 **Important**: 
 The Node expects the context to be passed into `results`. If the previous node in the pipeline is putting the text somewhere else, use a [Shaper](https://docs.haystack.deepset.ai/docs/shaper) to `rename` the argument to `results`. 
 
-## How to Use
+## Installation
+
 Clone the repo to a directory, change to that directory, then perform a `pip install '.'`.  This will install the package to your Python libraries.
 
-## Example Usage with Haystack Memory
+## Usage
+### Example Usage with Haystack Memory
 ```py
 from haystack_veracity_node.node import VeracityNode
 from haystack_memory.memory import RedisMemoryRecallNode

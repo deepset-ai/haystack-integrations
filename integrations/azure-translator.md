@@ -13,9 +13,14 @@ type: Custom Node
 report_issue: https://github.com/recrudesce/haystack_translate_node/issues
 ---
 
-## Include in your pipeline as follows:
+# Azure Translate Nodes
+
+This package allows you to use the Azure translation endpoints to separately translate the query and the answer. It's good for scenarios where your dataset is in a different language to what you expect the user query to be in. This way, you will be able to translate the user query to the your dataset's language, and translate the answer back to the user's language.
+
+## Installation
 git clone the repo somewhere, change to the directory, then `pip install '.'`
 
+## Usage
 Include in your pipeline as follows:
 
 ```python
