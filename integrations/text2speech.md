@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Answer and Document to Speech Nodes
+name: Answer and Document to Speech
 description: 
 authors:
     - name: deepset
@@ -14,13 +14,21 @@ type: Custom Node
 report_issue: https://github.com/deepset-ai/haystack-extras/issues
 ---
 
-# AnswerToSpeech and DocumentToSpeech Nodes
+# AnswerToSpeech and DocumentToSpeech
 
 The `farm-haystack-text2speech` package contains two Nodes that allow you to convert Haystack `Answers` and `Documents` into audio files: `AnswerToSpeech` and `DocumentToSpeech`.
 
 ## Installation
 
-`pip install farm-haystack-text2speech`
+For Debain-based systems, first install some more dependencies:
+```bash
+sudo apt-get install libsndfile1 ffmpeg
+```
+
+Install the `text2speech` package:
+```bash
+pip install farm-haystack-text2speech`
+```
 
 ## Usage
 
