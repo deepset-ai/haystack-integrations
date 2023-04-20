@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: AnswerToSpeech & DocumentToSpeech
-description: Convert Haystack Answers and Documents to Audio files
+description: Convert Haystack Answers and Documents to audio files
 authors:
     - name: deepset
       socials:
