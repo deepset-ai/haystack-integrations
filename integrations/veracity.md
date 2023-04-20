@@ -10,7 +10,6 @@ repo: https://github.com/Xceron/haystack_veracity_node
 type: Custom Node
 report_issue: https://github.com/Xceron/haystack_veracity_node/issues
 ---
-# Veracity Node
 
 This Node checks whether the given input is correctly answered by the given context (as judged by the given LLM). One example usage is together with [Haystack Memory](https://github.com/rolandtannous/haystack-memory): After the memory is retrieved, the given model checks whether the output is satisfying the question.
 

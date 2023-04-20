@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: Answer and Document to Speech
-description: 
+name: AnswerToSpeech & DocumentToSpeech
+description: Convert Haystack Answers and Documents to Audio files
 authors:
     - name: deepset
       socials:
@@ -13,8 +13,6 @@ repo: https://github.com/deepset-ai/haystack-extras/tree/main/nodes/text2speech
 type: Custom Node
 report_issue: https://github.com/deepset-ai/haystack-extras/issues
 ---
-
-# AnswerToSpeech and DocumentToSpeech
 
 The `farm-haystack-text2speech` package contains two Nodes that allow you to convert Haystack `Answers` and `Documents` into audio files: `AnswerToSpeech` and `DocumentToSpeech`.
 

@@ -13,8 +13,6 @@ type: Document Store
 report_issue: https://github.com/qdrant/qdrant-haystack/issues
 ---
 
-# Qdrant DocumentStore
-
 An integration of [Qdrant](https://qdrant.tech) vector database with [Haystack](https://haystack.deepset.ai/)
 by [deepset](https://www.deepset.ai).
 

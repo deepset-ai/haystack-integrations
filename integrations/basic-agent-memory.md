@@ -16,8 +16,6 @@ type: Agent Tool
 report_issue: https://github.com/rolandtannous/haystack-memory/issues
 ---
 
-# Basic Haystack Memory Tool
-
 This library implements a working memory that stores the Agent's conversation memory 
 and a sensory memory that stores the agent's short-term sensory memory. The working memory can be utilized in-memory or through Redis, with the 
 

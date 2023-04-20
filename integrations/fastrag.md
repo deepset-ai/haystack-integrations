@@ -12,8 +12,6 @@ type: Custom Node
 report_issue: https://github.com/IntelLabs/fastRAG/issues
 ---
 
-# fastRAG
-
 fast**RAG** is a research framework designed to facilitate the building of retrieval augmented generative pipelines. Its main goal is to make retrieval augmented generation as efficient as possible through the use of state-of-the-art and efficient retrieval and generative models. The framework includes a variety of sparse and dense retrieval models, as well as different extractive and generative information processing models. fastRAG aims to provide researchers and developers with a comprehensive tool-set for exploring and advancing the field of retrieval augmented generation.
 
 It includes custom nodes such as:
