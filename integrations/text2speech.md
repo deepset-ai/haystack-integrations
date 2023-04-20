@@ -25,7 +25,7 @@ For Debain-based systems, first install some more dependencies:
 sudo apt-get install libsndfile1 ffmpeg
 ```
 
-Install the `text2speech` package:
+Install the package:
 ```bash
 pip install farm-haystack-text2speech`
 ```
@@ -36,7 +36,7 @@ For a full example of how to use the `AnswerToSpeech` Node, you may try out our 
 
 For example, in a simple Extractive QA Pipeline:
 
-```
+```python
 from haystack.nodes import BM25Retriever, FARMReader
 from text2speech import AnswerToSpeech
 
