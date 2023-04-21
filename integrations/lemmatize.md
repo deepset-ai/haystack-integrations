@@ -10,6 +10,7 @@ authors:
     - name: Xceron
       socials:
         github: Xceron
+pypi: https://pypi.org/project/haystack-lemmatize-node/
 repo: https://github.com/recrudesce/haystack_lemmatize_node
 type: Custom Node
 report_issue: https://github.com/recrudesce/haystack_lemmatize_node/issues
@@ -32,7 +33,7 @@ The process of lemmatizing the document content can potentially reduce the amoun
 
 ## Installation
 
-Clone the repo to a directory, change to that directory, then perform a `pip install '.'`.  This will install the package to your Python libraries.
+Run `pip install haystack-lemmatize-node` to install the latest available release.
 
 ## Usage
 
