@@ -25,7 +25,7 @@ sudo apt-get install libsndfile1 ffmpeg
 
 Install the package:
 ```bash
-pip install farm-haystack-text2speech`
+pip install farm-haystack-text2speech
 ```
 
 ## Usage

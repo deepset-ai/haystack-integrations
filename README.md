@@ -2,7 +2,7 @@
 
 This repository is an index of external Haystack integrations that can be used with a Haystack Pipeline or Agent.
 
-These integrations are maintained by their respective owner or authors. You can browse them on the [Haystack Integrations]() page, where you will find information on the Author(s), installation and usage of each tool.
+These integrations are maintained by their respective owner or authors. You can browse them on the [Haystack Integrations](https://haystack.deepset.ai/integrations) page, where you will find information on the Author(s), installation and usage of each tool.
 
 ## What are Haystack Integrations?
 
