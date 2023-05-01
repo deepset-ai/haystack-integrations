@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Document Threshold
-description: This component filters documents based on a threshold percentage, ensuring only the documents above the threshold get passed down the pipeline.
+description: This component filters documents based on a minimum Confidence Score percentage, ensuring only the documents above the threshold get passed down the pipeline.
 authors:
     - name: recrudesce
       socials:
@@ -12,7 +12,7 @@ repo: https://github.com/recrudesce/haystack_threshold_node
 type: Custom Node
 report_issue: https://github.com/recrudesce/haystack_threshold_node/issues
 ---
-# haystack_threshold_node
+# Haystack Threshold Node
 This component filters documents based on a threshold percentage, ensuring only the documents above the threshold get passed down the pipeline.
 This allows you to query your document store for a larger top_k, but then filter the results down to those which are above a set confidence score.
 
