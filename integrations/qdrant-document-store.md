@@ -11,6 +11,7 @@ pypi: https://pypi.org/project/qdrant-haystack/
 repo: https://github.com/qdrant/qdrant-haystack
 type: Document Store
 report_issue: https://github.com/qdrant/qdrant-haystack/issues
+logo: /logos/qdrant.png
 ---
 
 An integration of [Qdrant](https://qdrant.tech) vector database with [Haystack](https://haystack.deepset.ai/)
