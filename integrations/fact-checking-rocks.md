@@ -1,35 +1,68 @@
 ---
 layout: integration
-name: Fact Checking rocks!
-description: Fact checking baseline combining dense retrieval and textual entailment.
+name: Entailment Checker
+description: Haystack node for checking the entailment between a statement and a list of Documents
 authors:
     - name: Stefano Fiorucci
       socials:
         github: anakin87
-pypi:
-repo: https://github.com/anakin87/fact-checking-rocks
+pypi: https://pypi.org/project/haystack-entailment-checker/
+repo: https://github.com/anakin87/haystack-entailment-checker
 type: Custom Node
-report_issue: https://github.com/anakin87/fact-checking-rocks/issues
+report_issue: https://github.com/anakin87/haystack-entailment-checker/issues
 ---
-## Idea
+**Live Demo**: Fact Checking 🎸 Rocks! &nbsp; [![Generic badge](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/anakin87/fact-checking-rocks)
 
-**Fact Checking rocks** 🎸 is a simple webapp that demonstrates how a baseline for fact checking can be built by combining dense retrieval and a textual entailment task. In a nutshell, the flow is as follows:
-
-- the user enters a factual statement
-- the relevant passages are retrieved from the knowledge base using dense retrieval
-- the system computes the text entailment between each relevant passage and the statement, using a Natural Language Inference model
-- the entailment scores are aggregated to produce a summary score.
-- Bonus step: the final decision is explained using a Large Language Model 
-
-## The EntailmentChecker: a custom Haystack node
-This project is strongly based on 🔎 Haystack and incudes a custom Haystack node (the `EntailmentChecker`), that checks the entailment between every document content and the query
-and returns aggregate entailment information.
+## How it works
+![Entailment Checker Node](https://github.com/anakin87/haystack-entailment-checker/blob/main/images/entailment_checker_node.png)
+- The node takes a list of Documents (commonly returned by a [Retriever](https://docs.haystack.deepset.ai/docs/retriever)) and a statement as input.
+- Using a Natural Language Inference model, the text entailment between each text passage/Document (premise) and the statement (hypothesis) is computed. For every text passage, we get 3 scores (summing to 1): entailment, contradiction and neutral.
+- The text entailment scores are aggregated using a weighted average. The weight is the relevance score of each passage returned by the Retriever, if availaible. It expresses the similarity between the text passage and the statement. **Now we have a summary score, so it is possible to tell if the passages confirm, are neutral or disprove the user statement.**
+- *empirical consideration: if in the first N passages (N<K), there is strong evidence of entailment/contradiction (partial aggregate scores > **threshold**), it is better not to consider (K-N) less relevant documents.*
 
 ## Installation
+```bash
+pip install haystack-entailment-checker
+```
 
-💻 To install this project locally, follow these steps:
-* `git clone https://github.com/anakin87/fact-checking-rocks`
-* `cd fact-checking-rocks`
-* `pip install -r requirements.txt`
+## Usage
+### Basic example
+```python
+from haystack import Document
+from haystack_entailment_checker import EntailmentChecker
 
-To run the web app, simply type: `streamlit run Rock_fact_checker.py`
+ec = EntailmentChecker(
+        model_name_or_path = "microsoft/deberta-v2-xlarge-mnli",
+        use_gpu = False,
+        entailment_contradiction_threshold = 0.5)
+
+doc = Document("My cat is lazy")
+
+print(ec.run("My cat is very active", [doc]))
+# ({'documents': [...],
+# 'aggregate_entailment_info': {'contradiction': 1.0, 'neutral': 0.0, 'entailment': 0.0}}, ...)
+```
+
+### Fact-checking pipeline (Retriever + EntailmentChecker)
+```python
+from haystack import Document, Pipeline
+from haystack.nodes import BM25Retriever
+from haystack.document_stores import InMemoryDocumentStore
+from haystack_entailment_checker import EntailmentChecker
+
+# INDEXING
+# the knowledge base can consist of many documents
+docs = [...]
+ds = InMemoryDocumentStore(use_bm25=True)
+ds.write_documents(docs)
+
+# QUERYING
+retriever = BM25Retriever(document_store=ds)
+ec = EntailmentChecker()
+
+pipe = Pipeline()
+pipe.add_node(component=retriever, name="Retriever", inputs=["Query"])
+pipe.add_node(component=ec, name="EntailmentChecker", inputs=["Retriever"])
+
+pipe.run(query="YOUR STATEMENT TO CHECK")
+```
