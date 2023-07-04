@@ -18,7 +18,7 @@ report_issue: https://github.com/anakin87/haystack-entailment-checker/issues
 - The node takes a list of Documents (commonly returned by a [Retriever](https://docs.haystack.deepset.ai/docs/retriever)) and a statement as input.
 - Using a Natural Language Inference model, the text entailment between each text passage/Document (premise) and the statement (hypothesis) is computed. For every text passage, we get 3 scores (summing to 1): entailment, contradiction and neutral.
 - The text entailment scores are aggregated using a weighted average. The weight is the relevance score of each passage returned by the Retriever, if availaible. It expresses the similarity between the text passage and the statement. **Now we have a summary score, so it is possible to tell if the passages confirm, are neutral or disprove the user statement.**
-- *empirical consideration: if in the first N passages (N<K), there is strong evidence of entailment/contradiction (partial aggregate scores > **threshold**), it is better not to consider (K-N) less relevant documents.*
+- *Empirical consideration: if in the first N documents (N<K), there is strong evidence of entailment/contradiction (partial aggregate scores > **threshold**), it is better not to consider the less relevant other (K-N) documents.*
 
 ## Installation
 ```bash
