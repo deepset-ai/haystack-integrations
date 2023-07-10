@@ -14,7 +14,7 @@ report_issue: https://github.com/anakin87/haystack-entailment-checker/issues
 **Live Demo**: Fact Checking 🎸 Rocks! &nbsp; [![Generic badge](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/anakin87/fact-checking-rocks)
 
 ## How it works
-![Entailment Checker Node](https://github.com/anakin87/haystack-entailment-checker/blob/main/images/entailment_checker_node.png)
+![Entailment Checker Node](https://github.com/anakin87/haystack-entailment-checker/raw/main/images/entailment_checker_node.png)
 - The node takes a list of Documents (commonly returned by a [Retriever](https://docs.haystack.deepset.ai/docs/retriever)) and a statement as input.
 - Using a Natural Language Inference model, the text entailment between each text passage/Document (premise) and the statement (hypothesis) is computed. For every text passage, we get 3 scores (summing to 1): entailment, contradiction and neutral.
 - The text entailment scores are aggregated using a weighted average. The weight is the relevance score of each passage returned by the Retriever, if availaible. It expresses the similarity between the text passage and the statement. **Now we have a summary score, so it is possible to tell if the passages confirm, are neutral or disprove the user statement.**
