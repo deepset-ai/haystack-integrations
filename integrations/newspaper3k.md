@@ -22,7 +22,7 @@ pip install newspaper3k-haystack
 ```
 
 ## Usage:
-### Scraper node:
+### Scraper Node:
 ```
 from newspaper3k-haystack import newspaper3k_scraper
 scraper = newspaper3k_scraper()
@@ -58,7 +58,7 @@ To run in standalone mode you can use the run or run_batch if you want to load o
 :param path: (None by default) Path where to store the downloaded articles html, if None, not downloaded. Ignored if load=True
 :param load: (False by default) If true query should be a local path to an html file to scrape.
 ```
-**In standalone:**
+**In Standalone:**
 ```
 scraper.run(query="https://www.lonelyplanet.com/articles/getting-around-norway",
     metadata=True,
@@ -66,7 +66,7 @@ scraper.run(query="https://www.lonelyplanet.com/articles/getting-around-norway",
     keywords=True,
     path="articles")
 ```
-**In a pipeline:**
+**In a Pipeline:**
 ```
 
 from qdrant_haystack.document_stores import QdrantDocumentStore
@@ -109,7 +109,7 @@ indexing_pipeline.run(query = "https://www.roughguides.com/norway/",
         }
     })
 ```
-### Crawler node:
+### Crawler Node:
 ```
 from newspaper3k-haystack import newspaper3k_crawler
 ```
@@ -179,7 +179,7 @@ crawler = newspaper3k_crawler(
         :param summary: (False by default) Wether to summarize the document (through nespaper3k) and save it as document metadata.
         :param path: (None by default) Path where to store the downloaded articles html, if None, not downloaded.
 ```
-**In standalone:** 
+**In Standalone:** 
 
 You can also use run_batch and pass a list of urls in the query argument. It will scrape n_articles for each provided url.
 ```
@@ -198,7 +198,7 @@ docs = crawler.run(
     path = "articles")
 ```
 
-**In a pipeline:**
+**In a Pipeline:**
 ```
 from qdrant_haystack.document_stores import QdrantDocumentStore
 from haystack.nodes import EntityExtractor
