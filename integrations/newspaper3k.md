@@ -12,7 +12,7 @@ repo: https://github.com/Haradai/newspaper3k-haystack
 type: Custom Node
 report_issue: https://github.com/Haradai/newspaper3k-haystack/issues
 ---
-# Newspaper3k Haystack
+
 Newspaper3k Haystack is a simple wrapper for the newspaper3k library within the Haystack framework. It allows to scrape articles given urls using the scraper node or crawl many pages using the crawler node.
 
 ## Installation:
