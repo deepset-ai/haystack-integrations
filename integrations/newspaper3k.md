@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: newspaper3k wrapper
-description: Newspaper3k wrapper nodes. It allows to scrape articles directly using the scraper node or crawling many pages using the crawler node.
+name: Newspaper3k Wrapper Nodes
+description: Newspaper3k wrapper nodes. It allows to scrape articles directly using the scraper Node or crawling many pages using the crawler Node.
 
 authors:
     - name: Haradai
