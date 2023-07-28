@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: ReadmeDocs Fetcher
+name: ReadMeDocs Fetcher
 description: Fetch documentdation pages from ReadMe docs sites.
 authors:
     - name: Tuana Çelik
