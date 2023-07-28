@@ -33,7 +33,7 @@ from mastodon_fetcher_haystack.mastodon_fetcher import MastodonFetcher
 
 mastodon_fetcher = MastodonFetcher()
 
-promot_template = PromptTemplate(prompt="Given the follwing Mastodon posts stream, create a short summary of the topics the account posts about. Mastodon posts stream: {join(documents)};\n Answer:", 
+prompt_template = PromptTemplate(prompt="Given the follwing Mastodon posts stream, create a short summary of the topics the account posts about. Mastodon posts stream: {join(documents)};\n Answer:", 
                                 output_parser=AnswerParser())
 prompt_node = PromptNode(default_prompt_template= promot_template, model_name_or_path="text-davinci-003", api_key=YOUR_OPENAI_API_KEY)
 
