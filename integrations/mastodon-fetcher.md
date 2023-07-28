@@ -13,7 +13,7 @@ type: Custom Node
 report_issue: https://github.com/tuanacelik/mastodon-fetcher-haystack/issues
 ---
 
-The MastodonFetcher is a simple custom component that fetcher the `last_k_posts` of a given Mastodon username.
+The `MastodonFetcher` is a simple custom component that fetcher the `last_k_posts` of a given Mastodon username.
 
 This component expects `query` to be a complete Mastodon username. For example "tuana@sigmoid.social". If the provided username is correct and public, `MastodonFetcher` will return a list of `Document` objects where the contents are the users latest posts.
 
@@ -45,4 +45,4 @@ result = pipe.run(query="tuana@sigmoid.social", params={"MastodonFetcher": {"las
 
 ## Limitations
 1. The way this component is set up is very particular with how it expects usernames. Make sure you provide the full username, e.g.: `username@instance`
-2. By default, the Mastodon API allows up requesting up to 40 posts.
+2. By default, the Mastodon API allows requesting up to 40 posts.
