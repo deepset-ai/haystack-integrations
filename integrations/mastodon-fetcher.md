@@ -35,7 +35,7 @@ mastodon_fetcher = MastodonFetcher()
 
 prompt_template = PromptTemplate(prompt="Given the follwing Mastodon posts stream, create a short summary of the topics the account posts about. Mastodon posts stream: {join(documents)};\n Answer:", 
                                 output_parser=AnswerParser())
-prompt_node = PromptNode(default_prompt_template= promot_template, model_name_or_path="text-davinci-003", api_key=YOUR_OPENAI_API_KEY)
+prompt_node = PromptNode(default_prompt_template=prompt_template, model_name_or_path="text-davinci-003", api_key=YOUR_OPENAI_API_KEY)
 
 pipe = Pipeline()
 pipe.add_node(component=mastodon_fetcher, name="MastodonFetcher", inputs=["Query"])
