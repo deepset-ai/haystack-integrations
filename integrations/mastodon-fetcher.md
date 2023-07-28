@@ -15,7 +15,7 @@ report_issue: https://github.com/tuanacelik/mastodon-fetcher-haystack/issues
 
 The MastodonFetcher is a simple custom component that fetcher the `last_k_posts` of a given Mastodon username.
 
-This component expects `query` to be a complete Mastodon username. For example "tuana@sigmoid.social". If the provided username is correct and public, `MastodonFetcher` return a list of `Document` objects where the contents are the users latest posts
+This component expects `query` to be a complete Mastodon username. For example "tuana@sigmoid.social". If the provided username is correct and public, `MastodonFetcher` will return a list of `Document` objects where the contents are the users latest posts.
 
 ## Installation
 
