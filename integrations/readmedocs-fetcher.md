@@ -30,7 +30,8 @@ pip install readmedocs-fetcher-haystack
 
 1. To initialize a `ReadmeDocsFetcher` you have to provide an `api_key` parameter. This is your ReadMe Docs API Key.
 2. There are 3 optional parameters to initialize the `ReadmeDocsFetcher`
-    - `slug`: To fetch a single defined page from your documentation. E.g. if you have want to fetch 'https://docs.haystack.deepset.ai/docs/installation' the slug would be `installation`. If not set, all of the available pages will be fetched.
+    - `slugs`: To fetch a list of specific pages from your documentation. E.g. if you have want to fetch 'https://docs.haystack.deepset.ai/docs/installation' the slug would be `installation`. If not set, all of the available pages will be fetched.
+    - `base_url`: Optionally provide this to add the full url of a documentation page to the `meta` of the created document. For example `base_url='https://docs.haystack.deepset.ai'"`
     - `version`: If not set, the latest stable version of tour docs will be fetched. 
     - `markdown_converter`: When documents are fetched from ReadMe, temporary `.md` files are created and we use a [`MakrdownConverter`](https://docs.haystack.deepset.ai/reference/file-converters-api#markdownconverter) to create a list of haystack `Documents`. If not provided at initialization, then a `MarkdownConverter` with the default parameters is used.
 
@@ -39,18 +40,19 @@ pip install readmedocs-fetcher-haystack
 import os
 from dotenv import load_dotenv
 from haystack.nodes import MarkdownConverter
+from readmedocs_fetcher_haystack import ReadmeDocsFetcher
 
 load_dotenv()
 README_API_KEY = os.getenv('README_API_KEY')
 
 converter = MarkdownConverter(remove_code_snippets=False)
-readme_fetcher = ReadmeDocsFetcher(api_key=README_API_KEY, markdown_converter=converter)
+readme_fetcher = ReadmeDocsFetcher(api_key=README_API_KEY, markdown_converter=converter, base_url="https://docs.haystack.deepset.ai")
 readme_fetcher.fetch_docs()
 ```
 
 To fetch a single doc from a specific version:
 ```python
-readme_fetcher.fetch_docs(slug="nodes_overview", version="v1.18")
+readme_fetcher.fetch_docs(slugs=["nodes_overview"], version="v1.18")
 ```
 ### In a Pipeline
 
@@ -60,11 +62,13 @@ from dotenv import load_dotenv
 from haystack import Pipeline
 from haystack.nodes import MarkdownConverter, PreProcessor
 from haystack.document_stores import InMemoryDocumentStore
+from readmedocs_fetcher_haystack import ReadmeDocsFetcher
+
 load_dotenv()
 README_API_KEY = os.getenv('README_API_KEY')
 
 converter = MarkdownConverter(remove_code_snippets=False)
-readme_fetcher = ReadmeDocsFetcher(api_key=README_API_KEY, markdown_converter=converter)
+readme_fetcher = ReadmeDocsFetcher(api_key=README_API_KEY, markdown_converter=converter, base_url="https://docs.haystack.deepset.ai"))
 
 preprocessor = PreProcessor()
 doc_store = InMemoryDocumentStore()
@@ -78,5 +82,5 @@ pipe.run()
 
 To fetch a single documentation page:
 ```python
-pipe.run(params={"ReadmeFetcher":{"slug": "nodes_overview"}})
+pipe.run(params={"ReadmeFetcher":{"slugs": ["nodes_overview"]}})
 ```
