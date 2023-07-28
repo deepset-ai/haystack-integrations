@@ -20,7 +20,7 @@ report_issue: https://github.com/tuanacelik/readmedocs-fetcher-haystack/issues
 
 This custom component for Haystack is designed to fetch documentation pages from the [ReadMe](https://readme.com/) documentation you have access to. It uses a `MarkdownConverter` to convert all of your documentation pages to a list of Haystack `Documents`. You can use this node as a standalone node or within an indexing pipeline. 
 
-## Instllation
+## Installation
 
 ```bash
 pip install readmedocs-fetcher-haystack
