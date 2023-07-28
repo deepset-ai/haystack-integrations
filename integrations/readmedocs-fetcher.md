@@ -31,7 +31,7 @@ pip install readmedocs-fetcher-haystack
 1. To initialize a `ReadmeDocsFetcher` you have to provide an `api_key` parameter. This is your ReadMe Docs API Key.
 2. There are 3 optional parameters to initialize the `ReadmeDocsFetcher`
     - `slug`: To fetch a single defined page from your documentation. E.g. if you have want to fetch 'https://docs.haystack.deepset.ai/docs/installation' the slug would be `installation`. If not set, all of the available pages will be fetched.
-    - `version`: If not set, the latest stable version of tour docs will be fethed. 
+    - `version`: If not set, the latest stable version of tour docs will be fetched. 
     - `markdown_converter`: When documents are fetched from ReadMe, temporary `.md` files are created and we use a [`MakrdownConverter`](https://docs.haystack.deepset.ai/reference/file-converters-api#markdownconverter) to create a list of haystack `Documents`. If not provided at initialization, the a `MarkdownConverter` with the default parameters is used.
 
 ### Standalone
