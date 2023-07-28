@@ -3,10 +3,11 @@ layout: integration
 name: Mastodon Fetcher
 description: A custom component to fetch a mastodon usernames latest posts
 authors:
-    - name: Tuana Celik
+    - name: Tuana Çelik
       socials:
         github: tuanacelik
         twitter: tuanacelik
+        linkedin: tuanacelik
 pypi: https://pypi.org/project/mastodon-fetcher-haystack/
 repo: https://github.com/tuanacelik/mastodon-fetcher-haystack
 type: Custom Node
