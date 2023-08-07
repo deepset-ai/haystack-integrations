@@ -26,7 +26,9 @@ pip install milvus-haystack
 
 ## Usage
 
-Once installed, you can import and use the `MilvusDocumentStore` as follows
+Once installed, to use the `MilvusDocumentStore`, first start up a Milvus service by following the [Start Milvus](https://milvus.io/docs/install_standalone-docker.md#Start-Milvus) instructions on the documentation.
+
+You can then import and use the `MilvusDocumentStore` as follows:
 
 ```python
 from milvus_haystack import MilvusDocumentStore
