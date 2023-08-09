@@ -1,12 +1,12 @@
 # Haystack Integrations
 
-This repository is an index of external Haystack integrations that can be used with a Haystack Pipeline or Agent.
+This repository is an index of Haystack integrations that can be used with a Haystack Pipeline or Agent.
 
 These integrations are maintained by their respective owner or authors. You can browse them on the [Haystack Integrations](https://haystack.deepset.ai/integrations) page, where you will find information on the Author(s), installation and usage of each tool.
 
 ## What are Haystack Integrations?
 
-A Haystack Integration are Custom Nodes, DocumentStores or Agent Tools that are not maintained within the main Haystack repository. They can however be installed and used within a Haystack project. Some integrations may be maintained by the deepset team, but most are community contributions that are owned by the authors of the integration. 
+A Haystack Integration are Custom Nodes, DocumentStores or Agent Tools that are either external packages or additional technologies that can be used with Haystack. Some integrations may be maintained by the deepset team, others are community contributions that are owned by the authors of the integration. 
 
 ## Looking for prompts?
 
