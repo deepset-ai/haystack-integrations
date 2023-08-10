@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Weaviate Document Store
-description: Use an Weaviate database with Haystack
+description: Use a Weaviate database with Haystack
 authors:
     - name: deepset
       socials:
@@ -15,7 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/weaviate.png
 ---
 
-Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeavaiteDocumentStore`. You can choose to run Weaviate locally youself, or use a hosted Weaviate databse.
+Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeaviateDocumentStore`. You can choose to run Weaviate locally youself, or use a hosted Weaviate database.
 
 For details on the available methods and parameters of the `WeaviateDocumentStore`, check out the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#weaviatedocumentstore) and [Documentation](https://docs.haystack.deepset.ai/docs/document_store#initialization)
 
@@ -42,7 +42,7 @@ document_store = WeaviateDocumentStore(host='http://localhost",
 To write documents to your `WeaviateDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
 For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Weaviate database. The example pipeline below not only indexes the contents of the files, but also the embeddings. This way, we can do vector search on our files.
 
-#### Indexing Pipleine
+#### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
@@ -63,7 +63,7 @@ indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=[
 indexing_pipeline.add_node(component=retriever, name="Retriever", inputs=["PreProcessor"])
 indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["Retriever"])
 
-indexing_pipeline.run(file_paths=["filename.md"])
+indexing_pipeline.run(file_paths=["filename.pdf"])
 ```
 
 ### Using Weaviate in a Query Pipeline
@@ -95,5 +95,5 @@ query_pipeline = Pipeline()
 query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
 query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
 
-query_pipeline.run(query = "What is Pinecone", params={"Retriever" : {"top_k": 5}})
+query_pipeline.run(query = "What is Weaviate", params={"Retriever" : {"top_k": 5}})
 ```

@@ -40,7 +40,7 @@ document_store = OpenSearchDocumentStore()
 To write documents to your `OpenSearchDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
 For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
-#### Indexing Pipleine
+#### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
