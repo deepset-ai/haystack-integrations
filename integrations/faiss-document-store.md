@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: FAISS Document Store
-description: Use an FAISS vector database with Haystack
+description: Use a FAISS vector database with Haystack
 authors:
     - name: deepset
       socials:
@@ -17,7 +17,7 @@ logo: /logos/meta.png
 
 [Faiss](https://github.com/facebookresearch/faiss#readme) is a project by Meta, for efficient vector search. You can use it in your Haystack pipelines with the [FAISSDocumentStore](https://docs.haystack.deepset.ai/docs/document_store#initialization)
 
-For a detailed explanation on different initialization options of the `FAISSDocumentStore``, please visit the [Haystack Documentation](https://docs.haystack.deepset.ai/docs/document_store#initialization) and [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#faissdocumentstore). Below are some examples of how you might use it within a Haystack Pipeline.
+For a detailed explanation on different initialization options of the `FAISSDocumentStore`, please visit the [Haystack Documentation](https://docs.haystack.deepset.ai/docs/document_store#initialization) and [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#faissdocumentstore). Below are some examples of how you might use it within a Haystack Pipeline.
 
 ## Installation
 
@@ -45,7 +45,7 @@ document_store = FAISSDocumentStore()
 To write documents to your `FAISSDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
 For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
-#### Indexing Pipleine
+#### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
