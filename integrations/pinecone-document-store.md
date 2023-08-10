@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Pinecone Document Store
-description: Use an Pinecone database with Haystack
+description: Use a Pinecone database with Haystack
 authors:
     - name: deepset
       socials:
@@ -42,7 +42,7 @@ document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
 To write documents to your `PineconeDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
 For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Pinecone database.
 
-#### Indexing Pipleine
+#### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
@@ -60,7 +60,7 @@ indexing_pipeline.add_node(component=converter, name="PDFConverter", inputs=["Fi
 indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=["PDFConverter"])
 indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["PreProcessor"])
 
-indexing_pipeline.run(file_paths=["filename.md"])
+indexing_pipeline.run(file_paths=["filename.pdf"])
 ```
 
 ### Using Pinecone in a Query Pipeline

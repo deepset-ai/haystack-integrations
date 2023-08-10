@@ -15,7 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/elastic.png
 ---
 
-The `ElasticsearchDocumentStore` is maintained within the core Haystack project. It allows you to use [Elasicsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html) as data storage for your Haystack pipelines.
+The `ElasticsearchDocumentStore` is maintained within the core Haystack project. It allows you to use [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html) as data storage for your Haystack pipelines.
 
 For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#elasticsearchdocumentstore-1)
 
@@ -46,15 +46,14 @@ document_store = ElasticsearchDocumentStore(host = "localhost",
 To write documents to your `ElasticsearchDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
 For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
-#### Indexing Pipleine
+#### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
 from haystack.document_stores import ElasticsearchDocumentStore
 from haystack.nodes import TextConverter, PreProcessor
 
-document_store = ElasticsearchDocumentStore(host = "localhost",
-                                            port = 9200)
+document_store = ElasticsearchDocumentStore(host = "localhost", port = 9200)
 converter = TextConverter()
 preprocessor = PreProcessor()
 
