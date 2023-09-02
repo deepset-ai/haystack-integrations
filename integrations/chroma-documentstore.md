@@ -4,7 +4,7 @@ description: A Document Store for storing and retrieval from Chroma
 authors:
     - name: Massimiliano Pippi
       socials:
-        github: https://github.com/masci
+        github: masci
 pypi: https://pypi.org/project/chroma-store
 repo: https://github.com/masci/chroma-haystack
 type: Document Store
