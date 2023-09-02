@@ -1,17 +1,17 @@
 ---
+layout: integration
 name: Croma document store
 description: A Document Store for storing and retrieval from Chroma
 authors:
-    - name: Massimiliano Pippi
-      socials:
-        github: masci
+  - name: Massimiliano Pippi
+    socials:
+      github: masci
 pypi: https://pypi.org/project/chroma-store
 repo: https://github.com/masci/chroma-haystack
 type: Document Store
 report_issue: https://github.com/masci/chroma-haystack/issues
 logo: /logos/chroma.png
 ---
-
 # Chroma Document Store for Haystack
 
 [![PyPI - Version](https://img.shields.io/pypi/v/chroma-haystack.svg)](https://pypi.org/project/chroma-haystack)
