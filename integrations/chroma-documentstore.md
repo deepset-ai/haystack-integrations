@@ -32,6 +32,29 @@ logo: /logos/chroma.png
 ```console
 pip install chroma-haystack
 ```
+## Usage
+Once installed, you can start using your Chroma database with Haystack 2.0 by initializing it:
+
+```python
+from chroma_haystack import ChromaDocumentStore
+
+# Chroma is used in-memory so we use the same instances in the two pipelines below
+document_store = ChromaDocumentStore()
+```
+
+### Writing Documents to ChromaDocumentStore
+To write documents to `ChromaDocumentStore`, create an indexing pipeline.
+
+```python
+from haystack.preview.components.file_converters import TextFileToDocument
+from haystack.preview.components.writers import DocumentWriter
+
+indexing = Pipeline()
+indexing.add_component("converter", TextFileToDocument())
+indexing.add_component("writer", DocumentWriter(document_store))
+indexing.connect("converter", "writer")
+indexing.run({"converter": {"paths": file_paths}})
+```
 
 ## Examples
 You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of this repo or in [this Colab](https://colab.research.google.com/drive/1YpDetI8BRbObPDEVdfqUcwhEX9UUXP-m?usp=sharing).
