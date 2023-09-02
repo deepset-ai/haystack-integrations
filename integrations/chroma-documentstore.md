@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Croma document store
+name: Chroma document store
 description: A Document Store for storing and retrieval from Chroma
 authors:
   - name: Massimiliano Pippi
