@@ -11,19 +11,27 @@ pypi: https://pypi.org/project/chainlit/
 repo: https://github.com/Chainlit/chainlit
 type: Custom Node
 report_issue: https://github.com/Chainlit/chainlit/issues
+logo: /logos/chainlit.png
 ---
 
 # Chainlit
 
 With a simple line of code, you can leverage Chainlit to interact with your agent, visualise intermediary steps, debug them in an advanced prompt playground and share your app to collect human feedback. More info on the [documentation](https://docs.chainlit.io/).
 
-![Screenshot](./chainlit-haystack.png)
+![Screenshot](../images/chainlit-haystack.png)
+
+# Installation
+
+```
+pip install chainlit
+```
 
 # Integration
 
 This code adds the Chainlit callback handler to the Haystack callback manager. The callback handler is responsible for listening to the chain’s intermediate steps and sending them to the UI.
 
 ```python
+from haystack.agents.conversational import ConversationalAgent
 import chainlit as cl
 
 ## Some code
