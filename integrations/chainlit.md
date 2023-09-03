@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Chainlit
-description: Chainlit is an open-source Python package that makes it incredibly fast to build, test and share LLM apps. Integrate the Chainlit API in your existing code to spawn a ChatGPT-like interface in minutes. Visualise and debug your agent's intermediary steps!
+description: Visualise and debug your agent's intermediary steps!
 authors:
     - name: Chainlit Team
       socials:
@@ -16,7 +16,7 @@ logo: /logos/chainlit.png
 
 # Chainlit
 
-With a simple line of code, you can leverage Chainlit to interact with your agent, visualise intermediary steps, debug them in an advanced prompt playground and share your app to collect human feedback. More info on the [documentation](https://docs.chainlit.io/).
+Chainlit is an open-source Python package that makes it incredibly fast to build, test and share LLM apps. Integrate the Chainlit API in your existing code to spawn a ChatGPT-like interface in minutes. With a simple line of code, you can leverage Chainlit to interact with your agent, visualise intermediary steps, debug them in an advanced prompt playground and share your app to collect human feedback. More info on the [documentation](https://docs.chainlit.io/).
 
 ![Screenshot](../images/chainlit-haystack.png)
 
