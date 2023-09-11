@@ -30,10 +30,14 @@ Simply use [vLLM](https://github.com/vllm-project/vllm) in your haystack pipelin
 Install the wrapper via pip:  `pip install vllm-haystack`
 
 ## Usage
+This integration provides two invocation layers:
+- `vLLMInvocationLayer`: To use models hosted on a vLLM server
+- `vLLMLocalInvocationLayer`: To use locally hosted vLLM models
+
+### Use a Model Hosted on a vLLM Server
 To utilize the wrapper the `vLLMInvocationLayer` has to be used. 
 
 Here is a simple example of how a `PromptNode` can be created with the wrapper.
-
 ```python
 from haystack.nodes import PromptNode, PromptModel
 from vllm_haystack import vLLMInvocationLayer
@@ -46,14 +50,16 @@ model = PromptModel(model_name_or_path="", invocation_layer_class=vLLMInvocation
 
 prompt_node = PromptNode(model_name_or_path=model, top_k=1, max_length=256)
 ```
+The model will be inferred based on the model served on the vLLM server
 For more configuration examples, take a look at the unit-tests.
 
-## Hosting a vLLM Server
+#### Hosting a vLLM Server
 
 To create an *OpenAI-Compatible Server* via vLLM you can follow the steps in the 
 Quickstart section of their [documentation](https://vllm.readthedocs.io/en/latest/getting_started/quickstart.html#openai-compatible-server).
 
-##  Running Locally
+### Use a Model Hosted Locally
+⚠️To run `vLLM` locally you need to have `vLLM` installed and a supported GPU.
 
 If you don't want to use an API-Server this wrapper also provides a `vLLMLocalInvocationLayer` which executes the vLLM on the same node Haystack is running on. 
 
@@ -68,4 +74,3 @@ model = PromptModel(model_name_or_path=MODEL, invocation_layer_class=vLLMLocalIn
 
 prompt_node = PromptNode(model_name_or_path=model, top_k=1, max_length=256)
 ```
-⚠️To run `vLLM` locally you need to have `vLLM` installed and a supported GPU.
