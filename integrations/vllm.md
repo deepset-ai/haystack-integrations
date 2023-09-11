@@ -50,7 +50,7 @@ model = PromptModel(model_name_or_path="", invocation_layer_class=vLLMInvocation
 
 prompt_node = PromptNode(model_name_or_path=model, top_k=1, max_length=256)
 ```
-The model will be inferred based on the model served on the vLLM server
+The model will be inferred based on the model served on the vLLM server.
 For more configuration examples, take a look at the unit-tests.
 
 #### Hosting a vLLM Server
@@ -59,7 +59,7 @@ To create an *OpenAI-Compatible Server* via vLLM you can follow the steps in the
 Quickstart section of their [documentation](https://vllm.readthedocs.io/en/latest/getting_started/quickstart.html#openai-compatible-server).
 
 ### Use a Model Hosted Locally
-⚠️To run `vLLM` locally you need to have `vLLM` installed and a supported GPU.
+⚠️To run `vLLM` locally you need to have `vllm` installed and a supported GPU.
 
 If you don't want to use an API-Server this wrapper also provides a `vLLMLocalInvocationLayer` which executes the vLLM on the same node Haystack is running on. 
 
