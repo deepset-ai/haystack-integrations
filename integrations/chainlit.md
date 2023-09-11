@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Chainlit
+name: Chainlit Agent UI
 description: Visualise and debug your agent's intermediary steps!
 authors:
     - name: Chainlit Team
@@ -14,27 +14,25 @@ report_issue: https://github.com/Chainlit/chainlit/issues
 logo: /logos/chainlit.png
 ---
 
-# Chainlit
-
 Chainlit is an open-source Python package that makes it incredibly fast to build, test and share LLM apps. Integrate the Chainlit API in your existing code to spawn a ChatGPT-like interface in minutes. With a simple line of code, you can leverage Chainlit to interact with your agent, visualise intermediary steps, debug them in an advanced prompt playground and share your app to collect human feedback. More info on the [documentation](https://docs.chainlit.io/).
 
 ![Chainlit screenshot](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/chainlit-haystack.png)
 
-# Installation
+## Installation
 
-```
+```bash
 pip install chainlit
 ```
 
-# Integration
+## Usage
 
-This code adds the Chainlit callback handler to the Haystack callback manager. The callback handler is responsible for listening to the chain’s intermediate steps and sending them to the UI.
+Create a new Python file named `app.py` with the code below. This code adds the Chainlit callback handler to the Haystack callback manager. The callback handler is responsible for listening to the Agent’s intermediate steps and sending them to the UI.
 
 ```python
 from haystack.agents.conversational import ConversationalAgent
 import chainlit as cl
 
-## Some code
+## Agent Code
 
 agent = ConversationalAgent(
   prompt_node=conversational_agent_prompt_node,
@@ -42,12 +40,23 @@ agent = ConversationalAgent(
   prompt_template=agent_prompt,
   tools=[search_tool],
 )
+
 cl.HaystackAgentCallbackHandler(agent)
+
+@cl.on_message
+async def main(message: str):
+    response = await cl.make_async(agent.run)(message)
+    await cl.Message(author="Agent", content=response["answers"][0].answer).send()
 ```
 
+To kick off your LLM app, open a terminal, navigate to the directory containing `app.py`, and run the following command:
+
+```bash
+chainlit run app.py
+```
 
 ## Example
-Check out this full example from the cookbook: https://github.com/Chainlit/cookbook/tree/main/haystack
+Check out this full example from [the cookbook](https://github.com/Chainlit/cookbook/tree/main/haystack). 
 
 ## About Chainlit
 Chainlit is an open-source Python package that makes it incredibly fast to build, test and share LLM apps. Integrate the Chainlit API in your existing code to spawn a ChatGPT-like interface in minutes!
