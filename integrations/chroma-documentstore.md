@@ -11,6 +11,7 @@ repo: https://github.com/masci/chroma-haystack
 type: Document Store
 report_issue: https://github.com/masci/chroma-haystack/issues
 logo: /logos/chroma.png
+version: Haystack 2.0
 ---
 # Chroma Document Store for Haystack
 
