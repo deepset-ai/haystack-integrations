@@ -18,7 +18,7 @@ logo: /logos/traceloop.png
 
 OpenLLMetry is an open-source Python package built and maintained by Traceloop that instruments your Haystack-based applications with OpenTelemetry. This gives you full visibility to your LLM app, right in your existing observability stack. You can also connect this to Traceloop to get quality evaluation metrics and LLM-specific capabilities like Prompt Playground.
 
-![Traceloop screenshot](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/traceloop-haystack.png)
+![Traceloop screenshot](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/traceloop-monitoring.png)
 
 More info on the [documentation](https://traceloop.com/docs/python-sdk).
 
@@ -42,6 +42,7 @@ If you want to connect to a different observability platform, [follow the guide 
 ## Use a Traceloop API Key
 
 If you have an account with Traceloop and would like to see your traces on your account dashboard:
+
 - Create an API key on Traceloop
 - Export the API key in an environment variable called `TRACELOOP_API_KEY`
 
@@ -70,10 +71,10 @@ prompt_node = PromptNode(
 
 pipeline = Pipeline()
 pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Query"])
-result = pipeline.run("Haystack)
+result = pipeline.run("Haystack")
 ```
 
-<img width="1798" alt="image" src="https://github.com/nirga/haystack-integrations/assets/15802862/19fb9ce5-4f06-4edb-8181-0dcc0c55405c">
+<img width="1798" alt="image" src="https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/traceloop-tracing.png">
 
 ## About Traceloop
 
