@@ -23,9 +23,9 @@ pip install marqo-haystack
 ```
 ## Usage
 
-Once installed, you can start using your Marqo database with Haystack 2.0 by first starting a Marqo Docker container, and then initializing a `MarqoDocumentStore`
+Once installed, you can start using your Marqo database with Haystack 2.0. The `MarqoDocumentStore` is compatible with the open-source Marqo Docker container and with the Marqo managed cloud offering.
 
-### Starting a Marqo Docker Container
+### Getting Started Locally with the Marqo Docker Container
 
 #### For x86 machines
 ```bash
@@ -46,13 +46,30 @@ docker rm -f marqo; docker run --name marqo --privileged \
     marqoai/marqo:latest
 ```
 
+### Getting started with Marqo Cloud
+
+Log in or create an account at [https://cloud.marqo.ai](https://cloud.marqo.ai). Create a new index with the indexing mode set as "Text-optimised".
+
 ### Initializing a MarqoDocumetStore in Haystack
 
 ```python
 from marqo_haystack import MarqoDocumentStore
  
 document_store = MarqoDocumentStore()
+```
 
+If you are using the Docker container then this will use an index called `documents`, if it doesn't exist then it will be created.
+
+If you are using Marqo cloud then you can connect to an existing index like so:
+
+```python
+from marqo_haystack import MarqoDocumentStore
+ 
+document_store = MarqoDocumentStore(
+    url="https://api.marqo.ai",
+    api_key="XXXXXXXXXXXXX",
+    collection_name="my-cloud-index"
+)
 ```
 
 ### Writing Documents to MarqoDocumentStore
@@ -68,3 +85,27 @@ indexing.add_component("writer", DocumentWriter(document_store))
 indexing.connect("converter", "writer")
 indexing.run({"converter": {"paths": file_paths}})
 ```
+
+### Using the MarqoRetriever
+To retrieve documents from your Marqo document store, create a querying pipeline.
+
+To send a single query use the `MarqoSingleRetriever`:
+
+```python
+from marqo_haystack.retriever import MarqoSingleRetriever
+
+querying = Pipeline()
+querying.add_component("retriever", MarqoSingleRetriever(document_store))
+results = querying.run({"retriever": {"query": "Who is Marco Polo?", "top_k": 3}})
+```
+
+To send a list of queries use the `MarqoRetriever`:
+
+```python
+from marqo_haystack.retriever import MarqoRetriever
+
+querying = Pipeline()
+querying.add_component("retriever", MarqoRetriever(document_store))
+results = querying.run({"retriever": {"queries": ["Who is Marco Polo?", "Can Hippos swim?"], "top_k": 3}})
+```
+
