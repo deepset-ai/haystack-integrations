@@ -1,4 +1,5 @@
 ---
+layout: integration
 name: Notion Extractor
 description: A component to extract pages from Notion to Haystack Documents. Useful for indexing Pipelines.
 authors:
