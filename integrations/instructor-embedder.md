@@ -20,7 +20,8 @@ report_issue: https://github.com/deepset-ai/haystack-extras/issues
 version: Haystack 2.0
 ---
 
-[![PyPI - Version](https://img.shields.io/pypi/v/instructor-embedders-haystack.svg)](https://pypi.org/project/instructor-embedders-haystack) &nbsp;&nbsp;&nbsp;[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instructor-embedders-haystack.svg)](https://pypi.org/project/instructor-embedders-haystack)
+[![PyPI - Version](https://img.shields.io/pypi/v/instructor-embedders-haystack.svg)](https://pypi.org/project/instructor-embedders-haystack)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instructor-embedders-haystack.svg)](https://pypi.org/project/instructor-embedders-haystack)
 
 
 This custom component for Haystack 2.0 can be used to create embeddings using the [INSTRUCTOR Embedding Models](https://instructor-embedding.github.io/). 
@@ -33,7 +34,8 @@ The INSTRUCTOR models can be used to create domain-specific and task-aware embed
 #### Unified Template for Creating Instructions
 To create customized embeddings for specific sentences, you should follow the unified template to write instructions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represent the `domain` `text_type` for `task_objective`:
+        Represent the 'domain' 'text_type' for 'task_objective':  
+
 * `domain` is optional, and it specifies the domain of the text, e.g., science, finance, medicine, etc.
 * `text_type` is required, and it specifies the encoding unit, e.g., sentence, document, paragraph, etc.
 * `task_objective` is optional, and it specifies the objective of embedding, e.g., retrieve a document, classify the sentence, etc.
