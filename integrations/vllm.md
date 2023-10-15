@@ -8,7 +8,7 @@ authors:
       github: LLukas22
 pypi: https://pypi.org/project/vllm-haystack/
 repo: https://github.com/LLukas22/vLLM-haystack-adapter
-type: Custom Node
+type: Model Provider
 report_issue: https://github.com/LLukas22/vLLM-haystack-adapter/issues
 logo: /logos/vllm.png
 ---
