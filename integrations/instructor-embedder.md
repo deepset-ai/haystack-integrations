@@ -143,20 +143,20 @@ print(f"Embedding Dimension: {len(result['documents'][0].embedding)}")
 
 ```python
 # Import necessary modules and classes
-from haystack.preview.document_stores import MemoryDocumentStore
+from haystack.preview.document_stores import InMemoryDocumentStore
 from haystack.preview.dataclasses import Document
 from haystack.preview import Pipeline
 from haystack.preview.components.writers import DocumentWriter
-from haystack.preview.components.retrievers import MemoryEmbeddingRetriever
+from haystack.preview.components.retrievers import InMemoryEmbeddingRetriever
 from datasets import load_dataset
 
 # Import custom INSTRUCTOR Embedders
 from instructor_embedders.instructor_document_embedder import InstructorDocumentEmbedder
 from instructor_embedders.instructor_text_embedder import InstructorTextEmbedder
 
-# Initialize a MemoryDocumentStore, which will be used to store and retrieve documents
+# Initialize a InMemoryDocumentStore, which will be used to store and retrieve documents
 # It uses cosine similarity for document embeddings comparison
-doc_store = MemoryDocumentStore(embedding_similarity_function="cosine")
+doc_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
 
 # Define an instruction for document embedding
 doc_embedding_instruction = "Represent the News Article for retrieval:"
@@ -218,9 +218,9 @@ text_embedder.warm_up()
 query_pipeline = Pipeline()
 # Add the text embedder component to the pipeline
 query_pipeline.add_component("TextEmbedder", text_embedder)
-# Add a MemoryEmbeddingRetriever component to the pipeline that retrieves documents from the doc_store
+# Add a InMemoryEmbeddingRetriever component to the pipeline that retrieves documents from the doc_store
 query_pipeline.add_component(
-    "Retriever", MemoryEmbeddingRetriever(document_store=doc_store)
+    "Retriever", InMemoryEmbeddingRetriever(document_store=doc_store)
 )
 # Connect the output of TextEmbedder to the input of Retriever
 query_pipeline.connect("TextEmbedder", "Retriever")
