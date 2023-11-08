@@ -88,6 +88,10 @@ text_embedder = InstructorTextEmbedder(
     model_name_or_path="hkunlp/instructor-base", instruction=instruction,
     device="cpu"
 )
+text_embedder.warm_up()
+result = text_embedder.run(text)
+print(f"Embedding: {result['embedding']}")
+print(f"Embedding Dimension: {len(result['embedding'])}")
 ```
 
 ### Using the Document Embedder
@@ -111,22 +115,22 @@ doc_embedder.warm_up()
 # Text taken from PubMed QA Dataset (https://huggingface.co/datasets/pubmed_qa)
 document_list = [
     Document(
-        text="Oxidative stress generated within inflammatory joints can produce autoimmune phenomena and joint destruction. Radical species with oxidative activity, including reactive nitrogen species, represent mediators of inflammation and cartilage damage.",
-        metadata={
+        content="Oxidative stress generated within inflammatory joints can produce autoimmune phenomena and joint destruction. Radical species with oxidative activity, including reactive nitrogen species, represent mediators of inflammation and cartilage damage.",
+        meta={
             "pubid": "25,445,628",
             "long_answer": "yes",
         },
     ),
     Document(
-        text="Plasma levels of pancreatic polypeptide (PP) rise upon food intake. Although other pancreatic islet hormones, such as insulin and glucagon, have been extensively investigated, PP secretion and actions are still poorly understood.",
-        metadata={
+        content="Plasma levels of pancreatic polypeptide (PP) rise upon food intake. Although other pancreatic islet hormones, such as insulin and glucagon, have been extensively investigated, PP secretion and actions are still poorly understood.",
+        meta={
             "pubid": "25,445,712",
             "long_answer": "yes",
         },
     ),
     Document(
-        text="Disturbed sleep is associated with mood disorders. Both depression and insomnia may increase the risk of disability retirement. The longitudinal links among insomnia, depression and work incapacity are poorly known.",
-        metadata={
+        content="Disturbed sleep is associated with mood disorders. Both depression and insomnia may increase the risk of disability retirement. The longitudinal links among insomnia, depression and work incapacity are poorly known.",
+        meta={
             "pubid": "25,451,441",
             "long_answer": "yes",
         },
@@ -134,7 +138,7 @@ document_list = [
 ]
 
 result = doc_embedder.run(document_list)
-print(f"Document Text: {result['documents'][0].text}")
+print(f"Document Text: {result['documents'][0].content}")
 print(f"Document Embedding: {result['documents'][0].embedding}")
 print(f"Embedding Dimension: {len(result['documents'][0].embedding)}")
 ```
@@ -187,8 +191,8 @@ dataset = load_dataset("xsum", split="train")
 # Create Document objects from the dataset and add them to the document store using the indexing pipeline
 docs = [
     Document(
-        text=doc["document"],
-        metadata={
+        content=doc["document"],
+        meta={
             "summary": doc["summary"],
             "doc_id": doc["id"],
         },
@@ -236,8 +240,8 @@ results = query_pipeline.run(
 
 # Print information about retrieved documents
 for doc in results["Retriever"]["documents"]:
-    print(f"Text:\n{doc.text[:150]}...\n")
-    print(f"Metadata: {doc.metadata}")
+    print(f"Text:\n{doc.content[:150]}...\n")
+    print(f"Metadata: {doc.meta}")
     print(f"Score: {doc.score}")
     print("-" * 10 + "\n")
 ```
