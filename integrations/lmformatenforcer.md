@@ -17,9 +17,15 @@ version: Haystack 2.0
 
 # LM Format Enforcer Haystack Integration Layer
 
+![LM Format enforcer](../logos/lmformatenforcer.png)
+
 Use the [LM Format Enforcer](https://github.com/noamgat/lm-format-enforcer)  to enforce JSON Schema / Regex output of your local models in your haystack pipelines.
 
-![Kiku](../logos/lmformatenforcer.png)
+
+### What is the LM Format enforcer?
+![Solution at a glance](https://raw.githubusercontent.com/noamgat/lm-format-enforcer/main/docs/Intro.webp)
+
+
 
 ## Installation
 Install the format enforcer via pip:  `pip install lm-format-enforcer`
