@@ -12,6 +12,7 @@ repo: https://github.com/noamgat/lm-format-enforcer
 type: Model Provider
 report_issue: https://github.com/noamgat/lm-format-enforcer/issues
 logo: /logos/lmformatenforcer.png
+version: Haystack 2.0
 ---
 
 # LM Format Enforcer Haystack Integration Layer
