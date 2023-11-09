@@ -24,9 +24,9 @@ Use the [LM Format Enforcer](https://github.com/noamgat/lm-format-enforcer)  to 
 Install the format enforcer via pip:  `pip install lm-format-enforcer`
 
 ## Usage
-This integration supports both the v1 and v2 Haystack APIs:
-- `LMFormatEnforcerPromptNode`: A V1 `PromptNode` that activates the format enforcer.
-- `LMFormatEnforcerLocalGenerator`: A V2 generator component that activates the format enforcer.
+This integration supports both Haystack 1.x and Haystack 2.0:
+- `LMFormatEnforcerPromptNode`: A Haystack 1.x `PromptNode` that activates the format enforcer.
+- `LMFormatEnforcerLocalGenerator`: A Haystack 2.0 Generator component that activates the format enforcer.
 
 Important note: LM Format Enforcer requires a LOCAL generator - currently only Local HuggingFace transformers are supported, vLLM suport is coming soon.
 
@@ -48,7 +48,7 @@ class AnswerFormat(BaseModel):
 
 parser = JsonSchemaParser(AnswerFormat.schema())
 ```
-### Haystack V1 Integration
+### Haystack 1.x Integration
 <a target="_blank" href="https://colab.research.google.com/github/noamgat/lm-format-enforcer/blob/main/samples/colab_haystackv1_integration.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
@@ -85,7 +85,7 @@ The model will be inferred with the format enforcer, and the output will look li
 ```
 For a full example, see the [example notebook](https://github.com/noamgat/lm-format-enforcer/blob/main/samples/colab_haystackv1_integration.ipynb)
 
-### Haystack V2 Integration
+### Haystack 2.0 Integration
 <a target="_blank" href="https://colab.research.google.com/github/noamgat/lm-format-enforcer/blob/main/samples/colab_haystackv2_integration.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
