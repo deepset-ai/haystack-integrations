@@ -7,9 +7,9 @@ authors:
     socials:
       github: masci
 pypi: https://pypi.org/project/chroma-store
-repo: https://github.com/masci/chroma-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/document_stores/chroma
 type: Document Store
-report_issue: https://github.com/masci/chroma-haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/chroma.png
 version: Haystack 2.0
 ---
