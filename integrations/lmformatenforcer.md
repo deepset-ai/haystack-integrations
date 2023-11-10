@@ -21,6 +21,7 @@ version: Haystack 2.0
 
 Use the [LM Format Enforcer](https://github.com/noamgat/lm-format-enforcer)  to enforce JSON Schema / Regex output of your local models in your haystack pipelines.
 
+Language models are able to generate text, but when requiring a precise output format, they do not always perform as instructed. Various prompt engineering techniques have been introduced to improve the robustness of the generated text, but they are not always sufficient. [LM Format Enforcer](https://github.com/noamgat/lm-format-enforcer) solves the issues by filtering the tokens that the language model is allowed to generate at every timestep, thus ensuring that the output format is respected, while minimizing the limitations on the language model.
 
 ### What is the LM Format enforcer?
 ![Solution at a glance](https://raw.githubusercontent.com/noamgat/lm-format-enforcer/main/docs/Intro.webp)
