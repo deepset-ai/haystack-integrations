@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Chroma Document Store
-description: A Document Store for storing and retrieval from Chroma - built for Haystack 2.0
+description: A Document Store for storing and retrieval from Chroma - built for Haystack 2.0.
 authors:
   - name: Massimiliano Pippi
     socials:
@@ -34,12 +34,13 @@ version: Haystack 2.0
   - [License](#license)
 
 ## Installation
+Use `pip` to install Chroma:
 
 ```console
 pip install chroma-haystack
 ```
 ## Usage
-Once installed, you can start using your Chroma database with Haystack 2.0 by initializing it:
+Once installed, initialize your Chroma database to use it with Haystack 2.0:
 
 ```python
 from chroma_haystack import ChromaDocumentStore
@@ -63,7 +64,7 @@ indexing.run({"converter": {"paths": file_paths}})
 ```
 
 ## Examples
-You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of this repo or in [this Colab](https://colab.research.google.com/drive/1YpDetI8BRbObPDEVdfqUcwhEX9UUXP-m?usp=sharing).
+You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/document_stores/chroma/example/example.py) or in [this Colab](https://colab.research.google.com/drive/1YpDetI8BRbObPDEVdfqUcwhEX9UUXP-m?usp=sharing).
 
 ## License
 
