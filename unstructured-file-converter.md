@@ -13,6 +13,7 @@ repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/compone
 type: Custom Node
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/unstructured.svg
+version: Haystack 2.0
 ---
 
 Component for the Haystack (2.x) LLM framework to easily convert files and directories into Documents using the Unstructured API.
