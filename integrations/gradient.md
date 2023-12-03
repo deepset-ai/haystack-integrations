@@ -13,7 +13,7 @@ pypi: https://pypi.org/project/gradient-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/gradient
 type: Embedder, Generator
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/small-logo-gradient.png
+logo: /logos/gradient.png
 version: Haystack 2.0
 ---
 # Gradient AI integration
