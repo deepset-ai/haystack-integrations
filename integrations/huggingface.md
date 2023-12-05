@@ -17,6 +17,15 @@ version: Haystack 2.0
 toc: true
 ---
 
+### **Table of Contents**
+
+- [Haystack 2.0](#haystack-20)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [Haystack 1.x](#haystack-1x)
+  - [Installation (1.x)](#installation-1x)
+  - [Usage (1.x)](#usage-1x)
+
 ## Haystack 2.0
 
 You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 2.0 pipelines with [Generators](https://docs.haystack.deepset.ai/v2.0/docs/generators), [Embedders](https://docs.haystack.deepset.ai/v2.0/docs/embedders), [Rankers](https://docs.haystack.deepset.ai/v2.0/docs/rankers) and [Readers](https://docs.haystack.deepset.ai/v2.0/docs/readers)!
@@ -168,13 +177,13 @@ extractive_qa_pipeline.run(data={"retriever": {"query": query, "top_k": 3},
 
 You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 1.x pipelines with the [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [Ranker](https://docs.haystack.deepset.ai/docs/ranker), [Reader](https://docs.haystack.deepset.ai/docs/reader) and more!
 
-### Installation
+### Installation (1.x)
 
 ```bash
 pip install farm-haystack
 ```
 
-### Usage
+### Usage (1.x)
 
 You can use models on Hugging Face in various ways:
 
