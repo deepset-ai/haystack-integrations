@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: gradient
-description: Gradient AI is a self-managed cloud service for Large Language Models, offering fine-tuning and inference of open-source models and embeddings generation.
+name: Gradient
+description: Gradient AI is a self-managed cloud service for Large Language Models, offering fine-tuning and inference of open-source embedding and generative models.
 authors:
   - name: Mateusz Haligowski
   - name: deepset
