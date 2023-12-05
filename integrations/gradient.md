@@ -37,8 +37,13 @@ Use `pip` to install the integration:
 pip install gradient-haystack
 ```
 ## Usage
-Once installed, you will have access to a Generator and two Embedder objects. To use
-the Embedder to index documents:
+Once installed, you will have access to a Generator and two Embedder objects. 
+- `GradientDocumentEmbedder`: Use this component to create embeddings of documents. This is commonly used in indexing pipelines to store documents and their embeddings in document stores.
+- `GradientTextEmbedder`: Use this component to create embeddings of text, such as queries. This is commonly used as the first component of query pipelines to create embeddings of the query.
+- `GradientGenerator`: Use this component to query generative models with Gradient. This is commonly used in query pipelines to generate responses to queries.
+
+### Use the GradientDocumentEmbedder
+You can use embedding models with `GradientDocumentEmbedder`` to create embeddings of your documents. This is commonly used in indexing pipelines to write documents and their embeddings into a document store.
 
 ```python
 import os
@@ -63,6 +68,59 @@ indexing_pipeline.add_component(instance=GradientDocumentEmbedder(), name="docum
 indexing_pipeline.add_component(instance=DocumentWriter(document_store=InMemoryDocumentStore()), name="document_writer")
 indexing_pipeline.connect("document_embedder", "document_writer")
 indexing_pipeline.run({"document_embedder": {"documents": documents}})
+```
+
+### Use the GradientTextEmbedder and GradientGenerator
+You can use embedding models with `GradientTextEmbedder` and generative models with `GradientGenerator`. These two are commonly used together in a query pipeline such as a retrievel-augmented generative (RAG) pipeline such as the one below. 
+
+```python
+from haystack.components.builders.answer_builder import AnswerBuilder
+from haystack.components.builders.prompt_builder import PromptBuilder
+from haystack.components.retrievers import InMemoryEmbeddingRetriever
+
+from gradient_haystack.embedders.gradient_text_embedder import GradientTextEmbedder
+from gradient_haystack.generator.base import GradientGenerator
+
+from getpass import getpass
+
+prompt_template = """
+Given these documents, answer the question.\nDocuments:
+{% for doc in documents %}
+    {{ doc.content }}
+{% endfor %}
+\nQuestion: {{question}}
+\nAnswer:
+"""
+
+gradient_access_token = os.environ.get("GRADIENT_ACCESS_TOKEN")
+
+retriever = InMemoryEmbeddingRetriever(document_store)
+prompt_builder = PromptBuilder(template=prompt_template)
+embedder = GradientTextEmbedder(access_token=gradient_access_token)
+generator = GradientGenerator(access_token=gradient_access_token, base_model_slug="llama2-7b-chat")
+
+rag_pipeline = Pipeline()
+rag_pipeline.add_component(instance=embedder, name="text_embedder")
+rag_pipeline.add_component(
+    instance=retriever, name="retriever"
+)
+rag_pipeline.add_component(instance=prompt_builder, name="prompt_builder")
+rag_pipeline.add_component(instance=generator, name="llm")
+rag_pipeline.add_component(instance=AnswerBuilder(), name="answer_builder")
+
+rag_pipeline.connect("text_embedder", "retriever")
+rag_pipeline.connect("retriever", "prompt_builder.documents")
+rag_pipeline.connect("prompt_builder", "llm")
+rag_pipeline.connect("llm.replies", "answer_builder.replies")
+rag_pipeline.connect("retriever", "answer_builder.documents")
+
+rag_pipeline.run(
+        {
+            "text_embedder": {"text": question},
+            "prompt_builder": {"question": question},
+            "answer_builder": {"query": question},
+        }
+    )
 ```
 
 ## Examples
