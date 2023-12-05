@@ -16,19 +16,12 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/gradient.png
 version: Haystack 2.0
 ---
-# Gradient AI integration
-
-[![PyPI - Version](https://img.shields.io/pypi/v/gradient-haystack.svg)](https://pypi.org/project/gradient-haystack)
-
------
 
 **Table of Contents**
-
-- [Gradient AI integration](#gradient-ai-integration)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Examples](#examples)
-  - [License](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [License](#license)
 
 ## Installation
 Use `pip` to install the integration:
