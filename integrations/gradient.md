@@ -3,7 +3,7 @@ layout: integration
 name: gradient
 description: Gradient AI is a self-managed cloud service for Large Language Models, offering fine-tuning and inference of open-source models and embeddings generation.
 authors:
-  - name: Mateusz Haligowski <mhaligowski@gmail.com>
+  - name: Mateusz Haligowski
   - name: deepset
     socials:
       github: deepset-ai
@@ -11,7 +11,7 @@ authors:
       linkedin: deepset-ai
 pypi: https://pypi.org/project/gradient-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/gradient
-type: Embedder, Generator
+type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/gradient.png
 version: Haystack 2.0
