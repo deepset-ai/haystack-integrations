@@ -8,7 +8,7 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/farm-haystack
+pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack/issues
@@ -87,7 +87,7 @@ Given the following information, answer the question.
 
 Context: 
 {% for document in documents %}
-    {{ document.text }}
+    {{ document.content }}
 {% endfor %}
 
 Question: What's the official language of {{ country }}?
