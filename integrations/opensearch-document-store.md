@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: OpenSearch Document Store
-description: A Document Store for storing and retrieval from OpenSearch - built for Haystack 2.0.
+description: A Document Store for storing and retrieval from OpenSearch
 authors:
     - name: Thomas Stadelmann
       socials:
