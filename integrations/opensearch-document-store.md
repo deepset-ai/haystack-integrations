@@ -1,31 +1,90 @@
 ---
 layout: integration
 name: OpenSearch Document Store
-description: Use an OpenSearch database with Haystack
+description: A Document Store for storing and retrieval from OpenSearch
 authors:
+    - name: Thomas Stadelmann
+      socials:
+        github: tstadel
+    - name: Julian Risch
+      socials:
+        github: julian-risch
     - name: deepset
       socials:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/farm-haystack
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/opensearch-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/opensearch
 type: Document Store
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/opensearch.png
+version: Haystack 2.0
+toc: true
 ---
 
+### Table of Contents
+
+- [Haystack 2.0](#haystack-20)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [Haystack 1.x](#haystack-1x)
+  - [Installation (1.x)](#installation-1x)
+  - [Usage (1.x)](#usage-1x)
+
+## Haystack 2.0
+
+[![PyPI - Version](https://img.shields.io/pypi/v/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
+[![test](https://github.com/deepset-ai/haystack-core-integrations/actions/workflows/opensearch.yml/badge.svg)](https://github.com/deepset-ai/haystack-core-integrations/actions/workflows/opensearch.yml)
+
+-----
+
+## Installation
+Use `pip` to install OpenSearch:
+
+```console
+pip install opensearch-haystack
+```
+## Usage
+Once installed, initialize your OpenSearch database to use it with Haystack 2.0:
+
+```python
+from opensearch_haystack import OpenSearchDocumentStore
+
+document_store = OpenSearchDocumentStore()
+```
+
+### Writing Documents to OpenSearchDocumentStore
+To write documents to `OpenSearchDocumentStore`, create an indexing pipeline.
+
+```python
+from haystack.components.file_converters import TextFileToDocument
+from haystack.components.writers import DocumentWriter
+
+indexing = Pipeline()
+indexing.add_component("converter", TextFileToDocument())
+indexing.add_component("writer", DocumentWriter(document_store))
+indexing.connect("converter", "writer")
+indexing.run({"converter": {"paths": file_paths}})
+```
+
+### License
+
+`opensearch-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+
+## Haystack 1.x
 You can use [OpenSearch](https://opensearch.org/docs/latest/#docker-quickstart) in your Haystack pipelines with the [OpenSearchDocumentStore](https://docs.haystack.deepset.ai/docs/document_store#initialization)
 
 For a detailed overview of all the available methods and settings for the `OpenSearchDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#opensearchdocumentstore)
 
-## Installation
+## Installation (1.x)
 
 ```bash
 pip install farm-haystack[opensearch]
 ```
 
-## Usage
+## Usage (1.x)
 
 Once installed and running, you can start using OpenSearch with Haystack by initializing it: 
 
