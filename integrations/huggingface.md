@@ -72,7 +72,7 @@ indexing_pipeline.run({
 
 #### Generative Models (LLMs) 
 
-You can leverage text generation models from Hugging Face through two components: [HuggingFaceLocalGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacelocalgenerator), [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator) and [HuggingFaceTGIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgichatgenerator).
+You can leverage text generation models from Hugging Face through three components: [HuggingFaceLocalGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacelocalgenerator), [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator) and [HuggingFaceTGIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgichatgenerator).
 
 Depending on the model type (chat or text completion) and hosting option (TGI, Inference Endpoint, locally hosted), select the suitable Hugging Face Generator component and initialize it with the model name
 
