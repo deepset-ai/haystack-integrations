@@ -42,7 +42,7 @@ You can use Cohere models in various ways:
 
 #### Embedding Models
 
-You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/cohere/src/cohere_haystack/embedders/text_embedder.py) and [CohereDocumentEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/cohere/src/cohere_haystack/embedders/document_embedder.py).
+You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/cohere/src/cohere_haystack/embedders/text_embedder.py) and [CohereDocumentEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/cohere/src/cohere_haystack/embedders/document_embedder.py). These components support both Embed v2 and Embed v3 models.
 
 To create semantic embeddings for documents, use `CohereDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `CohereTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Cohere API key.
 
@@ -54,7 +54,7 @@ from haystack.document_stores import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 from cohere_haystack.embedders.document_embedder import CohereDocumentEmbedder
 
-document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+document_store = InMemoryDocumentStore()
 
 documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="I saw a black horse running"),
@@ -62,7 +62,7 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="Germany has many big cities")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", CohereDocumentEmbedder(api_key="COHERE_API_KEY", model_name="embed-multilingual-v2.0"))
+indexing_pipeline.add_component("embedder", CohereDocumentEmbedder(api_key="COHERE_API_KEY", model_name="embed-multilingual-v3.0", input_type="search_document"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
