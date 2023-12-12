@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/farm-haystack
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/elasticsearch-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/opensearch
 type: Document Store
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/elastic.png
 version: Haystack 2.0
 toc: true
@@ -47,7 +47,7 @@ Once installed, you can start using your Elasticsearch database with Haystack by
 ```python
 from elasticsearch_haystack.document_store import ElasticsearchDocumentStore
 
-document_store = ElasticsearchDocumentStore(host = "http://localhost:9200", embedding_dim = 768)
+document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 ```
 
 #### Writing Documents to ElasticsearchDocumentStore
@@ -65,7 +65,7 @@ from haystack.components.converters import TextFileToDocument
 from haystack.components.preprocessors import DocumentSplitter
 from haystack.components.writers import DocumentWriter 
 
-document_store = ElasticsearchDocumentStore(host = "http://localhost:9200")
+document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 converter = TextFileToDocument()
 splitter = DocumentSplitter()
 doc_embedder = SentenceTransformersDocumentEmbedder(model_name_or_path="sentence-transformers/multi-qa-mpnet-base-dot-v1")
