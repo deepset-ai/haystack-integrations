@@ -17,6 +17,14 @@ version: Haystack 2.0
 toc: true
 ---
 
+Jina Embeddings v2 are state-of-the-art models, trained to understand and process large volumes of text data efficiently. The unique selling points include:
+
+1. Extended Document Handling: The ability to process and encode up to 8192 tokens is crucial for enterprises dealing with lengthy documents, such as legal documents, technical manuals, or comprehensive reports.
+2. Enhanced Semantic Understanding: The extended context length allows for a richer and more nuanced understanding of text, improving applications like document summarization, topic extraction, and semantic search.
+3. Efficient Information Retrieval and Clustering: For tasks requiring clustering or retrieval of large documents, the model's capability to handle extended texts ensures more accurate and relevant results.
+
+Jina AI is paving the way towards the future of AI as a multimodal reality. We recognize that the existing machine learning and software ecosystems face challenges in handling multimodal AI. Our vision is to play a crucial role in helping the world harness the vast potential of multimodal AI and truly revolutionize the way we interpret and interact with information.
+
 ### **Table of Contents**
 
 - [Haystack 2.0](#haystack-20)
