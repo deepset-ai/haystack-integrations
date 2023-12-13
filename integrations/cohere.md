@@ -93,7 +93,7 @@ Context:
 Question: What's the official language of {{ country }}?
 """
 pipe = Pipeline()
-pipe.add_component("embedder", CohereTextEmbedder(api_key=api_key, model_name="embed-multilingual-v2.0"))
+pipe.add_component("embedder", CohereTextEmbedder(api_key=api_key, model_name="embed-multilingual-v3.0"))
 pipe.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
 pipe.add_component("llm", CohereGenerator(api_key=api_key, model_name="command-light"))
