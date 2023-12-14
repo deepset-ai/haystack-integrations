@@ -19,7 +19,11 @@ toc: true
 
 [![PyPI](https://img.shields.io/pypi/v/voyage-embedders-haystack)](https://pypi.org/project/voyage-embedders-haystack/) 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/voyage-embedders-haystack?logo=python&logoColor=gold) 
+### **Table of Contents**
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Example](#example)
 
 Custom component for [Haystack](https://github.com/deepset-ai/haystack) (2.x) for creating embeddings using the [VoyageAI Embedding Models](https://voyageai.com/).
 
@@ -86,6 +90,7 @@ doc_embedder = VoyageDocumentEmbedder(
     model_name="voyage-01",
     input_type="document",
     batch_size=8,
+    api_key="VOYAGE_API_KEY",
 )
 
 # Indexing Pipeline
@@ -103,7 +108,7 @@ print(f"Embedding of first Document: {doc_store.filter_documents()[0].embedding}
 
 Query the Semantic Search Pipeline using the `InMemoryEmbeddingRetriever` and `VoyageTextEmbedder`:
 ```python
-text_embedder = VoyageTextEmbedder(model_name="voyage-01", input_type="query")
+text_embedder = VoyageTextEmbedder(model_name="voyage-01", input_type="query", api_key="VOYAGE_API_KEY)
 
 # Query Pipeline
 query_pipeline = Pipeline()
