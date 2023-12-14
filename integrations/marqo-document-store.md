@@ -12,8 +12,16 @@ type: Document Store
 report_issue: https://github.com/marqo-ai/marqo-haystack/issues
 logo: /logos/marqo.png
 version: Haystack 2.0
+toc: true
 ---
-# Marqo Document Store for Haystack
+
+### **Table of Contents**
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
+
+## Overview
+
 This integration allows you to use [Marqo DB](https://www.marqo.ai/) as the document store for your Haystack pipelines. This page provides simple instructions on how to start it up and how to initialize a `MarqoDocumentStore` that can be used in any Haystack 2.0 pipeline.
 
 ## Installation
@@ -76,8 +84,8 @@ document_store = MarqoDocumentStore(
 To write documents to `MarqoDocumentStore`, create an indexing pipeline.
 
 ```python
-from haystack.preview.components.file_converters import TextFileToDocument
-from haystack.preview.components.writers import DocumentWriter
+from haystack.components.converters import TextFileToDocument
+from haystack.components.writers import DocumentWriter
 
 indexing = Pipeline()
 indexing.add_component("converter", TextFileToDocument())
