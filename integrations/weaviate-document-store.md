@@ -49,7 +49,7 @@ from haystack import Pipeline
 from haystack.document_stores import WeaviateDocumentStore
 from haystack.nodes import EmbeddingRetriever, MarkdownConverter, PreProcessor
 
-document_store = WeaviateDocumentStore(host='http://localhost",
+document_store = WeaviateDocumentStore(host="http://localhost",
                                        port=8080,
                                        embedding_dim=768)
 converter = MarkdownConverter()
