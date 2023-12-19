@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: ReadMeDocs Fetcher
-description: Fetch documentdation pages from ReadMe docs sites.
+description: Fetch documentation pages from ReadMe docs sites.
 authors:
     - name: Tuana Çelik
       socials:
@@ -16,6 +16,7 @@ pypi: https://pypi.org/project/readmedocs-fetcher-haystack/
 repo: https://github.com/tuanacelik/readmedocs-fetcher-haystack
 type: Custom Node
 report_issue: https://github.com/tuanacelik/readmedocs-fetcher-haystack/issues
+toc: true
 ---
 
 This custom component for Haystack is designed to fetch documentation pages from the [ReadMe](https://readme.com/) documentation you have access to. It uses a `MarkdownConverter` to convert all of your documentation pages to a list of Haystack `Documents`. You can use this node as a standalone node or within an indexing pipeline. 
@@ -30,10 +31,10 @@ pip install readmedocs-fetcher-haystack
 
 1. To initialize a `ReadmeDocsFetcher` you have to provide an `api_key` parameter. This is your ReadMe Docs API Key.
 2. There are 3 optional parameters to initialize the `ReadmeDocsFetcher`
-    - `slugs`: To fetch a list of specific pages from your documentation. E.g. if you have want to fetch 'https://docs.haystack.deepset.ai/docs/installation' the slug would be `installation`. If not set, all of the available pages will be fetched.
-    - `base_url`: Optionally provide this to add the full url of a documentation page to the `meta` of the created document. For example `base_url='https://docs.haystack.deepset.ai'"`
+    - `slugs`: To fetch a list of specific pages from your documentation. E.g. if you have want to fetch "https://docs.haystack.deepset.ai/docs/installation" the slug would be `installation`. If not set, all of the available pages will be fetched.
+    - `base_url`: Optionally provide this to add the full url of a documentation page to the `meta` of the created document. For example `base_url='https://docs.haystack.deepset.ai'`
     - `version`: If not set, the latest stable version of tour docs will be fetched. 
-    - `markdown_converter`: When documents are fetched from ReadMe, temporary `.md` files are created and we use a [`MakrdownConverter`](https://docs.haystack.deepset.ai/reference/file-converters-api#markdownconverter) to create a list of haystack `Documents`. If not provided at initialization, then a `MarkdownConverter` with the default parameters is used.
+    - `markdown_converter`: When documents are fetched from ReadMe, temporary `.md` files are created and we use a [`MarkdownConverter`](https://docs.haystack.deepset.ai/reference/file-converters-api#markdownconverter) to create a list of haystack `Documents`. If not provided at initialization, then a `MarkdownConverter` with the default parameters is used.
 
 ### Standalone
 ```python
