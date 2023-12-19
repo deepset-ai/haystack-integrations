@@ -12,13 +12,13 @@ authors:
       twitter: deepset_ai
       linkedin: deepset-ai
 pypi: https://pypi.org/project/chroma-store
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/document_stores/chroma
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/chroma
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/chroma.png
 version: Haystack 2.0
+toc: true
 ---
-# Chroma Document Store for Haystack
 
 [![PyPI - Version](https://img.shields.io/pypi/v/chroma-haystack.svg)](https://pypi.org/project/chroma-haystack)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/chroma-haystack.svg)](https://pypi.org/project/chroma-haystack)
@@ -53,18 +53,18 @@ document_store = ChromaDocumentStore()
 To write documents to `ChromaDocumentStore`, create an indexing pipeline.
 
 ```python
-from haystack.preview.components.file_converters import TextFileToDocument
-from haystack.preview.components.writers import DocumentWriter
+from haystack.components.converters import TextFileToDocument
+from haystack.components.writers import DocumentWriter
 
 indexing = Pipeline()
 indexing.add_component("converter", TextFileToDocument())
 indexing.add_component("writer", DocumentWriter(document_store))
 indexing.connect("converter", "writer")
-indexing.run({"converter": {"paths": file_paths}})
+indexing.run({"converter": {"sources": file_paths}})
 ```
 
 ## Examples
-You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/document_stores/chroma/example/example.py) or in [this Colab](https://colab.research.google.com/drive/1YpDetI8BRbObPDEVdfqUcwhEX9UUXP-m?usp=sharing).
+You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/chroma) or in [this Colab](https://colab.research.google.com/drive/1YpDetI8BRbObPDEVdfqUcwhEX9UUXP-m?usp=sharing).
 
 ## License
 
