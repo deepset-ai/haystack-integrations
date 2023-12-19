@@ -12,7 +12,13 @@ repo: https://github.com/traceloop/openllmetry
 type: Monitoring
 report_issue: https://github.com/traceloop/openllmetry/issues
 logo: /logos/traceloop.png
+toc: true
 ---
+
+- [OpenLLMetry](#openllmetry)
+  - [Installation](#installation)
+  - [Example](#example)
+  - [About Traceloop](#about-traceloop)
 
 # OpenLLMetry
 
@@ -22,13 +28,13 @@ OpenLLMetry is an open-source Python package built and maintained by Traceloop t
 
 More info on the [documentation](https://traceloop.com/docs/python-sdk).
 
-# Installation
+## Installation
 
 ```
 pip install traceloop-sdk
 ```
 
-# Integration
+## Example
 
 Basic integration is as simple as adding one line to your code:
 
@@ -39,14 +45,14 @@ Traceloop.init(app_name="your_app_name")
 When you run your code, you'll get a link to the Traceloop UI where you can see your app's traces.
 If you want to connect to a different observability platform, [follow the guide for exporting your traces](https://traceloop.com/docs/python-sdk/exporting).
 
-## Use a Traceloop API Key
+### Use a Traceloop API Key
 
 If you have an account with Traceloop and would like to see your traces on your account dashboard:
 
 - Create an API key on Traceloop
 - Export the API key in an environment variable called `TRACELOOP_API_KEY`
 
-## Trace Haystack Pipelines
+### Trace Haystack Pipelines
 
 Once you've initialized a Traceloop app, any Haystack pipeline that you run in the same environment will get logged in the dashboard provided by the generated Traceloop URL.
 For example, below is a simple Haystack pipeline and its traceloop logs:
