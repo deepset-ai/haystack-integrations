@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: Jina
-description: Use Jina embedding models with Haystack
+name: Jina AI
+description: Use the latest Jina AI embedding models
 authors:
     - name: deepset
       socials:
@@ -17,6 +17,8 @@ version: Haystack 2.0
 toc: true
 ---
 
+This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings-v2` models in their pipelines. [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
+ 
 Jina Embeddings v2 are state-of-the-art models, trained to understand and process large volumes of text data efficiently. The unique selling points include:
 
 1. Extended Document Handling: The ability to process and encode up to 8192 tokens is crucial for enterprises dealing with lengthy documents, such as legal documents, technical manuals, or comprehensive reports.
