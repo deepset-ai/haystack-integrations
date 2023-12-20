@@ -13,6 +13,7 @@ type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/qdrant.png
 version: Haystack 2.0
+toc: true
 ---
 
 An integration of [Qdrant](https://qdrant.tech) vector database with [Haystack](https://haystack.deepset.ai/)
@@ -32,6 +33,19 @@ pip install qdrant-haystack
 
 ```bash
 poetry add qdrant-haystack
+```
+
+## Installation (1.x)
+
+Latest versions of `qdrant-haystack` are compatible only with Haystack 2.x.
+If you're using Haystack 1.x you need to specify the version explicitly.
+
+```bash
+pip install "qdrant-haystack<2.0.0"
+```
+
+```bash
+poetry add "qdrant-haystack<2.0.0"
 ```
 
 ## Usage
