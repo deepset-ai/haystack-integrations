@@ -3,15 +3,17 @@ layout: integration
 name: Qdrant Document Store
 description: Use the Qdrant vector database with Haystack
 authors:
-    - name: Qdrant 
-      socials:
-        github: qdrant
-        twitter: qdrant_engine
+  - name: Qdrant
+    socials:
+      github: qdrant
+      twitter: qdrant_engine
 pypi: https://pypi.org/project/qdrant-haystack/
-repo: https://github.com/qdrant/qdrant-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/qdrant
 type: Document Store
-report_issue: https://github.com/qdrant/qdrant-haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/qdrant.png
+version: Haystack 2.0
+toc: true
 ---
 
 An integration of [Qdrant](https://qdrant.tech) vector database with [Haystack](https://haystack.deepset.ai/)
@@ -31,6 +33,19 @@ pip install qdrant-haystack
 
 ```bash
 poetry add qdrant-haystack
+```
+
+## Installation (1.x)
+
+Latest versions of `qdrant-haystack` are compatible only with Haystack 2.x.
+If you're using Haystack 1.x you need to specify the version explicitly.
+
+```bash
+pip install "qdrant-haystack<2.0.0"
+```
+
+```bash
+poetry add "qdrant-haystack<2.0.0"
 ```
 
 ## Usage
@@ -55,9 +70,9 @@ official [Python Qdrant client](https://github.com/qdrant/qdrant_client).
 
 ### Using local in-memory / disk-persisted mode
 
-Qdrant Python client, from version 1.1.1, supports local in-memory/disk-persisted mode. That's 
+Qdrant Python client, from version 1.1.1, supports local in-memory/disk-persisted mode. That's
 a good choice for any test scenarios and quick experiments in which you do not plan to store
-lots of vectors. In such a case spinning a Docker container might be even not required. 
+lots of vectors. In such a case spinning a Docker container might be even not required.
 
 The local mode was also implemented in `qdrant-haystack` integration.
 
