@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Jina AI
-description: Jina AI is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
+description: Use the latest Jina AI embedding models
 authors:
     - name: deepset
       socials:
