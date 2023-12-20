@@ -17,7 +17,7 @@ version: Haystack 2.0
 toc: true
 ---
 
-This integration allows users of Haystack to seamlessly use Jina AI's jina-embeddings-v2 models in their pipelines.
+This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings-v2` models in their pipelines. [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
  
 Jina Embeddings v2 are state-of-the-art models, trained to understand and process large volumes of text data efficiently. The unique selling points include:
 
