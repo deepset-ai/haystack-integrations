@@ -88,7 +88,7 @@ indexing_pipeline.run({
 
 ### Using Elasticsearch in a Query Pipeline
 
-Once you have documents in your `ElasitsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/elasticsearch/src/elasticsearch_haystack/embedding_retriever.py) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
+Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/elasticsearch/src/elasticsearch_haystack/embedding_retriever.py) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
 
 ```python
 from elasticsearch_haystack.document_store import ElasticsearchDocumentStore
