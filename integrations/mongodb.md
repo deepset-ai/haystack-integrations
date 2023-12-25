@@ -13,6 +13,7 @@ repo: https://github.com/deepset-ai/haystack
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/mongodb.png
+toc: true
 ---
 
 [MongoDB](https://www.mongodb.com/) is a document database designed for ease of application development and scaling. [MongoDB Atlas](https://www.mongodb.com/atlas) is a multi-cloud database service built by people behind MongoDB. MongoDB Atlas simplifies deploying and managing your databases while offering the versatility you need to build resilient and performant global applications on the cloud providers of your choice.
