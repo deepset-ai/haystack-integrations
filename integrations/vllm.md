@@ -11,9 +11,8 @@ repo: https://github.com/LLukas22/vLLM-haystack-adapter
 type: Model Provider
 report_issue: https://github.com/LLukas22/vLLM-haystack-adapter/issues
 logo: /logos/vllm.png
+toc: true
 ---
-
-# vLLM Invocation Layer
 [![PyPI - Version](https://img.shields.io/pypi/v/vllm-haystack.svg)](https://pypi.org/project/vllm-haystack)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/vllm-haystack.svg)](https://pypi.org/project/vllm-haystack)
 
