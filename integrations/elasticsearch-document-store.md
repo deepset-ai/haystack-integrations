@@ -88,23 +88,30 @@ indexing_pipeline.run({
 
 ### Using Elasticsearch in a Query Pipeline
 
-Once you have documents in your `ElasitsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/elasticsearch/src/elasticsearch_haystack/embedding_retriever.py) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
+Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/elasticsearch/src/elasticsearch_haystack/embedding_retriever.py) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
 
 ```python
 from elasticsearch_haystack.document_store import ElasticsearchDocumentStore
 from haystack.pipeline import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder 
-from elasticsearch_haystack.embedding_retriever import ElasticsearchEmbeddingRetriever 
+from elasticsearch_haystack.embedding_retriever import ElasticsearchEmbeddingRetriever
 
-document_store = ElasticsearchDocumentStore(host = "http://localhost:9200")
-retriever = ElasticsearchEmbeddingRetriever(document_store)
-text_embedder = SentenceTransformersTextEmbedder(model_name_or_path="sentence-transformers/multi-qa-mpnet-base-dot-v1")
+model_name_or_path = "sentence-transformers/multi-qa-mpnet-base-dot-v1"
+
+document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
+
+
+retriever = ElasticsearchEmbeddingRetriever(document_store=document_store)
+text_embedder = SentenceTransformersTextEmbedder(model_name_or_path=model_name_or_path)
 
 query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", text_embedder)
 query_pipeline.add_component("retriever", retriever)
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
-query_pipeline.run(query = "historical places in Istanbul")
+result = query_pipeline.run({"text_embedder": {"text": "historical places in Instanbul"}})
+
+print(result)
 ```
 
 ## Haystack 1.x
