@@ -42,7 +42,7 @@ You can use Cohere models in various ways:
 
 #### Embedding Models
 
-You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/cohere/src/cohere_haystack/embedders/text_embedder.py) and [CohereDocumentEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/cohere/src/cohere_haystack/embedders/document_embedder.py). These components support both Embed v2 and Embed v3 models.
+You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/coheretextembedder) and [CohereDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/coheredocumentembedder). These components support both **Embed v2** and **Embed v3** models.
 
 To create semantic embeddings for documents, use `CohereDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `CohereTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Cohere API key.
 
@@ -71,7 +71,7 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 #### Generative Models (LLMs) 
 
-To use `/generate` models from Cohere, initialize a `CohereGenerator` with the model name, Cohere API key and the prompt template. You can then use this `CohereGenerator` in a question answering pipeline after the `PromptBuilder`.   
+To use `/generate` models from Cohere, initialize a [CohereGenerator](https://docs.haystack.deepset.ai/v2.0/docs/coheregenerator) with the model name and Cohere API key. You can then use this `CohereGenerator` in a question answering pipeline after the `PromptBuilder`.   
 
 Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `CohereGenerator`:
 
