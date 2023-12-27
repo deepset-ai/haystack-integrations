@@ -123,7 +123,7 @@ from haystack.document_stores import PineconeDocumentStore
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
                                        similarity="cosine",
-                                       embedding_dim=768)
+                                       dimension=768)
 ```
 
 ### Writing Documents to PineconeDocumentStore
@@ -173,8 +173,7 @@ from pinecone_haystack import PineconeDocumentStore
 from pinecone_haystack.dense_retriever import PineconeDenseRetriever
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
-                                       similarity="cosine",
-                                       embedding_dim=768)
+                                       dimension=768)
               
 prompt_template = """Answer the following query based on the provided context. If the context does
                      not include an answer, reply with 'I don't know'.\n
