@@ -52,7 +52,7 @@ To start using Vertex AI generators in Haystack, you need to set the `project_id
 
 ### Gemini API models
 
-You can leverage Gemini models through two components: [GeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/coheregenerator) and [GeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator). You can use these components on their own or in a pipeline.  
+You can leverage Gemini models through two components: [GeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminigenerator) and [GeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator). You can use these components on their own or in a pipeline.  
 
 **Text Generation with `gemini-pro`** 
 
