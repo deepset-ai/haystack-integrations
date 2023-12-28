@@ -150,7 +150,7 @@ print(codey_llm_result["answers"][0])
 
 ### Imagen API models
 
-You can leverage Imagen models through three components: [VertexAIImageCaptioner](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fdocs.haystack.deepset.ai%2Fv2.0%2Fdocs%2Fvertexaiimagecaptioner), `VertexAIImageGenerator` and `VertexAIImageQA`.
+You can leverage Imagen models through three components: [VertexAIImageCaptioner](https://docs.haystack.deepset.ai/v2.0/docs/vertexaiimagecaptioner), `VertexAIImageGenerator` and `VertexAIImageQA`.
 
 **Image Generation with `imagegeneration`**
 
