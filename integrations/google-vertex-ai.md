@@ -46,6 +46,15 @@ pip install google-vertex-haystack
 
 ## Usage
 
+Once installed, you will have access to various Haystack Generators: 
+- [`GeminiGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/geminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation and multimodal prompts.
+- [`GeminiChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation, multimodal prompts and function calling in chat completion setting.
+- `VertexAITextGenerator`: Use this component with PaLM models for text generation.
+- `VertexAICodeGenerator`: Use this component with Codey model for code generation and code completion.
+- `VertexAIImageGenerator`: Use this component with Imagen model '**imagegeneration**' for image generation.
+- [`VertexAIImageCaptioner`](https://docs.haystack.deepset.ai/v2.0/docs/vertexaiimagecaptioner): Use this component with Imagen model '**imagetext**' for image captioning.
+- `VertexAIImageQA`: Use this component with Imagen model '**imagetext**' for visual question answering.
+
 To use Vertex AI models, you need to have a Google Cloud Platform account and be logged in using Application Default Credentials (ADCs). For more info see the [official documentation](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fcloud.google.com%2Fdocs%2Fauthentication%2Fprovide-credentials-adc). 
 
 To start using Vertex AI generators in Haystack, you need to set the `project_id` variable to a valid project ID that have enough authorization to use Vertex AI. Find your `project_id` in the [GCP resource manager](https://console.cloud.google.com/cloud-resource-manager) or locally by running `gcloud projects list` in your terminal. For more info on the gcloud CLI see the [official documentation](https://cloud.google.com/cli).
