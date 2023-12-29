@@ -13,9 +13,7 @@ report_issue: https://github.com/IntelLabs/fastRAG/issues
 logo: /logos/intel-labs.png
 ---
 
-fast**RAG** is a research framework for ***efficient*** and ***optimized*** retrieval augmented generative pipelines,
-incorporating state-of-the-art LLMs and Information Retrieval. fastRAG is designed to empower researchers and developers
-with a comprehensive tool-set for advancing retrieval augmented generation.
+fast**RAG** is a research framework, that extends [Haystack](https://github.com/deepset-ai/haystack), with abilities to build ***efficient*** and ***optimized*** retrieval augmented generative pipelines (with emphasis on ***Intel hardware***), incorporating state-of-the-art LLMs and Information Retrieval modules.
 
 ## Key Features
 
