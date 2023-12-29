@@ -31,9 +31,9 @@ pip install gradient-haystack
 ```
 ## Usage
 Once installed, you will have access to a Generator and two Embedder objects. 
-- `GradientDocumentEmbedder`: Use this component to create embeddings of documents. This is commonly used in indexing pipelines to store documents and their embeddings in document stores.
-- `GradientTextEmbedder`: Use this component to create embeddings of text, such as queries. This is commonly used as the first component of query pipelines to create embeddings of the query.
-- `GradientGenerator`: Use this component to query generative models with Gradient. This is commonly used in query pipelines to generate responses to queries.
+- [`GradientDocumentEmbedder`](https://docs.haystack.deepset.ai/v2.0/docs/gradientdocumentembedder): Use this component to create embeddings of documents. This is commonly used in indexing pipelines to store documents and their embeddings in document stores.
+- [`GradientTextEmbedder`](https://docs.haystack.deepset.ai/v2.0/docs/gradienttextembedder): Use this component to create embeddings of text, such as queries. This is commonly used as the first component of query pipelines to create embeddings of the query.
+- [`GradientGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/gradientgenerator): Use this component to query generative models with Gradient. This is commonly used in query pipelines to generate responses to queries.
 
 ### Use the GradientDocumentEmbedder
 You can use embedding models with `GradientDocumentEmbedder`` to create embeddings of your documents. This is commonly used in indexing pipelines to write documents and their embeddings into a document store.
