@@ -61,7 +61,7 @@ To start using Vertex AI generators in Haystack, you need to set the `project_id
 
 ### Gemini API models
 
-You can leverage Gemini models through two components: [GeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/coheregenerator) and [GeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator). You can use these components on their own or in a pipeline.  
+You can leverage Gemini models through two components: [GeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminigenerator) and [GeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator). You can use these components on their own or in a pipeline.  
 
 **Text Generation with `gemini-pro`** 
 
@@ -159,7 +159,7 @@ print(codey_llm_result["answers"][0])
 
 ### Imagen API models
 
-You can leverage Imagen models through three components: [VertexAIImageCaptioner](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fdocs.haystack.deepset.ai%2Fv2.0%2Fdocs%2Fvertexaiimagecaptioner), `VertexAIImageGenerator` and `VertexAIImageQA`.
+You can leverage Imagen models through three components: [VertexAIImageCaptioner](https://docs.haystack.deepset.ai/v2.0/docs/vertexaiimagecaptioner), `VertexAIImageGenerator` and `VertexAIImageQA`.
 
 **Image Generation with `imagegeneration`**
 
