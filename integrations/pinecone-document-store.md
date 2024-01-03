@@ -91,7 +91,7 @@ indexing.connect("converter", "splitter")
 indexing.connect("splitter", "embedder")
 indexing.connect("embedder", "writer")
 
-indexing.run({"converter": {"sources": ["filename.pdf"]}})
+indexing.run({"converter": {"sources": ["filename.md"]}})
 ```
 
 ### Using Pinecone in a RAG Pipeline
@@ -180,7 +180,7 @@ indexing_pipeline.add_node(component=converter, name="PDFConverter", inputs=["Fi
 indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=["PDFConverter"])
 indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["PreProcessor"])
 
-indexing_pipeline.run(file_paths=["filename.pdf"])
+indexing_pipeline.run(file_paths=["filename.md"])
 ```
 
 ### Using Pinecone in a Query Pipeline
