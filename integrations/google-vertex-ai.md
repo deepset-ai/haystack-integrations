@@ -47,8 +47,8 @@ pip install google-vertex-haystack
 ## Usage
 
 Once installed, you will have access to various Haystack Generators: 
-- [`GeminiGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/geminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation and multimodal prompts.
-- [`GeminiChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation and multimodal prompts.
+- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation, multimodal prompts and function calling in chat completion setting.
 - `VertexAITextGenerator`: Use this component with PaLM models for text generation.
 - `VertexAICodeGenerator`: Use this component with Codey model for code generation and code completion.
 - `VertexAIImageGenerator`: Use this component with Imagen model '**imagegeneration**' for image generation.
@@ -61,16 +61,16 @@ To start using Vertex AI generators in Haystack, you need to set the `project_id
 
 ### Gemini API models
 
-You can leverage Gemini models through two components: [GeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminigenerator) and [GeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/geminichatgenerator). You can use these components on their own or in a pipeline.  
+You can leverage Gemini models through two components: [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminigenerator) and [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminichatgenerator). You can use these components on their own or in a pipeline.  
 
 **Text Generation with `gemini-pro`** 
 
-To use Gemini model for text generation, initialize a `GeminiGenerator` with `"gemini-pro"` and `project_id`: 
+To use Gemini model for text generation, initialize a `VertexAIGeminiGenerator` with `"gemini-pro"` and `project_id`: 
 
 ```python
-from google_vertex_haystack.generators.gemini import GeminiGenerator
+from google_vertex_haystack.generators.gemini import VertexAIGeminiGenerator
 
-gemini_generator = GeminiGenerator(model="gemini-pro", project_id=project_id)
+gemini_generator = VertexAIGeminiGenerator(model="gemini-pro", project_id=project_id)
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
 print(result["answers"][0])
 ```
@@ -81,7 +81,7 @@ Assemblage in art refers to the creation of a three-dimensional artwork by combi
 
 **Multimodality with `gemini-pro-vision`** 
 
-To use `gemini-pro-vision` model for visual question answering, initialize a `GeminiGenerator` with `"gemini-pro-vision"` and `project_id`. Then, run it with the images as well as the prompt:
+To use `gemini-pro-vision` model for visual question answering, initialize a `VertexAIGeminiGenerator` with `"gemini-pro-vision"` and `project_id`. Then, run it with the images as well as the prompt:
 
 ```python
 import requests
@@ -97,7 +97,7 @@ images = [
     ByteStream(data=requests.get(url).content, mime_type="image/jpeg")
     for url in URLS
 ]
-gemini_generator = GeminiGenerator(model="gemini-pro-vision", project_id=project_id)
+gemini_generator = VertexAIGeminiGenerator(model="gemini-pro-vision", project_id=project_id)
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
 for answer in result["answers"]:
     print(answer)  
