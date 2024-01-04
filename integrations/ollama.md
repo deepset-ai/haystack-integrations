@@ -43,7 +43,7 @@ You can use [Ollama Models](https://ollama.ai/library) in your Haystack 2.0 pipe
 pip install ollama-haystack
 ```
 
-### Usage
+## Usage
 
 You can leverage Ollama models through the OllamaGenerator Component
 
