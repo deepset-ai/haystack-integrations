@@ -84,8 +84,6 @@ document_store.write_documents(
     ]
 )
 
-query = "Who is Super Mario?"
-
 template = """
 Given only the following information, answer the question.
 Ignore your own knowledge.
@@ -97,13 +95,16 @@ Context:
 
 Question: {{ query }}?
 """
+
 pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OllamaGenerator(model="orca-mini"))
+pipe.add_component("llm", OllamaGenerator(model="orca-mini", url="http://localhost:11434/api/generate"))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
+
+query = "Who is Super Mario?"
 
 response = pipe.run({"prompt_builder": {"query": query}, "retriever": {"query": query}})
 
