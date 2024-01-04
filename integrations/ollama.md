@@ -53,7 +53,7 @@ To use an Ollama model for text generation:
 2. Initialize an `OllamaGenerator` with the name of the model served in your Ollama instance and you can then use the `OllamaGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
 
 
-#### Example
+### Example
 To run the example, you may choose to run a docker container serving an Ollama model of your choice. 
 Here are some commands that work with this example:
 
