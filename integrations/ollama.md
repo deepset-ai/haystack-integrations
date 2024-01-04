@@ -29,6 +29,7 @@ toc: true
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Example](#example)
 
 ### Introduction
 
@@ -51,6 +52,8 @@ To use an Ollama model for text generation:
 1. Follow instructions on the [Ollama Github Page](https://github.com/jmorganca/ollama) to pull and serve your model of choice 
 2. Initialize an `OllamaGenerator` with the name of the model served in your Ollama instance and you can then use the `OllamaGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
 
+
+#### Example
 To run the example, you may choose to run a docker container serving an Ollama model of your choice. 
 Here are some commands that work with this example
 
