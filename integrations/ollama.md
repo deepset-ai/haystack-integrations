@@ -7,6 +7,9 @@ authors:
       socials:
         github: alistairlr112
         linkedin: https://www.linkedin.com/in/alistairlr/
+    - name: Sachin Sachdeva
+      socials:
+        github: sachinsachdeva
     - name: deepset
       socials:
         github: deepset-ai
@@ -15,7 +18,7 @@ authors:
 pypi: https://pypi.org/project/ollama-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/ollama
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/ollama.png
 version: Haystack 2.0
 toc: true
