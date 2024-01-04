@@ -44,10 +44,6 @@ pip install ollama-haystack
 
 ### Usage
 
-You can use Ollama models in various ways:
-
-#### Generative Models (LLMs)
-
 You can leverage Ollama models through the OllamaGenerator Component
 
 To use an Ollama model for text generation:
