@@ -55,7 +55,7 @@ To use an Ollama model for text generation:
 
 #### Example
 To run the example, you may choose to run a docker container serving an Ollama model of your choice. 
-Here are some commands that work with this example
+Here are some commands that work with this example:
 
 ```bash
 docker run -d -p 11434:11434 --name ollama ollama/ollama:latest
