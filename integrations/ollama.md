@@ -48,8 +48,16 @@ You can leverage Ollama models through the OllamaGenerator Component
 
 To use an Ollama model for text generation:
 
-1. Follow instructions on the [Ollama Github Page](https://github.com/jmorganca/ollama) to pull and serve your model of choice
+1. Follow instructions on the [Ollama Github Page](https://github.com/jmorganca/ollama) to pull and serve your model of choice 
 2. Initialize an `OllamaGenerator` with the name of the model served in your Ollama instance and you can then use the `OllamaGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
+
+To run the example, you may choose to run a docker container serving an Ollama model of your choice. 
+Here are some commands that work with this example
+
+```bash
+docker run -d -p 11434:11434 --name ollama ollama/ollama:latest
+docker exec ollama ollama pull orca-mini
+```
 
 Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `OllamaGenerator`:
 
@@ -97,4 +105,11 @@ pipe.connect("prompt_builder", "llm")
 response = pipe.run({"prompt_builder": {"query": query}, "retriever": {"query": query}})
 
 print(response["llm"]["replies"])
+```
+You should receive an output like (output is not deterministic):
+```
+['Based on the information provided, Super Mario is a successful military leader who fought
+off several invasion attempts by his arch rival - Bowser. He is also an important politician and owns several
+castles where he conducts political business. ' 'Therefore, it can be inferred that Super Mario is a combination of
+both a military leader and an important politician.']
 ```
