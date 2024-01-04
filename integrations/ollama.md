@@ -31,7 +31,7 @@ toc: true
 - [Usage](#usage)
   - [Example](#example)
 
-### Introduction
+## Introduction
 
 You can use [Ollama Models](https://ollama.ai/library) in your Haystack 2.0 pipelines with the OllamaGenerator.
 
