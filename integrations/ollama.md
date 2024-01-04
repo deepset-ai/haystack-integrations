@@ -37,7 +37,7 @@ You can use [Ollama Models](https://ollama.ai/library) in your Haystack 2.0 pipe
 
 [Ollama](https://ollama.ai/) is a project focused on running Large Language Models locally. Internally it uses the quantized GGUF format by default. This means it is possible to run LLMs on standard machines (even without GPUs), without having to handle complex installation procedures.
 
-### Installation
+## Installation
 
 ```bash
 pip install ollama-haystack
