@@ -26,8 +26,7 @@ toc: true
 
 ## Overview
 
-[Amazon Bedrock](https://aws.amazon.com/bedrock/) is a fully managed service that makes high-performing foundation models from leading AI startups and Amazon available for your use through a unified API. 
-You can choose from various foundation models to find the one best suited for your use case.
+[Amazon Bedrock](https://aws.amazon.com/bedrock/) is a fully managed service that makes high-performing foundation models from leading AI startups and Amazon available for your use through a unified API.  You can choose from various foundation models to find the one best suited for your use case. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator).
 
 ## Installation
 
