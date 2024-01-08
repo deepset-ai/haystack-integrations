@@ -166,7 +166,7 @@ from haystack.schema import Document
 document_store = InMemoryDocumentStore(embedding_dim=1024)
 preprocessor = PreProcessor()
 retriever = EmbeddingRetriever(
-    embedding_model="ada", document_store=document_store, api_key=OPENAI_API_KEY
+    embedding_model="babbage-002", document_store=document_store, api_key=OPENAI_API_KEY
 )
 
 indexing_pipeline = Pipeline()
@@ -256,7 +256,7 @@ from haystack.schema import Document
 document_store = InMemoryDocumentStore(embedding_dim=1024)
 preprocessor = PreProcessor()
 retriever = EmbeddingRetriever(
-    embedding_model="ada", document_store=document_store, api_key=OPENAI_API_KEY
+    embedding_model="babbage-002", document_store=document_store, api_key=OPENAI_API_KEY
 )
 
 indexing_pipeline = Pipeline()
