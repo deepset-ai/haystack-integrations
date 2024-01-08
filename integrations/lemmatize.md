@@ -67,7 +67,7 @@ lfqa_prompt = PromptTemplate(
 )
 
 prompt_node = PromptNode(
-    model_name_or_path="text-davinci-003",
+    model_name_or_path="gpt-3.5-turbo",
     default_prompt_template=lfqa_prompt,
     max_length=500,
     api_key="sk-OPENAIKEY",

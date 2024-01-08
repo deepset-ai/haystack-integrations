@@ -51,7 +51,7 @@ memory_tool = Tool(name="Memory",
                    pipeline_or_node=memory_node,
                    description="Your memory. Always access this tool first to remember what you have learned.")
 
-prompt_node = PromptNode(model_name_or_path="text-davinci-003", 
+prompt_node = PromptNode(model_name_or_path="gpt-3.5-turbo", 
                          api_key="<YOUR_OPENAI_KEY>", 
                          max_length=1024,
                          stop_words=["Observation:"])
@@ -84,7 +84,7 @@ redis_memory_node = RedisMemoryRecallNode(memory_id="working_memory",
 memory_tool = Tool(name="Memory",
                    pipeline_or_node=redis_memory_node,
                    description="Your memory. Always access this tool first to remember what you have learned.")
-prompt_node = PromptNode(model_name_or_path="text-davinci-003",
+prompt_node = PromptNode(model_name_or_path="gpt-3.5-turbo",
                          api_key="<YOUR_OPENAI_KEY>",
                          max_length=1024,
                          stop_words=["Observation:"])
