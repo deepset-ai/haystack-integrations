@@ -2,10 +2,12 @@
 layout: integration
 name: AssemblyAI
 description: Use AssemblyAI transcription models with Haystack
-    # - name: AssemblyAI
-    #   socials:
-    #     github: alistairlr112
-    #     linkedin: https://www.linkedin.com/in/alistairlr/
+authors:
+    - name: AssemblyAI
+      socials:
+        twitter: assemblyai
+        github: AssemblyAI
+        linkedin: assemblyai
 # pypi: https://pypi.org/project/ollama-haystack
 repo: https://github.com/AssemblyAI/assemblyai-haystack
 type: Model Provider
