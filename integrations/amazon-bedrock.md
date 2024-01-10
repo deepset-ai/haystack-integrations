@@ -41,9 +41,9 @@ Once installed, you will have access to an AmazonBedrockGenerator that supports 
 - Anthropic's Claude
 - AI21 Labs' Jurassic-2
 - Stability AI's Stable Diffusion
-- Cohere's Command and Embed
+- Cohere's Command
 - Meta's Llama 2
-- Amazon Titan language and embeddings models
+- Amazon Titan language models
 
 ### AmazonBedrockGenerator
 
