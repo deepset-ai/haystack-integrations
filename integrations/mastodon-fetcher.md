@@ -17,7 +17,9 @@ version: Haystack 2.0
 toc: true
 ---
 The `MastodonFetcher` is a simple custom component that fetches the `last_k_posts` of a given Mastodon username.
-You can see an demo of this custom component in use in the [🦄 Should I Follow?](https://huggingface.co/spaces/deepset/should-i-follow) space on Hugging Face 🤗.
+You can see a demo of this custom component in the [🦄 Should I Follow?](https://huggingface.co/spaces/deepset/should-i-follow) space on Hugging Face 🤗.
+
+The latest versions of `mastodon-fetcher-haystack` are compatible only with Haystack 2.x. You need to specify the version explicitly to import the `MastodonFetcher` component suitable with Haystack 1.x.
 
 ### **Table of Contents**
 
@@ -73,7 +75,9 @@ This component expects `query` to be a complete Mastodon username. For example "
 
 ### Installation (1.x)
 
-Run `pip install mastodon-fetcher-haystack==0.0.1`
+```bash
+pip install mastodon-fetcher-haystack==0.0.1
+```
 
 ### Usage (1.x)
 
