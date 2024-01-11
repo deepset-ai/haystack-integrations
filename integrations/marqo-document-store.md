@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Marqo Document Store
+name: Marqo
 description: A Document Store for storing and retrieval from Marqo - built for Haystack 2.0
 authors:
   - name: marqo-ai

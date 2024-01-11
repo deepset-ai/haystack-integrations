@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Weaviate Document Store
+name: Weaviate
 description: Use a Weaviate database with Haystack
 authors:
     - name: deepset

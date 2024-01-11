@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Elasticsearch Document Store
+name: Elasticsearch
 description: Use an Elasticsearch database with Haystack
 authors:
     - name: deepset

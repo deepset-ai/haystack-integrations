@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: FAISS Document Store
+name: FAISS
 description: Use a FAISS vector database with Haystack
 authors:
     - name: deepset
