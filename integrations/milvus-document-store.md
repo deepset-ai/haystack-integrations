@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Milvus Document Store
+name: Milvus
 description: Use the Milvus vector database with Haystack
 authors:
     - name: Zilliz 

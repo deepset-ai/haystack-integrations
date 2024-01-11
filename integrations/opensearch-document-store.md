@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: OpenSearch Document Store
+name: OpenSearch
 description: A Document Store for storing and retrieval from OpenSearch
 authors:
     - name: Thomas Stadelmann

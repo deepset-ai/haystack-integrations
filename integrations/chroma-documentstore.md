@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: Chroma Document Store
-description: A Document Store for storing and retrieval from Chroma - built for Haystack 2.0.
+name: Chroma
+description: A Document Store for storing and retrieval from Chroma
 authors:
   - name: Massimiliano Pippi
     socials:
