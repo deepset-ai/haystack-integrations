@@ -31,7 +31,7 @@ You can see an demo of this custom component in use in the [🦄 Should I Follow
 ## Haystack 2.0
 This component expects `username` to be a complete Mastodon username. For example "tuana@sigmoid.social". If the provided username is correct and public, `MastodonFetcher` will return a list of `Document` objects where the contents are the users latest posts.
 
-### Installation  (2.0)
+### Installation (2.0)
 ```bash
 pip install mastodon-fetcher-haystack
 ```
