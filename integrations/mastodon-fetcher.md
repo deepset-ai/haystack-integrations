@@ -75,7 +75,7 @@ This component expects `query` to be a complete Mastodon username. For example "
 
 Run `pip install mastodon-fetcher-haystack==0.0.1`
 
-### Usage  (1.x)
+### Usage (1.x)
 
 Because the component returns a list of Documents, it can be used at the same step that a Retriever would normally be used. For example, use it in a Retrieval Augmented Generative (RAG) pipeline as follows:
 
