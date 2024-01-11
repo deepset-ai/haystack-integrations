@@ -71,7 +71,7 @@ pipe.run(data={"fetcher": {"username": "tuana@sigmoid.social"}})
 
 This component expects `query` to be a complete Mastodon username. For example "tuana@sigmoid.social". If the provided username is correct and public, `MastodonFetcher` will return a list of `Document` objects where the contents are the users latest posts.
 
-### Installation  (1.x)
+### Installation (1.x)
 
 Run `pip install mastodon-fetcher-haystack==0.0.1`
 
