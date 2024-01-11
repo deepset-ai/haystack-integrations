@@ -22,8 +22,8 @@ You can see an demo of this custom component in use in the [🦄 Should I Follow
 ### **Table of Contents**
 
 - [Haystack 2.0](#haystack-20)
-  - [Installation](#installation)
-  - [Usage](#usage)
+  - [Installation (2.0)](#installation-20)
+  - [Usage (2.0)](#usage-20)
 - [Haystack 1.x](#haystack-1x)
   - [Installation (1.x)](#installation-1x)
   - [Usage (1.x)](#usage-1x)
