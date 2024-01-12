@@ -45,7 +45,7 @@ pip install ollama-haystack
 
 ## Usage
 
-You can leverage Ollama models through the OllamaGenerator Component
+You can leverage Ollama models through the OllamaGenerator and OllamaChatGenerator Components
 
 To use an Ollama model for text generation:
 
@@ -53,7 +53,7 @@ To use an Ollama model for text generation:
 2. Initialize an `OllamaGenerator` with the name of the model served in your Ollama instance and you can then use the `OllamaGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
 
 
-### Example
+### Examples
 To run the example, you may choose to run a docker container serving an Ollama model of your choice. 
 Here are some commands that work with this example:
 
@@ -61,6 +61,8 @@ Here are some commands that work with this example:
 docker run -d -p 11434:11434 --name ollama ollama/ollama:latest
 docker exec ollama ollama pull orca-mini
 ```
+
+#### Text Generation
 
 Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `OllamaGenerator`:
 
@@ -116,4 +118,41 @@ You should receive an output like (output is not deterministic):
 off several invasion attempts by his arch rival - Bowser. He is also an important politician and owns several
 castles where he conducts political business. ' 'Therefore, it can be inferred that Super Mario is a combination of
 both a military leader and an important politician.']
+```
+
+#### Chat Generation
+
+```python
+from haystack.dataclasses import ChatMessage
+
+from ollama_haystack import OllamaChatGenerator
+
+messages = [
+    ChatMessage.from_user("What's Natural Language Processing?"),
+    ChatMessage.from_system(
+        "Natural Language Processing (NLP) is a field of computer science and artificial "
+        "intelligence concerned with the interaction between computers and human language"
+    ),
+    ChatMessage.from_user("How do I get started?"),
+]
+client = OllamaChatGenerator(model="orca-mini", timeout=45, url="http://localhost:11434/api/chat")
+
+response = client.run(messages, generation_kwargs={"temperature": 0.2})
+
+print(response["replies"][0].content)
+
+```
+You should receive an output like (output is not deterministic):
+
+```
+Natural Language Processing (NLP) is a complex field with many different tools and techniques to learn. Here are some steps you can take to get started:
+
+1. Understand the basics of natural language processing: Before diving into the specifics of NLP, it's important to have a basic understanding of what natural language is and how it works. You can start by reading up on linguistics and semantics.
+
+2. Learn about the different components of NLP: There are several components of NLP that you need to understand, including syntax, semantics, morphology, and pragmatics. You can start by learning about these components individually.
+
+3. Choose a tool or library to use: There are many different tools and libraries available for NLP, such as NLTK, spaCy, and Stanford CoreNLP. Choose one that you feel comfortable working with and that fits your needs.
+
+4. Practice: The best way to learn NLP is by practicing. Start with simple tasks like sentiment analysis or tokenization and work your way up to more complex ones like machine translation
+
 ```
