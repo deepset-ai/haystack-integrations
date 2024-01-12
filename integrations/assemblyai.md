@@ -8,7 +8,7 @@ authors:
         twitter: assemblyai
         github: AssemblyAI
         linkedin: assemblyai
-# pypi: https://pypi.org/project/ollama-haystack
+pypi: https://pypi.org/project/assemblyai-haystack/
 repo: https://github.com/AssemblyAI/assemblyai-haystack
 type: Model Provider
 report_issue: https://github.com/AssemblyAI/assemblyai-haystack/issues
@@ -41,7 +41,7 @@ More info about AssemblyAI:
 ## Installation
 
 ```bash
-pip install [TODO]
+pip install assemblyai-haystack
 ```
 
 ## Usage
@@ -65,6 +65,7 @@ from haystack.components.preprocessors import DocumentSplitter
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.pipeline import Pipeline
 from haystack.document_stores import InMemoryDocumentStore
+from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
 document_store = InMemoryDocumentStore()
 transcriber = AssemblyAITranscriber(api_key=assemblyai_api_key)
@@ -119,6 +120,7 @@ from haystack import Pipeline
 from haystack.components.retrievers import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
+from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
 template = """
 Given the following information, answer the question.
@@ -153,6 +155,7 @@ from haystack import Pipeline
 from haystack.components.retrievers import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
+from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
 ## Write utterances into InMemoryDocumentStore
 document_store = InMemoryDocumentStore()
@@ -164,12 +167,10 @@ document_store.write_documents(result["speaker_labels"])
 ## Build a generative QA pipeline
 template = """
 Answer the question, based on the content in the documents. If you can't answer based on the documents, say so.
-
 Context:
 {% for document in documents %}
     {{ document.content }}
 {% endfor %}
-
 Question: {{ question }}
 """
 pipe = Pipeline()
