@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/assemblyai-haystack/
 repo: https://github.com/AssemblyAI/assemblyai-haystack
 type: Model Provider
 report_issue: https://github.com/AssemblyAI/assemblyai-haystack/issues
-logo: /logos/assemblyai.svg
+logo: /logos/assemblyai.png
 version: Haystack 2.0
 toc: true
 ---
