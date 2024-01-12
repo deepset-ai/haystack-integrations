@@ -43,7 +43,7 @@ pip install chroma-haystack
 Once installed, initialize your Chroma database to use it with Haystack 2.0:
 
 ```python
-from chroma_haystack import ChromaDocumentStore
+from haystack_integrations.document_stores.chroma import ChromaDocumentStore
 
 # Chroma is used in-memory so we use the same instances in the two pipelines below
 document_store = ChromaDocumentStore()
