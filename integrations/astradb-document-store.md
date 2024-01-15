@@ -42,7 +42,7 @@ First you need to [sign up for a free DataStax account](https://astra.datastax.c
 ## Installation
 
 ```console
-pip install haystack-ai astra-store sentence-transformers
+pip install astra-store
 ```
 ## Usage
 
