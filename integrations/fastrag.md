@@ -21,7 +21,7 @@ fast**RAG** is a research framework, that extends [Haystack](https://github.com/
 - **Optimized for Intel Hardware**: Leverage [Intel extensions for PyTorch (IPEX)](https://github.com/intel/intel-extension-for-pytorch), [🤗 Optimum Intel](https://github.com/huggingface/optimum-intel) and [🤗 Optimum-Habana](https://github.com/huggingface/optimum-habana) for *running as optimal as possible* on Intel® Xeon® Processors and Intel® Gaudi® AI accelerators.
 - **Customizable**: fastRAG is built using [Haystack](https://github.com/deepset-ai/haystack) and HuggingFace. All of fastRAG's components are 100% Haystack compatible.
 
-## :rocket: Components
+## Components
 
 For a brief overview of the various unique components in fastRAG refer to the [Components Overview]([components.md](https://github.com/IntelLabs/fastRAG/blob/main/components.md)) page.
 
@@ -80,7 +80,7 @@ For a brief overview of the various unique components in fastRAG refer to the [C
 </tbody>
 </table></div>
 
-## :round_pushpin: Installation
+## Installation
 
 Preliminary requirements:
 
@@ -89,32 +89,23 @@ Preliminary requirements:
 
 To set up the software, clone the project and run the following, preferably in a newly created virtual environment:
 
-
-
 ```bash
 git clone https://github.com/IntelLabs/fastRAG.git
 cd fastrag
-pip install .
 ```
 
 There are several dependencies to consider, depending on your specific usage:
 
+Basic installation:
+
 ```bash
-# Additional engines/components
-pip install .[intel]               # Intel optimized backend [Optimum-intel, IPEX]
-pip install .[elastic]             # Support for ElasticSearch store
-pip install .[qdrant]              # Support for Qdrant store
-pip install libs/colbert           # Indexing engine for ColBERT/PLAID
-pip install .[faiss-cpu]           # CPU-based Faiss library
-pip install .[faiss-gpu]           # GPU-based Faiss library
-pip install .[knowledge_graph]     # Libraries for working with spacy and KG
-
-# User interface (for demos)
-pip install .[ui]
-
-# Benchmarking
-pip install .[benchmark]
-
-# Development tools
-pip install .[dev]
+pip install .
 ```
+
+fastRAG with Intel-optimized backend:
+
+```bash
+pip install .[intel]
+```
+
+Other installation options can be found [here](https://github.com/IntelLabs/fastRAG#round_pushpin-installation).
