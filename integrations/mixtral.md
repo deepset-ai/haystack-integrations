@@ -1,3 +1,22 @@
+---
+layout: integration
+name: Mixtral
+description: TBD
+authors:
+    - name: deepset
+      socials:
+        github: deepset-ai
+        twitter: deepset_ai
+        linkedin: deepset-ai
+pypi: https://pypi.org/project/elasticsearch-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/opensearch
+type: Document Store
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/elastic.png
+version: Haystack 2.0
+toc: true
+---
+
 - Explain that it's a guide on how to use OpenAIGenerator to make use of Mistral
 
 ```python
