@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Mixtral
+name: Mistral
 description: TBD
 authors:
     - name: deepset
@@ -17,7 +17,24 @@ version: Haystack 2.0
 toc: true
 ---
 
-- Explain that it's a guide on how to use OpenAIGenerator to make use of Mistral
+This page demonstrates how to use OpenAIGenerator within Haystack make use of Mistral models.
+
+[Mistral AI](https://mistral.ai/) currently provides two types of access to Large Language Models:
+
+- An API providing pay-as-you-go access to our latest models,
+- Open source models available under the Apache 2.0 License, available on Hugging Face or directly from the documentation.
+
+For more information see [the Mistal docs](https://docs.mistral.ai/).
+
+In order to follow along with this guide, you'll need a [Mistal API key](https://console.mistral.ai/).
+
+### Installation
+
+```bash
+pip install haystack-ai
+```
+
+### Usage
 
 ```python
 from haystack.components.generators.chat import OpenAIChatGenerator
