@@ -29,7 +29,9 @@ toc: true
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Example](#example)
+  - [Examples](#examples)
+    - [Text Generation](#text-generation)
+    - [Chat Generation](#chat-generation)
 
 ## Introduction
 
@@ -72,7 +74,7 @@ from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.retrievers import InMemoryBM25Retriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 
-from ollama_haystack import OllamaGenerator
+from haystack_integrations.components.generators.ollama import OllamaGenerator
 
 document_store = InMemoryDocumentStore()
 document_store.write_documents(
@@ -125,7 +127,7 @@ both a military leader and an important politician.']
 ```python
 from haystack.dataclasses import ChatMessage
 
-from ollama_haystack import OllamaChatGenerator
+from haystack_integrations.components.generators.ollama import OllamaChatGenerator
 
 messages = [
     ChatMessage.from_user("What's Natural Language Processing?"),
