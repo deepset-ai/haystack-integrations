@@ -45,7 +45,7 @@ memory_pipeline.add_node(component=redis_memory_node, name="MemoryTool", inputs=
 memory_pipeline.add_node(component=veracity_node, name="VeracityNode", inputs=["MemoryTool"])
 
 # Create an agent and add the pipeline as a tool
-prompt_node = PromptNode(model_name_or_path="gpt-3.5-turbo", api_key=openai_api_key, max_length=512,
+prompt_node = PromptNode(model_name_or_path="gpt-3.5-turbo-instruct", api_key=openai_api_key, max_length=512,
                          stop_words=["Observation:"])
 memory_agent = Agent(prompt_node=prompt_node, prompt_template=memory_template)
 memory_tool = Tool(name="Memory",
