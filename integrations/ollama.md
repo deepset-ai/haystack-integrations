@@ -127,7 +127,7 @@ both a military leader and an important politician.']
 ```python
 from haystack.dataclasses import ChatMessage
 
-from haystack_integrations.components.generators.ollama import OllamaGenerator
+from haystack_integrations.components.generators.ollama import OllamaChatGenerator
 
 messages = [
     ChatMessage.from_user("What's Natural Language Processing?"),
