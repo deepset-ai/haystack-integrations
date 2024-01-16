@@ -1,32 +1,32 @@
 ---
 layout: integration
 name: Mistral
-description: TBD
+description: This page demonstrates how to use OpenAIGenerator within Haystack to make use of Mistral models.
 authors:
     - name: deepset
       socials:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/elasticsearch-haystack
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/opensearch
-type: Document Store
-report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/elastic.png
+pypi: https://pypi.org/project/haystack-ai
+repo: https://github.com/deepset-ai/haystack
+type: Model Provider
+report_issue: report_issue: https://github.com/deepset-ai/haystack/issues
+logo: /logos/mistral.png
 version: Haystack 2.0
 toc: true
 ---
 
-This page demonstrates how to use OpenAIGenerator within Haystack make use of Mistral models.
+This page demonstrates how to use OpenAIGenerator within Haystack to make use of Mistral models.
 
 [Mistral AI](https://mistral.ai/) currently provides two types of access to Large Language Models:
 
-- An API providing pay-as-you-go access to our latest models,
-- Open source models available under the Apache 2.0 License, available on Hugging Face or directly from the documentation.
+- An API providing pay-as-you-go access to the latest models,
+- Open source models available under the Apache 2.0 License, available on [Hugging Face](https://huggingface.co/mistralai) or directly from [the documentation](https://docs.mistral.ai/models/).
 
 For more information see [the Mistal docs](https://docs.mistral.ai/).
 
-In order to follow along with this guide, you'll need a [Mistal API key](https://console.mistral.ai/).
+In order to follow along with this guide, you'll need a [Mistal API key](https://console.mistral.ai/). Add it as an environment variable, `MISTRAL_API_KEY`.
 
 ### Installation
 
@@ -36,11 +36,13 @@ pip install haystack-ai
 
 ### Usage
 
+To use a Mistral LLM:
 ```python
+import os
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 
-api_key = "MISTRAL-API-KEY"
+api_key = os.getenv("MISTRAL_API_KEY")
 model = "mistral-medium"
 
 client = OpenAIChatGenerator(
@@ -53,11 +55,14 @@ response = client.run(
 print(response)
 ```
 
+To use a Mistal embedding model:
 ```python
+import os
 from haystack.components.embedders import OpenAITextEmbedder
 
-api_key = "MISTRAL-API-KEY"
+api_key = os.getenv("MISTRAL_API_KEY")
 model = "mistral-embed"
+
 
 embedder = OpenAITextEmbedder(api_key=api_key, model_name=model, api_base_url="https://api.mistral.ai/v1")
 
