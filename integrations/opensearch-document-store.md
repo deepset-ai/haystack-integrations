@@ -50,7 +50,7 @@ pip install opensearch-haystack
 Once installed, initialize your OpenSearch database to use it with Haystack 2.0:
 
 ```python
-from opensearch_haystack import OpenSearchDocumentStore
+from haystack_integrations.document_stores.opensearch import OpenSearchDocumentStore
 
 document_store = OpenSearchDocumentStore()
 ```
