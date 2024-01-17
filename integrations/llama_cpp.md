@@ -64,7 +64,7 @@ The GGUF versions of popular LLMs can be downloaded from [HuggingFace](https://h
 Initialize an `LlamaCppGenerator` with the the path to the GGUF file and also specify the required model and text generation parameters:
 
 ```python
-from llama_cpp_haystack import LlamaCppGenerator
+from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
     model_path="/content/openchat-3.5-1210.Q3_K_S.gguf", 
@@ -90,7 +90,7 @@ See [Llama.cpp's LLM documentation](https://llama-cpp-python.readthedocs.io/en/l
 For example, to offload the model to GPU during initialization:
 
 ```python
-from llama_cpp_haystack import LlamaCppGenerator
+from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
     model_path="/content/openchat-3.5-1210.Q3_K_S.gguf",
@@ -114,7 +114,7 @@ See [Llama.cpp's Completion API documentation](https://llama-cpp-python.readthed
 For example, to set the `max_tokens` and `temperature`:
 
 ```python
-from llama_cpp_haystack import LlamaCppGenerator
+from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
     model_path="/content/openchat-3.5-1210.Q3_K_S.gguf",
@@ -130,7 +130,7 @@ result = generator.run(prompt)
 The `generation_kwargs` can also be passed to the `run` method of the generator directly:
 
 ```python
-from llama_cpp_haystack import LlamaCppGenerator
+from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
     model_path="/content/openchat-3.5-1210.Q3_K_S.gguf",
@@ -163,7 +163,7 @@ from haystack.components.writers import DocumentWriter
 from haystack.document_stores import InMemoryDocumentStore
 
 # Import LlamaCppGenerator
-from llama_cpp_haystack import LlamaCppGenerator
+from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 # Load first 100 rows of the Simple Wikipedia Dataset from HuggingFace
 dataset = load_dataset("pszemraj/simple_wikipedia", split="validation[:100]")
