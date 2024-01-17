@@ -33,7 +33,13 @@ toc: true
 DataStax Astra DB is a serverless vector database built on Apache Cassandra, and it supports vector-based search and auto-scaling. You can deploy it on AWS, GCP, or Azure and easily expand to one or more regions within those clouds for multi-region availability, low latency data access, data sovereignty, and to avoid cloud vendor lock-in. For more information, see the [DataStax documentation](https://docs.datastax.com/en/astra-serverless/docs/).
 
 
-This integration allows you to use AstraDB as the document store for your Haystack pipelines. This page provides simple instructions on how to start it up and how to initialize an `AstraDocumentStore` that can be used in any Haystack 2.0 pipeline.
+This integration allows you to use AstraDB for document storage and retrieval in your Haystack 2.0 pipelines. This page provides instructions on how to initialize an AstraDB instance and connect with Haystack.
+
+## Components
+
+- [`AstraDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/astradocumentstore). This component serves as a persistent data store for your Haystack documents, and supports a number of embedding models and vector dimensions.
+- [`AstraRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/astraretriever) This is an embedding-based Retriever compatible with the Astra Document Store.
+
 
 ## Initialization
 
