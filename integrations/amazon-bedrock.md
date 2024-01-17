@@ -56,7 +56,7 @@ aws_access_key_id="..."
 aws_secret_access_key="..."
 aws_region_name="eu-central-1"
 
-generator = AmazonBedrockGenerator(model_name="anthropic.claude-v2", aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_region_name=aws_region_name)
+generator = AmazonBedrockGenerator(model="anthropic.claude-v2", aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_region_name=aws_region_name)
 result = generator.run("Who is the best American actor?")
 for reply in result["replies"]:
     print(reply)
