@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: AstraDB Document Store
+name: AstraDB
 description: A Document Store for storing and retrieval from AstraDB - built for Haystack 2.0.
 authors:
   - name: Nicholas Brackley
