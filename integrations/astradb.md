@@ -61,7 +61,7 @@ In order to connect AstraDB with Haystack, you'll need these pieces of informati
 - Astra keyspace name
 - access token
 
-### to use the Document Store directly:
+### how to use the `AstraDocumentStore`:
 
 ```python
 from astra_haystack.document_store import AstraDocumentStore
@@ -86,6 +86,53 @@ document_store.write_documents([
     Document(content="This is second")
     ])
 print(document_store.count_documents())
+```
+
+### How to use the `AstraRetriever`
+
+```python
+from astra_haystack.document_store import AstraDocumentStore
+from astra_haystack.retriever import AstraRetriever
+
+from haystack import Document, Pipeline
+from haystack.components.embedders import SentenceTransformersTextEmbedder, SentenceTransformersDocumentEmbedder
+
+astra_id = os.getenv("ASTRA_DB_ID", "")
+astra_region = os.getenv("ASTRA_DB_REGION", "us-east-2")
+astra_application_token = os.getenv("ASTRA_DB_APPLICATION_TOKEN", "")
+collection_name = os.getenv("COLLECTION_NAME", "haystack_integration")
+keyspace_name = os.getenv("KEYSPACE_NAME", "astra_haystack_test")
+
+document_store = AstraDocumentStore(
+    astra_id=astra_id,
+    astra_region=astra_region,
+    astra_collection=collection_name,
+    astra_keyspace=keyspace_name,
+    astra_application_token=astra_application_token,
+)
+
+model_name_or_path = "sentence-transformers/all-mpnet-base-v2"
+
+documents = [Document(content="There are over 7,000 languages spoken around the world today."),
+						Document(content="Elephants have been observed to behave in a way that indicates a high level of self-awareness, such as recognizing themselves in mirrors."),
+						Document(content="In certain parts of the world, like the Maldives, Puerto Rico, and San Diego, you can witness the phenomenon of bioluminescent waves.")]
+
+document_embedder = SentenceTransformersDocumentEmbedder(model_name_or_path=model_name_or_path)  
+document_embedder.warm_up()
+documents_with_embeddings = document_embedder.run(documents)
+
+document_store.write_documents(documents_with_embeddings.get("documents"), policy=DuplicatePolicy.SKIP)
+
+query_pipeline = Pipeline()
+query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder(model_name_or_path=model_name_or_path))
+query_pipeline.add_component("retriever", AstraRetriever(document_store=document_store))
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+
+query = "How many languages are there?"
+
+result = query_pipeline.run({"text_embedder": {"text": query}})
+
+print(result['retriever']['documents'][0])
 ```
 
 ### Note:
