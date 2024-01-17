@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: AssemblyAI
-description: Use AssemblyAI transcription models with Haystack
+description: Use AssemblyAI transcription, summarization and speaker diarization models with Haystack
 authors:
     - name: AssemblyAI
       socials:
