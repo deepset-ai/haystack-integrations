@@ -9,7 +9,7 @@ authors:
         twitter: deepset_ai
         linkedin: deepset-ai
 pypi: https://pypi.org/project/unstructured-fileconverter-haystack/
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/unstructured/fileconverter
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/unstructured
 type: Custom Node
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/unstructured.svg
@@ -27,7 +27,7 @@ pip install unstructured-fileconverter-haystack
 ```
 
 ### Hosted API
-If you plan to use the hosted version of the Unstructured API, you just need the **(free) Unsctructured API key**. You can get it by signing up [here](https://unstructured.io/api-key).
+If you plan to use the hosted version of the Unstructured API, you just need the **(free) Unsctructured API key**. You can get it by signing up [here](https://unstructured.io/api-key-free).
 
 ### Local API (Docker)
 If you want to run your own local instance of the Unstructured API, you need Docker and you can find instructions [here](https://unstructured-io.github.io/unstructured/api.html#using-docker-images).
@@ -42,7 +42,7 @@ docker run -p 8000:8000 -d --rm --name unstructured-api quay.io/unstructured-io/
 ### In isolation
 ```python
 import os
-from unstructured_fileconverter_haystack import UnstructuredFileConverter
+from haystack_integrations.components.converters.unstructured import UnstructuredFileConverter
 
 converter = UnstructuredFileConverter(api_key="UNSTRUCTURED_API_KEY")
 documents = converter.run(paths = ["a/file/path.pdf", "a/directory/path"])["documents"]
@@ -54,7 +54,7 @@ import os
 from haystack.preview import Pipeline
 from haystack.preview.components.writers import DocumentWriter
 from haystack.preview.document_stores import InMemoryDocumentStore
-from unstructured_fileconverter_haystack import UnstructuredFileConverter
+from haystack_integrations.components.converters.unstructured import UnstructuredFileConverter
 
 document_store = InMemoryDocumentStore()
 
