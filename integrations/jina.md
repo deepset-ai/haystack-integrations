@@ -66,7 +66,7 @@ documents = [Document(content="I enjoy programming in Python"),
              Document(content="Thomas is injured and can't play sports")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(api_key="JINA_API_KEY", model_name="jina-embeddings-v2-base-en"))
+indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(api_key="JINA_API_KEY", model="jina-embeddings-v2-base-en"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
