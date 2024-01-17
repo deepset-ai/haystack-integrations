@@ -62,7 +62,7 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="Germany has many big cities")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", CohereDocumentEmbedder(api_key="COHERE_API_KEY", model_name="embed-multilingual-v3.0", input_type="search_document"))
+indexing_pipeline.add_component("embedder", CohereDocumentEmbedder(api_key="COHERE_API_KEY", model="embed-multilingual-v3.0", input_type="search_document"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
@@ -93,10 +93,10 @@ Context:
 Question: What's the official language of {{ country }}?
 """
 pipe = Pipeline()
-pipe.add_component("embedder", CohereTextEmbedder(api_key=api_key, model_name="embed-multilingual-v3.0"))
+pipe.add_component("embedder", CohereTextEmbedder(api_key=api_key, model="embed-multilingual-v3.0"))
 pipe.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", CohereGenerator(api_key=api_key, model_name="command-light"))
+pipe.add_component("llm", CohereGenerator(api_key=api_key, model="command-light"))
 pipe.connect("embedder.embedding", "retriever.query_embedding")
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
