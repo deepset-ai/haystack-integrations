@@ -69,7 +69,7 @@ pip install instructor-embedders-haystack
 
 ## Usage
 
-1. To initialize the `InstructorTextEmbedder` or `InstructorDocumentEmbedder` you need to pass Local path or name of the model in Hugging Face's model hub, such as `'hkunlp/instructor-base'`, using the  `model_name_or_path` parameter.
+1. To initialize the `InstructorTextEmbedder` or `InstructorDocumentEmbedder` you need to pass Local path or name of the model in Hugging Face's model hub, such as `'hkunlp/instructor-base'`, using the  `model` parameter.
 2. The instruction string to be used while computing domain-specific embeddings needs to be passed using the `instruction` parameter.
 
 
@@ -85,7 +85,7 @@ instruction = (
 )
 
 text_embedder = InstructorTextEmbedder(
-    model_name_or_path="hkunlp/instructor-base", instruction=instruction,
+    model="hkunlp/instructor-base", instruction=instruction,
     device="cpu"
 )
 text_embedder.warm_up()
@@ -104,7 +104,7 @@ from haystack.preview.dataclasses import Document
 doc_embedding_instruction = "Represent the Medical Document for retrieval:"
 
 doc_embedder = InstructorDocumentEmbedder(
-    model_name_or_path="hkunlp/instructor-base",
+    model="hkunlp/instructor-base",
     instruction=doc_embedding_instruction,
     batch_size=32,
     device="cpu",
@@ -166,7 +166,7 @@ doc_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
 doc_embedding_instruction = "Represent the News Article for retrieval:"
 # Create an InstructorDocumentEmbedder instance with specified parameters
 doc_embedder = InstructorDocumentEmbedder(
-    model_name_or_path="hkunlp/instructor-base",
+    model="hkunlp/instructor-base",
     instruction=doc_embedding_instruction,
     batch_size=32,
     device="cpu",
@@ -211,7 +211,7 @@ query_embedding_instruction = (
 )
 # Create an InstructorTextEmbedder instance for query embedding
 text_embedder = InstructorTextEmbedder(
-    model_name_or_path="hkunlp/instructor-base",
+    model="hkunlp/instructor-base",
     instruction=query_embedding_instruction,
     device="cpu",
 )
