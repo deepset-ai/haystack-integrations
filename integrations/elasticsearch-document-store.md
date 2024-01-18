@@ -68,7 +68,7 @@ from haystack.components.writers import DocumentWriter
 document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 converter = TextFileToDocument()
 splitter = DocumentSplitter()
-doc_embedder = SentenceTransformersDocumentEmbedder(model_name_or_path="sentence-transformers/multi-qa-mpnet-base-dot-v1")
+doc_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/multi-qa-mpnet-base-dot-v1")
 writer = DocumentWriter(document_store)
 
 indexing_pipeline = Pipeline()
@@ -96,13 +96,13 @@ from haystack.pipeline import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder 
 from elasticsearch_haystack.embedding_retriever import ElasticsearchEmbeddingRetriever
 
-model_name_or_path = "sentence-transformers/multi-qa-mpnet-base-dot-v1"
+model = "sentence-transformers/multi-qa-mpnet-base-dot-v1"
 
 document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 
 
 retriever = ElasticsearchEmbeddingRetriever(document_store=document_store)
-text_embedder = SentenceTransformersTextEmbedder(model_name_or_path=model_name_or_path)
+text_embedder = SentenceTransformersTextEmbedder(model=model)
 
 query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", text_embedder)

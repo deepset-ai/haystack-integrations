@@ -61,7 +61,7 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="Germany has many big cities")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", OpenAIDocumentEmbedder(api_key="OPENAI_API_KEY", model_name="text-embedding-ada-002"))
+indexing_pipeline.add_component("embedder", OpenAIDocumentEmbedder(api_key="OPENAI_API_KEY", model="text-embedding-ada-002"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
@@ -128,7 +128,7 @@ from haystack.document_stores import InMemoryDocumentStore
 
 document_store = InMemoryDocumentStore()
 pipeline = Pipeline()
-pipeline.add_component(instance=LocalWhisperTranscriber(model_name_or_path="small"), name="transcriber")
+pipeline.add_component(instance=LocalWhisperTranscriber(model="small"), name="transcriber")
 pipeline.add_component(instance=DocumentCleaner(), name="cleaner")
 pipeline.add_component(instance=DocumentSplitter(), name="splitter")
 pipeline.add_component(instance=DocumentWriter(document_store=document_store), name="writer")

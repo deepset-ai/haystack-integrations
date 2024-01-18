@@ -62,7 +62,7 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="Germany has many big cities")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", SentenceTransformersDocumentEmbedder(model_name_or_path="sentence-transformers/all-MiniLM-L6-v2"))
+indexing_pipeline.add_component("embedder", SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 indexing_pipeline.run({
@@ -128,7 +128,7 @@ document_store = InMemoryDocumentStore()
 document_store.write_documents(docs)
 
 retriever = InMemoryBM25Retriever(document_store = document_store)
-ranker = TransformersSimilarityRanker(model_name_or_path="cross-encoder/ms-marco-MiniLM-L-6-v2")
+ranker = TransformersSimilarityRanker(model="cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 document_ranker_pipeline = Pipeline()
 document_ranker_pipeline.add_component(instance=retriever, name="retriever")
@@ -160,7 +160,7 @@ document_store = InMemoryDocumentStore()
 document_store.write_documents(docs)
 
 retriever = InMemoryBM25Retriever(document_store = document_store)
-reader = ExtractiveReader(model_name_or_path="deepset/roberta-base-squad2-distilled")
+reader = ExtractiveReader(model="deepset/roberta-base-squad2-distilled")
 
 extractive_qa_pipeline = Pipeline()
 extractive_qa_pipeline.add_component(instance=retriever, name="retriever")
