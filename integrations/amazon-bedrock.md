@@ -40,7 +40,6 @@ pip install amazon-bedrock-haystack
 Once installed, you will have access to an [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator) that supports models from various providers: 
 - Anthropic's Claude
 - AI21 Labs' Jurassic-2
-- Stability AI's Stable Diffusion
 - Cohere's Command
 - Meta's Llama 2
 - Amazon Titan language models
