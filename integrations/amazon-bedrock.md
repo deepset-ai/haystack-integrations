@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Amazon Bedrock
-description: Use Models from AI21 Labs, Anthropic, Cohere, Meta, Stability AI, and Amazon via Amazon Bedrock with Haystack
+description: Use Models from AI21 Labs, Anthropic, Cohere, Meta, and Amazon via Amazon Bedrock with Haystack
 authors:
     - name: deepset
       socials:
