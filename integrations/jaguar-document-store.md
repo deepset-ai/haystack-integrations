@@ -3,7 +3,7 @@ layout: integration
 name: Jaguar Document Store
 description: Use a Jaguar database with Haystack
 authors:
-    - name: deepset
+    - name: fserv
       socials:
         github: https://github.com/fserv/jaguar-haystack
         twitter: 
@@ -11,10 +11,10 @@ authors:
 pypi: https://pypi.org/project/jaguar-haystack
 repo: https://github.com/fserv/jaguar-haystack
 type: Document Store
-report_issue: 
+report_issue: https://github.com/fserv/jaguar-haystack/issues
 ---
 
-Haystack supports the use of [Jaguar](http://www.jaguardb.com/) as data storage for LLM pipelines, with the `JaguarDocumentStore`. You can choose to run Jaguar locally youself, or use cloud versions: multi-tenant, single-tenant multi-member, or single-tenant and single-member.
+Haystack supports the use of [Jaguar](http://www.jaguardb.com/) as data storage for LLM pipelines, with the `JaguarDocumentStore`. You can choose to run Jaguar locally yourself, or use cloud versions: multi-tenant, single-tenant multi-member, or single-tenant and single-member. The following documentation is aligned with the Haystack 2.0 framework.
 
 For details on the available methods and parameters of the `JaguarDocumentStore`, check out [Documentation](http://www.jaguardb.com/support.html)
 
@@ -32,7 +32,7 @@ pip install -U jaguardb-http-client
 To use Jaguar as your data storage for your Haystack LLM pipelines, you should set it up running. Then, you can make a `JaguarDocumentStore`:
 
 ```python
-from jaguar_haystack.jaguar import JaguarDocumentStore
+from haystack_integrations.document_stores.jaguar import JaguarDocumentStore
 
 url = "http://127.0.0.1:8080/fwww/"
 pod = "vdb"
@@ -52,26 +52,48 @@ document_store = JaguarDocumentStore(
 
 ### Writing Documents to JaguarDocumentStore
 
-To write documents to your `JaguarDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
+To write documents to your `JaguarDocumentStore`, you can use the `write_documents()` function or
+create an indexing pipeline to load documents into the store.
+
+#### Write Documents
+
+```python
+from haystack.dataclasses import Document
+
+doc1 = Document(
+    content="Return of King Lear",
+    embedding=[0.9, 0.1, 0.4],
+)
+
+doc2 = Document(
+    content="Slow Clouds",
+    embedding=[0.4, 0.2, 0.8],
+)
+
+doc3 = Document(
+    content="Green Machine",
+    embedding=[0.1, 0.7, 0.5],
+)
+
+docs = [doc1, doc2, doc3]
+document_store.write_documents(documents=docs)
+
+```
+
 
 #### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
-from haystack.nodes import EmbeddingRetriever, MarkdownConverter, PreProcessor
+from haystack.components.file_converters import TextFileToDocument
+from haystack.components.writers import DocumentWriter
 
-converter = MarkdownConverter()
-preprocessor = PreProcessor()
-retriever = EmbeddingRetriever(document_store = document_store,
-                               embedding_model="sentence-transformers/multi-qa-mpnet-base-dot-v1")
+indexing = Pipeline()
+indexing.add_component("converter", TextFileToDocument())
+indexing.add_component("writer", DocumentWriter(document_store))
+indexing.connect("converter", "writer")
+indexing.run({"converter": {"paths": file_paths}})
 
-indexing_pipeline = Pipeline()
-indexing_pipeline.add_node(component=converter, name="PDFConverter", inputs=["File"])
-indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=["PDFConverter"])
-indexing_pipeline.add_node(component=retriever, name="Retriever", inputs=["PreProcessor"])
-indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["Retriever"])
-
-indexing_pipeline.run(file_paths=["myfile.pdf"])
 ```
 
 ### Using Jaguar in a Query Pipeline
@@ -98,5 +120,5 @@ query_pipeline = Pipeline()
 query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
 query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
 
-query_pipeline.run(query = "Where is the Bermuda Traingle? ", params={"Retriever" : {"top_k": 5}})
+query_pipeline.run(query = "Where is the Bermuda Triangle? ", params={"Retriever" : {"top_k": 5}})
 ```
