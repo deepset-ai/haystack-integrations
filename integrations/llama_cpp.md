@@ -67,7 +67,7 @@ Initialize an `LlamaCppGenerator` with the the path to the GGUF file and also sp
 from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
-    model_path="/content/openchat-3.5-1210.Q3_K_S.gguf", 
+    model="/content/openchat-3.5-1210.Q3_K_S.gguf", 
     n_ctx=512,
     n_batch=128,
     model_kwargs={"n_gpu_layers": -1},
@@ -93,7 +93,7 @@ For example, to offload the model to GPU during initialization:
 from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
-    model_path="/content/openchat-3.5-1210.Q3_K_S.gguf",
+    model="/content/openchat-3.5-1210.Q3_K_S.gguf",
     n_ctx=512,
     n_batch=128,
     model_kwargs={"n_gpu_layers": -1}
@@ -117,7 +117,7 @@ For example, to set the `max_tokens` and `temperature`:
 from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
-    model_path="/content/openchat-3.5-1210.Q3_K_S.gguf",
+    model="/content/openchat-3.5-1210.Q3_K_S.gguf",
     n_ctx=512,
     n_batch=128,
     generation_kwargs={"max_tokens": 128, "temperature": 0.1},
@@ -133,7 +133,7 @@ The `generation_kwargs` can also be passed to the `run` method of the generator 
 from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
-    model_path="/content/openchat-3.5-1210.Q3_K_S.gguf",
+    model="/content/openchat-3.5-1210.Q3_K_S.gguf",
     n_ctx=512,
     n_batch=128,
 )
@@ -215,7 +215,7 @@ text_embedder = SentenceTransformersTextEmbedder(model_name_or_path="sentence-tr
 
 # Load the LLM using LlamaCppGenerator
 model_path = "openchat-3.5-1210.Q3_K_S.gguf"
-generator = LlamaCppGenerator(model_path=model_path, n_ctx=4096, n_batch=128)
+generator = LlamaCppGenerator(model=model_path, n_ctx=4096, n_batch=128)
 
 rag_pipeline.add_component(
     instance=text_embedder,
