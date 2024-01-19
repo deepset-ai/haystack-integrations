@@ -45,7 +45,7 @@ from haystack import Pipeline
 from haystack.document_stores import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 
-from gradient_haystack.embedders.gradient_document_embedder import GradientDocumentEmbedder
+from haystack_integrations.components.embedders.gradient import GradientDocumentEmbedder
 
 os.environ["GRADIENT_ACCESS_TOKEN"] = "Your Gradient Access Token"
 os.environ["GRADIENT_WORKSPACE_ID"] = "Your Gradient Workspace id: "
@@ -71,8 +71,8 @@ from haystack.components.builders.answer_builder import AnswerBuilder
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.retrievers import InMemoryEmbeddingRetriever
 
-from gradient_haystack.embedders.gradient_text_embedder import GradientTextEmbedder
-from gradient_haystack.generator.base import GradientGenerator
+from haystack_integrations.components.embedders.gradient import GradientTextEmbedder
+from haystack_integrations.components.generators.gradient import GradientGenerator
 
 from getpass import getpass
 
