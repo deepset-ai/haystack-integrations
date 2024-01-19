@@ -111,7 +111,7 @@ document_store = AstraDocumentStore(
     astra_application_token=astra_application_token,
 )
 
-model_name_or_path = "sentence-transformers/all-mpnet-base-v2"
+model = "sentence-transformers/all-mpnet-base-v2"
 
 documents = [Document(content="There are over 7,000 languages spoken around the world today."),
 						Document(content="Elephants have been observed to behave in a way that indicates a high level of self-awareness, such as recognizing themselves in mirrors."),
