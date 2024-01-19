@@ -64,7 +64,7 @@ from haystack.components.writers import DocumentWriter
 from haystack.components.preprocessors import DocumentSplitter
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.pipeline import Pipeline
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
 document_store = InMemoryDocumentStore()
@@ -117,7 +117,7 @@ The example below illustrates a generative QA pipeline that seamlessly integrate
 
 ```python
 from haystack import Pipeline
-from haystack.components.retrievers import InMemoryEmbeddingRetriever
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
 from assemblyai_haystack.transcriber import AssemblyAITranscriber
@@ -152,7 +152,7 @@ Explore the example below to see how to index speaker diarization information an
 ```python 
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack import Pipeline
-from haystack.components.retrievers import InMemoryBM25Retriever
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
 from assemblyai_haystack.transcriber import AssemblyAITranscriber

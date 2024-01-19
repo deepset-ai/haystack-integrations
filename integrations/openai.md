@@ -50,7 +50,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `OpenAIDocu
 
 ```python
 from haystack import Document, Pipeline
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.embedders import OpenAIDocumentEmbedder
 from haystack.components.writers import DocumentWriter
 
@@ -78,7 +78,7 @@ Below is the example of generative questions answering pipeline using RAG with `
 
 ```python
 from haystack import Pipeline
-from haystack.components.retrievers import InMemoryBM25Retriever
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import GPTGenerator
 
@@ -124,7 +124,7 @@ from haystack import Pipeline
 from haystack.components.audio import LocalWhisperTranscriber
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
 from haystack.components.writers import DocumentWriter
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 
 document_store = InMemoryDocumentStore()
 pipeline = Pipeline()
@@ -159,7 +159,7 @@ Below is the example indexing pipeline with `PreProcessor`, `InMemoryDocumentSto
 
 ```python
 from haystack.nodes import EmbeddingRetriever
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.pipelines import Pipeline
 from haystack.schema import Document
 

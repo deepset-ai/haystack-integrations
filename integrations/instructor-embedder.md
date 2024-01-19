@@ -98,7 +98,7 @@ print(f"Embedding Dimension: {len(result['embedding'])}")
 
 ```python
 from instructor_embedders.instructor_document_embedder import InstructorDocumentEmbedder
-from haystack.preview.dataclasses import Document
+from haystack.dataclasses import Document
 
 
 doc_embedding_instruction = "Represent the Medical Document for retrieval:"
@@ -147,11 +147,11 @@ print(f"Embedding Dimension: {len(result['documents'][0].embedding)}")
 
 ```python
 # Import necessary modules and classes
-from haystack.preview.document_stores import InMemoryDocumentStore
-from haystack.preview.dataclasses import Document
-from haystack.preview import Pipeline
-from haystack.preview.components.writers import DocumentWriter
-from haystack.preview.components.retrievers import InMemoryEmbeddingRetriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.dataclasses import Document
+from haystack import Pipeline
+from haystack.components.writers import DocumentWriter
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from datasets import load_dataset
 
 # Import custom INSTRUCTOR Embedders

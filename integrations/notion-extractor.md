@@ -43,7 +43,7 @@ exported_pages = exporter.run(file_paths=["<list-of-page-ids>"])
 The following example shows how to use the `NotionExporter` inside an indexing pipeline:
 ```python
 from notion_haystack import NotionExporter
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack import Pipeline
 
 document_store = InMemoryDocumentStore()

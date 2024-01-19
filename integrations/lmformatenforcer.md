@@ -100,7 +100,7 @@ To activate the the enforcer with Haystack V2, a `LMFormatEnforcerLocalGenerator
 
 Here is a simple example:
 ```python
-from haystack.preview.components.generators.hugging_face.hugging_face_local import HuggingFaceLocalGenerator
+from haystack.components.generators.hugging_face.hugging_face_local import HuggingFaceLocalGenerator
 from lmformatenforcer.integrations.haystackv2 import LMFormatEnforcerLocalGenerator
 
 
