@@ -45,7 +45,7 @@ pip install elasticsearch-haystack
 Once installed, you can start using your Elasticsearch database with Haystack by initializing it: 
 
 ```python
-from elasticsearch_haystack.document_store import ElasticsearchDocumentStore
+from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore
 
 document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 ```
@@ -58,7 +58,7 @@ For this step, you can use the available [TextFileToDocument](https://docs.hayst
 #### Indexing Pipeline
 
 ```python
-from elasticsearch_haystack.document_store import ElasticsearchDocumentStore
+from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore
 from haystack.pipeline import Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.converters import TextFileToDocument
@@ -91,10 +91,10 @@ indexing_pipeline.run({
 Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/elasticsearch/src/elasticsearch_haystack/embedding_retriever.py) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
 
 ```python
-from elasticsearch_haystack.document_store import ElasticsearchDocumentStore
+from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore
 from haystack.pipeline import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder 
-from elasticsearch_haystack.embedding_retriever import ElasticsearchEmbeddingRetriever
+from haystack_integrations.components.retrievers.elasticsearch import ElasticsearchEmbeddingRetriever
 
 model = "sentence-transformers/multi-qa-mpnet-base-dot-v1"
 
