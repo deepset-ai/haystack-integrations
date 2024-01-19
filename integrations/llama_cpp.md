@@ -1,13 +1,13 @@
 ---
 layout: integration
 name: Llama.cpp
-description: Use Llama.cpp models with Haystack. 
+description: Use Llama.cpp models with Haystack.
 authors:
-    - name: Ashwin Mathur
-      socials:
-        github: awinml
-        twitter: awinml
-        linkedin: ashwin-mathur-ds
+  - name: Ashwin Mathur
+    socials:
+      github: awinml
+      twitter: awinml
+      linkedin: ashwin-mathur-ds
 pypi: https://pypi.org/project/llama-cpp-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/llama_cpp
 type: Model Provider
@@ -21,6 +21,7 @@ toc: true
 - [Introduction](#introduction)
 - [Installation](#installation)
   - [Using a different compute backend](#using-a-different-compute-backend)
+- [Downloading Models](#downloading-models)
 - [Usage](#usage)
   - [Passing additional model parameters](#passing-additional-model-parameters)
   - [Passing text generation parameters](#passing-text-generation-parameters)
@@ -42,7 +43,7 @@ pip install llama-cpp-haystack
 
 The default installation behaviour is to build `llama.cpp` for CPU on Linux and Windows and use Metal on MacOS. To use other compute backends:
 
-1. Follow instructions on the [llama.cpp installation page](https://github.com/abetlen/llama-cpp-python#installation) to install  [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) for your preffered compute backend.
+1. Follow instructions on the [llama.cpp installation page](https://github.com/abetlen/llama-cpp-python#installation) to install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) for your preffered compute backend.
 2. Install [llama-cpp-haystack](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/llama_cpp) using the command above.
 
 For example, to use `llama-cpp-haystack` with the **cuBLAS backend**, you have to run the following commands:
@@ -53,13 +54,43 @@ CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python
 pip install llama-cpp-haystack
 ```
 
-## Usage
-
-You can leverage Llama.cpp to run models by using the `LlamaCppGenerator` component.
+## Downloading Models
 
 Llama.cpp requires the quantized binary of the LLM in GGUF format.
 
 The GGUF versions of popular LLMs can be downloaded from [HuggingFace](https://huggingface.co/models?library=gguf).
+
+For example, to download the GGUF version of [OpenChat3.5](https://huggingface.co/openchat/openchat_3.5), we find the required [GGUF version on HuggingFace](https://huggingface.co/TheBloke/openchat-3.5-1210-GGUF) and then download the file to disk:
+
+```python
+import os
+import urllib.request
+
+def download_file(file_link, filename):
+    # Checks if the file already exists before downloading
+    if not os.path.isfile(filename):
+        urllib.request.urlretrieve(file_link, filename)
+        print("Model file downloaded successfully.")
+    else:
+        print("Model file already exists.")
+
+# Download GGUF model from HuggingFace
+ggml_model_path = (
+    "https://huggingface.co/TheBloke/openchat-3.5-1210-GGUF/resolve/main/openchat-3.5-1210.Q3_K_S.gguf"
+)
+filename = "openchat-3.5-1210.Q3_K_S.gguf"
+download_file(ggml_model_path, filename)
+```
+
+You could also directly download the file from the command line using Curl:
+
+```bash
+curl -L -O "https://huggingface.co/TheBloke/openchat-3.5-1210-GGUF/resolve/main/openchat-3.5-1210.Q3_K_S.gguf"
+```
+
+## Usage
+
+You can leverage Llama.cpp to run models by using the `LlamaCppGenerator` component.
 
 Initialize an `LlamaCppGenerator` with the the path to the GGUF file and also specify the required model and text generation parameters:
 
@@ -67,7 +98,7 @@ Initialize an `LlamaCppGenerator` with the the path to the GGUF file and also sp
 from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator
 
 generator = LlamaCppGenerator(
-    model="/content/openchat-3.5-1210.Q3_K_S.gguf", 
+    model="/content/openchat-3.5-1210.Q3_K_S.gguf",
     n_ctx=512,
     n_batch=128,
     model_kwargs={"n_gpu_layers": -1},
@@ -76,14 +107,13 @@ generator = LlamaCppGenerator(
 generator.warm_up()
 prompt = f"Who is the best American actor?"
 result = generator.run(prompt)
-```  
-
+```
 
 ### Passing additional model parameters
 
 The `model_path`, `n_ctx`, `n_batch` arguments have been exposed for convenience and can be directly passed to the Generator during initialization as keyword arguments.
 
-The `model_kwargs` parameter can be used to pass additional arguments when initializing the model. In case of duplication, these parameters override the `model_path`, `n_ctx`, and `n_batch` initialization parameters. 
+The `model_kwargs` parameter can be used to pass additional arguments when initializing the model. In case of duplication, these parameters override the `model_path`, `n_ctx`, and `n_batch` initialization parameters.
 
 See [Llama.cpp's LLM documentation](https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.__init__) for more information on the available model arguments.
 
@@ -107,7 +137,7 @@ print(generated_text)
 
 ### Passing text generation parameters
 
-The `generation_kwargs` parameter can be used to pass additional generation arguments like `max_tokens`, `temperature`, `top_k`, `top_p`, etc to the model during inference. 
+The `generation_kwargs` parameter can be used to pass additional generation arguments like `max_tokens`, `temperature`, `top_k`, `top_p`, etc to the model during inference.
 
 See [Llama.cpp's Completion API documentation](https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.create_completion) for more information on the available generation arguments.
 
@@ -147,7 +177,7 @@ result = generator.run(
 
 ## Example: RAG Pipeline
 
-We use the `LlamaCppGenerator` in a Retrieval Augmented Generation pipeline on the [Simple Wikipedia](https://huggingface.co/datasets/pszemraj/simple_wikipedia) Dataset from HuggingFace and generate answers using the [OpenChat-3.5](https://huggingface.co/openchat/openchat-3.5-1210) LLM. 
+We use the `LlamaCppGenerator` in a Retrieval Augmented Generation pipeline on the [Simple Wikipedia](https://huggingface.co/datasets/pszemraj/simple_wikipedia) Dataset from HuggingFace and generate answers using the [OpenChat-3.5](https://huggingface.co/openchat/openchat-3.5-1210) LLM.
 
 **Load the dataset:**
 
