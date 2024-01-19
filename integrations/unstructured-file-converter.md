@@ -51,9 +51,9 @@ documents = converter.run(paths = ["a/file/path.pdf", "a/directory/path"])["docu
 ### In a Haystack Pipeline
 ```python
 import os
-from haystack.preview import Pipeline
-from haystack.preview.components.writers import DocumentWriter
-from haystack.preview.document_stores import InMemoryDocumentStore
+from haystack import Pipeline
+from haystack.components.writers import DocumentWriter
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_integrations.components.converters.unstructured import UnstructuredFileConverter
 
 document_store = InMemoryDocumentStore()

@@ -50,7 +50,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `CohereDocu
 
 ```python
 from haystack import Document, Pipeline
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 from cohere_haystack.embedders.document_embedder import CohereDocumentEmbedder
 
@@ -77,7 +77,7 @@ Below is the example of generative questions answering pipeline using RAG with `
 
 ```python
 from haystack import Pipeline
-from haystack.components.retrievers import InMemoryEmbeddingRetriever
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from cohere_haystack.embedders.text_embedder import CohereTextEmbedder
 from cohere_haystack.generator import CohereGenerator

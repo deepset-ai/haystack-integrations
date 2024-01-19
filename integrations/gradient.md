@@ -42,7 +42,7 @@ You can use embedding models with `GradientDocumentEmbedder`` to create embeddin
 import os
 
 from haystack import Pipeline
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 
 from haystack_integrations.components.embedders.gradient import GradientDocumentEmbedder
@@ -69,7 +69,7 @@ You can use embedding models with `GradientTextEmbedder` and generative models w
 ```python
 from haystack.components.builders.answer_builder import AnswerBuilder
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.retrievers import InMemoryEmbeddingRetriever
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 
 from haystack_integrations.components.embedders.gradient import GradientTextEmbedder
 from haystack_integrations.components.generators.gradient import GradientGenerator

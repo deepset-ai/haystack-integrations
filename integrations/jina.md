@@ -54,7 +54,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocume
 
 ```python
 from haystack import Document, Pipeline
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 from jina_haystack import JinaDocumentEmbedder
 

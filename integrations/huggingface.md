@@ -51,7 +51,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `DocumentWr
 ```python
 from haystack import Document
 from haystack import Pipeline
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.writers import DocumentWriter
 
@@ -80,7 +80,7 @@ Below is the example query pipeline that uses `mistralai/Mistral-7B-v0.1` hosted
 
 ```python
 from haystack import Pipeline
-from haystack.components.retrievers import InMemoryBM25Retriever
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import HuggingFaceTGIGenerator
 
@@ -117,8 +117,8 @@ Below is the example of document retrieval pipeline with `InMemoryBM25Retriever`
 
 ```python
 from haystack import Document, Pipeline
-from haystack.document_stores import InMemoryDocumentStore
-from haystack.components.retrievers import InMemoryBM25Retriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.rankers import TransformersSimilarityRanker
 
 docs = [Document(content="Paris is in France"), 
@@ -148,8 +148,8 @@ Below is the example of extractive question answering pipeline with `InMemoryBM2
 
 ```python
 from haystack import Document, Pipeline
-from haystack.document_stores import InMemoryDocumentStore
-from haystack.components.retrievers import InMemoryBM25Retriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.readers import ExtractiveReader
 
 docs = [Document(content="Paris is the capital of France."),

@@ -58,10 +58,10 @@ Load the dataset:
 # Install HuggingFace Datasets using "pip install datasets"
 from datasets import load_dataset
 from haystack import Pipeline
-from haystack.components.retrievers import InMemoryEmbeddingRetriever
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.writers import DocumentWriter
 from haystack.dataclasses import Document
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 
 # Import Voyage Embedders
 from voyage_embedders.voyage_document_embedder import VoyageDocumentEmbedder
