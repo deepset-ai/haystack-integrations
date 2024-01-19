@@ -124,7 +124,7 @@ documents_with_embeddings = document_embedder.run(documents)
 document_store.write_documents(documents_with_embeddings.get("documents"), policy=DuplicatePolicy.SKIP)
 
 query_pipeline = Pipeline()
-query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder(model_name_or_path=model_name_or_path))
+query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder(model=model_name_or_path))
 query_pipeline.add_component("retriever", AstraRetriever(document_store=document_store))
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
