@@ -117,7 +117,7 @@ documents = [Document(content="There are over 7,000 languages spoken around the 
 						Document(content="Elephants have been observed to behave in a way that indicates a high level of self-awareness, such as recognizing themselves in mirrors."),
 						Document(content="In certain parts of the world, like the Maldives, Puerto Rico, and San Diego, you can witness the phenomenon of bioluminescent waves.")]
 
-document_embedder = SentenceTransformersDocumentEmbedder(model_name_or_path=model_name_or_path)  
+document_embedder = SentenceTransformersDocumentEmbedder(model=model_name_or_path)  
 document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
