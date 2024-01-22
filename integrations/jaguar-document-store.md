@@ -39,7 +39,7 @@ pod = "vdb"
 store = "haystack_test_store"
 vector_index = "v"
 vector_type = "cosine_fraction_float"
-vector_dimension = 1536
+vector_dimension = 768  # SentenceTransformersTextEmbedder(all-mpnet-base-v2) dim=768
 document_store = JaguarDocumentStore(
     pod,
     store,
