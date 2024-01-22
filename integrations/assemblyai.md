@@ -100,7 +100,7 @@ The expected output should indicate that 9 documents are written to the document
 {'document_writer': {'documents_written': 9}}
 ```
 
-Note: Calling `indexing.run()` blocks until the transcription is finished.
+Note: Calling `preprocessing_pipeline.run()` blocks until the transcription is finished.
 
 The metadata of the transcription document contains the transcription ID and url of the uploaded audio file.
 
