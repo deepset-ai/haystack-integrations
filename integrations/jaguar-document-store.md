@@ -1,11 +1,11 @@
 ---
 layout: integration
-name: Jaguar Document Store
+name: Jaguar
 description: Use a Jaguar database with Haystack
 authors:
     - name: fserv
       socials:
-        github: https://github.com/fserv/jaguar-haystack
+        github: fserv
         twitter: 
         linkedin: 
 pypi: https://pypi.org/project/jaguar-haystack
@@ -32,7 +32,7 @@ pip install -U jaguardb-http-client
 To use Jaguar as your data storage for your Haystack LLM pipelines, you should set it up running. Then, you can make a `JaguarDocumentStore`:
 
 ```python
-from haystack_integrations.document_stores.jaguar import JaguarDocumentStore
+from jaguar_haystack.jaguar import JaguarDocumentStore
 
 url = "http://127.0.0.1:8080/fwww/"
 pod = "vdb"
@@ -101,24 +101,15 @@ indexing.run({"converter": {"paths": file_paths}})
 Once you saved documents in your `JaguarDocumentStore`, you can use a Haystack pipeline for query.
 
 ```python
-from haystack.nodes import AnswerParser, EmbeddingRetriever, PromptNode, PromptTemplate
-
-retriever = EmbeddingRetriever(document_store = document_store,
-                               embedding_model="sentence-transformers/multi-qa-mpnet-base-dot-v1")
-
-prompt = """"Given the provided Documents, answer the Query. Make your answer detailed and long\n
-             Query: {query}\n
-             Documents: {join(documents)}
-             Answer: 
-         """
-prompt_template = PromptTemplate(prompt = prompt, output_parser=AnswerParser())
-prompt_node = PromptNode(model_name_or_path = "gpt-4",
-                         api_key = "YOUR_OPENAI_KEY",
-                         default_prompt_template = prompt_template)
+from haystack import Pipeline
+from haystack.components.embedders import SentenceTransformersTextEmbedder
+from jaguar_haystack import JaguarEmbeddingRetriever
 
 query_pipeline = Pipeline()
-query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
-query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
+query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder())
+query_pipeline.add_component("retriever", JaguarEmbeddingRetriever(document_store=document_store))
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
-query_pipeline.run(query = "Where is the Bermuda Triangle? ", params={"Retriever" : {"top_k": 5}})
+query = "Where is the Bermuda Triangle?"
+result = query_pipeline.run({"text_embedder":{"text": query}})
 ```
