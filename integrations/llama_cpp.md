@@ -214,7 +214,7 @@ docs = [
 
 ```python
 doc_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
-doc_embedder = SentenceTransformersDocumentEmbedder(model_name_or_path="sentence-transformers/all-MiniLM-L6-v2")
+doc_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
 
 # Indexing Pipeline
 indexing_pipeline = Pipeline()
@@ -241,7 +241,7 @@ GPT4 Correct Assistant:
 
 rag_pipeline = Pipeline()
 
-text_embedder = SentenceTransformersTextEmbedder(model_name_or_path="sentence-transformers/all-MiniLM-L6-v2")
+text_embedder = SentenceTransformersTextEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
 
 # Load the LLM using LlamaCppGenerator
 model_path = "openchat-3.5-1210.Q3_K_S.gguf"
