@@ -56,7 +56,8 @@ pip install pinecone-haystack
 To use Pinecone as your data storage for your Haystack LLM pipelines, you must have an account with Pinecone and an API Key. Once you have those, you can initialize a `PineconeDocumentStore` for Haystack:
 
 ```python
-from haystack.document_stores import PineconeDocumentStore
+from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
                                        similarity="cosine",
@@ -76,7 +77,8 @@ from haystack.components.converters import MarkdownToDocument
 from haystack.components.writers import DocumentWriter
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.preprocessors import DocumentSplitter
-from pinecone_haystack import PineconeDocumentStore
+from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+
 
 document_store = PineconeDocumentStore(api_key="YOUR_API_KEY",
                                        environment="gcp-starter",
@@ -102,8 +104,9 @@ Once you have documents in your `PineconeDocumentStore`, it's ready to be used i
 from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.builders import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
-from pinecone_haystack import PineconeDocumentStore
-from pinecone_haystack.dense_retriever import PineconeDenseRetriever
+from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+from haystack_integrations.components.retrievers.pinecone import PineconeDenseRetriever
+
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
                                        dimension=768)
@@ -150,7 +153,8 @@ pip install farm-haystack[pinecone]
 To use Pinecone as your data storage for your Haystack LLM pipelines, you must have an account with Pinecone and an API Key. Once you have those, you can initialize a `PineconeDocumentStore` for Haystack:
 
 ```python
-from haystack.document_stores import PineconeDocumentStore
+from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
                                        similarity="cosine",
@@ -166,8 +170,9 @@ For this step, you may make use of the available [FileConverters](https://docs.h
 
 ```python
 from haystack import Pipeline
-from haystack.document_stores import PineconeDocumentStore
 from haystack.nodes import MarkdownConverter, PreProcessor
+from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
                                        similarity="cosine",
@@ -189,8 +194,9 @@ Once you have documents in your `PineconeDocumentStore`, it's ready to be used i
 
 ```python
 from haystack import Pipeline
-from haystack.document_stores import PineconeDocumentStore
 from haystack.nodes import AnswerParser, EmbeddingRetriever, PromptNode, PromptTemplate
+from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
                                        similarity="cosine",
