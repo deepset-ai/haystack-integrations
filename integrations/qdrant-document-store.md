@@ -54,7 +54,10 @@ Once installed, you can already start using `QdrantDocumentStore` as any other s
 embeddings.
 
 ```python
-from qdrant_haystack import QdrantDocumentStore
+from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+# Note: for Haystack 1.x use the following import instead:
+# from qdrant_haystack import QdrantDocumentStore
+
 
 document_store = QdrantDocumentStore(
     url="localhost",
@@ -84,7 +87,10 @@ option. It might be simply enabled by passing `:memory:` as first parameter, whi
 instance of `QdrantDocumentStore`.
 
 ```python
-from qdrant_haystack import QdrantDocumentStore
+from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+# Note: for Haystack 1.x use the following import instead:
+# from qdrant_haystack import QdrantDocumentStore
+
 
 document_store = QdrantDocumentStore(
     ":memory:",
@@ -102,7 +108,10 @@ might be better to use on disk storage and pass the path that should be used to 
 the data.
 
 ```python
-from qdrant_haystack import QdrantDocumentStore
+from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+# Note: for Haystack 1.x use the following import instead:
+# from qdrant_haystack import QdrantDocumentStore
+
 
 document_store = QdrantDocumentStore(
     path="/home/qdrant/storage_local",
@@ -119,7 +128,10 @@ If you prefer not to manage your own Qdrant instance, [Qdrant Cloud](https://clo
 might be a better option.
 
 ```python
-from qdrant_haystack import QdrantDocumentStore
+from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+# Note: for Haystack 1.x use the following import instead:
+# from qdrant_haystack import QdrantDocumentStore
+
 
 document_store = QdrantDocumentStore(
     url="https://YOUR-CLUSTER-URL.aws.cloud.qdrant.io",
