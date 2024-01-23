@@ -76,7 +76,7 @@ pip install instructor-embedders-haystack
 ### Using the Text Embedder
 
 ```python
-from instructor_embedders.instructor_text_embedder import InstructorTextEmbedder
+from haystack_integrations.components.embedders.instructor_embedders import InstructorTextEmbedder
 
 # Example text from the Amazon Reviews Polarity Dataset (https://huggingface.co/datasets/amazon_polarity)
 text = "It clearly says online this will work on a Mac OS system. The disk comes and it does not, only Windows. Do Not order this if you have a Mac!!"
@@ -97,7 +97,7 @@ print(f"Embedding Dimension: {len(result['embedding'])}")
 ### Using the Document Embedder
 
 ```python
-from instructor_embedders.instructor_document_embedder import InstructorDocumentEmbedder
+from haystack_integrations.components.embedders.instructor_embedders import InstructorDocumentEmbedder
 from haystack.dataclasses import Document
 
 
@@ -155,8 +155,8 @@ from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from datasets import load_dataset
 
 # Import custom INSTRUCTOR Embedders
-from instructor_embedders.instructor_document_embedder import InstructorDocumentEmbedder
-from instructor_embedders.instructor_text_embedder import InstructorTextEmbedder
+from haystack_integrations.components.embedders.instructor_embedders import InstructorDocumentEmbedder
+from haystack_integrations.components.embedders.instructor_embedders import InstructorTextEmbedder
 
 # Initialize a InMemoryDocumentStore, which will be used to store and retrieve documents
 # It uses cosine similarity for document embeddings comparison
