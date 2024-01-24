@@ -14,6 +14,7 @@ type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 version: Haystack 2.0
 toc: true
+logo: /logos/llama_cpp.png
 ---
 
 ### Table of Contents
