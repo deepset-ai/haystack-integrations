@@ -56,7 +56,7 @@ To get an API key visit [Google Makersuite](https://makersuite.google.com).
 To use Gemini model for text generation, initialize a `GoogleAIGeminiGenerator` with `"gemini-pro"` and `api_key`:
 
 ```python
-from google_ai_haystack.generators.gemini import GoogleAIGeminiGenerator
+from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
 
 gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro", api_key=api_key)
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
@@ -77,7 +77,7 @@ To use `gemini-pro-vision` model for visual question answering, initialize a `Go
 import requests
 from haystack.dataclasses.byte_stream import ByteStream
 
-from google_ai_haystack.generators.gemini import GoogleAIGeminiGenerator
+from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
 
 BASE_URL = (
     "https://raw.githubusercontent.com/deepset-ai/haystack-core-integrations"
@@ -117,7 +117,7 @@ When chatting with Gemini we can also use function calls.
 from google.ai.generativelanguage import FunctionDeclaration, Tool
 from haystack.dataclasses import ChatMessage
 
-from google_ai_haystack.generators.chat.gemini import GoogleAIGeminiChatGenerator
+from haystack_integrations.components.generators.google_ai import GoogleAIGeminiChatGenerator
 
 # Define a function that return always some nice weather
 def get_current_weather(location: str, unit: str = "celsius"):
@@ -174,7 +174,7 @@ In Berlin, the weather is sunny with a temperature of 21.8 degrees Celsius.
 Gemini can also easily generate code, here's an example:
 
 ```python
-from google_ai_haystack.generators.gemini import GoogleAIGeminiGenerator
+from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
 
 gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro", api_key=api_key)
 result = gemini_generator.run("Write a code for calculating fibonacci numbers in JavaScript")
