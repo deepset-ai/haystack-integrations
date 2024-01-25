@@ -55,7 +55,7 @@ response = client.run(
 print(response)
 ```
 ```bash
-{'replies': [ChatMessage(content='The "best" French cheese is subjective and depends on personal taste. However, some popular and highly regarded French cheeses include:\n\n* Brie de Meaux: A soft, creamy cheese with a white rind and a rich, buttery flavor.\n* Camembert: Similar to Brie, but with a stronger flavor and aroma.\n* Roquefort: A blue cheese made from sheep\'s milk, with a crumbly texture and a tangy, slightly sweet flavor.\n* Comté: A hard cheese made from unpasteurized cow\'s milk, with a nutty, complex flavor.\n* Reblochon: A soft cheese made from raw cow\'s milk, with a creamy texture and a mild, slightly fruity flavor.\n\nUltimately, the best way to find your favorite French cheese is to try a variety and see which ones you like best. You can also ask a cheesemonger or cheese expert for recommendations based on your taste preferences.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'mistral-medium', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 231, 'prompt_tokens': 16, 'total_tokens': 247}})]}
+{'replies': [ChatMessage(content='The "best" French cheese is subjective and depends on personal taste...', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'mistral-medium', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 231, 'prompt_tokens': 16, 'total_tokens': 247}})]}
 ```
 
 To use a Mistal embedding model:
