@@ -39,6 +39,7 @@ ds=MongoDBAtlasDocumentStore(
     mongo_connection_string="mongodb+srv://{mongo_atlas_username}:{mongo_atlas_password}@{mongo_atlas_host}/?{mongo_atlas_params_string}",
     database_name="database_name",
     collection_name="collection_name",
+    vector_search_index="vector_search_index"
 )
 ```
 
@@ -58,6 +59,7 @@ document_store=MongoDBAtlasDocumentStore(
     mongo_connection_string="mongodb+srv://{mongo_atlas_username}:{mongo_atlas_password}@{mongo_atlas_host}/?{mongo_atlas_params_string}",
     database_name="database_name",
     collection_name="collection_name",
+    vector_search_index="vector_search_index",
     embedding_dim=1536
 )
 converter = MarkdownConverter()
@@ -83,7 +85,8 @@ from haystack.nodes import AnswerParser, EmbeddingRetriever, PromptNode, PromptT
 document_store=MongoDBAtlasDocumentStore(
     mongo_connection_string="mongodb+srv://{mongo_atlas_username}:{mongo_atlas_password}@{mongo_atlas_host}/?{mongo_atlas_params_string}",
     database_name="database_name",
-    collection_name="collection_name"
+    collection_name="collection_name",
+    vector_search_index="vector_search_index"
 )
               
 retriever = EmbeddingRetriever(document_store = document_store,
