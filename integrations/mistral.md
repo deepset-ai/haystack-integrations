@@ -36,7 +36,7 @@ pip install haystack-ai
 
 ### Usage
 
-To use a Mistral LLM:
+#### Use Mistral Generative Models
 ```python
 import os
 from haystack.components.generators.chat import OpenAIChatGenerator
