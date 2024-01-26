@@ -98,3 +98,41 @@ print(response)
 # 'meta': {'model': 'mistral-embed', 
 #'usage': {'prompt_tokens': 9, 'total_tokens': 9, 'completion_tokens': 0}}}
 ```
+
+In a Haystack pipeline:
+
+```python
+import os
+
+from haystack import Document
+from haystack import Pipeline
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.components.embedders import OpenAITextEmbedder, OpenAIDocumentEmbedder
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+
+api_key = os.getenv("MISTRAL_API_KEY")
+api_base_url ="https://api.mistral.ai/v1"
+
+document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+documents = [Document(content="My name is Wolfgang and I live in Berlin"),
+             Document(content="I saw a black horse running"),
+             Document(content="Germany has many big cities")]
+
+document_embedder = OpenAIDocumentEmbedder(api_key=api_key, model='mistral-embed', api_base_url=api_base_url)
+documents_with_embeddings = document_embedder.run(documents)['documents']
+document_store.write_documents(documents)
+
+text_embedder = OpenAITextEmbedder(api_key=api_key, model="mistral-embed", api_base_url=api_base_url)
+
+query_pipeline = Pipeline()
+query_pipeline.add_component("text_embedder", text_embedder)
+query_pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+
+query = "Who lives in Berlin?"
+
+result = query_pipeline.run({"text_embedder":{"text": query}})
+
+print(result['retriever']['documents'])
+```
