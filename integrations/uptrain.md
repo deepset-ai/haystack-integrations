@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: UpTrain
-description: Use the UpTrain evaluation framework to calculate metrics 
+description: Use the UpTrain evaluation framework to calculate model-based metrics 
 authors:
     - name: deepset
       socials:
