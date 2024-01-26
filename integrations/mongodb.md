@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: MongoDB
-description: Use a MongoDB Atlas with Haystack
+description: Use a MongoDB Atlas database with Haystack
 authors:
     - name: deepset
       socials:
