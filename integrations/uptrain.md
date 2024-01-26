@@ -55,12 +55,35 @@ Once installed, you will have access to an [UpTrainEvaluator](https://docs.hayst
 To use this integration for calculating model-based evaluation metrics, initialize an `UpTrainEvaluator` with the metric name and metric input parameters: 
 
 ```python
-from uptrain_haystack import UpTrainEvaluator, UpTrainMetric
+from haystack import Pipeline
+from haystack_integrations.components.evaluators import UpTrainEvaluator, UpTrainMetric
 
-evaluator = UpTrainEvaluator(metric=UpTrainMetric.FACTUAL_ACCURACY, ...)
-result = evaluator.run(...)
+QUESTIONS = [
+    "Which is the most popular global sport?",
+]
+CONTEXTS = [
+    "The popularity of sports can be measured in various ways, including TV viewership, social media presence, number of participants, and economic impact. Football is undoubtedly the world's most popular sport with major events like the FIFA World Cup and sports personalities like Ronaldo and Messi, drawing a followership of more than 4 billion people."
+]
+RESPONSES = [
+    "Football is the most popular sport with around 4 billion followers worldwide",
+]
+
+pipeline = Pipeline()
+evaluator = UpTrainEvaluator(
+    metric=UpTrainMetric.FACTUAL_ACCURACY,
+    api="openai",
+    api_key_env_var="OPENAI_API_KEY",
+)
+pipeline.add_component("evaluator", evaluator)
+
+# Each metric expects a specific set of parameters as input. Refer to the
+# UpTrainMetric class' documentation for more details.
+output = pipeline.run({"evaluator": {"questions": QUESTIONS, "contexts": CONTEXTS, "responses": RESPONSES}})
+
+for output in output["evaluator"]["results"]:
+    print(output)
 ```
 Output: 
-```shell
-'...'
+```python
+[{'name': 'factual_accuracy', 'score': 1.0, 'explanation': "1. Football is the most popular sport.\nReasoning for yes: The context explicitly states that football is undoubtedly the world's most popular sport.\nReasoning for no: No arguments.\nJudgement: yes. as the context explicitly supports the fact.\n\n2. Football has around 4 billion followers worldwide.\nReasoning for yes: The context explicitly mentions that major events like the FIFA World Cup and sports personalities like Ronaldo and Messi draw a followership of more than 4 billion people.\nReasoning for no: No arguments.\nJudgement: yes. as the context explicitly supports the fact.\n\n"}]
 ```
