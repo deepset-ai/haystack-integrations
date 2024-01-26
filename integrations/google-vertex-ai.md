@@ -68,7 +68,8 @@ You can leverage Gemini models through two components: [VertexAIGeminiGenerator]
 To use Gemini model for text generation, initialize a `VertexAIGeminiGenerator` with `"gemini-pro"` and `project_id`: 
 
 ```python
-from google_vertex_haystack.generators.gemini import VertexAIGeminiGenerator
+from haystack_integrations.components.generators.google_vertex import VertexAIGeminiGenerator
+
 
 gemini_generator = VertexAIGeminiGenerator(model="gemini-pro", project_id=project_id)
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
@@ -86,6 +87,7 @@ To use `gemini-pro-vision` model for visual question answering, initialize a `Ve
 ```python
 import requests
 from haystack.dataclasses.byte_stream import ByteStream
+
 
 URLS = [
     "https://raw.githubusercontent.com/silvanocerza/robots/main/robot1.jpg",
@@ -119,7 +121,8 @@ You can leverage PaLM API models `text-bison`, `text-unicorn` and `text-bison-32
 Here'a an example of using `text-unicorn` model with VertexAITextGenerator to extract information as a JSON file:
 
 ```python
-from google_vertex_haystack.generators.text_generator import VertexAITextGenerator
+from haystack_integrations.components.generators.google_vertex import VertexAITextGenerator
+
 
 palm_llm = VertexAITextGenerator(model="text-unicorn", project_id=project_id)
 palm_llm_result = palm_llm.run(
@@ -136,7 +139,8 @@ You can leverage Codey API models, `code-bison`, `code-bison-32k` and `code-geck
 
 Here'a an example of using `code-bison` model for **code generation**:
 ```python
-from google_vertex_haystack.generators.code_generator import VertexAICodeGenerator
+from haystack_integrations.components.generators.google_vertex import VertexAICodeGenerator
+
 
 codey_llm = VertexAICodeGenerator(model="code-bison", project_id=project_id)
 codey_llm_result = codey_llm.run("Write a code for calculating fibonacci numbers in JavaScript")
@@ -145,7 +149,8 @@ print(codey_llm_result["answers"][0])
 
 Here'a an example of using `code-gecko` model for **code completion**:
 ```python
-from google_vertex_haystack.generators.code_generator import VertexAICodeGenerator
+from haystack_integrations.components.generators.google_vertex import VertexAICodeGenerator
+
 
 codey_llm = VertexAICodeGenerator(model="code-gecko", project_id=project_id)
 codey_llm_result = codey_llm.run("""function fibonacci(n) {
@@ -168,7 +173,8 @@ To generate an image, initialize a VertexAIImageGenerator with the `imagegenerat
 ```python
 import io
 import PIL.Image as Image
-from google_vertex_haystack.generators.image_generator import VertexAIImageGenerator
+from haystack_integrations.components.generators.google_verteximport VertexAIImageGenerator
+
 
 image_generator = VertexAIImageGenerator(model="imagegeneration", project_id=project_id)
 image_generator_result = image_generator.run("magazine style, 4k, photorealistic, modern red armchair, natural lighting")
@@ -183,7 +189,8 @@ image.save("output.png")
 To use generate image captions, initialize a VertexAIImageCaptioner with the `imagetext` model and `project_id`. Then, you can run the VertexAIImageCaptioner with the image that you want to caption: 
 
 ```python
-from google_vertex_haystack.generators.captioner import VertexAIImageCaptioner
+from haystack_integrations.components.generators.google_vertex import VertexAIImageCaptioner
+
 
 image_captioner = VertexAIImageCaptioner(model='imagetext', project_id=project_id)
 image = ByteStream.from_file_path("output.png") # you can use the generated image
@@ -198,7 +205,8 @@ To answers questions about an image, initialize a VertexAIImageQA with the `imag
 
 ```python
 from haystack.dataclasses.byte_stream import ByteStream
-from google_vertex_haystack.generators.question_answering import VertexAIImageQA
+from haystack_integrations.components.generators.google_vertex import VertexAIImageQA
+
 
 visual_qa = VertexAIImageQA(model='imagetext', project_id=project_id)
 image = ByteStream.from_file_path("output.png") # you can use the generated image
