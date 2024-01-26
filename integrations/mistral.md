@@ -17,7 +17,9 @@ version: Haystack 2.0
 toc: true
 ---
 
-This page demonstrates how to use the [OpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaichatgenerator) and [OpenAITextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/openaitextembedder) within Haystack to make use of Mistral models.
+This page demonstrates how to use the [OpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaichatgenerator) and [OpenAITextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/openaitextembedder) within Haystack to make use of Mistral models. Since the OpenAI generators use the same protocol as Mistral, we're able to use them by changing the `API_BASE_URL`.
+
+To see an end to end example of [Mistal models in a Haystack pipeline, see this colab.](https://colab.research.google.com/github/deepset-ai/haystack-cookbook/blob/main/notebooks/mixtral-8x7b-for-web-qa.ipynb)
 
 [Mistral AI](https://mistral.ai/) currently provides two types of access to Large Language Models:
 
