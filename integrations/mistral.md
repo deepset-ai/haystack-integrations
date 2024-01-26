@@ -79,7 +79,7 @@ response = client.run(
 print(response)
 ```
 
-To use a Mistal embedding model:
+#### Use a Mistral Embedding Models
 ```python
 import os
 from haystack.components.embedders import OpenAITextEmbedder
