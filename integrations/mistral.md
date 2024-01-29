@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack/issues
-logo: /logos/mistral.jpeg
+logo: /logos/mistral.svg
 version: Haystack 2.0
 toc: true
 ---
