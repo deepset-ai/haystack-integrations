@@ -52,7 +52,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `CohereDocu
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
-from cohere_haystack.embedders.document_embedder import CohereDocumentEmbedder
+from haystack_integrations.components.embedders.document_embedder import CohereDocumentEmbedder
 
 document_store = InMemoryDocumentStore()
 
@@ -79,8 +79,8 @@ Below is the example of generative questions answering pipeline using RAG with `
 from haystack import Pipeline
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
-from cohere_haystack.embedders.text_embedder import CohereTextEmbedder
-from cohere_haystack.generator import CohereGenerator
+from haystack_integrations.components.embedders.cohere import CohereTextEmbedder
+from haystack_integrations.components.generators.cohere import CohereGenerator
 
 template = """
 Given the following information, answer the question.
@@ -106,6 +106,29 @@ pipe.run({
     "prompt_builder": {"country": "France"}
 })  
 ```
+
+Similar to the above example, you can also use `CohereChatGenerator` to use cohere chat models in your pipeline.
+
+```python
+from haystack import Pipeline
+from haystack.components.builders import DynamicChatPromptBuilder
+from haystack.dataclasses import ChatMessage
+from haystack_integrations.components.generators.cohere.chat import CohereChatGenerator
+
+
+pipe = Pipeline()
+pipe.add_component("prompt_builder", DynamicChatPromptBuilder())
+pipe.add_component("llm", CohereChatGenerator(api_key="<COHERE_API_KEY>"))
+pipe.connect("prompt_builder", "llm")
+
+country = "Germany"
+system_message = ChatMessage.from_system("You are an assistant giving out valuable information to language learners.")
+messages = [system_message, ChatMessage.from_user("What's the official language of {{ country }}?")]
+
+res = pipe.run(data={"prompt_builder": {"template_variables": {"country": "Germany"}, "prompt_source": messages}})
+print(res)
+```
+
 
 ## Haystack 1.x  
 
