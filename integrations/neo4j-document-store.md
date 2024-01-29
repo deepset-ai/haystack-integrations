@@ -18,8 +18,8 @@ toc: true
 ### Table of Contents
 
 - [Overview](#overview)
-- [Usage](#usage)
 - [Installation](#installation)
+- [Usage](#usage)
 - [License](#license)
 
 ## Overview
@@ -81,6 +81,7 @@ In the above diagram:
 
 ```bash
 pip install --upgrade pip # optional
+pip install sentence-transformers # required iin order to run pipeline examples given below
 pip install neo4j-haystack
 ```
 
@@ -131,7 +132,7 @@ docker run \
 
 ### Retrieving documents
 
-`Neo4jEmbeddingRetriever` component can be used to retrieve documents from Neo4j by querying vector index using an embedded query. Below is a pipeline which finds documents using query embedding s well as [metadata filtering](https://docs.haystack.deepset.ai/v2.0/docs/metadata-filtering):
+`Neo4jEmbeddingRetriever` component can be used to retrieve documents from Neo4j by querying vector index using an embedded query. Below is a pipeline which finds documents using query embedding as well as [metadata filtering](https://docs.haystack.deepset.ai/v2.0/docs/metadata-filtering):
 
 ```python
 from haystack import Document, Pipeline
@@ -173,8 +174,12 @@ result = pipeline.run(
 
 documents: List[Document] = result["retriever"]["documents"]
 ```
-output:
+
+```bash
+>>> output:
 `[Document(id=e765764ab700b231db1eeae208d6a59047b4b93712d1a9e379ae9599128ffdbd, content: 'My name is Morgan and I live in Paris.', meta: {'release_date': '2018-12-09'}, score: 0.8416308164596558)]`
+```
+
 ### Retrieving documents using Cypher
 
 `Neo4jDynamicDocumentRetriever` is a flexible retriever component which can run a Cypher query to obtain documents. The above example of `Neo4jEmbeddingRetriever` could be rewritten without usage of `Neo4jDocumentStore`:
@@ -229,6 +234,16 @@ Please notice how query parameters are being used in the `cypher_query`:
     in a pipeline. In our case `query_embedding` input is connected to the `text_embedder.embedding` output.
 - `pipeline.run` specifies additional parameters to the `retriever` component which can be referenced in the
     `cypher_query`, e.g. `top_k`.
+
+### More examples
+
+You can find more examples in the implementation [repository](https://github.com/prosto/neo4j-haystack/tree/main/examples):
+
+- [indexing_pipeline.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/indexing_pipeline.py) - Indexing text files (documents) from a remote http location.
+- [rag_pipeline.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/rag_pipeline.py) - Generative question answering RAG pipeline using `Neo4jEmbeddingRetriever` to fetch documents from Neo4j document store and answer question using [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator).
+- [rag_pipeline_cypher.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/rag_pipeline_cypher.py) - Same as `rag_pipeline.py` but using `Neo4jDynamicDocumentRetriever`.
+
+You might find more technical details in the [Code Reference](https://prosto.github.io/neo4j-haystack/reference/neo4j_store/) documentation. For example, in real world scenarios there could be requirements to tune connection settings to Neo4j database (e.g. request timeout). [Neo4jDocumentStore](https://prosto.github.io/neo4j-haystack/reference/neo4j_store/#neo4j_haystack.document_stores.Neo4jDocumentStore.__init__) accepts an extended client configuration using [Neo4jClientConfig](https://prosto.github.io/neo4j-haystack/reference/neo4j_client/#neo4j_haystack.client.neo4j_client.Neo4jClientConfig) class.
 
 ## License
 
