@@ -3,7 +3,7 @@ layout: integration
 name: Mistral
 description: This page demonstrates how to use OpenAIGenerator within Haystack to make use of Mistral models.
 authors:
-    - name: deepset
+    - name: deepset 
       socials:
         github: deepset-ai
         twitter: deepset_ai
@@ -11,7 +11,7 @@ authors:
 pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
-report_issue: report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/mistral.jpeg
 version: Haystack 2.0
 toc: true
