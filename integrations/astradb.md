@@ -48,7 +48,7 @@ First you need to [sign up for a free DataStax account](https://astra.datastax.c
 ## Installation
 
 ```console
-pip install astra-store
+pip install astra-haystack
 ```
 ## Usage
 
@@ -64,8 +64,9 @@ In order to connect AstraDB with Haystack, you'll need these pieces of informati
 ### how to use the `AstraDocumentStore`:
 
 ```python
-from astra_haystack.document_store import AstraDocumentStore
 from haystack import Document
+from haystack_integrations.document_stores.astra import AstraDocumentStore
+
 
 astra_id = os.getenv("ASTRA_DB_ID", "")
 astra_region = os.getenv("ASTRA_DB_REGION", "us-east-2")
@@ -91,11 +92,11 @@ print(document_store.count_documents())
 ### How to use the `AstraRetriever`
 
 ```python
-from astra_haystack.document_store import AstraDocumentStore
-from astra_haystack.retriever import AstraRetriever
-
 from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder, SentenceTransformersDocumentEmbedder
+from haystack_integrations.components.retrievers.astra import AstraRetriever
+from haystack_integrations.document_stores.astra import AstraDocumentStore
+
 
 astra_id = os.getenv("ASTRA_DB_ID", "")
 astra_region = os.getenv("ASTRA_DB_REGION", "us-east-2")
@@ -141,4 +142,4 @@ As well as filtering with none values (these won't be inserted as the result is 
 
 ### License
 
-`astra-store` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+`astra-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
