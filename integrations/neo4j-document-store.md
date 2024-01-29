@@ -135,7 +135,7 @@ docker run \
 
 ```python
 from haystack import Document, Pipeline
-from haystack.components.embedders import SentenceTransformersTextEmbedder
+from haystack.components.embedders import SentenceTransformersTextEmbedder, SentenceTransformersDocumentEmbedder
 from neo4j_haystack import Neo4jEmbeddingRetriever, Neo4jDocumentStore
 
 document_store = Neo4jDocumentStore(
@@ -146,7 +146,16 @@ document_store = Neo4jDocumentStore(
     embedding_dim=384,
     index="document-embeddings",
 )
+documents = [
+    Document(content="My name is Morgan and I live in Paris.", meta={"release_date": "2018-12-09"})]
 
+document_embedder = SentenceTransformersDocumentEmbedder(model=model_name)  
+document_embedder.warm_up()
+documents_with_embeddings = document_embedder.run(documents)
+
+document_store.write_documents(documents_with_embeddings.get("documents"))
+
+print(document_store.count_documents())
 pipeline = Pipeline()
 pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder(model="sentence-transformers/all-MiniLM-L6-v2"))
 pipeline.add_component("retriever", Neo4jEmbeddingRetriever(document_store=document_store))
@@ -154,7 +163,7 @@ pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
 result = pipeline.run(
     data={
-        "text_embedder": {"text": "Query to be embedded"},
+        "text_embedder": {"text": "What cities do people live in?"},
         "retriever": {
             "top_k": 5,
             "filters": {"field": "release_date", "operator": "==", "value": "2018-12-09"},
@@ -164,7 +173,8 @@ result = pipeline.run(
 
 documents: List[Document] = result["retriever"]["documents"]
 ```
-
+output:
+`[Document(id=e765764ab700b231db1eeae208d6a59047b4b93712d1a9e379ae9599128ffdbd, content: 'My name is Morgan and I live in Paris.', meta: {'release_date': '2018-12-09'}, score: 0.8416308164596558)]`
 ### Retrieving documents using Cypher
 
 `Neo4jDynamicDocumentRetriever` is a flexible retriever component which can run a Cypher query to obtain documents. The above example of `Neo4jEmbeddingRetriever` could be rewritten without usage of `Neo4jDocumentStore`:
@@ -202,7 +212,7 @@ pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
 result = pipeline.run(
     data={
-        "text_embedder": {"text": "Query to be embedded"},
+        "text_embedder": {"text": "What cities do people live in?"},
         "retriever": {
             "query": cypher_query,
             "parameters": {"index": "document-embeddings", "top_k": 5, "release_date": "2018-12-09"},
