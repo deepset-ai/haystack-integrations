@@ -107,7 +107,7 @@ pipe.run({
 })  
 ```
 
-Similar to the above example, you can also use `CohereChatGenerator` to use cohere chat models in your pipeline.
+Similar to the above example, you can also use [`CohereChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/coherechatgenerator) to use Cohere `/chat` models and features (streaming, connectors) in your pipeline.
 
 ```python
 from haystack import Pipeline
