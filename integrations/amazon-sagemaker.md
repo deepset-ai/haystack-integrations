@@ -20,10 +20,10 @@ toc: true
 ### Table of Contents
 
 - [Overview](#overview)
-- [Haystack 2.x]
+- [Haystack 2.x](#haystack-2x)
     - [Installation](#installation)
     - [Usage](#usage)
-- [Haystack 1.x]
+- [Haystack 1.x](#haystack-1x)
     - [Installation (1.x)](#installation-1x)
     - [Usage (1.x)](#usage-1x)
 
