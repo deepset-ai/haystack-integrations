@@ -49,7 +49,7 @@ Once installed, you will have access to an [AmazonBedrockGenerator](https://docs
 To use this integration for text generation, initialize a `AmazonBedrockGenerator` with the model name and aws credentials: 
 
 ```python
-from amazon_bedrock_haystack import AmazonBedrockGenerator
+from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockGenerator
 
 aws_access_key_id="..."
 aws_secret_access_key="..."
