@@ -34,7 +34,9 @@ pip install mixedbread_ai_haystack
 
 ## Usage
 
-You can use mixedbread's embedding models with the [MixedbreadAiTextEmbedder](https://github.com/mixedbread-ai/mixedbread-ai-haystack/blob/main/mixedbread_ai_haystack/embedders/text_embedder.py) and [MixedbreadAiDocumentEmbedder](https://github.com/mixedbread-ai/mixedbread-ai-haystack/blob/main/mixedbread_ai_haystack/embedders/document_embedder.py).
+This integration comes with 2 components:
+- [`MixedbreadAiTextEmbedder`](https://github.com/mixedbread-ai/mixedbread-ai-haystack/blob/main/mixedbread_ai_haystack/embedders/text_embedder.py)
+- [`MixedbreadAiDocumentEmbedder`](https://github.com/mixedbread-ai/mixedbread-ai-haystack/blob/main/mixedbread_ai_haystack/embedders/document_embedder.py).
 
 For documents you can use MixedbreadAiDocumentEmbedder and for queries you can use MixedbreadAiTextEmbedder. Once you've selected the component for your specific use case, initialize the component with the model name and mixedbread ai API key. You can also set the environment variable `MIXEDBREAD_API_KEY` instead of passing the api key as an argument.
 
