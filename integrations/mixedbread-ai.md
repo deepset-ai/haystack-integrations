@@ -15,7 +15,6 @@ logo: /logos/mixedbread-ai.png
 toc: true
 ---
 
-# mixedbread ai haytack 2.0 integration
 
 mixedbread ai offers a seamless integration for users to employ both mixedbread's models and top open-source models effortlessly. Our platform stands out with its capability to re-rank, provide multi-modal embeddings, classifiers, and more. We're on a mission to make AI accessible to everyone, and we're excited to bring our state-of-the-art models to the Haystack community.
 
