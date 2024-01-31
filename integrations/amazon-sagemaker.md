@@ -86,7 +86,7 @@ generator = SagemakerGenerator(model="jumpstart-dft-meta-textgenerationneuron-ll
 ### Installation (1.x)
 
 ```bash
-pip install farm-haystack
+pip install farm-haystack[aws]
 ```
 
 ### Usage (1.x)
