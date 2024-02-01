@@ -52,7 +52,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `CohereDocu
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
-from haystack_integrations.components.embedders.document_embedder import CohereDocumentEmbedder
+from haystack_integrations.components.embedders.cohere import CohereDocumentEmbedder
 
 document_store = InMemoryDocumentStore()
 
