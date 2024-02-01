@@ -12,6 +12,7 @@ repo: https://github.com/mixedbread-ai/mixedbread-ai-haystack
 type: Model Provider
 report_issue: https://github.com/mixedbread-ai/mixedbread-ai-haystack/issues
 logo: /logos/mixedbread-ai.png
+version: Haystack 2.0
 toc: true
 ---
 
