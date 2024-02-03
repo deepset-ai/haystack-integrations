@@ -48,6 +48,10 @@ document_store = JaguarDocumentStore(
     vector_dimension,
     url,
 )
+
+metadata_fields = "author char(32), category char(16)"
+text_size = 1024  # text size in each document
+document_store.create(metadata_fields, text_size)
 ```
 
 ### Writing Documents to JaguarDocumentStore
