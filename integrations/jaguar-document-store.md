@@ -49,9 +49,11 @@ document_store = JaguarDocumentStore(
     url,
 )
 
+document_store.login( "demouser" )
 metadata_fields = "author char(32), category char(16)"
 text_size = 1024  # text size in each document
 document_store.create(metadata_fields, text_size)
+
 ```
 
 ### Writing Documents to JaguarDocumentStore
@@ -116,4 +118,5 @@ query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
 query = "Where is the Bermuda Triangle?"
 result = query_pipeline.run({"text_embedder":{"text": query}})
+document_store.logout()
 ```
