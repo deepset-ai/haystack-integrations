@@ -31,7 +31,7 @@ is being used for storing document embeddings and dense retrievals.
 The library allows using Neo4j as a [DocumentStore](https://docs.haystack.deepset.ai/v2.0/docs/document-store), and implements the required [Protocol](https://docs.haystack.deepset.ai/v2.0/docs/document-store#documentstore-protocol) methods. You can start working with the implementation by importing it from `neo4_haystack` package:
 
 ```python
-from neo4_haystack import Neo4jDocumentStore
+from neo4j_haystack import Neo4jDocumentStore
 ```
 
 In addition to the `Neo4jDocumentStore` the library includes the following haystack components which can be used in a pipeline:
