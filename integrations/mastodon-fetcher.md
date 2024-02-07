@@ -52,12 +52,13 @@ mastodon_fetcher.run(username="tuana@sigmoid.social")
 
 ```python
 from haystack import Pipeline
+from haystack.utils import Secret
 from mastodon_fetcher_haystack.mastodon_fetcher import MastodonFetcher
 from haystack.components.generators import OpenAIGenerator
 from haystack.components.builders import PromptBuilder
 
 prompt_builder = PromptBuilder(template='YOUR_PROMPT_TEMPLATE')
-llm = OpenAIGenerator(api_key'YOUR_OPENAI_API_KEY')
+llm = OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"))
 
 pipe = Pipeline()
 pipe.add_component("fetcher", mastodon_fetcher)

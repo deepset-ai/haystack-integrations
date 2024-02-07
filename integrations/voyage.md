@@ -97,7 +97,7 @@ doc_embedder = VoyageDocumentEmbedder(
 indexing_pipeline = Pipeline()
 indexing_pipeline.add_component(instance=doc_embedder, name="DocEmbedder")
 indexing_pipeline.add_component(instance=DocumentWriter(document_store=doc_store), name="DocWriter")
-indexing_pipeline.connect(connect_from="DocEmbedder", connect_to="DocWriter")
+indexing_pipeline.connect("DocEmbedder", "DocWriter")
 
 indexing_pipeline.run({"DocEmbedder": {"documents": docs}})
 
