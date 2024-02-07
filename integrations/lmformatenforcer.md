@@ -109,7 +109,7 @@ schema_json_str = AnswerFormat.schema_json()
 prompt = f'{question}{schema_json_str}'
 
 
-model = HuggingFaceLocalGenerator(model_name_or_path="meta-llama/Llama-2-7b-chat-hf")
+model = HuggingFaceLocalGenerator(model="meta-llama/Llama-2-7b-chat-hf")
 format_enforcer = LMFormatEnforcerLocalGenerator(model, character_level_parser)
 pipeline = Pipeline()
 pipeline.add_component(instance=format_enforcer, name='model')

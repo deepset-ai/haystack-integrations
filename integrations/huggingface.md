@@ -80,6 +80,7 @@ Below is the example query pipeline that uses `mistralai/Mistral-7B-v0.1` hosted
 
 ```python
 from haystack import Pipeline
+from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import HuggingFaceTGIGenerator
@@ -98,7 +99,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=docstore))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", HuggingFaceTGIGenerator(model="mistralai/Mistral-7B-v0.1", token="HF_TOKEN"))
+pipe.add_component("llm", HuggingFaceTGIGenerator(model="mistralai/Mistral-7B-v0.1", token=Secret.from_token("YOUR_HF_API_TOKEN")))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 

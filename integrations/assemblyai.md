@@ -117,6 +117,7 @@ The example below illustrates a generative QA pipeline that seamlessly integrate
 
 ```python
 from haystack import Pipeline
+from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
@@ -133,7 +134,7 @@ Question: {{ question }}
 summary_qa = Pipeline()
 summary_qa.add_component("transcriber", AssemblyAITranscriber(api_key=assemblyai_api_key))
 summary_qa.add_component("prompt_builder", PromptBuilder(template=template))
-summary_qa.add_component("llm", OpenAIGenerator(api_key=openai_api_key, model_name="gpt-3.5-turbo"))
+summary_qa.add_component("llm", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-3.5-turbo"))
 summary_qa.connect("transcriber.summarization", "prompt_builder.summary")
 summary_qa.connect("prompt_builder", "llm")
 
@@ -152,6 +153,7 @@ Explore the example below to see how to index speaker diarization information an
 ```python 
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack import Pipeline
+from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
@@ -176,7 +178,7 @@ Question: {{ question }}
 pipe = Pipeline()
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store, top_k=3))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OpenAIGenerator(api_key=openai_api_key, model_name="gpt-3.5-turbo"))
+pipe.add_component("llm", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-3.5-turbo"))
 
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")

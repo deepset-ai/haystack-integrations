@@ -183,7 +183,7 @@ indexing_pipeline.add_component(
     instance=DocumentWriter(document_store=doc_store), name="DocWriter"
 )
 # Connect the output of DocEmbedder to the input of DocWriter
-indexing_pipeline.connect(connect_from="DocEmbedder", connect_to="DocWriter")
+indexing_pipeline.connect("DocEmbedder", "DocWriter")
 
 # Load the 'XSum' dataset from HuggingFace (https://huggingface.co/datasets/xsum)
 dataset = load_dataset("xsum", split="train")

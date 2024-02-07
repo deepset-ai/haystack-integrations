@@ -50,6 +50,7 @@ Below is the example indexing pipeline with `InMemoryDocumentStore`, `OpenAIDocu
 
 ```python
 from haystack import Document, Pipeline
+from haystack.utils import Secret
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.embedders import OpenAIDocumentEmbedder
 from haystack.components.writers import DocumentWriter
@@ -61,7 +62,7 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="Germany has many big cities")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", OpenAIDocumentEmbedder(api_key="OPENAI_API_KEY", model="text-embedding-ada-002"))
+indexing_pipeline.add_component("embedder", OpenAIDocumentEmbedder(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="text-embedding-ada-002"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
@@ -70,17 +71,18 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 #### Generative Models (LLMs)
 
-You can leverage OpenAI models through two components: [GPTGenerator](https://docs.haystack.deepset.ai/v2.0/docs/gptgenerator) and [GPTChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/gptchatgenerator).
+You can leverage OpenAI models through two components: [OpenAIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaigenerator) and [OpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaichatgenerator).
 
-To use OpenAI's GPT models for text generation, initialize a `GPTGenerator` with the model name and OpenAI API key. You can then use the `GPTGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
+To use OpenAI's GPT models for text generation, initialize a `OpenAIGenerator` with the model name and OpenAI API key. You can then use the `OpenAIGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
 
-Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `GPTGenerator`:
+Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `OpenAIGenerator`:
 
 ```python
 from haystack import Pipeline
+from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import GPTGenerator
+from haystack.components.generators import OpenAIGenerator
 
 template = """
 Given the following information, answer the question.
@@ -96,7 +98,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", GPTGenerator(model="gpt-4", api_key="OPENAI_API_KEY"))
+pipe.add_component("llm", OpenAIGenerator(model="gpt-4", api_key=Secret.from_token("YOUR_OPENAI_API_KEY")))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 
