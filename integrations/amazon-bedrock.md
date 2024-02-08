@@ -23,6 +23,7 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
     - [AmazonBedrockGenerator](#AmazonBedrockGenerator)
+    - [AmazonBedrockChatGenerator](#AmazonBedrockChatGenerator)
 
 ## Overview
 
@@ -64,3 +65,32 @@ Output:
 ```shell
 'There is no definitive "best" American actor, as acting skill and talent a# re subjective. However, some of the most acclaimed and influential American act# ors include Tom Hanks, Daniel Day-Lewis, Denzel Washington, Meryl Streep, Rober# t De Niro, Al Pacino, Marlon Brando, Jack Nicholson, Leonardo DiCaprio and John# ny Depp. Choosing a single "best" actor comes down to personal preference.'
 ```
+
+### AmazonBedrockChatGenerator
+
+To use this integration for chat models, initialize a `AmazonBedrockChatGenerator` with the model name and aws credentials:
+
+Currently, the following models are supported: 
+- Anthropic's Claude
+- Meta's Llama 2
+
+
+```python
+from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockChatGenerator
+from haystack.dataclasses import ChatMessage
+    
+generator = AmazonBedrockChatGenerator(model="meta.llama2-70b-chat-v1")
+messages = [ChatMessage.from_system("You are a helpful assistant that answers question in Spanish only"), 
+            ChatMessage.from_user("What's Natural Language Processing? Be brief.")]
+    
+response = generator.run(messages)
+print(response)
+
+```
+Output: 
+```shell
+{'replies': [ChatMessage(content='  Procesamiento del Lenguaje Natural (PLN) es una rama de la inteligencia artificial que se enfoca en el desarrollo de algoritmos y modelos computacionales para analizar, comprender y generar texto y lenguaje humano.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'prompt_token_count': 46, 'generation_token_count': 60, 'stop_reason': 'stop'})]}
+```
+
+
+
