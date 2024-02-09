@@ -22,12 +22,12 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [AmazonBedrockGenerator](#AmazonBedrockGenerator)
-    - [AmazonBedrockChatGenerator](#AmazonBedrockChatGenerator)
+    - [AmazonBedrockGenerator](#amazonbedrockgenerator)
+    - [AmazonBedrockChatGenerator](#amazonbedrockchatgenerator)
 
 ## Overview
 
-[Amazon Bedrock](https://aws.amazon.com/bedrock/) is a fully managed service that makes high-performing foundation models from leading AI startups and Amazon available for your use through a unified API.  You can choose from various foundation models to find the one best suited for your use case. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator).
+[Amazon Bedrock](https://aws.amazon.com/bedrock/) is a fully managed service that makes high-performing foundation models from leading AI startups and Amazon available for your use through a unified API. You can choose from various foundation models to find the one best suited for your use case. More information can be found on the [Amazon Bedrock documentation page](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html).
 
 ## Installation
 
@@ -38,16 +38,18 @@ pip install amazon-bedrock-haystack
 
 ## Usage
 
-Once installed, you will have access to an [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator) that supports models from various providers: 
+Once installed, you will have access to [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator) and [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockchatgenerator) components that support foundation models on Amazon Bedrock. 
+
+### AmazonBedrockGenerator
+
+To use this integration for text generation, initialize an `AmazonBedrockGenerator` with the model name and aws credentials: 
+
+Currently, the following models are supported: 
 - Anthropic's Claude
 - AI21 Labs' Jurassic-2
 - Cohere's Command
 - Meta's Llama 2
 - Amazon Titan language models
-
-### AmazonBedrockGenerator
-
-To use this integration for text generation, initialize a `AmazonBedrockGenerator` with the model name and aws credentials: 
 
 ```python
 from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockGenerator
@@ -68,12 +70,11 @@ Output:
 
 ### AmazonBedrockChatGenerator
 
-To use this integration for chat models, initialize a `AmazonBedrockChatGenerator` with the model name and aws credentials:
+To use this integration for chat models, initialize an `AmazonBedrockChatGenerator` with the model name and aws credentials:
 
 Currently, the following models are supported: 
 - Anthropic's Claude
 - Meta's Llama 2
-
 
 ```python
 from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockChatGenerator
