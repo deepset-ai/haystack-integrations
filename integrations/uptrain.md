@@ -56,13 +56,13 @@ To use this integration for calculating model-based evaluation metrics, initiali
 
 ```python
 from haystack import Pipeline
-from haystack_integrations.components.evaluators import UpTrainEvaluator, UpTrainMetric
+from haystack_integrations.components.evaluators.uptrain import UpTrainEvaluator, UpTrainMetric
 
 QUESTIONS = [
     "Which is the most popular global sport?",
 ]
 CONTEXTS = [
-    "The popularity of sports can be measured in various ways, including TV viewership, social media presence, number of participants, and economic impact. Football is undoubtedly the world's most popular sport with major events like the FIFA World Cup and sports personalities like Ronaldo and Messi, drawing a followership of more than 4 billion people."
+    ["The popularity of sports can be measured in various ways, including TV viewership, social media presence, number of participants, and economic impact. Football is undoubtedly the world's most popular sport with major events like the FIFA World Cup and sports personalities like Ronaldo and Messi, drawing a followership of more than 4 billion people."]
 ]
 RESPONSES = [
     "Football is the most popular sport with around 4 billion followers worldwide",
