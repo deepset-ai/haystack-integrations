@@ -109,7 +109,7 @@ Once you saved documents in your `JaguarDocumentStore`, you can use a Haystack p
 ```python
 from haystack import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder
-from jaguar_haystack import JaguarEmbeddingRetriever
+from jaguar_haystack.retriever import JaguarEmbeddingRetriever
 
 query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder())
