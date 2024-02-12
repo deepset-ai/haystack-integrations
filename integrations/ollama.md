@@ -47,12 +47,14 @@ pip install ollama-haystack
 
 ## Usage
 
-You can leverage Ollama models through the OllamaGenerator and OllamaChatGenerator Components
+This integration provides 2 components that allow you to leverage Ollama models:
+- The [`OllamaGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/ollamagenerator)
+- The [`OllamaChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/ollamachatgenerator)
 
-To use an Ollama model for text generation:
+To use an Ollama model:
 
 1. Follow instructions on the [Ollama Github Page](https://github.com/jmorganca/ollama) to pull and serve your model of choice 
-2. Initialize an `OllamaGenerator` with the name of the model served in your Ollama instance and you can then use the `OllamaGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
+2. Initialize one of the Ollama generators with the name of the model served in your Ollama instance. 
 
 
 ### Examples
@@ -66,7 +68,7 @@ docker exec ollama ollama pull orca-mini
 
 #### Text Generation
 
-Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `OllamaGenerator`:
+Below is the example of generative questions-answering pipeline using RAG with `PromptBuilder` and  `OllamaGenerator`:
 
 ```python
 from haystack import Document, Pipeline
