@@ -98,7 +98,7 @@ indexing.run({"converter": {"sources": ["filename.md"]}})
 
 ### Using Pinecone in a RAG Pipeline
 
-Once you have documents in your `PineconeDocumentStore`, it's ready to be used in any Haystack pipeline. Then, you can use `PineconeDenseRetriever` to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that makes use of a custom prompt that is designed to answer questions for the retrieved documents.
+Once you have documents in your `PineconeDocumentStore`, it's ready to be used in any Haystack pipeline. Then, you can use `PineconeEmbeddingRetriever` to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that makes use of a custom prompt that is designed to answer questions for the retrieved documents.
 
 ```python
 from haystack.utils import Secret
@@ -106,7 +106,7 @@ from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.builders import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-from haystack_integrations.components.retrievers.pinecone import PineconeDenseRetriever
+from haystack_integrations.components.retrievers.pinecone import PineconeEmbeddingRetriever
 
 
 document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
@@ -124,7 +124,7 @@ prompt_template = """Answer the following query based on the provided context. I
 
 query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder())
-query_pipeline.add_component("retriever", PineconeDenseRetriever(document_store=document_store))
+query_pipeline.add_component("retriever", PineconeEmbeddingRetriever(document_store=document_store))
 query_pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
 query_pipeline.add_component("generator", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-4"))
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
