@@ -129,6 +129,7 @@ might be a better option.
 
 ```python
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+from haystack.utils import Secret
 # Note: for Haystack 1.x use the following import instead:
 # from qdrant_haystack import QdrantDocumentStore
 
@@ -136,7 +137,7 @@ from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 document_store = QdrantDocumentStore(
     url="https://YOUR-CLUSTER-URL.aws.cloud.qdrant.io",
     index="Document",
-    api_key="<< YOUR QDRANT CLOUD API KEY >>",
+    api_key=Secret.from_env("QDRANT_API_KEY"),
     embedding_dim=512,
     recreate_index=True,
 )
