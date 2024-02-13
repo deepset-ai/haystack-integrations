@@ -38,7 +38,7 @@ This integration allows you to use AstraDB for document storage and retrieval in
 ## Components
 
 - [`AstraDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/astradocumentstore). This component serves as a persistent data store for your Haystack documents, and supports a number of embedding models and vector dimensions.
-- [`AstraRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/astraretriever) This is an embedding-based Retriever compatible with the Astra Document Store.
+- [`AstraEmbeddingRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/astraretriever) This is an embedding-based Retriever compatible with the Astra Document Store.
 
 
 ## Initialization
@@ -89,12 +89,12 @@ document_store.write_documents([
 print(document_store.count_documents())
 ```
 
-### How to use the `AstraRetriever`
+### How to use the `AstraEmbeddingRetriever`
 
 ```python
 from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder, SentenceTransformersDocumentEmbedder
-from haystack_integrations.components.retrievers.astra import AstraRetriever
+from haystack_integrations.components.retrievers.astra import AstraEmbeddingRetriever
 from haystack_integrations.document_stores.astra import AstraDocumentStore
 
 
@@ -125,7 +125,7 @@ documents_with_embeddings = document_embedder.run(documents)
 document_store.write_documents(documents_with_embeddings.get("documents"))
 query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder(model=model_name_or_path))
-query_pipeline.add_component("retriever", AstraRetriever(document_store=document_store))
+query_pipeline.add_component("retriever", AstraEmbeddingRetriever(document_store=document_store))
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
 query = "How many languages are there?"
