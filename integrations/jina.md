@@ -53,10 +53,13 @@ set the environment variable JINA_API_KEY instead of passing the api key as an a
 Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and  `DocumentWriter`:
 
 ```python
+import os
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 from haystack_integrations.components.embedders.jina import JinaDocumentEmbedder
+
+os.environ["JINA_API_KEY"]="your-jina-api-key"
 
 document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
 
@@ -66,7 +69,7 @@ documents = [Document(content="I enjoy programming in Python"),
              Document(content="Thomas is injured and can't play sports")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(api_key="JINA_API_KEY", model="jina-embeddings-v2-base-en"))
+indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(model="jina-embeddings-v2-base-en"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
