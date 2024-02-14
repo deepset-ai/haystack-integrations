@@ -31,9 +31,9 @@ toc: true
   - [License](#license)
 
 ## Installation
-pgvector is an extension for PostgreSQL that adds support for vector similarity search.
+`pgvector` is an extension for PostgreSQL that adds support for vector similarity search.
 
-To quickly setup a PostgreSQL database with pgvector, you can use Docker:
+To quickly set up a PostgreSQL database with pgvector, you can use Docker:
 ```bash
 docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres ankane/pgvector
 ```
@@ -45,13 +45,18 @@ Use `pip` to install `pgvector-haystack`:
 pip install pgvector-haystack
 ```
 ## Usage
+
+Define the connection string to your PostgreSQL database in the `PG_CONN_STR` environment variable. For example:
+```bash
+export PG_CONN_STR="postgresql://postgres:postgres@localhost:5432/postgres"
+````
+
 Once installed, initialize PgvectorDocumentStore:
 
 ```python
 from haystack_integrations.document_stores.pgvector import PgvectorDocumentStore
 
 document_store = PgvectorDocumentStore(
-    connection_string="postgresql://postgres:postgres@localhost:5432/postgres",
     table_name="haystack_docs",
     embedding_dimension=768,
     vector_function="cosine_similarity",
@@ -64,6 +69,7 @@ document_store = PgvectorDocumentStore(
 To write documents to `PgvectorDocumentStore`, create an indexing Pipeline.
 
 ```python
+from haystack import Pipeline
 from haystack.components.converters import TextFileToDocument
 from haystack.components.writers import DocumentWriter
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
