@@ -59,9 +59,8 @@ To use Pinecone as your data storage for your Haystack LLM pipelines, you must h
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
 
-document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
-                                       similarity="cosine",
-                                       dimension=768)
+# Make sure you have the PINECONE_API_KEY environment variable set
+document_store = PineconeDocumentStore(similarity="cosine", dimension=768)
 ```
 
 #### Writing Documents to PineconeDocumentStore
@@ -80,9 +79,8 @@ from haystack.components.preprocessors import DocumentSplitter
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
 
-document_store = PineconeDocumentStore(api_key="YOUR_API_KEY",
-                                       environment="gcp-starter",
-                                       dimension=768)
+# Make sure you have the PINECONE_API_KEY environment variable set
+document_store = PineconeDocumentStore(environment="gcp-starter", dimension=768)
 
 indexing = Pipeline()
 indexing.add_component("converter", MarkdownToDocument())
@@ -109,8 +107,8 @@ from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 from haystack_integrations.components.retrievers.pinecone import PineconeEmbeddingRetriever
 
 
-document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
-                                       dimension=768)
+# Make sure you have the PINECONE_API_KEY environment variable set
+document_store = PineconeDocumentStore(dimension=768)
               
 prompt_template = """Answer the following query based on the provided context. If the context does
                      not include an answer, reply with 'I don't know'.\n
