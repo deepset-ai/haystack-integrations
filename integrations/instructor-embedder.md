@@ -14,9 +14,9 @@ authors:
         twitter: vrunmnlp
         linkedin: varun-mathur-ds
 pypi: https://pypi.org/project/instructor-embedders-haystack/
-repo: https://github.com/deepset-ai/haystack-extras/tree/main/components/instructor-embedders
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/instructor_embedders
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack-extras/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 version: Haystack 2.0
 ---
 
