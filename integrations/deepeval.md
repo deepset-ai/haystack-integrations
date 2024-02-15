@@ -26,7 +26,7 @@ toc: true
 
 ## Overview
 
-[DeepEval](https://docs.confident-ai.com/) is an open source framework for model-based evaluation to evaluate your LLM applications by quantifying their performance on aspects such as correctness, tonality, hallucination, fluency, etc. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/v2.0/docs/deepevalevaluator).
+[DeepEval](https://docs.confident-ai.com/) is an open source framework for model-based evaluation to evaluate your LLM applications by quantifying their performance on aspects such as faithfulness, answer relevancy, contextual recall etc. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/v2.0/docs/deepevalevaluator).
 
 ## Installation
 
@@ -38,17 +38,11 @@ pip install deepeval-haystack
 ## Usage
 
 Once installed, you will have access to a [DeepEvalEvaluator](https://docs.haystack.deepset.ai/v2.0/docs/deepevalevaluator) that supports a variety of model-based evaluation metrics: 
-- G-Eval
-- Summarization
-- Faithfulness
 - Answer Relevancy
-- Contextual Relevancy
+- Faithfulness
 - Contextual Precision
 - Contextual Recall
-- Ragas
-- Hallucination
-- Toxicity
-- Bias
+- Contextual Relevance
 
 ### DeepEvalEvaluator
 
