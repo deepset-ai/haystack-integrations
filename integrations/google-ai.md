@@ -53,7 +53,7 @@ To get an API key visit [Google Makersuite](https://makersuite.google.com).
 
 **Text Generation with `gemini-pro`**
 
-To use Gemini model for text generation, initialize a `GoogleAIGeminiGenerator` with `"gemini-pro"` and `api_key`:
+To use Gemini model for text generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleAIGeminiGenerator` with `"gemini-pro"`:
 
 ```python
 import os
