@@ -57,8 +57,8 @@ This package includes Astra Document Store and Astra Retriever classes that inte
 In order to connect AstraDB with Haystack, you'll need these pieces of information from your Datastax console:
 - API Endpoint
 - Token
-- Astra collection name
-- Astra keyspace name
+- Astra collection name (otherwise `default_keyspace` will be used)
+- Astra keyspace name (otherwise `documents` will be used)
 
 ### how to use the `AstraDocumentStore`:
 
