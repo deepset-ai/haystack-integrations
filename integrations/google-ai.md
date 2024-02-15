@@ -53,12 +53,15 @@ To get an API key visit [Google Makersuite](https://makersuite.google.com).
 
 **Text Generation with `gemini-pro`**
 
-To use Gemini model for text generation, initialize a `GoogleAIGeminiGenerator` with `"gemini-pro"` and `api_key`:
+To use Gemini model for text generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleAIGeminiGenerator` with `"gemini-pro"`:
 
 ```python
+import os
 from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
 
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro", api_key=api_key)
+os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro")
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
 print(result["answers"][0])
 ```
@@ -75,6 +78,7 @@ To use `gemini-pro-vision` model for visual question answering, initialize a `Go
 
 ```python
 import requests
+import os
 from haystack.dataclasses.byte_stream import ByteStream
 
 from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
@@ -94,7 +98,10 @@ images = [
     ByteStream(data=requests.get(url).content, mime_type="image/jpeg")
     for url in URLS
 ]
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro-vision", api_key=api_key)
+
+os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro-vision")
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
 for answer in result["answers"]:
     print(answer)
@@ -114,6 +121,7 @@ The fourth image is of Marvin from the 1977 film The Hitchhiker's Guide to the G
 When chatting with Gemini we can also use function calls.
 
 ```python
+import os
 from google.ai.generativelanguage import FunctionDeclaration, Tool
 from haystack.dataclasses import ChatMessage
 
@@ -145,9 +153,9 @@ get_current_weather_func = FunctionDeclaration(
 )
 tool = Tool(function_declarations=[get_current_weather_func])
 
-gemini_chat = GoogleAIGeminiChatGenerator(
-    model="gemini-pro", api_key=api_key, tools=[tool]
-)
+os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+
+gemini_chat = GoogleAIGeminiChatGenerator(model="gemini-pro", tools=[tool])
 
 messages = [
     ChatMessage.from_user(content="What is the temperature in celsius in Berlin?")
@@ -174,9 +182,12 @@ In Berlin, the weather is sunny with a temperature of 21.8 degrees Celsius.
 Gemini can also easily generate code, here's an example:
 
 ```python
+import os
 from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
 
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro", api_key=api_key)
+os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro")
 result = gemini_generator.run("Write a code for calculating fibonacci numbers in JavaScript")
 print(result["answers"][0])
 ```
