@@ -47,8 +47,8 @@ from haystack.components.writers import DocumentWriter
 
 from haystack_integrations.components.embedders.gradient import GradientDocumentEmbedder
 
-os.environ["GRADIENT_ACCESS_TOKEN"] = "Your Gradient Access Token"
-os.environ["GRADIENT_WORKSPACE_ID"] = "Your Gradient Workspace id: "
+os.environ["GRADIENT_ACCESS_TOKEN"] = "YOUR-GRADIENT-ACCESS-TOKEN"
+os.environ["GRADIENT_WORKSPACE_ID"] = "YOUR-GRADIENT-WORKSPACE-ID"
 
 documents = [
     Document(content="My name is Jean and I live in Paris."),
@@ -67,6 +67,8 @@ indexing_pipeline.run({"document_embedder": {"documents": documents}})
 You can use embedding models with `GradientTextEmbedder` and generative models with `GradientGenerator`. These two are commonly used together in a query pipeline such as a retrievel-augmented generative (RAG) pipeline such as the one below. 
 
 ```python
+import os
+
 from haystack.components.builders.answer_builder import AnswerBuilder
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
@@ -85,12 +87,13 @@ Given these documents, answer the question.\nDocuments:
 \nAnswer:
 """
 
-gradient_access_token = os.environ.get("GRADIENT_ACCESS_TOKEN")
+os.environ["GRADIENT_ACCESS_TOKEN"] = "YOUR-GRADIENT-ACCESS-TOKEN"
+os.environ["GRADIENT_WORKSPACE_ID"] = "YOUR-GRADIENT-WORKSPACE-ID"
 
 retriever = InMemoryEmbeddingRetriever(document_store)
 prompt_builder = PromptBuilder(template=prompt_template)
-embedder = GradientTextEmbedder(access_token=gradient_access_token)
-generator = GradientGenerator(access_token=gradient_access_token, base_model_slug="llama2-7b-chat")
+embedder = GradientTextEmbedder()
+generator = GradientGenerator(base_model_slug="llama2-7b-chat")
 
 rag_pipeline = Pipeline()
 rag_pipeline.add_component(instance=embedder, name="text_embedder")
@@ -117,7 +120,7 @@ rag_pipeline.run(
 ```
 
 ## Examples
-You can find a full code example showing how to use the integration in [this Colab](https://colab.research.google.com/drive/1kE_NAKKgZztQJMbgm2esyTVkAxlrpGtd#scrollTo=coE-fMtTJ-Pp).
+You can find a full code example showing how to use the integration in [this Colab](https://colab.research.google.com/github/deepset-ai/haystack-cookbook/blob/main/notebooks/gradient-embeders-and-generators-for-notion-rag.ipynb).
 
 ## License
 
