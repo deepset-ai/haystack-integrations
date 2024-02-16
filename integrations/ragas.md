@@ -50,10 +50,11 @@ Once installed, you will have access to a [RagasEvaluator](https://docs.haystack
 To use this integration for calculating model-based evaluation metrics, initialize a `RagasEvaluator` with the metric name and optional metric input parameters: 
 
 ```python
-from haystack import Pipeline
-from haystack.utils import Secret
+# A valid OpenAI API key must be provided as an environment variable "OPENAI_API_KEY" to run this example.
 
-from haystack_integrations.components.evaluators.ragas_evaluator import RagasEvaluator, RagasMetric
+from haystack import Pipeline
+
+from haystack_integrations.components.evaluators.ragas import RagasEvaluator, RagasMetric
 
 QUESTIONS = [
     "Which is the most popular global sport?",
@@ -78,17 +79,26 @@ GROUND_TRUTHS = [
 ]
 
 pipeline = Pipeline()
-evaluator = RagasEvaluator(
+evaluator_context = RagasEvaluator(
     metric=RagasMetric.CONTEXT_PRECISION,
-    api="openai",
-    api_key=Secret.from_env_var("OPENAI_API_KEY"),
 )
-pipeline.add_component("evaluator", evaluator)
+evaluator_aspect = RagasEvaluator(
+    metric=RagasMetric.ASPECT_CRITIQUE,
+    metric_params={"name": "custom", "definition": "Is this answer problematic for children?", "strictness": 3},
+)
+pipeline.add_component("evaluator_context", evaluator_context)
+pipeline.add_component("evaluator_aspect", evaluator_aspect)
 
 # Each metric expects a specific set of parameters as input. Refer to the
 # Ragas class' documentation for more details.
-results = pipeline.run({"evaluator": {"questions": QUESTIONS, "contexts": CONTEXTS, "ground_truths": GROUND_TRUTHS}})
+results = pipeline.run(
+    {
+        "evaluator_context": {"questions": QUESTIONS, "contexts": CONTEXTS, "ground_truths": GROUND_TRUTHS},
+        "evaluator_aspect": {"questions": QUESTIONS, "contexts": CONTEXTS, "responses": RESPONSES},
+    }
+)
 
-for output in results["evaluator"]["results"]:
-    print(output)
+for component in ["evaluator_context", "evaluator_aspect"]:
+    for output in results[component]["results"]:
+        print(output)
 ```
