@@ -41,8 +41,8 @@ pip install mistral-haystack
 ## Usage
 ### Components
 This instegration introduces 3 components:
-- The `MistralDocumentEmbedder`: Creates embeddings for Haystack Documents using Mistrak embedding models (currently only `mistral-embed`).
-- The `MistralTextEmbedder`: Creates embeddings for texts (such as queries) using Mistrak embedding models (currently only `mistral-embed`)
+- The `MistralDocumentEmbedder`: Creates embeddings for Haystack Documents using Mistral embedding models (currently only `mistral-embed`).
+- The `MistralTextEmbedder`: Creates embeddings for texts (such as queries) using Mistral embedding models (currently only `mistral-embed`)
 - The `MistralChatGenerator`: Uses Mistral chat completion models such as `mistral-tiny` (default).
   
 ### Use Mistral Generative Models
