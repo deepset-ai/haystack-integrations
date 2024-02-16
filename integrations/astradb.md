@@ -55,11 +55,10 @@ pip install astra-haystack
 This package includes Astra Document Store and Astra Retriever classes that integrate with Haystack 2.0, allowing you to easily perform document retrieval or RAG with AstraDB, and include those functions in Haystack pipelines.
 
 In order to connect AstraDB with Haystack, you'll need these pieces of information from your Datastax console:
-- AstraDB ID
-- region
-- Astra collection name
-- Astra keyspace name
-- access token
+- API Endpoint
+- Token
+- Astra collection name (otherwise `documents` will be used)
+- Astra keyspace name (otherwise `default_keyspace` will be used)
 
 ### how to use the `AstraDocumentStore`:
 
@@ -67,20 +66,8 @@ In order to connect AstraDB with Haystack, you'll need these pieces of informati
 from haystack import Document
 from haystack_integrations.document_stores.astra import AstraDocumentStore
 
-
-astra_id = os.getenv("ASTRA_DB_ID", "")
-astra_region = os.getenv("ASTRA_DB_REGION", "us-east-2")
-astra_application_token = os.getenv("ASTRA_DB_APPLICATION_TOKEN", "")
-collection_name = os.getenv("COLLECTION_NAME", "haystack_integration")
-keyspace_name = os.getenv("KEYSPACE_NAME", "astra_haystack_test")
-
-document_store = AstraDocumentStore(
-    astra_id=astra_id,
-    astra_region=astra_region,
-    astra_collection=collection_name,
-    astra_keyspace=keyspace_name,
-    astra_application_token=astra_application_token,
-)
+# Make sure ASTRA_API_ENDPOINT and ASTRA_TOKEN environment variables are set
+document_store = AstraDocumentStore()
 
 document_store.write_documents([
     Document(content="This is first"),
@@ -98,19 +85,8 @@ from haystack_integrations.components.retrievers.astra import AstraEmbeddingRetr
 from haystack_integrations.document_stores.astra import AstraDocumentStore
 
 
-astra_id = os.getenv("ASTRA_DB_ID", "")
-astra_region = os.getenv("ASTRA_DB_REGION", "us-east-2")
-astra_application_token = os.getenv("ASTRA_DB_APPLICATION_TOKEN", "")
-collection_name = os.getenv("COLLECTION_NAME", "haystack_integration")
-keyspace_name = os.getenv("KEYSPACE_NAME", "astra_haystack_test")
-
-document_store = AstraDocumentStore(
-    astra_id=astra_id,
-    astra_region=astra_region,
-    astra_collection=collection_name,
-    astra_keyspace=keyspace_name,
-    astra_application_token=astra_application_token,
-)
+# Make sure ASTRA_API_ENDPOINT and ASTRA_TOKEN environment variables are set
+document_store = AstraDocumentStore()
 
 model = "sentence-transformers/all-mpnet-base-v2"
 
