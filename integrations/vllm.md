@@ -11,6 +11,7 @@ repo: https://github.com/LLukas22/vLLM-haystack-adapter
 type: Model Provider
 report_issue: https://github.com/LLukas22/vLLM-haystack-adapter/issues
 logo: /logos/vllm.png
+version: Haystack 2.0
 toc: true
 ---
 [![PyPI - Version](https://img.shields.io/pypi/v/vllm-haystack.svg)](https://pypi.org/project/vllm-haystack)
@@ -45,7 +46,7 @@ For Haystack 1.x, the integration is available as a separate package, while for 
 ## Haystack 2.x
 
 vLLM can be deployed as a server that implements the OpenAI API protocol.
-This allows vLLM to be used with the `OpenAIGenerator` and `OpenAIChatGenerator` components in Haystack.
+This allows vLLM to be used with the [`OpenAIGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/openaigenerator) and [`OpenAIChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/openaichatgenerator) components in Haystack.
 
 For an end-to-end example of [vLLM + Haystack 2.x, see this notebook](https://colab.research.google.com/github/deepset-ai/haystack-cookbook/blob/main/notebooks/vllm_inference_engine.ipynb).
 
