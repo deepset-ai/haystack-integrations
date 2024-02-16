@@ -1,55 +1,62 @@
 ---
 layout: integration
 name: Mistral
-description: This page demonstrates how to use OpenAIGenerator within Haystack to make use of Mistral models.
+description: Use the Mistral API for embedding and text generation models.
 authors:
     - name: deepset 
       socials:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/haystack-ai
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/mistral-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/mistral
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/mistral.svg
 version: Haystack 2.0
 toc: true
 ---
+### **Table of Contents**
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Note](#note)
+- [License](#license)
 
-This page demonstrates how to use the [OpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaichatgenerator) and [OpenAITextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/openaitextembedder) within Haystack to make use of Mistral models. Since the OpenAI generators use the same protocol as Mistral, we're able to use them by changing the `API_BASE_URL`.
-
-To see an end to end example of [Mistal models in a Haystack pipeline, see this colab.](https://colab.research.google.com/github/deepset-ai/haystack-cookbook/blob/main/notebooks/mixtral-8x7b-for-web-qa.ipynb)
-
+## Overview
 [Mistral AI](https://mistral.ai/) currently provides two types of access to Large Language Models:
 
-- An API providing pay-as-you-go access to the latest models,
-- Open source models available under the Apache 2.0 License, available on [Hugging Face](https://huggingface.co/mistralai) or directly from [the documentation](https://docs.mistral.ai/models/).
+- An API providing pay-as-you-go access to the latest Mistral models like `mistral-embed` and `mistral-small`.
+- Open-source models available under the Apache 2.0 License, available on [Hugging Face](https://huggingface.co/mistralai) which you can use with the `HuggingFaceTGIGenerator`.
 
-For more information see [the Mistal docs](https://docs.mistral.ai/).
+For more information on models available via the Mistral API, see [the Mistal docs](https://docs.mistral.ai/).
 
 In order to follow along with this guide, you'll need a [Mistal API key](https://console.mistral.ai/). Add it as an environment variable, `MISTRAL_API_KEY`.
 
-### Installation
+## Installation
 
 ```bash
-pip install haystack-ai
+pip install mistral-haystack
 ```
 
-### Usage
-
-#### Use Mistral Generative Models
+## Usage
+### Components
+This instegration introduces 3 components:
+- The `MistralDocumentEmbedder`: Creates embeddings for Haystack Documents using Mistrak embedding models (currently only `mistral-embed`).
+- The `MistralTextEmbedder`: Creates embeddings for texts (such as queries) using Mistrak embedding models (currently only `mistral-embed`)
+- The `MistralChatGenerator`: Uses Mistral chat completion models such as `mistral-tiny` (default).
+  
+### Use Mistral Generative Models
 ```python
 import os
-from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
+from haystack_integrations.components.generators.mistral import MistralChatGenerator
 
 api_key = os.getenv("MISTRAL_API_KEY")
 model = "mistral-medium"
 
-client = OpenAIChatGenerator(
-    api_key=api_key, model=model, api_base_url="https://api.mistral.ai/v1"
-)
+client = MistralChatGenerator(model=model)
+
 
 response = client.run(
     messages=[ChatMessage.from_user("What is the best French cheese?")]
@@ -59,20 +66,22 @@ print(response)
 ```bash
 {'replies': [ChatMessage(content='The "best" French cheese is subjective and depends on personal taste...', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'mistral-medium', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 231, 'prompt_tokens': 16, 'total_tokens': 247}})]}
 ```
-Mistral LLMs also support streaming responses if you pass a callback in to the `OpenAIChatGenerator` like so:
+Mistral LLMs also support streaming responses if you pass a callback in to the `MistralChatGenerator` like so:
+
 ```python
 import os
-from haystack.components.generators.chat import OpenAIChatGenerator
+
+from haystack.components.generators.utils import print_streaming_chunk
 from haystack.dataclasses import ChatMessage
+from haystack_integrations.components.generators.mistral import MistralChatGenerator
 
 api_key = os.getenv("MISTRAL_API_KEY")
 model = "mistral-medium"
 
-client = OpenAIChatGenerator(
+client = MistralChatGenerator(
     api_key=api_key,
     model=model,
-    api_base_url="https://api.mistral.ai/v1",
-    streaming_callback=lambda chunk: print(chunk.content, end="", flush=True)
+    streaming_callback=print_streaming_chunk
 )
 
 response = client.run(
@@ -81,37 +90,16 @@ response = client.run(
 print(response)
 ```
 
-#### Use a Mistral Embedding Models
-```python
-import os
-from haystack.components.embedders import OpenAITextEmbedder
+### Use a Mistral Embedding Models
 
-api_key = os.getenv("MISTRAL_API_KEY")
-model = "mistral-embed"
-
-
-embedder = OpenAITextEmbedder(api_key=api_key, model=model, api_base_url="https://api.mistral.ai/v1")
-
-response = embedder.run(text="What is the best French cheese?")
-print(response)
-# {'embedding': [-0.0186004638671875, ...],
-# 'meta': {'model': 'mistral-embed', 
-#'usage': {'prompt_tokens': 9, 'total_tokens': 9, 'completion_tokens': 0}}}
-```
-
-In a Haystack pipeline:
+Use the `MistralDocumentEmbedder` in an indexing pipeline:
 
 ```python
-import os
 
-from haystack import Document
-from haystack import Pipeline
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.components.embedders import OpenAITextEmbedder, OpenAIDocumentEmbedder
-from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+import os
+from haystack_integrations.components.embedders.mistral.document_embedder import MistralDocumentEmbedder
 
 api_key = os.getenv("MISTRAL_API_KEY")
-api_base_url ="https://api.mistral.ai/v1"
 
 document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
 
@@ -119,20 +107,69 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
              Document(content="I saw a black horse running"),
              Document(content="Germany has many big cities")]
 
-document_embedder = OpenAIDocumentEmbedder(api_key=api_key, model='mistral-embed', api_base_url=api_base_url)
+embedder = MistralDocumentEmbedder()
+writer = DocumentWriter(document_store=document_store)
+
+indexing_pipeline = Pipeline()
+indexing_pipeline.add_component(name="embedder", instance=embedder)
+indexing_pipeline.add_component(name="writer", instance=writer)
+
+indexing_pipeline.run(data={"embedder": {"documents": documents}})
+```
+
+Use the `MistralTextEmbedder` in a RAG pipeline:
+
+```python
+import os
+
+from haystack import Document
+from haystack import Pipeline
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.embedders.mistral.document_embedder import MistralDocumentEmbedder
+from haystack_integrations.components.embedders.mistral.text_embedder import MistralTextEmbedder
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+
+api_key = os.getenv("MISTRAL_API_KEY")
+
+document_store = InMemoryDocumentStore()
+
+documents = [Document(content="My name is Wolfgang and I live in Berlin"),
+             Document(content="I saw a black horse running"),
+             Document(content="Germany has many big cities")]
+
+document_embedder = MistralDocumentEmbedder()
 documents_with_embeddings = document_embedder.run(documents)['documents']
 document_store.write_documents(documents)
 
-text_embedder = OpenAITextEmbedder(api_key=api_key, model="mistral-embed", api_base_url=api_base_url)
+text_embedder = MistralTextEmbedder()
+retriever = InMemoryEmbeddingRetriever(document_store=document_store)
+prompt_builder = DynamicChatPromptBuilder(runtime_variables=["documents"])
+llm = MistralChatGenerator(streaming_callback=print_streaming_chunk)
 
-query_pipeline = Pipeline()
-query_pipeline.add_component("text_embedder", text_embedder)
-query_pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
-query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+messages = [ChatMessage.from_user("Here are some the documents: {{documents}} \\n Answer: {{query}}")]
 
-query = "Who lives in Berlin?"
+rag_pipeline = Pipeline()
+rag_pipeline.add_component("text_embedder", text_embedder)
+rag_pipeline.add_component("retriever", retriever)
+rag_pipeline.add_component("prompt_builder", prompt_builder)
+rag_pipeline.add_component("llm", llm)
 
-result = query_pipeline.run({"text_embedder":{"text": query}})
 
-print(result['retriever']['documents'])
+rag_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+rag_pipeline.connect("retriever.documents", "prompt_builder.documents")
+rag_pipeline.connect("prompt_builder.prompt", "llm.messages")
+
+question = "Who lives in Berlin?"
+
+result = rag_pipeline.run(
+    {
+        "text_embedder": {"text": question},
+        "prompt_builder": {"template_variables": {"query": question}, "prompt_source": messages},
+        "llm": {"generation_kwargs": {"max_tokens": 165}},
+    }
+)
 ```
+
+### License
+
+`mistral-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
