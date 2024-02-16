@@ -20,7 +20,6 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Note](#note)
 - [License](#license)
 
 ## Overview
