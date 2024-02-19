@@ -42,7 +42,8 @@ Once installed, you will have access to [AmazonBedrockGenerator](https://docs.ha
 
 ### AmazonBedrockGenerator
 
-To use this integration for text generation, initialize an `AmazonBedrockGenerator` with the model name, the AWS credentials should be set as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/v2.0/docs/secret-management) arguments. Note, make sure the region you set supports Amazon Bedrock. 
+To use this integration for text generation, initialize an `AmazonBedrockGenerator` with the model name, the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) should be set as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/v2.0/docs/secret-management) arguments. 
+Note, make sure the region you set supports Amazon Bedrock. 
 
 Currently, the following models are supported: 
 
