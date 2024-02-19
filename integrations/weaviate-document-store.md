@@ -3,17 +3,78 @@ layout: integration
 name: Weaviate
 description: Use a Weaviate database with Haystack
 authors:
-    - name: deepset
-      socials:
-        github: deepset-ai
-        twitter: deepset_ai
-        linkedin: deepset-ai
-pypi: https://pypi.org/project/farm-haystack
-repo: https://github.com/deepset-ai/haystack
+  - name: deepset
+    socials:
+      github: deepset-ai
+      twitter: deepset_ai
+      linkedin: deepset-ai
+pypi: https://pypi.org/project/weaviate-haystack/
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weaviate_haystack
 type: Document Store
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/weaviate.png
+version: Haystack 2.0
+toc: true
 ---
+
+### Table of Contents
+
+- [Haystack 2.0](#haystack-20)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [Haystack 1.x](#haystack-1x)
+  - [Installation (1.x)](#installation-1x)
+  - [Usage (1.x)](#usage-1x)
+
+## Haystack 2.0
+
+[![PyPI - Version](https://img.shields.io/pypi/v/weaviate-haystack.svg)](https://pypi.org/project/weaviate-haystack)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/weaviate-haystack.svg)](https://pypi.org/project/weaviate-haystack)
+[![test](https://github.com/deepset-ai/haystack-core-integrations/actions/workflows/weaviate.yml/badge.svg)](https://github.com/deepset-ai/haystack-core-integrations/actions/workflows/weaviate.yml)
+
+---
+
+## Installation
+
+Use `pip` to install Weaviate:
+
+```console
+pip install weaviate-haystack
+```
+
+## Usage
+
+Once installed, initialize your Weaviate database to use it with Haystack 2.0:
+
+```python
+from haystack.utils.auth import Secret
+from haystack_integrations.document_stores.weaviate import WeaviateDocumentStore, AuthApiKey
+
+
+auth_client_secret = AuthApiKey(Secret.from_token("MY_WEAVIATE_API_KEY"))
+document_store = WeaviateDocumentStore(auth_client_secret=auth_client_secret)
+```
+
+### Writing Documents to WeaviateDocumentStore
+
+To write documents to `WeaviateDocumentStore`, create an indexing pipeline.
+
+```python
+from haystack.components.file_converters import TextFileToDocument
+from haystack.components.writers import DocumentWriter
+
+indexing = Pipeline()
+indexing.add_component("converter", TextFileToDocument())
+indexing.add_component("writer", DocumentWriter(document_store))
+indexing.connect("converter", "writer")
+indexing.run({"converter": {"paths": file_paths}})
+```
+
+### License
+
+`weaviate-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+
+## Haystack 1.x
 
 Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeaviateDocumentStore`. You can choose to run Weaviate locally youself, or use a hosted Weaviate database.
 
@@ -78,13 +139,13 @@ from haystack.nodes import AnswerParser, EmbeddingRetriever, PromptNode, PromptT
 document_store = WeaviateDocumentStore(host='http://localhost",
                                        port=8080,
                                        embedding_dim=768)
-              
+
 retriever = EmbeddingRetriever(document_store = document_store,
                                embedding_model="sentence-transformers/multi-qa-mpnet-base-dot-v1")
 prompt_template = PromptTemplate(prompt = """"Given the provided Documents, answer the Query. Make your answer detailed and long\n
                                               Query: {query}\n
                                               Documents: {join(documents)}
-                                              Answer: 
+                                              Answer:
                                           """,
                                           output_parser=AnswerParser())
 prompt_node = PromptNode(model_name_or_path = "gpt-4",
