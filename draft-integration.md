@@ -10,7 +10,7 @@ authors:
         linkedin: author-linkedin-url
 pypi: https://pypi.org/project/{project-slug}
 repo: https://your-repo-url
-type: Type of integration
+type: Type of integration (e.g.: Model Provider or Document Sotre)
 report_issue: https://your-repo-url/issues
 logo: /logos/your-logo.png
 version: Haystack 2.0
