@@ -39,7 +39,7 @@ This instegration introduces X components:
 ### Use XYZ
 
 ```python
-Example code block
+Example code block (must actually run, include all imports, etc.)
 ```
 
 ### License
