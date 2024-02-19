@@ -1,17 +1,17 @@
 ---
 layout: integration
-name: Name of your integration
-description: Description of integration
+name: Your integration name
+description: The description of your integration
 authors:
-    - name: author-name
+    - name: Author Name
       socials:
-        github: author-username
-        twitter: author-username
+        github: author-github-username
+        twitter: author-twitter-username
         linkedin: author-linkedin-url
-pypi: https://pypi.org/project/project-slug
-repo: https://your-repo-url
-type: Type of integration (e.g.: Model Provider or Document Sotre)
-report_issue: https://your-repo-url/issues
+pypi: https://pypi.org/project/your-project
+repo: https://github.com/your-repo
+type: Type of your integration (like Model Provider or Document Store etc)
+report_issue: https://github.com/yout-repo/issues
 logo: /logos/your-logo.png
 version: Haystack 2.0
 toc: true
