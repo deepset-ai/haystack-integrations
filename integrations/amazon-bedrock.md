@@ -42,23 +42,21 @@ Once installed, you will have access to [AmazonBedrockGenerator](https://docs.ha
 
 ### AmazonBedrockGenerator
 
-To use this integration for text generation, initialize an `AmazonBedrockGenerator` with the model name and aws credentials: 
+To use this integration for text generation, initialize an `AmazonBedrockGenerator` with the model name, the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) should be set as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/v2.0/docs/secret-management) arguments. 
+Note, make sure the region you set supports Amazon Bedrock. 
 
 Currently, the following models are supported: 
-- Anthropic's Claude
+
 - AI21 Labs' Jurassic-2
+- Amazon Titan language models
+- Anthropic's Claude
 - Cohere's Command
 - Meta's Llama 2
-- Amazon Titan language models
 
 ```python
 from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockGenerator
 
-aws_access_key_id="..."
-aws_secret_access_key="..."
-aws_region_name="eu-central-1"
-
-generator = AmazonBedrockGenerator(model="anthropic.claude-v2", aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_region_name=aws_region_name)
+generator = AmazonBedrockGenerator(model="anthropic.claude-v2")
 result = generator.run("Who is the best American actor?")
 for reply in result["replies"]:
     print(reply)
@@ -92,6 +90,3 @@ Output:
 ```shell
 {'replies': [ChatMessage(content='  Procesamiento del Lenguaje Natural (PLN) es una rama de la inteligencia artificial que se enfoca en el desarrollo de algoritmos y modelos computacionales para analizar, comprender y generar texto y lenguaje humano.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'prompt_token_count': 46, 'generation_token_count': 60, 'stop_reason': 'stop'})]}
 ```
-
-
-
