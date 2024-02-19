@@ -32,7 +32,7 @@ pip install your-package
 
 ## Usage
 ### Components
-This instegration introduces X components:
+This integration introduces X components:
 
 - The `ComponentName`: 
   
