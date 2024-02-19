@@ -7,7 +7,7 @@ authors:
       socials:
         github: author-username
         twitter: author-username
-        linkedin: author-username
+        linkedin: author-linkedin-url
 pypi: https://pypi.org/project/{project-slug}
 repo: https://your-repo-url
 type: Type of integration
