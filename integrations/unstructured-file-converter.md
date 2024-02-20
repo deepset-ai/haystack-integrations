@@ -39,12 +39,17 @@ docker run -p 8000:8000 -d --rm --name unstructured-api quay.io/unstructured-io/
 
 ## Usage
 
+If you plan to use the hosted version of the Unstructured API, set the Unstructured API key as an environment variable `UNSTRUCTURED_API_KEY`:
+```bash
+export UNSTRUCTURED_API_KEY=your_api_key
+```
+
 ### In isolation
 ```python
 import os
 from haystack_integrations.components.converters.unstructured import UnstructuredFileConverter
 
-converter = UnstructuredFileConverter(api_key="UNSTRUCTURED_API_KEY")
+converter = UnstructuredFileConverter()
 documents = converter.run(paths = ["a/file/path.pdf", "a/directory/path"])["documents"]
 ```
 
@@ -59,7 +64,7 @@ from haystack_integrations.components.converters.unstructured import Unstructure
 document_store = InMemoryDocumentStore()
 
 indexing = Pipeline()
-indexing.add_component("converter", UnstructuredFileConverter(api_key="UNSTRUCTURED_API_KEY"))
+indexing.add_component("converter", UnstructuredFileConverter())
 indexing.add_component("writer", DocumentWriter(document_store))
 indexing.connect("converter", "writer")
 
