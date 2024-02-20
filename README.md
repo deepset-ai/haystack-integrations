@@ -14,8 +14,9 @@ Prompts for the `PromptNode` and `Agent` can be found on our [Prompt Hub](https:
 To contribute a prompt, follow instructions in the [`prompthub`](https://github.com/deepset-ai/prompthub) repo.
 
 ## How to contribute
-
-To contribute, create a PR add an `.md` file to the `integrations/` directory. A few things to include in the file 👇
+To contribute, create a PR add an `.md` file to the `integrations/` directory.
+👉 You can start off with the [draft integration page](https://github.com/deepset-ai/haystack-integrations/blob/main/draft-integration.md)
+A few things to include in the file 👇
 The frontmatter has to include the following:
 ```
 ---
