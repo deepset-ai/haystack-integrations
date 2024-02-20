@@ -55,10 +55,9 @@ pip install astra-haystack
 This package includes Astra Document Store and Astra Retriever classes that integrate with Haystack 2.0, allowing you to easily perform document retrieval or RAG with AstraDB, and include those functions in Haystack pipelines.
 
 In order to connect AstraDB with Haystack, you'll need these pieces of information from your Datastax console:
-- API Endpoint
-- Token
+- Database API Endpoint
+- Application Token
 - Astra collection name (otherwise `documents` will be used)
-- Astra keyspace name (otherwise `default_keyspace` will be used)
 
 ### how to use the `AstraDocumentStore`:
 
@@ -66,7 +65,7 @@ In order to connect AstraDB with Haystack, you'll need these pieces of informati
 from haystack import Document
 from haystack_integrations.document_stores.astra import AstraDocumentStore
 
-# Make sure ASTRA_API_ENDPOINT and ASTRA_TOKEN environment variables are set
+# Make sure ASTRA_DB_API_ENDPOINT and ASTRA_DB_APPLICATION_TOKEN environment variables are set
 document_store = AstraDocumentStore()
 
 document_store.write_documents([
@@ -85,7 +84,7 @@ from haystack_integrations.components.retrievers.astra import AstraEmbeddingRetr
 from haystack_integrations.document_stores.astra import AstraDocumentStore
 
 
-# Make sure ASTRA_API_ENDPOINT and ASTRA_TOKEN environment variables are set
+# Make sure ASTRA_DB_API_ENDPOINT and ASTRA_DB_APPLICATION_TOKEN environment variables are set
 document_store = AstraDocumentStore()
 
 model = "sentence-transformers/all-mpnet-base-v2"
