@@ -39,7 +39,7 @@ docker run -p 8000:8000 -d --rm --name unstructured-api quay.io/unstructured-io/
 
 ## Usage
 
-Set the Unstructured API key as an environment variable `UNSTRUCTURED_API_KEY`:
+If you plan to use the hosted version of the Unstructured API, set the Unstructured API key as an environment variable `UNSTRUCTURED_API_KEY`:
 ```bash
 export UNSTRUCTURED_API_KEY=your_api_key
 ```
