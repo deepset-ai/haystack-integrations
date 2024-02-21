@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: FastEmbed
-description: Use the Fastembed embedding models
+description: Use the FastEmbed embedding models
 authors:
     - name: Nicola Procopio
       socials:
