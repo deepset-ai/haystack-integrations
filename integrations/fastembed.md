@@ -6,7 +6,7 @@ authors:
     - name: Nicola Procopio
       socials:
         github: nickprock
-        linkedin: nicolaprocopio
+        linkedin: https://www.linkedin.com/in/nicolaprocopio
 pypi: https://pypi.org/project/fastembed-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/fastembed
 type: Model Provider
