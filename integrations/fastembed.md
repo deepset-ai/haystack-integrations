@@ -22,7 +22,7 @@ toc: true
 - [License](#license)
 
 ## Overview
-[Fastembed](https://qdrant.github.io/fastembed/) is a lightweight, fast, Python library built for embedding generation.
+[FastEmbed](https://qdrant.github.io/fastembed/) is a lightweight, fast, Python library built for embedding generation.
 
 1. Light & Fast
   * Quantized model weights
