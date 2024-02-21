@@ -76,6 +76,7 @@ pip install instructor-embedders-haystack
 ### Using the Text Embedder
 
 ```python
+from haystack.utils.device import ComponentDevice
 from haystack_integrations.components.embedders.instructor_embedders import InstructorTextEmbedder
 
 # Example text from the Amazon Reviews Polarity Dataset (https://huggingface.co/datasets/amazon_polarity)
@@ -86,7 +87,7 @@ instruction = (
 
 text_embedder = InstructorTextEmbedder(
     model="hkunlp/instructor-base", instruction=instruction,
-    device="cpu"
+    device=ComponentDevice.from_str("cpu"),
 )
 text_embedder.warm_up()
 result = text_embedder.run(text)
@@ -97,8 +98,9 @@ print(f"Embedding Dimension: {len(result['embedding'])}")
 ### Using the Document Embedder
 
 ```python
-from haystack_integrations.components.embedders.instructor_embedders import InstructorDocumentEmbedder
+from haystack.utils.device import ComponentDevice
 from haystack.dataclasses import Document
+from haystack_integrations.components.embedders.instructor_embedders import InstructorDocumentEmbedder
 
 
 doc_embedding_instruction = "Represent the Medical Document for retrieval:"
@@ -107,7 +109,7 @@ doc_embedder = InstructorDocumentEmbedder(
     model="hkunlp/instructor-base",
     instruction=doc_embedding_instruction,
     batch_size=32,
-    device="cpu",
+    device=ComponentDevice.from_str("cpu"),
 )
 
 doc_embedder.warm_up()
@@ -152,6 +154,7 @@ from haystack.dataclasses import Document
 from haystack import Pipeline
 from haystack.components.writers import DocumentWriter
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack.utils.device import ComponentDevice
 from datasets import load_dataset
 
 # Import custom INSTRUCTOR Embedders
@@ -169,7 +172,7 @@ doc_embedder = InstructorDocumentEmbedder(
     model="hkunlp/instructor-base",
     instruction=doc_embedding_instruction,
     batch_size=32,
-    device="cpu",
+    device=ComponentDevice.from_str("cpu"),
 )
 # Warm up the embedder (loading the pre-trained model)
 doc_embedder.warm_up()
@@ -213,7 +216,7 @@ query_embedding_instruction = (
 text_embedder = InstructorTextEmbedder(
     model="hkunlp/instructor-base",
     instruction=query_embedding_instruction,
-    device="cpu",
+    device=ComponentDevice.from_str("cpu"),
 )
 # Load the text embedding model
 text_embedder.warm_up()
