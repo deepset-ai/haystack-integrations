@@ -64,7 +64,7 @@ indexing.run({"converter": {"sources": file_paths}})
 ```
 
 ## Examples
-You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/chroma) or in [this Colab](https://colab.research.google.com/drive/1YpDetI8BRbObPDEVdfqUcwhEX9UUXP-m?usp=sharing).
+You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/chroma).
 
 ## License
 
