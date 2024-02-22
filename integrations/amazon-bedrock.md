@@ -38,7 +38,8 @@ pip install amazon-bedrock-haystack
 
 ## Usage
 
-Once installed, you will have access to [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator) and [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockchatgenerator) components that support foundation models on Amazon Bedrock. 
+Once installed, you will have access to [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator) and [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockchatgenerator) components that support generative language models on Amazon Bedrock.
+You will also have access to the AmazonBedrockTextEmbedder and AmazonBedrockDocumentEmbedder, which can be used to compute embeddings.
 
 ### AmazonBedrockGenerator
 
@@ -68,7 +69,7 @@ Output:
 
 ### AmazonBedrockChatGenerator
 
-To use this integration for chat models, initialize an `AmazonBedrockChatGenerator` with the model name and aws credentials:
+To use this integration for chat models, initialize an `AmazonBedrockChatGenerator` with the model name and AWS credentials:
 
 Currently, the following models are supported: 
 - Anthropic's Claude
@@ -90,3 +91,47 @@ Output:
 ```shell
 {'replies': [ChatMessage(content='  Procesamiento del Lenguaje Natural (PLN) es una rama de la inteligencia artificial que se enfoca en el desarrollo de algoritmos y modelos computacionales para analizar, comprender y generar texto y lenguaje humano.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'prompt_token_count': 46, 'generation_token_count': 60, 'stop_reason': 'stop'})]}
 ```
+
+### AmazonBedrockTextEmbedder and AmazonBedrockDocumentEmbedder
+
+These two components can be used to compute embeddings for text and Documents respectively. 
+Supported models are "amazon.titan-embed-text-v1", "cohere.embed-english-v3" and "cohere.embed-multilingual-v3".
+
+See them in action:
+
+```python
+from haystack import Pipeline
+from haystack.dataclasses import Document
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.embedders.amazon_bedrock import (
+    AmazonBedrockDocumentEmbedder,
+    AmazonBedrockTextEmbedder,
+)
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+
+document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+documents = [Document(content="My name is Wolfgang and I live in Berlin"),
+             Document(content="I saw a black horse running"),
+             Document(content="Germany has many big cities")]
+
+indexing_pipeline = Pipeline()
+indexing_pipeline.add_component("embedder", AmazonBedrockDocumentEmbedder(model="cohere.embed-english-v3"))
+indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
+indexing_pipeline.connect("embedder", "writer")
+
+indexing_pipeline.run({"embedder": {"documents": documents}})
+
+
+query_pipeline = Pipeline()
+query_pipeline.add_component("text_embedder", AmazonBedrockTextEmbedder(model="cohere.embed-english-v3"))
+query_pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+
+query = "Who lives in Berlin?"
+
+result = query_pipeline.run({"text_embedder":{"text": query}})
+
+print(result['retriever']['documents'][0])
+
+# Document(id=..., content: 'My name is Wolfgang and I live in Berlin')
