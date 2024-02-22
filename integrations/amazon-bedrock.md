@@ -39,7 +39,7 @@ pip install amazon-bedrock-haystack
 ## Usage
 
 Once installed, you will have access to [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockgenerator) and [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockchatgenerator) components that support generative language models on Amazon Bedrock.
-You will also have access to the AmazonBedrockTextEmbedder and AmazonBedrockDocumentEmbedder, which can be used to compute embeddings.
+You will also have access to the [AmazonBedrockTextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrocktextembedder) and [AmazonBedrockDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/amazonbedrockdocumentembedder), which can be used to compute embeddings.
 
 ### AmazonBedrockGenerator
 
