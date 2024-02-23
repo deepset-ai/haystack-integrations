@@ -55,7 +55,7 @@ Once your database is set, first export an environment variable called `MONGO_CO
 export MONGO_CONNECTION_STRING="mongodb+srv://<username>:<password>@<cluster_name>.gwkckbk.mongodb.net/?retryWrites=true&w=majority"
 ```
 
-And then you can initialize a `MongoDBAtlasDocumentStore` for Haystack with required configurations:
+And then you can initialize a [`MongoDBAtlasDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore) for Haystack with required configurations:
 
 ```python
 from haystack_integrations.document_stores.mongodb_atlas import MongoDBAtlasDocumentStore
