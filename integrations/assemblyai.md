@@ -63,7 +63,7 @@ Following example showcases an indexing pipeline that incorporates `AssemblyAITr
 from haystack.components.writers import DocumentWriter
 from haystack.components.preprocessors import DocumentSplitter
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
-from haystack.pipeline import Pipeline
+from haystack import Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
