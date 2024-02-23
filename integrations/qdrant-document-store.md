@@ -4,10 +4,10 @@ name: Qdrant
 description: Use the Qdrant vector database with Haystack
 authors:
   - name: deepset
-      socials:
-        github: deepset-ai
-        twitter: deepset_ai
-        linkedin: deepset-ai
+    socials:
+      github: deepset-ai
+      twitter: deepset_ai
+      linkedin: deepset-ai
   - name: Qdrant
     socials:
       github: qdrant
