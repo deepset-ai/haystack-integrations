@@ -14,6 +14,7 @@ type: Document Store
 report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/mongodb.png
 toc: true
+version: Haystack 2.0
 ---
 
 ### Table of Contents
