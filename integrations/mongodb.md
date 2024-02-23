@@ -55,7 +55,7 @@ Once your database is set, first export an environment variable called `MONGO_CO
 export MONGO_CONNECTION_STRING="mongodb+srv://<username>:<password>@<cluster_name>.gwkckbk.mongodb.net/?retryWrites=true&w=majority"
 ```
 
-And then you can initialize a [`MongoDBAtlasDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore) for Haystack with required configurations:
+And then you can initialize a [`MongoDBAtlasDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore) for Haystack with the required configurations:
 
 ```python
 from haystack_integrations.document_stores.mongodb_atlas import MongoDBAtlasDocumentStore
@@ -68,7 +68,7 @@ document_store = MongoDBAtlasDocumentStore(
 
 ### Example pipelines
 
-Here is some example code of an end-to-end RAG app built on MongoDB Atlas: one ingestion pipeline that embeds the documents,
+Here is some example code of an end-to-end RAG app built on MongoDB Atlas: one indexing pipeline that embeds the documents,
 and a generative pipeline that can be used for question answering.
 
 ```python
@@ -97,12 +97,12 @@ doc_embedder = SentenceTransformersDocumentEmbedder(model="intfloat/e5-base-v2")
 query_embedder = SentenceTransformersTextEmbedder(model="intfloat/e5-base-v2")
 
 # Pipeline that ingests document for retrieval
-ingestion_pipe = Pipeline()
-ingestion_pipe.add_component(instance=doc_embedder, name="doc_embedder")
-ingestion_pipe.add_component(instance=doc_writer, name="doc_writer")
+indexing_pipe = Pipeline()
+indexing_pipe.add_component(instance=doc_embedder, name="doc_embedder")
+indexing_pipe.add_component(instance=doc_writer, name="doc_writer")
 
-ingestion_pipe.connect("doc_embedder.documents", "doc_writer.documents")
-ingestion_pipe.run({"doc_embedder": {"documents": documents}})
+indexing_pipe.connect("doc_embedder.documents", "doc_writer.documents")
+indexing_pipe.run({"doc_embedder": {"documents": documents}})
 
 # Build a RAG pipeline with a Retriever to get relevant documents to 
 # the query and a OpenAIGenerator interacting with LLMs using a custom prompt.
