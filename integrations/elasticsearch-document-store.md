@@ -59,7 +59,7 @@ For this step, you can use the available [TextFileToDocument](https://docs.hayst
 
 ```python
 from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore
-from haystack.pipeline import Pipeline
+from haystack import Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.converters import TextFileToDocument
 from haystack.components.preprocessors import DocumentSplitter
@@ -92,7 +92,7 @@ Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be u
 
 ```python
 from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore
-from haystack.pipeline import Pipeline
+from haystack import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder 
 from haystack_integrations.components.retrievers.elasticsearch import ElasticsearchEmbeddingRetriever
 

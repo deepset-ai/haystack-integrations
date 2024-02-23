@@ -89,7 +89,7 @@ You can retrieve Documents similar to a given query using a simple Pipeline.
 ```python
 from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack_integrations.components.retrievers.pgvector import PgvectorEmbeddingRetriever
-from haystack.pipeline import Pipeline
+from haystack import Pipeline
 
 querying = Pipeline()
 querying.add_component("embedder", SentenceTransformersTextEmbedder())
