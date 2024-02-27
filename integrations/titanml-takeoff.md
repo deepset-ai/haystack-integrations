@@ -13,7 +13,7 @@ authors:
         github: rorcde
         twitter: rorcde
         linkedin: https://www.linkedin.com/in/aiengineer/
-pypi: https://pypi.org/project/your-project
+pypi: https://pypi.org/project/takeoff-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/titanml-takeoff
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
