@@ -8,11 +8,16 @@ authors:
         github: fergusbarratt
         twitter: BarrattFergus
         linkedin: https://www.linkedin.com/in/fergusfinn/
+    - name: Rod Rivera
+          socials:
+            github: rorcde
+            twitter: rorcde
+            linkedin: https://www.linkedin.com/in/aiengineer/
 pypi: https://pypi.org/project/your-project
-repo: https://github.com/your-repo
+repo: ttps://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/titanml-takeoff
 type: Model Provider
-report_issue: https://github.com/yout-repo/issues
-logo: /logos/your-logo.png
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/titanml.png
 version: Haystack 2.0
 toc: true
 ---
