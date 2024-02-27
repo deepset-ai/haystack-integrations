@@ -9,10 +9,10 @@ authors:
         twitter: BarrattFergus
         linkedin: https://www.linkedin.com/in/fergusfinn/
     - name: Rod Rivera
-          socials:
-            github: rorcde
-            twitter: rorcde
-            linkedin: https://www.linkedin.com/in/aiengineer/
+      socials:
+        github: rorcde
+        twitter: rorcde
+        linkedin: https://www.linkedin.com/in/aiengineer/
 pypi: https://pypi.org/project/your-project
 repo: ttps://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/titanml-takeoff
 type: Model Provider
