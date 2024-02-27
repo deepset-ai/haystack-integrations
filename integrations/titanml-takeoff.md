@@ -41,7 +41,7 @@ pip install takeoff_haystack
 ## Usage
 You can interact with takeoff deployed models using the `TakeoffGenerator` component in Haystack. To do so, you must have a takeoff model deployed. For information on how to do so, please read the takeoff docs [here](https://docs.titanml.co/docs/Docs/launching/).
 
-The following example deploys a gpt2 model using takeoff locally on port 3000.
+The following example deploys a Llama-2-7B-Chat-AWQ model using takeoff locally on port 3000.
 
 ```bash
 docker run --gpus all -e TAKEOFF_MODEL_NAME=TheBloke/Llama-2-7B-Chat-AWQ \
