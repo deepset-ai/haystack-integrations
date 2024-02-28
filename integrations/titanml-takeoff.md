@@ -25,6 +25,7 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Example](#example)
 
 ## Overview
 You can use the Takeoff inference server to deploy local models efficiently in your Haystack 2.0 pipelines. Takeoff is a state-of-the art inference server focused on deploying openly available language models at scale. It can run LLMs on local machines with consumer GPUs, and on cloud infrastructure. 
@@ -50,7 +51,8 @@ docker run --gpus all -e TAKEOFF_MODEL_NAME=TheBloke/Llama-2-7B-Chat-AWQ \
                       -p 3000:3000 tytn/takeoff-pro:0.11.0-gpu
 ```
 
-## TextGeneration
+## Example
+### Daily News Digest Generation
 
 Below is an example of using takeoff models in a Haystack RAG pipeline. It summarizes headlines from popular news sites in technology such as Techcrunch, TheVerge, Engadget and others.
 
