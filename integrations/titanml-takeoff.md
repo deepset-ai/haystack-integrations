@@ -14,9 +14,9 @@ authors:
         twitter: rorcde
         linkedin: https://www.linkedin.com/in/aiengineer/
 pypi: https://pypi.org/project/takeoff-haystack/
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/titanml-takeoff
+repo: https://github.com/titanml/takeoff-haystack
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+report_issue: https://github.com/titanml/takeoff-haystack/issues
 logo: /logos/titanml.png
 version: Haystack 2.0
 toc: true
@@ -25,7 +25,6 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-- [License](#license)
 
 ## Overview
 You can use the Takeoff inference server to deploy local models efficiently in your Haystack 2.0 pipelines. Takeoff is a state-of-the art inference server focused on deploying openly available language models at scale. It can run LLMs on local machines with consumer GPUs, and on cloud infrastructure. 
@@ -41,7 +40,7 @@ pip install takeoff_haystack
 ## Usage
 You can interact with takeoff deployed models using the `TakeoffGenerator` component in Haystack. To do so, you must have a takeoff model deployed. For information on how to do so, please read the takeoff docs [here](https://docs.titanml.co/docs/Docs/launching/).
 
-The following example deploys a Llama-2-7B-Chat-AWQ model using takeoff locally on port 3000.
+The following example deploys a Llama-2-7B-Chat-AWQ model using takeoff locally on port 3000. You can get a free license [here](https://www.titanml.co/contact).
 
 ```bash
 docker run --gpus all -e TAKEOFF_MODEL_NAME=TheBloke/Llama-2-7B-Chat-AWQ \
@@ -53,7 +52,7 @@ docker run --gpus all -e TAKEOFF_MODEL_NAME=TheBloke/Llama-2-7B-Chat-AWQ \
 
 ## TextGeneration
 
-Below is an example of using takeoff models in a Haystack RAG pipeline. It summarizes headlines from popular news sites in technology.
+Below is an example of using takeoff models in a Haystack RAG pipeline. It summarizes headlines from popular news sites in technology such as Techcrunch, TheVerge, Engadget and others.
 
 ```bash
 from typing import Dict, List
@@ -124,7 +123,3 @@ You should see a response like the following
 ```
 ['\n\n\nANSWER:\n\n1. Poker Roguelike - Exciting gameplay\n2. AI-powered news reader - Personalized feed\n3. Best laptops MWC 2024 - Powerful devices']
 ```
-
-### License
-
-Info about your integration license
