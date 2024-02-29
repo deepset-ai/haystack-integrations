@@ -8,7 +8,7 @@ authors:
         github: anakin87
 pypi: https://pypi.org/project/haystack-entailment-checker/
 repo: https://github.com/anakin87/haystack-entailment-checker
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/anakin87/haystack-entailment-checker/issues
 ---
 **Live Demo**: Fact Checking 🎸 Rocks! &nbsp; [![Generic badge](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/anakin87/fact-checking-rocks)

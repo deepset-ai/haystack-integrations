@@ -12,7 +12,7 @@ authors:
         github: Xceron
 pypi: https://pypi.org/project/haystack-memory/
 repo: https://github.com/rolandtannous/haystack-memory
-type: Agent Tool
+type: Custom Component
 report_issue: https://github.com/rolandtannous/haystack-memory/issues
 ---
 
