@@ -10,7 +10,7 @@ authors:
         linkedin: deepset-ai
 pypi: https://pypi.org/project/farm-haystack-text2speech/
 repo: https://github.com/deepset-ai/haystack-extras/tree/main/nodes/text2speech
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/deepset-ai/haystack-extras/issues
 ---
 

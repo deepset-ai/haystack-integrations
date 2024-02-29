@@ -10,7 +10,7 @@ authors:
         linkedin: deepset-ai
 pypi: https://pypi.org/project/unstructured-fileconverter-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/unstructured
-type: Custom Node
+type: Data Ingestion
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/unstructured.svg
 version: Haystack 2.0

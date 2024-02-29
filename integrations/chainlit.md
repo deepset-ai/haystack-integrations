@@ -9,7 +9,7 @@ authors:
         twitter: chainlit_io
 pypi: https://pypi.org/project/chainlit/
 repo: https://github.com/Chainlit/chainlit
-type: Monitoring
+type: Monitoring Tool
 report_issue: https://github.com/Chainlit/chainlit/issues
 logo: /logos/chainlit.png
 ---

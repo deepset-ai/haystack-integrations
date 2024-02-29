@@ -9,7 +9,7 @@ authors:
       twitter: traceloopdev
 pypi: https://pypi.org/project/traceloop-sdk/
 repo: https://github.com/traceloop/openllmetry
-type: Monitoring
+type: Monitoring Tool
 report_issue: https://github.com/traceloop/openllmetry/issues
 logo: /logos/traceloop.png
 toc: true

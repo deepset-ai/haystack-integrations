@@ -8,7 +8,7 @@ authors:
         github: bogdankostic
 pypi: https://pypi.org/project/notion-haystack/
 repo: https://github.com/bogdankostic/notion-haystack
-type: Custom Node
+type: Data Ingestion
 report_issue: https://github.com/bogdankostic/notion-haystack/issues
 logo: /logos/notion.png
 ---

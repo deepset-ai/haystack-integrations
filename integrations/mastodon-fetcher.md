@@ -10,7 +10,7 @@ authors:
         linkedin: tuanacelik
 pypi: https://pypi.org/project/mastodon-fetcher-haystack/
 repo: https://github.com/tuanacelik/mastodon-fetcher-haystack
-type: Custom Node
+type: Data Ingestion
 report_issue: https://github.com/tuanacelik/mastodon-fetcher-haystack/issues
 logo: /logos/mastodon.png
 version: Haystack 2.0

@@ -9,7 +9,7 @@ authors:
         twitter: recrudesce
 pypi: https://pypi.org/project/haystack-translate-node/ 
 repo: https://github.com/recrudesce/haystack_translate_node
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/recrudesce/haystack_translate_node/issues
 ---
 

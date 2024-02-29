@@ -8,7 +8,7 @@ authors:
         github: IntelLabs
 pypi:
 repo: https://github.com/IntelLabs/fastRAG
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/IntelLabs/fastRAG/issues
 logo: /logos/intel-labs.png
 ---

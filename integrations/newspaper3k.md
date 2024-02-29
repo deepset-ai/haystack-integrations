@@ -9,7 +9,7 @@ authors:
         github: haradai
 pypi: https://pypi.org/project/newspaper3k-haystack
 repo: https://github.com/Haradai/newspaper3k-haystack
-type: Custom Node
+type: Data Ingestion
 report_issue: https://github.com/Haradai/newspaper3k-haystack/issues
 ---
 

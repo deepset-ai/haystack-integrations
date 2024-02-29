@@ -7,7 +7,7 @@ authors:
       socials:
         github: Xceron
 repo: https://github.com/Xceron/haystack_veracity_node
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/Xceron/haystack_veracity_node/issues
 ---
 

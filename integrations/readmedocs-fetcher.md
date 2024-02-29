@@ -14,7 +14,7 @@ authors:
         linkedin: silvanocerza
 pypi: https://pypi.org/project/readmedocs-fetcher-haystack/
 repo: https://github.com/tuanacelik/readmedocs-fetcher-haystack
-type: Custom Node
+type: Data Ingestion
 report_issue: https://github.com/tuanacelik/readmedocs-fetcher-haystack/issues
 toc: true
 ---

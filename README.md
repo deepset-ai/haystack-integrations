@@ -33,7 +33,7 @@ authors:
         twitter: include if desired
 pypi: url of pypi package if exists
 repo: url of GitHub repo if exists 
-type: Custom Node OR Document Store OR Agent Tool (required)
+type: Document Store OR Model Provider OR Data Ingestion OR Monitoring Tool or Evaluation Framework OR Custom Component (required)
 report_issue: url to where people can report an issue with the integration
 ---
 ```

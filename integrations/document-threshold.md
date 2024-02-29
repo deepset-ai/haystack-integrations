@@ -9,7 +9,7 @@ authors:
         twitter: recrudesce
 pypi: https://pypi.org/project/haystack-threshold-node/
 repo: https://github.com/recrudesce/haystack_threshold_node
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/recrudesce/haystack_threshold_node/issues
 ---
 # Haystack Threshold Node

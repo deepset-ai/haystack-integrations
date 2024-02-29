@@ -12,7 +12,7 @@ authors:
         github: Xceron
 pypi: https://pypi.org/project/haystack-lemmatize-node/
 repo: https://github.com/recrudesce/haystack_lemmatize_node
-type: Custom Node
+type: Custom Component
 report_issue: https://github.com/recrudesce/haystack_lemmatize_node/issues
 ---
 
