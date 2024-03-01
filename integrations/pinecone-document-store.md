@@ -39,9 +39,9 @@ toc: true
 
 ## Overview
 
-[Pinecone](https://www.pinecone.io/) is a fast and scalable vector database which you can use in Haystack pipelines with the [PineconeDocumentStore](https://docs.haystack.deepset.ai/docs/document_store#initialization).
+[Pinecone](https://www.pinecone.io/) is a fast and scalable vector database that you can use in Haystack pipelines with the [PineconeDocumentStore](https://docs.haystack.deepset.ai/v2.0/docs/pinecone-document-store).
 
-For a detailed overview of all the available methods and settings for the `PineconeDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#pineconedocumentstore).
+For a detailed overview of all the available methods and settings for the `PineconeDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/v2.0/reference/integrations-pinecone#pineconedocumentstore).
 
 ## Haystack 2.x
 
@@ -57,7 +57,6 @@ To use Pinecone as your data storage for your Haystack LLM pipelines, you must h
 
 ```python
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-
 
 # Make sure you have the PINECONE_API_KEY environment variable set
 document_store = PineconeDocumentStore(similarity="cosine", dimension=768)
@@ -78,7 +77,6 @@ from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.preprocessors import DocumentSplitter
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
-
 # Make sure you have the PINECONE_API_KEY environment variable set
 document_store = PineconeDocumentStore(environment="gcp-starter", dimension=768)
 
@@ -96,7 +94,7 @@ indexing.run({"converter": {"sources": ["filename.md"]}})
 
 ### Using Pinecone in a RAG Pipeline
 
-Once you have documents in your `PineconeDocumentStore`, it's ready to be used in any Haystack pipeline. Then, you can use `PineconeEmbeddingRetriever` to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that makes use of a custom prompt that is designed to answer questions for the retrieved documents.
+Once you have documents in your `PineconeDocumentStore`, it's ready to be used in any Haystack pipeline. Then, you can use [`PineconeEmbeddingRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/pineconedenseretriever) to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that uses a custom prompt designed to answer questions for the retrieved documents.
 
 ```python
 from haystack.utils import Secret
@@ -105,7 +103,6 @@ from haystack.components.builders import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 from haystack_integrations.components.retrievers.pinecone import PineconeEmbeddingRetriever
-
 
 # Make sure you have the PINECONE_API_KEY environment variable set
 document_store = PineconeDocumentStore(dimension=768)
