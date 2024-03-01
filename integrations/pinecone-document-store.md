@@ -59,7 +59,7 @@ To use Pinecone as your data storage for your Haystack LLM pipelines, you must h
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
 # Make sure you have the PINECONE_API_KEY environment variable set
-document_store = PineconeDocumentStore(similarity="cosine", dimension=768)
+document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YOUR_INDEX_NAME", environment = "YOUR_ENVIRONMENT")
 ```
 
 #### Writing Documents to PineconeDocumentStore
@@ -78,7 +78,7 @@ from haystack.components.preprocessors import DocumentSplitter
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
 # Make sure you have the PINECONE_API_KEY environment variable set
-document_store = PineconeDocumentStore(environment="gcp-starter", dimension=768)
+document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YOUR_INDEX_NAME", environment = "YOUR_ENVIRONMENT")
 
 indexing = Pipeline()
 indexing.add_component("converter", MarkdownToDocument())
@@ -94,7 +94,7 @@ indexing.run({"converter": {"sources": ["filename.md"]}})
 
 ### Using Pinecone in a RAG Pipeline
 
-Once you have documents in your `PineconeDocumentStore`, it's ready to be used in any Haystack pipeline. Then, you can use [`PineconeEmbeddingRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/pineconedenseretriever) to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that uses a custom prompt designed to answer questions for the retrieved documents.
+Once you have documents in your `PineconeDocumentStore`, they can be used in any Haystack pipeline. Then, you can use [`PineconeEmbeddingRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/pineconedenseretriever) to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that uses a custom prompt designed to answer questions for the retrieved documents.
 
 ```python
 from haystack.utils import Secret
@@ -105,7 +105,7 @@ from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 from haystack_integrations.components.retrievers.pinecone import PineconeEmbeddingRetriever
 
 # Make sure you have the PINECONE_API_KEY environment variable set
-document_store = PineconeDocumentStore(dimension=768)
+document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YOUR_INDEX_NAME", environment = "YOUR_ENVIRONMENT")
               
 prompt_template = """Answer the following query based on the provided context. If the context does
                      not include an answer, reply with 'I don't know'.\n
@@ -129,8 +129,8 @@ query_pipeline.connect("prompt_builder", "generator")
 query = "What is Pinecone?"
 results = query_pipeline.run(
     {
-        "text_embedder": {"text": question},
-        "prompt_builder": {"question": question},
+        "text_embedder": {"text": query},
+        "prompt_builder": {"query": query},
     }
 )
 ```
