@@ -20,7 +20,7 @@ authors:
         linkedin: https://www.linkedin.com/in/amisha29/
 pypi: https://pypi.org/project/context-haystack/
 repo: https://github.com/contextco/context-haystack
-type: Analytics Framework
+type: Monitoring Tool
 report_issue: https://github.com/contextco/context-haystack/issues
 logo: /logos/context.svg
 version: Haystack 2.0
@@ -100,3 +100,7 @@ response = pipe.run(
 
 print(response)
 ```
+
+
+## License
+`context-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
