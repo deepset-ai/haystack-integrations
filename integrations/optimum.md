@@ -23,6 +23,7 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
   - [Components](#components)
+- [License](#license)
 
 ## Overview
 
@@ -76,3 +77,7 @@ indexing_pipeline.connect("embedder", "writer")
 
 indexing_pipeline.run({"embedder": {"documents": documents}})
 ```
+
+## License
+
+`optimum-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
