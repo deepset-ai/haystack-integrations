@@ -30,6 +30,7 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+- [License](#license)
 
 ## Overview
 [Context.ai](https://context.ai)  is an evaluations and analytics tool for products powered by LLMs.
@@ -100,7 +101,6 @@ response = pipe.run(
 
 print(response)
 ```
-
 
 ## License
 `context-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
