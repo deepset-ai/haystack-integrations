@@ -6,7 +6,7 @@ These integrations are maintained by their respective owner or authors. You can 
 
 ## What are Haystack Integrations?
 
-A Haystack Integration are Custom Nodes, DocumentStores or Agent Tools that are either external packages or additional technologies that can be used with Haystack. Some integrations may be maintained by the deepset team, others are community contributions that are owned by the authors of the integration. 
+Haystack Integrations are a Document Store, Model Provider, Custom Component, Monitoring Tool or Evaluation Framework that are either external packages or additional technologies that can be used with Haystack. Some integrations may be maintained by the deepset team, others are community contributions owned by the authors of the integration. Read more about Haystack Integrations in [Introduction to Integrations](https://docs.haystack.deepset.ai/v2.0/docs/integrations).
 
 ## Looking for prompts?
 
@@ -20,6 +20,7 @@ A few things to include in the file 👇
 The frontmatter has to include the following:
 ```
 ---
+layout: integration (required)
 name: Name of your integration (required)
 description: A short description (this will appear on the front page element of your integration on the website) (required)
 authors:
@@ -32,9 +33,11 @@ authors:
         github: include if desired
         twitter: include if desired
 pypi: url of pypi package if exists
-repo: url of GitHub repo if exists 
+repo: url of GitHub repo if exists
+report_issue: url to where people can report an issue with the integration 
 type: Document Store OR Model Provider OR Data Ingestion OR Monitoring Tool or Evaluation Framework OR Custom Component (required)
-report_issue: url to where people can report an issue with the integration
+logo: /logos/your-logo.png (optional)
+version: Haystack 2.0 (if it's for Haystack 2.0)
 ---
 ```
 Note that there should be at least one of either the `pypi` or `repo` fields for us to merge the integration.
