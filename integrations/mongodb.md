@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/farm-haystack
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/mongodb-atlas-haystack/
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/mongodb_atlas
 type: Document Store
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/mongodb.png
 toc: true
 version: Haystack 2.0
@@ -34,7 +34,7 @@ version: Haystack 2.0
 
 [MongoDB](https://www.mongodb.com/) is a document database designed for ease of application development and scaling. [MongoDB Atlas](https://www.mongodb.com/atlas) is a multi-cloud database service built by people behind MongoDB. MongoDB Atlas simplifies deploying and managing your databases while offering the versatility you need to build resilient and performant global applications on the cloud providers of your choice.
 
-For a detailed overview of all the available methods and settings for the `MongoDBAtlasDocumentStore`, visit the Haystack [Documentation](https://docs.haystack.deepset.ai/docs/document_store#initialization).
+For a detailed overview of all the available methods and settings for the `MongoDBAtlasDocumentStore`, visit the Haystack [Documentation](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore).
 
 ## Haystack 2.0
 
@@ -47,13 +47,12 @@ pip install mongodb-atlas-haystack
 
 ### Usage
 
-To use MongoDB Atlas as your data storage for your Haystack LLM pipelines, you must have a running database at MongoDB Atlas. For details, see [Get Started with Atlas](https://www.mongodb.com/docs/atlas/getting-started/).  
+To use the `MongoDBAtlasDocumentStore`, you must have a running MongoDB Atlas database.
+For details, see [Get Started with Atlas](https://www.mongodb.com/docs/atlas/getting-started/).  
 
-Once your database is set, first export an environment variable called `MONGO_CONNECTION_STRING`, which should look more or less like this:
-
-```bash
-export MONGO_CONNECTION_STRING="mongodb+srv://<username>:<password>@<cluster_name>.gwkckbk.mongodb.net/?retryWrites=true&w=majority"
-```
+Once your database is set, set the environment variable `MONGO_CONNECTION_STRING` with the connection string to your MongoDB Atlas database.
+The format should be similar to the following:
+`"mongodb+srv://{mongo_atlas_username}:{mongo_atlas_password}@{mongo_atlas_host}/?{mongo_atlas_params_string}"`
 
 And then you can initialize a [`MongoDBAtlasDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore) for Haystack with the required configurations:
 
@@ -63,6 +62,7 @@ from haystack_integrations.document_stores.mongodb_atlas import MongoDBAtlasDocu
 document_store = MongoDBAtlasDocumentStore(
     database_name="haystack_test",
     collection_name="test_collection",
+    vector_search_index="test_vector_search_index",
 )
 ```
 
@@ -88,8 +88,11 @@ documents = [
     Document(content="My name is Giorgio and I live in Rome."),
 ]
 
-# We support many different databases. Here we load a simple and lightweight in-memory document store.
-document_store = MongoDBAtlasDocumentStore()
+document_store = MongoDBAtlasDocumentStore(
+    database_name="haystack_test",
+    collection_name="test_collection",
+    vector_search_index="test_vector_search_index",
+)
 
 # Define some more components
 doc_writer = DocumentWriter(document_store=document_store, policy=DuplicatePolicy.SKIP)
@@ -104,8 +107,8 @@ indexing_pipe.add_component(instance=doc_writer, name="doc_writer")
 indexing_pipe.connect("doc_embedder.documents", "doc_writer.documents")
 indexing_pipe.run({"doc_embedder": {"documents": documents}})
 
-# Build a RAG pipeline with a Retriever to get relevant documents to 
-# the query and a OpenAIGenerator interacting with LLMs using a custom prompt.
+# Build a RAG pipeline with a Retriever to get documents relevant to 
+# the query, a PromptBuilder to create a custom prompt and the OpenAIGenerator (LLM)
 prompt_template = """
 Given these documents, answer the question.\nDocuments:
 {% for doc in documents %}
@@ -132,9 +135,7 @@ result = rag_pipeline.run(
         "prompt_builder": {"question": question},
     }
 )
-
-# For details, like which documents were used to generate the answer, look into the GeneratedAnswer object
-print(result["answer_builder"]["answers"])
+print(result)
 ```
 
 ## Haystack 1.x
