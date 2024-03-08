@@ -29,7 +29,7 @@ toc: true
 This integration allows you to use NVIDIA Foundation Models in your Haystack piplines.
 
 
-In order to use this integration, you'll need a NVIDIA API key. Set it as an environment variable, `NVIDIA_API_KEY`.
+In order to use this integration, you'll need a [NVIDIA API key](https://org.ngc.nvidia.com/setup). Set it as an environment variable, `NVIDIA_API_KEY`.
 
 ## Installation
 
