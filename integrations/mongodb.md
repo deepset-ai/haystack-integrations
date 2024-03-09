@@ -79,7 +79,7 @@ from haystack.components.generators import OpenAIGenerator
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 from haystack_integrations.document_stores.mongodb_atlas import MongoDBAtlasDocumentStore
-from haystack_integrations.components.embedders.mongodb_atlas import MongoDBAtlasEmbeddingRetriever
+from haystack_integrations.components.retrievers.mongodb_atlas import MongoDBAtlasEmbeddingRetriever
 
 # Create some example documents
 documents = [
