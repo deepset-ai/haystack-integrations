@@ -74,9 +74,9 @@ indexing.run({"converter": {"paths": file_paths}})
 `opensearch-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
 
 ## Haystack 1.x
-You can use [OpenSearch](https://opensearch.org/docs/latest/#docker-quickstart) in your Haystack pipelines with the [OpenSearchDocumentStore](https://docs.haystack.deepset.ai/docs/document_store#initialization)
+You can use [OpenSearch](https://opensearch.org/docs/latest/#docker-quickstart) in your Haystack pipelines with the [OpenSearchDocumentStore](https://docs.haystack.deepset.ai/v1.25/docs/document_store#initialization)
 
-For a detailed overview of all the available methods and settings for the `OpenSearchDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#opensearchdocumentstore)
+For a detailed overview of all the available methods and settings for the `OpenSearchDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#opensearchdocumentstore)
 
 ## Installation (1.x)
 
@@ -97,7 +97,7 @@ document_store = OpenSearchDocumentStore()
 ### Writing Documents to OpenSearchDocumentStore
 
 To write documents to your `OpenSearchDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
+For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
 #### Indexing Pipeline
 

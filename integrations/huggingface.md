@@ -176,7 +176,7 @@ extractive_qa_pipeline.run(data={"retriever": {"query": query, "top_k": 3},
 
 ## Haystack 1.x
 
-You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 1.x pipelines with the [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [Ranker](https://docs.haystack.deepset.ai/docs/ranker), [Reader](https://docs.haystack.deepset.ai/docs/reader) and more!
+You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 1.x pipelines with the [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [Ranker](https://docs.haystack.deepset.ai/v1.25/docs/ranker), [Reader](https://docs.haystack.deepset.ai/v1.25/docs/reader) and more!
 
 ### Installation (1.x)
 

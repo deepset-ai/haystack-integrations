@@ -136,7 +136,7 @@ print(res)
 
 ## Haystack 1.x
 
-You can use [Cohere Models](https://cohere.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), and [CohereRanker](https://docs.haystack.deepset.ai/docs/ranker#cohereranker).
+You can use [Cohere Models](https://cohere.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), and [CohereRanker](https://docs.haystack.deepset.ai/v1.25/docs/ranker#cohereranker).
 
 ### Installation (1.x)
 

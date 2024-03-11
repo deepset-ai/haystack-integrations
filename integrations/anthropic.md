@@ -15,7 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/anthropic.png
 ---
 
-You can use [Anhtropic Claude](https://docs.anthropic.com/claude/reference/getting-started-with-the-api) in your Haystack pipelines with the [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node#using-anthropic-generative-models), which can also be used with and [Agent](https://docs.haystack.deepset.ai/docs/agent).
+You can use [Anhtropic Claude](https://docs.anthropic.com/claude/reference/getting-started-with-the-api) in your Haystack pipelines with the [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node#using-anthropic-generative-models), which can also be used with and [Agent](https://docs.haystack.deepset.ai/v1.25/docs/agent).
 
 ## Installation
 

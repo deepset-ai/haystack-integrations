@@ -15,9 +15,9 @@ report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/meta.png
 ---
 
-[Faiss](https://github.com/facebookresearch/faiss#readme) is a project by Meta, for efficient vector search. You can use it in your Haystack pipelines with the [FAISSDocumentStore](https://docs.haystack.deepset.ai/docs/document_store#initialization)
+[Faiss](https://github.com/facebookresearch/faiss#readme) is a project by Meta, for efficient vector search. You can use it in your Haystack pipelines with the [FAISSDocumentStore](https://docs.haystack.deepset.ai/v1.25/docs/document_store#initialization)
 
-For a detailed explanation on different initialization options of the `FAISSDocumentStore`, please visit the [Haystack Documentation](https://docs.haystack.deepset.ai/docs/document_store#initialization) and [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#faissdocumentstore). Below are some examples of how you might use it within a Haystack Pipeline.
+For a detailed explanation on different initialization options of the `FAISSDocumentStore`, please visit the [Haystack Documentation](https://docs.haystack.deepset.ai/v1.25/docs/document_store#initialization) and [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#faissdocumentstore). Below are some examples of how you might use it within a Haystack Pipeline.
 
 ## Installation
 
@@ -43,7 +43,7 @@ document_store = FAISSDocumentStore()
 ### Writing Documents to FAISSDocumentStore
 
 To write documents to your `FAISSDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
+For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
 #### Indexing Pipeline
 
@@ -66,7 +66,7 @@ indexing_pipeline.run(file_paths=["filename.pdf"])
 
 ### Using Faiss in a Query Pipeline
 
-Once you have documents in your `FAISSDocumentStore`, it's ready to be used in any Haystack pipeline. Such as a Retrieval Augmented Generation (RAG) pipeline. Learn more about [Retrievers](https://docs.haystack.deepset.ai/docs/retriever) to make use of vector search within your LLM pipelines.
+Once you have documents in your `FAISSDocumentStore`, it's ready to be used in any Haystack pipeline. Such as a Retrieval Augmented Generation (RAG) pipeline. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v1.25/docs/retriever) to make use of vector search within your LLM pipelines.
 
 ```python
 from haystack import Pipeline

@@ -231,7 +231,7 @@ output = pipeline.run(file_paths=["path/to/audio/file"])
 
 ## Haystack 1.x
 
-You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), and [WhisperTranscriber](https://docs.haystack.deepset.ai/docs/whisper_transcriber).
+You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), and [WhisperTranscriber](https://docs.haystack.deepset.ai/v1.25/docs/whisper_transcriber).
 
 ### Installation (1.x)
 

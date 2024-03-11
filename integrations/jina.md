@@ -45,7 +45,7 @@ pip install jina-haystack
 
 ### Usage
 
-You can use Jina Embedding models with two components: [JinaTextEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/jina/src/jina_haystack/text_embedder.py) and [JinaDocumentEmbedder](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/jina/src/jina_haystack/document_embedder.py).
+You can use Jina Embedding models with two components: [JinaTextEmbedder](https://docs.haystack.deepset.ai/docs/jinatextembedder) and [JinaDocumentEmbedder](https://docs.haystack.deepset.ai/docs/jinadocumentembedder).
 
 To create semantic embeddings for documents, use `JinaDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `JinaTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Jina API key. You can also
 set the environment variable JINA_API_KEY instead of passing the api key as an argument.
