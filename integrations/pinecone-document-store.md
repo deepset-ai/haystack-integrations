@@ -39,9 +39,9 @@ toc: true
 
 ## Overview
 
-[Pinecone](https://www.pinecone.io/) is a fast and scalable vector database that you can use in Haystack pipelines with the [PineconeDocumentStore](https://docs.haystack.deepset.ai/v2.0/docs/pinecone-document-store).
+[Pinecone](https://www.pinecone.io/) is a fast and scalable vector database that you can use in Haystack pipelines with the [PineconeDocumentStore](https://docs.haystack.deepset.ai/docs/pinecone-document-store).
 
-For a detailed overview of all the available methods and settings for the `PineconeDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/v2.0/reference/integrations-pinecone#pineconedocumentstore).
+For a detailed overview of all the available methods and settings for the `PineconeDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/integrations-pinecone#pineconedocumentstore).
 
 ## Haystack 2.x
 
@@ -65,7 +65,7 @@ document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YO
 #### Writing Documents to PineconeDocumentStore
 
 To write documents to your `PineconeDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [Converters](https://docs.haystack.deepset.ai/v2.0/docs/converters) and [PreProcessors](https://docs.haystack.deepset.ai/v2.0/docs/preprocessors), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Pinecone database.
+For this step, you may make use of the available [Converters](https://docs.haystack.deepset.ai/docs/converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessors), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Pinecone database.
 
 #### Indexing Pipeline
 
@@ -94,7 +94,7 @@ indexing.run({"converter": {"sources": ["filename.md"]}})
 
 ### Using Pinecone in a RAG Pipeline
 
-Once you have documents in your `PineconeDocumentStore`, they can be used in any Haystack pipeline. Then, you can use [`PineconeEmbeddingRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/pineconedenseretriever) to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that uses a custom prompt designed to answer questions for the retrieved documents.
+Once you have documents in your `PineconeDocumentStore`, they can be used in any Haystack pipeline. Then, you can use [`PineconeEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/pineconedenseretriever) to retrieve data from your PineconeDocumentStore. For example, below is a pipeline that uses a custom prompt designed to answer questions for the retrieved documents.
 
 ```python
 from haystack.utils import Secret

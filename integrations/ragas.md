@@ -26,7 +26,7 @@ toc: true
 
 ## Overview
 
-[Ragas](https://docs.ragas.io/) is an open source framework for model-based evaluation to evaluate your LLM applications by quantifying their performance on aspects such as correctness, tonality, hallucination, fluency, etc. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/v2.0/docs/ragasevaluator).
+[Ragas](https://docs.ragas.io/) is an open source framework for model-based evaluation to evaluate your LLM applications by quantifying their performance on aspects such as correctness, tonality, hallucination, fluency, etc. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/docs/ragasevaluator).
 
 ## Installation
 
@@ -37,7 +37,7 @@ pip install ragas-haystack
 
 ## Usage
 
-Once installed, you will have access to a [RagasEvaluator](https://docs.haystack.deepset.ai/v2.0/docs/ragasevaluator) that supports a variety of model-based evaluation metrics: 
+Once installed, you will have access to a [RagasEvaluator](https://docs.haystack.deepset.ai/docs/ragasevaluator) that supports a variety of model-based evaluation metrics: 
 - Faithfulness
 - Answer relevancy
 - Context recall

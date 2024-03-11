@@ -52,8 +52,8 @@ document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 
 #### Writing Documents to ElasticsearchDocumentStore
 
-To write documents to your `ElasticsearchDocumentStore`, create an indexing pipeline with a [DocumentWriter](https://docs.haystack.deepset.ai/v2.0/docs/documentwriter), or use the `write_documents()` function.
-For this step, you can use the available [TextFileToDocument](https://docs.haystack.deepset.ai/v2.0/docs/textfiletodocument) and [DocumentSplitter](https://docs.haystack.deepset.ai/v2.0/docs/documentsplitter), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
+To write documents to your `ElasticsearchDocumentStore`, create an indexing pipeline with a [DocumentWriter](https://docs.haystack.deepset.ai/docs/documentwriter), or use the `write_documents()` function.
+For this step, you can use the available [TextFileToDocument](https://docs.haystack.deepset.ai/docs/textfiletodocument) and [DocumentSplitter](https://docs.haystack.deepset.ai/docs/documentsplitter), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
 #### Indexing Pipeline
 
@@ -88,7 +88,7 @@ indexing_pipeline.run({
 
 ### Using Elasticsearch in a Query Pipeline
 
-Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://docs.haystack.deepset.ai/docs/elasticsearchembeddingretriever) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
+Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://docs.haystack.deepset.ai/docs/elasticsearchembeddingretriever) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/docs/retrievers) to make use of vector search within your LLM pipelines.
 
 ```python
 from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore

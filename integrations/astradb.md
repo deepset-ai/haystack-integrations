@@ -37,8 +37,8 @@ This integration allows you to use AstraDB for document storage and retrieval in
 
 ## Components
 
-- [`AstraDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/astradocumentstore). This component serves as a persistent data store for your Haystack documents, and supports a number of embedding models and vector dimensions.
-- [`AstraEmbeddingRetriever`](https://docs.haystack.deepset.ai/v2.0/docs/astraretriever) This is an embedding-based Retriever compatible with the Astra Document Store.
+- [`AstraDocumentStore`](https://docs.haystack.deepset.ai/docs/astradocumentstore). This component serves as a persistent data store for your Haystack documents, and supports a number of embedding models and vector dimensions.
+- [`AstraEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/astraretriever) This is an embedding-based Retriever compatible with the Astra Document Store.
 
 
 ## Initialization

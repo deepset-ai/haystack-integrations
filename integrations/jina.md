@@ -35,7 +35,7 @@ Jina AI is paving the way towards the future of AI as a multimodal reality. We r
 
 ## Haystack 2.0
 
-You can use [Jina embedding Models](https://jina.ai/embeddings) in your Haystack 2.0 pipelines with the Jina [Embedders](https://docs.haystack.deepset.ai/v2.0/docs/embedders).
+You can use [Jina embedding Models](https://jina.ai/embeddings) in your Haystack 2.0 pipelines with the Jina [Embedders](https://docs.haystack.deepset.ai/docs/embedders).
 
 ### Installation
 

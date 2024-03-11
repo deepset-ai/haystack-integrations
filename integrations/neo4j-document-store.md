@@ -24,11 +24,11 @@ toc: true
 
 ## Overview
 
-An integration of [Neo4j](https://neo4j.com/) graph database with [Haystack v2.0](https://docs.haystack.deepset.ai/v2.0/docs/intro)
+An integration of [Neo4j](https://neo4j.com/) graph database with [Haystack v2.0](https://docs.haystack.deepset.ai/docs/intro)
 by [deepset](https://www.deepset.ai). In Neo4j [Vector search index](https://neo4j.com/docs/cypher-manual/current/indexes-for-vector-search/)
 is being used for storing document embeddings and dense retrievals.
 
-The library allows using Neo4j as a [DocumentStore](https://docs.haystack.deepset.ai/v2.0/docs/document-store), and implements the required [Protocol](https://docs.haystack.deepset.ai/v2.0/docs/document-store#documentstore-protocol) methods. You can start working with the implementation by importing it from `neo4_haystack` package:
+The library allows using Neo4j as a [DocumentStore](https://docs.haystack.deepset.ai/docs/document-store), and implements the required [Protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol) methods. You can start working with the implementation by importing it from `neo4_haystack` package:
 
 ```python
 from neo4j_haystack import Neo4jDocumentStore
@@ -36,7 +36,7 @@ from neo4j_haystack import Neo4jDocumentStore
 
 In addition to the `Neo4jDocumentStore` the library includes the following haystack components which can be used in a pipeline:
 
-- [Neo4jEmbeddingRetriever](https://prosto.github.io/neo4j-haystack/reference/neo4j_retriever/#neo4j_haystack.components.neo4j_retriever.Neo4jEmbeddingRetriever) - a typical [retriever component](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) which can be used to query vector store index and find related Documents. The component uses `Neo4jDocumentStore` to query embeddings.
+- [Neo4jEmbeddingRetriever](https://prosto.github.io/neo4j-haystack/reference/neo4j_retriever/#neo4j_haystack.components.neo4j_retriever.Neo4jEmbeddingRetriever) - a typical [retriever component](https://docs.haystack.deepset.ai/docs/retrievers) which can be used to query vector store index and find related Documents. The component uses `Neo4jDocumentStore` to query embeddings.
 - [Neo4jDynamicDocumentRetriever](https://prosto.github.io/neo4j-haystack/reference/neo4j_retriever/#neo4j_haystack.components.neo4j_retriever.Neo4jDynamicDocumentRetriever) is also a retriever component in a sense that it can be used to query Documents in Neo4j. However it is decoupled from `Neo4jDocumentStore` and allows to run arbitrary [Cypher query](https://neo4j.com/docs/cypher-manual/current/queries/) to extract documents. Practically it is possible to query Neo4j same way `Neo4jDocumentStore` does, including vector search.
 
 The `neo4j-haystack` library uses [Python Driver](https://neo4j.com/docs/api/python-driver/current/api.html#api-documentation) and
@@ -71,7 +71,7 @@ The `neo4j-haystack` library uses [Python Driver](https://neo4j.com/docs/api/pyt
 In the above diagram:
 
 - `Document` is a Neo4j node (with "Document" label)
-- `properties` are Document [attributes](https://docs.haystack.deepset.ai/v2.0/docs/data-classes#document) stored as part of the node.
+- `properties` are Document [attributes](https://docs.haystack.deepset.ai/docs/data-classes#document) stored as part of the node.
 - `embedding` is also a property of the Document node (just shown separately in the diagram for clarity) which is a vector of type `LIST[FLOAT]`.
 - `Vector Index` is where embeddings are getting indexed by Neo4j as soon as those are updated in Document nodes.
 
@@ -132,7 +132,7 @@ docker run \
 
 ### Retrieving documents
 
-`Neo4jEmbeddingRetriever` component can be used to retrieve documents from Neo4j by querying vector index using an embedded query. Below is a pipeline which finds documents using query embedding as well as [metadata filtering](https://docs.haystack.deepset.ai/v2.0/docs/metadata-filtering):
+`Neo4jEmbeddingRetriever` component can be used to retrieve documents from Neo4j by querying vector index using an embedded query. Below is a pipeline which finds documents using query embedding as well as [metadata filtering](https://docs.haystack.deepset.ai/docs/metadata-filtering):
 
 ```python
 from haystack import Document, Pipeline
@@ -240,7 +240,7 @@ Please notice how query parameters are being used in the `cypher_query`:
 You can find more examples in the implementation [repository](https://github.com/prosto/neo4j-haystack/tree/main/examples):
 
 - [indexing_pipeline.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/indexing_pipeline.py) - Indexing text files (documents) from a remote http location.
-- [rag_pipeline.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/rag_pipeline.py) - Generative question answering RAG pipeline using `Neo4jEmbeddingRetriever` to fetch documents from Neo4j document store and answer question using [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator).
+- [rag_pipeline.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/rag_pipeline.py) - Generative question answering RAG pipeline using `Neo4jEmbeddingRetriever` to fetch documents from Neo4j document store and answer question using [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgigenerator).
 - [rag_pipeline_cypher.py](https://github.com/prosto/neo4j-haystack/blob/main/examples/rag_pipeline_cypher.py) - Same as `rag_pipeline.py` but using `Neo4jDynamicDocumentRetriever`.
 
 You might find more technical details in the [Code Reference](https://prosto.github.io/neo4j-haystack/reference/neo4j_store/) documentation. For example, in real world scenarios there could be requirements to tune connection settings to Neo4j database (e.g. request timeout). [Neo4jDocumentStore](https://prosto.github.io/neo4j-haystack/reference/neo4j_store/#neo4j_haystack.document_stores.Neo4jDocumentStore.__init__) accepts an extended client configuration using [Neo4jClientConfig](https://prosto.github.io/neo4j-haystack/reference/neo4j_client/#neo4j_haystack.client.neo4j_client.Neo4jClientConfig) class.
