@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: deepset-ai
-pypi: https://pypi.org/project/haystack-ai
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/nvidia-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/nvidia
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/nvidia.png
 version: Haystack 2.0
 toc: true
