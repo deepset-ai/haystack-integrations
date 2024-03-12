@@ -72,7 +72,7 @@ Output:
 To use this integration for chat models, initialize an `AmazonBedrockChatGenerator` with the model name and AWS credentials:
 
 Currently, the following models are supported: 
-- Anthropic's Claude
+- Anthropic's Claude 2, Claude 3 Sonnet
 - Meta's Llama 2
 
 ```python
