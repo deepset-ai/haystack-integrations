@@ -44,7 +44,7 @@ pip install llama-cpp-haystack
 
 The default installation behaviour is to build `llama.cpp` for CPU on Linux and Windows and use Metal on MacOS. To use other compute backends:
 
-1. Follow instructions on the [llama.cpp installation page](https://github.com/abetlen/llama-cpp-python#installation) to install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) for your preffered compute backend.
+1. Follow instructions on the [llama.cpp installation page](https://github.com/abetlen/llama-cpp-python#installation) to install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) for your preferred compute backend.
 2. Install [llama-cpp-haystack](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/llama_cpp) using the command above.
 
 For example, to use `llama-cpp-haystack` with the **cuBLAS backend**, you have to run the following commands:

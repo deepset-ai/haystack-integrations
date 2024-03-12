@@ -30,7 +30,7 @@ This integration supports both Haystack 1.x and Haystack 2.0:
 - `LMFormatEnforcerPromptNode`: A Haystack 1.x `PromptNode` that activates the format enforcer.
 - `LMFormatEnforcerLocalGenerator`: A Haystack 2.0 Generator component that activates the format enforcer.
 
-Important note: LM Format Enforcer requires a LOCAL generator - currently only Local HuggingFace transformers are supported, vLLM suport is coming soon.
+Important note: LM Format Enforcer requires a LOCAL generator - currently only Local HuggingFace transformers are supported, vLLM support is coming soon.
 
 ### Creating a CharacterLevelParser
 The `CharacterLevelParser` is the class that connects the output parsing to the format enforcing. Two main parsers are available : `JsonSchemaParser` for JSON Schemas, and `RegexParser` for regular expressions.

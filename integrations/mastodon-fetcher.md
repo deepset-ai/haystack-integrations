@@ -92,7 +92,7 @@ from mastodon_fetcher_haystack.mastodon_fetcher import MastodonFetcher
 
 mastodon_fetcher = MastodonFetcher()
 
-prompt_template = PromptTemplate(prompt="Given the follwing Mastodon posts stream, create a short summary of the topics the account posts about. Mastodon posts stream: {join(documents)};\n Answer:", 
+prompt_template = PromptTemplate(prompt="Given the following Mastodon posts stream, create a short summary of the topics the account posts about. Mastodon posts stream: {join(documents)};\n Answer:", 
                                 output_parser=AnswerParser())
 prompt_node = PromptNode(default_prompt_template=prompt_template, model_name_or_path="gpt-3.5-turbo-instruct", api_key=YOUR_OPENAI_API_KEY)
 
