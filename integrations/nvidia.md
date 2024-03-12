@@ -26,7 +26,7 @@ toc: true
 
  [NVIDIA AI Foundation Models](https://www.nvidia.com/en-us/ai-data-science/foundation-models/) allow you to reach optimal performance on NVIDIA accelerated infrastructure. With pretrained generative AI models, enterprises can create custom models faster and take advantage of the latest training and inference techniques. And with NVIDIA AI Foundation Endpoints, their applications can be connected to these models running on a fully accelerated stack to test performance.
 
-This integration allows you to use NVIDIA Foundation Models in your Haystack piplines.
+This integration allows you to use NVIDIA Foundation Models in your Haystack pipelines.
 
 
 In order to use this integration, you'll need a [NVIDIA API key](https://org.ngc.nvidia.com/setup). Set it as an environment variable, `NVIDIA_API_KEY`.
