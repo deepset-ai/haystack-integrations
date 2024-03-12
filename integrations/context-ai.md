@@ -85,7 +85,7 @@ pipe.connect("prompt_builder.prompt", "llm.messages")
 pipe.connect("prompt_builder.prompt", "prompt_analytics")
 pipe.connect("llm.replies", "assistant_analytics")
 
-# thread_id is unqiue to each conversation
+# thread_id is unique to each conversation
 context_parameters = {"thread_id": uuid.uuid4(), "metadata": {"model": model, "user_id": "1234"}}
 location = "Berlin"
 messages = [ChatMessage.from_system("Always respond in German even if some input data is in other languages."),

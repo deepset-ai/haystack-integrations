@@ -76,7 +76,7 @@ indexing.run({"converter": {"paths": file_paths}})
 
 ## Haystack 1.x
 
-Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeaviateDocumentStore`. You can choose to run Weaviate locally youself, or use a hosted Weaviate database.
+Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeaviateDocumentStore`. You can choose to run Weaviate locally yourself, or use a hosted Weaviate database.
 
 For details on the available methods and parameters of the `WeaviateDocumentStore`, check out the Haystack [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#weaviatedocumentstore) and [Documentation](https://docs.haystack.deepset.ai/v1.25/docs/document_store#initialization)
 

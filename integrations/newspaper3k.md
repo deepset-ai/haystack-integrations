@@ -54,7 +54,7 @@ To run in standalone mode you can use the run or run_batch if you want to load o
     fr              French
     he              Hebrew
 ...
-:param summary: (False by default) Wether to summarize the document (through nespaper3k) and save it as document metadata.
+:param summary: (False by default) Whether to summarize the document (through nespaper3k) and save it as document metadata.
 :param path: (None by default) Path where to store the downloaded articles html, if None, not downloaded. Ignored if load=True
 :param load: (False by default) If true query should be a local path to an html file to scrape.
 ```
@@ -134,7 +134,7 @@ crawler = newspaper3k_crawler(
             e.g.
             {positive: [".com",".es"],
             negative: ["facebook","instagram"]}
-        :param keep_links: (False by default) Wether to keep the found links in each page as document metadata or not
+        :param keep_links: (False by default) Whether to keep the found links in each page as document metadata or not
 
         :param lang: (None by default) language to process the article with, if None autodetected.
             Available languages are: (more info at https://newspaper.readthedocs.io/en/latest/)
@@ -174,9 +174,9 @@ crawler = newspaper3k_crawler(
             ja              Japanese
             be              Belarusian
 
-        :param metadata: (False by default) Wether to get article metadata.
-        :param keywords: (False by default) Wether to save the detected article keywords as document metadata.
-        :param summary: (False by default) Wether to summarize the document (through nespaper3k) and save it as document metadata.
+        :param metadata: (False by default) Whether to get article metadata.
+        :param keywords: (False by default) Whether to save the detected article keywords as document metadata.
+        :param summary: (False by default) Whether to summarize the document (through nespaper3k) and save it as document metadata.
         :param path: (None by default) Path where to store the downloaded articles html, if None, not downloaded.
 ```
 **In Standalone:** 
