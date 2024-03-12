@@ -30,7 +30,7 @@ toc: true
 
 The `ElasticsearchDocumentStore` is maintained in [haystack-core-integrations](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/elasticsearch) repo. It allows you to use [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html) as data storage for your Haystack pipelines.
 
-For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#elasticsearchdocumentstore-1)
+For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#elasticsearchdocumentstore-1)
 
 ### Installation
 
@@ -52,8 +52,8 @@ document_store = ElasticsearchDocumentStore(hosts = "http://localhost:9200")
 
 #### Writing Documents to ElasticsearchDocumentStore
 
-To write documents to your `ElasticsearchDocumentStore`, create an indexing pipeline with a [DocumentWriter](https://docs.haystack.deepset.ai/v2.0/docs/documentwriter), or use the `write_documents()` function.
-For this step, you can use the available [TextFileToDocument](https://docs.haystack.deepset.ai/v2.0/docs/textfiletodocument) and [DocumentSplitter](https://docs.haystack.deepset.ai/v2.0/docs/documentsplitter), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
+To write documents to your `ElasticsearchDocumentStore`, create an indexing pipeline with a [DocumentWriter](https://docs.haystack.deepset.ai/docs/documentwriter), or use the `write_documents()` function.
+For this step, you can use the available [TextFileToDocument](https://docs.haystack.deepset.ai/docs/textfiletodocument) and [DocumentSplitter](https://docs.haystack.deepset.ai/docs/documentsplitter), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
 #### Indexing Pipeline
 
@@ -88,7 +88,7 @@ indexing_pipeline.run({
 
 ### Using Elasticsearch in a Query Pipeline
 
-Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/elasticsearch/src/elasticsearch_haystack/embedding_retriever.py) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) to make use of vector search within your LLM pipelines.
+Once you have documents in your `ElasticsearchDocumentStore`, it's ready to be used with with [ElasticsearchEmbeddingRetriever](https://docs.haystack.deepset.ai/docs/elasticsearchembeddingretriever) in the retrieval step of any Haystack pipeline such as a Retrieval Augmented Generation (RAG) pipelines. Learn more about [Retrievers](https://docs.haystack.deepset.ai/docs/retrievers) to make use of vector search within your LLM pipelines.
 
 ```python
 from haystack_integrations.document_stores.elasticsearch import ElasticsearchDocumentStore
@@ -118,7 +118,7 @@ print(result)
 
 The `ElasticsearchDocumentStore` is maintained within the core Haystack project. It allows you to use [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html) as data storage for your Haystack pipelines.
 
-For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#elasticsearchdocumentstore-1)
+For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#elasticsearchdocumentstore-1)
 
 ### Installation (1.x)
 
@@ -145,7 +145,7 @@ document_store = ElasticsearchDocumentStore(host = "localhost",
 #### Writing Documents to ElasticsearchDocumentStore
 
 To write documents to your `ElasticsearchDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
+For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
 
 #### Indexing Pipeline
 
@@ -168,7 +168,7 @@ indexing_pipeline.run(file_paths=["filename.txt"])
 
 ### Using Elasticsearch in a Query Pipeline
 
-Once you have documents in your `ElasitsearchDocumentStore`, it's ready to be used in any Haystack pipeline. Such as a Retrieval Augmented Generation (RAG) pipeline. Learn more about [Retrievers](https://docs.haystack.deepset.ai/docs/retriever) to make use of vector search within your LLM pipelines.
+Once you have documents in your `ElasitsearchDocumentStore`, it's ready to be used in any Haystack pipeline. Such as a Retrieval Augmented Generation (RAG) pipeline. Learn more about [Retrievers](https://docs.haystack.deepset.ai/v1.25/docs/retriever) to make use of vector search within your LLM pipelines.
 
 ```python
 from haystack import Pipeline

@@ -34,7 +34,7 @@ pip install readmedocs-fetcher-haystack
     - `slugs`: To fetch a list of specific pages from your documentation. E.g. if you have want to fetch "https://docs.haystack.deepset.ai/docs/installation" the slug would be `installation`. If not set, all of the available pages will be fetched.
     - `base_url`: Optionally provide this to add the full url of a documentation page to the `meta` of the created document. For example `base_url='https://docs.haystack.deepset.ai'`
     - `version`: If not set, the latest stable version of tour docs will be fetched. 
-    - `markdown_converter`: When documents are fetched from ReadMe, temporary `.md` files are created and we use a [`MarkdownConverter`](https://docs.haystack.deepset.ai/reference/file-converters-api#markdownconverter) to create a list of haystack `Documents`. If not provided at initialization, then a `MarkdownConverter` with the default parameters is used.
+    - `markdown_converter`: When documents are fetched from ReadMe, temporary `.md` files are created and we use a [`MarkdownConverter`](https://docs.haystack.deepset.ai/v1.25/reference/file-converters-api#markdownconverter) to create a list of haystack `Documents`. If not provided at initialization, then a `MarkdownConverter` with the default parameters is used.
 
 ### Standalone
 ```python

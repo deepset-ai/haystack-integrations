@@ -33,7 +33,7 @@ toc: true
 
 ## Haystack 2.0
 
-You can use [Cohere Models](https://cohere.com/) in your Haystack 2.0 pipelines with the [Generators](https://docs.haystack.deepset.ai/v2.0/docs/generators) and [Embedders](https://docs.haystack.deepset.ai/v2.0/docs/embedders).
+You can use [Cohere Models](https://cohere.com/) in your Haystack 2.0 pipelines with the [Generators](https://docs.haystack.deepset.ai/docs/generators) and [Embedders](https://docs.haystack.deepset.ai/docs/embedders).
 
 ### Installation
 
@@ -47,7 +47,7 @@ You can use Cohere models in various ways:
 
 #### Embedding Models
 
-You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/coheretextembedder) and [CohereDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/coheredocumentembedder). These components support both **Embed v2** and **Embed v3** models.
+You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://docs.haystack.deepset.ai/docs/coheretextembedder) and [CohereDocumentEmbedder](https://docs.haystack.deepset.ai/docs/coheredocumentembedder). These components support both **Embed v2** and **Embed v3** models.
 
 To create semantic embeddings for documents, use `CohereDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `CohereTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable.
 
@@ -76,7 +76,7 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 #### Generative Models (LLMs)
 
-To use `/generate` models from Cohere, initialize a [CohereGenerator](https://docs.haystack.deepset.ai/v2.0/docs/coheregenerator) with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable. You can then use this `CohereGenerator` in a question answering pipeline after the `PromptBuilder`.
+To use `/generate` models from Cohere, initialize a [CohereGenerator](https://docs.haystack.deepset.ai/docs/coheregenerator) with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable. You can then use this `CohereGenerator` in a question answering pipeline after the `PromptBuilder`.
 
 Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and `CohereGenerator`:
 
@@ -112,7 +112,7 @@ pipe.run({
 })
 ```
 
-Similar to the above example, you can also use [`CohereChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/coherechatgenerator) to use Cohere `/chat` models and features (streaming, connectors) in your pipeline.
+Similar to the above example, you can also use [`CohereChatGenerator`](https://docs.haystack.deepset.ai/docs/coherechatgenerator) to use Cohere `/chat` models and features (streaming, connectors) in your pipeline.
 
 ```python
 from haystack import Pipeline
@@ -136,7 +136,7 @@ print(res)
 
 ## Haystack 1.x
 
-You can use [Cohere Models](https://cohere.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), and [CohereRanker](https://docs.haystack.deepset.ai/docs/ranker#cohereranker).
+You can use [Cohere Models](https://cohere.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), and [CohereRanker](https://docs.haystack.deepset.ai/v1.25/docs/ranker#cohereranker).
 
 ### Installation (1.x)
 

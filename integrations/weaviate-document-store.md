@@ -9,7 +9,7 @@ authors:
       twitter: deepset_ai
       linkedin: deepset-ai
 pypi: https://pypi.org/project/weaviate-haystack/
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weaviate_haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weaviate
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/weaviate.png
@@ -76,9 +76,9 @@ indexing.run({"converter": {"paths": file_paths}})
 
 ## Haystack 1.x
 
-Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeaviateDocumentStore`. You can choose to run Weaviate locally youself, or use a hosted Weaviate database.
+Haystack supports the use of [Weaviate](https://weaviate.io/) as data storage for LLM pipelines, with the `WeaviateDocumentStore`. You can choose to run Weaviate locally yourself, or use a hosted Weaviate database.
 
-For details on the available methods and parameters of the `WeaviateDocumentStore`, check out the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/document-store-api#weaviatedocumentstore) and [Documentation](https://docs.haystack.deepset.ai/docs/document_store#initialization)
+For details on the available methods and parameters of the `WeaviateDocumentStore`, check out the Haystack [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#weaviatedocumentstore) and [Documentation](https://docs.haystack.deepset.ai/v1.25/docs/document_store#initialization)
 
 ## Installation
 
@@ -101,7 +101,7 @@ document_store = WeaviateDocumentStore(host='http://localhost",
 ### Writing Documents to WeaviateDocumentStore
 
 To write documents to your `WeaviateDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Weaviate database. The example pipeline below not only indexes the contents of the files, but also the embeddings. This way, we can do vector search on our files.
+For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Weaviate database. The example pipeline below not only indexes the contents of the files, but also the embeddings. This way, we can do vector search on our files.
 
 #### Indexing Pipeline
 

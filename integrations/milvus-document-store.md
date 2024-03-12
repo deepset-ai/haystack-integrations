@@ -42,7 +42,7 @@ document_store = MilvusDocumentStore()
 ### Writing Documents to MilvusDocumentStore
 
 To write documents to your `MilvusDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is the example indexing pipeline used in the Milvus Documentation QA demo, which makes use of the `Crawler` component.
+For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is the example indexing pipeline used in the Milvus Documentation QA demo, which makes use of the `Crawler` component.
 
 #### Indexing Pipeline
 

@@ -31,7 +31,7 @@ toc: true
 
 [Amazon Sagemaker](https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html) is a comprehensive, fully managed machine learning service 
 that allows data scientists and developers to build, train, and deploy ML models efficiently. More information can be found on the 
-[documentation page](https://docs.haystack.deepset.ai/v2.0/docs/sagemakergenerator).
+[documentation page](https://docs.haystack.deepset.ai/docs/sagemakergenerator).
 
 ## Haystack 2.x
 
@@ -44,7 +44,7 @@ pip install amazon-sagemaker-haystack
 
 ### Usage
 
-Once installed, you will have access to a [SagemakerGenerator](https://docs.haystack.deepset.ai/v2.0/docs/sagemakergenerator) that supports models from various providers. To know more
+Once installed, you will have access to a [SagemakerGenerator](https://docs.haystack.deepset.ai/docs/sagemakergenerator) that supports models from various providers. To know more
 about which models are supported, check out [Sagemaker's documentation](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models.html).
 
 To use this integration for text generation, initialize a `SagemakerGenerator` with the model name and aws credentials: 

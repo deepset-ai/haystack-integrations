@@ -28,7 +28,7 @@ toc: true
 
 ## Haystack 2.0
 
-You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 2.0 pipelines with [Generators](https://docs.haystack.deepset.ai/v2.0/docs/generators), [Embedders](https://docs.haystack.deepset.ai/v2.0/docs/embedders), [Rankers](https://docs.haystack.deepset.ai/v2.0/docs/rankers) and [Readers](https://docs.haystack.deepset.ai/v2.0/docs/readers)!
+You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 2.0 pipelines with [Generators](https://docs.haystack.deepset.ai/docs/generators), [Embedders](https://docs.haystack.deepset.ai/docs/embedders), [Rankers](https://docs.haystack.deepset.ai/docs/rankers) and [Readers](https://docs.haystack.deepset.ai/docs/readers)!
 
 ### Installation
 
@@ -42,7 +42,7 @@ You can use models on Hugging Face in various ways:
 
 #### Embedding Models
 
-You can leverage embedding models from Hugging Face through two components: [SentenceTransformersTextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/sentencetransformerstextembedder) and [SentenceTransformersDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/sentencetransformersdocumentembedder).
+You can leverage embedding models from Hugging Face through two components: [SentenceTransformersTextEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformerstextembedder) and [SentenceTransformersDocumentEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformersdocumentembedder).
 
 To create semantic embeddings for documents, use `SentenceTransformersDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `SentenceTransformersTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the desired model name.
 
@@ -72,7 +72,7 @@ indexing_pipeline.run({
 
 #### Generative Models (LLMs) 
 
-You can leverage text generation models from Hugging Face through three components: [HuggingFaceLocalGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacelocalgenerator), [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator) and [HuggingFaceTGIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgichatgenerator).
+You can leverage text generation models from Hugging Face through three components: [HuggingFaceLocalGenerator](https://docs.haystack.deepset.ai/docs/huggingfacelocalgenerator), [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgigenerator) and [HuggingFaceTGIChatGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgichatgenerator).
 
 Depending on the model type (chat or text completion) and hosting option (TGI, Inference Endpoint, locally hosted), select the suitable Hugging Face Generator component and initialize it with the model name
 
@@ -176,7 +176,7 @@ extractive_qa_pipeline.run(data={"retriever": {"query": query, "top_k": 3},
 
 ## Haystack 1.x
 
-You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 1.x pipelines with the [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [Ranker](https://docs.haystack.deepset.ai/docs/ranker), [Reader](https://docs.haystack.deepset.ai/docs/reader) and more!
+You can use models on [Hugging Face](https://huggingface.co/) in your Haystack 1.x pipelines with the [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [Ranker](https://docs.haystack.deepset.ai/v1.25/docs/ranker), [Reader](https://docs.haystack.deepset.ai/v1.25/docs/reader) and more!
 
 ### Installation (1.x)
 

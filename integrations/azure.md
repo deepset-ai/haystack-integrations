@@ -44,16 +44,16 @@ To work with Azure components, you will need an Azure OpenAI API key, an [Azure 
 
 ### Components
 
-- [AzureOpenAIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaigenerator)
-- [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaichatgenerator)
-- [AzureOpenAITextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaitextembedder)
-- [AzureOpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaidocumentembedder)
+- [AzureOpenAIGenerator](https://docs.haystack.deepset.ai/docs/azureopenaigenerator)
+- [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/azureopenaichatgenerator)
+- [AzureOpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/azureopenaitextembedder)
+- [AzureOpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/azureopenaidocumentembedder)
 
-All components use `AZURE_OPENAI_API_KEY` and `AZURE_OPENAI_AD_TOKEN` environment variables by default. Otherwise, you can pass `api_key` and `azure_ad_token` at initialization using `Secret` class. Read more about [Secret Handling](https://docs.haystack.deepset.ai/v2.0/docs/secret-management#structured-secret-handling).
+All components use `AZURE_OPENAI_API_KEY` and `AZURE_OPENAI_AD_TOKEN` environment variables by default. Otherwise, you can pass `api_key` and `azure_ad_token` at initialization using `Secret` class. Read more about [Secret Handling](https://docs.haystack.deepset.ai/docs/secret-management#structured-secret-handling).
 
 ### Embedding Models
 
-You can leverage embedding models from Azure OpenAI through two components: [AzureOpenAITextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaitextembedder) and [AzureOpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaidocumentembedder).
+You can leverage embedding models from Azure OpenAI through two components: [AzureOpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/azureopenaitextembedder) and [AzureOpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/azureopenaidocumentembedder).
 
 To create semantic embeddings for documents, use `AzureOpenAIDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `AzureOpenAITextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with required parameters.
 
@@ -84,7 +84,7 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 ### Generative Models (LLMs)
 
-You can leverage Azure OpenAI models through two components: [AzureOpenAIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaigenerator) and [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/azureopenaichatgenerator).
+You can leverage Azure OpenAI models through two components: [AzureOpenAIGenerator](https://docs.haystack.deepset.ai/docs/azureopenaigenerator) and [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/azureopenaichatgenerator).
 
 To use OpenAI models deployed through Azure services for text generation, initialize a `AzureOpenAIGenerator` with `azure_deployment` and `azure_endpoint`. You can then use the `AzureOpenAIGenerator` instance in a pipeline after the `PromptBuilder`.  
 

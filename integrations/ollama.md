@@ -48,8 +48,8 @@ pip install ollama-haystack
 ## Usage
 
 This integration provides 2 components that allow you to leverage Ollama models:
-- The [`OllamaGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/ollamagenerator)
-- The [`OllamaChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/ollamachatgenerator)
+- The [`OllamaGenerator`](https://docs.haystack.deepset.ai/docs/ollamagenerator)
+- The [`OllamaChatGenerator`](https://docs.haystack.deepset.ai/docs/ollamachatgenerator)
 
 To use an Ollama model:
 

@@ -34,7 +34,7 @@ version: Haystack 2.0
 
 [MongoDB](https://www.mongodb.com/) is a document database designed for ease of application development and scaling. [MongoDB Atlas](https://www.mongodb.com/atlas) is a multi-cloud database service built by people behind MongoDB. MongoDB Atlas simplifies deploying and managing your databases while offering the versatility you need to build resilient and performant global applications on the cloud providers of your choice.
 
-For a detailed overview of all the available methods and settings for the `MongoDBAtlasDocumentStore`, visit the Haystack [Documentation](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore).
+For a detailed overview of all the available methods and settings for the `MongoDBAtlasDocumentStore`, visit the Haystack [Documentation](https://docs.haystack.deepset.ai/docs/mongodbatlasdocumentstore).
 
 ## Haystack 2.0
 
@@ -54,7 +54,7 @@ Once your database is set, set the environment variable `MONGO_CONNECTION_STRING
 The format should be similar to the following:
 `"mongodb+srv://{mongo_atlas_username}:{mongo_atlas_password}@{mongo_atlas_host}/?{mongo_atlas_params_string}"`
 
-And then you can initialize a [`MongoDBAtlasDocumentStore`](https://docs.haystack.deepset.ai/v2.0/docs/mongodbatlasdocumentstore) for Haystack with the required configurations:
+And then you can initialize a [`MongoDBAtlasDocumentStore`](https://docs.haystack.deepset.ai/docs/mongodbatlasdocumentstore) for Haystack with the required configurations:
 
 ```python
 from haystack_integrations.document_stores.mongodb_atlas import MongoDBAtlasDocumentStore
@@ -166,7 +166,7 @@ ds=MongoDBAtlasDocumentStore(
 ### Writing Documents to MongoDBAtlasDocumentStore
 
 To write documents to your `MongoDBAtlasDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a MongoDB Atlas instance.
+For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a MongoDB Atlas instance.
 
 ### Indexing Pipeline
 

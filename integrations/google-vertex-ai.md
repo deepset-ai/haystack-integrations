@@ -47,12 +47,12 @@ pip install google-vertex-haystack
 ## Usage
 
 Once installed, you will have access to various Haystack Generators: 
-- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation and multimodal prompts.
-- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation and multimodal prompts.
+- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation, multimodal prompts and function calling in chat completion setting.
 - `VertexAITextGenerator`: Use this component with PaLM models for text generation.
 - `VertexAICodeGenerator`: Use this component with Codey model for code generation and code completion.
 - `VertexAIImageGenerator`: Use this component with Imagen model '**imagegeneration**' for image generation.
-- [`VertexAIImageCaptioner`](https://docs.haystack.deepset.ai/v2.0/docs/vertexaiimagecaptioner): Use this component with Imagen model '**imagetext**' for image captioning.
+- [`VertexAIImageCaptioner`](https://docs.haystack.deepset.ai/docs/vertexaiimagecaptioner): Use this component with Imagen model '**imagetext**' for image captioning.
 - `VertexAIImageQA`: Use this component with Imagen model '**imagetext**' for visual question answering.
 
 To use Vertex AI models, you need to have a Google Cloud Platform account and be logged in using Application Default Credentials (ADCs). For more info see the [official documentation](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fcloud.google.com%2Fdocs%2Fauthentication%2Fprovide-credentials-adc). 
@@ -61,7 +61,7 @@ To start using Vertex AI generators in Haystack, you need to set the `project_id
 
 ### Gemini API models
 
-You can leverage Gemini models through two components: [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminigenerator) and [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/vertexaigeminichatgenerator). You can use these components on their own or in a pipeline.  
+You can leverage Gemini models through two components: [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator) and [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator). You can use these components on their own or in a pipeline.  
 
 **Text Generation with `gemini-pro`** 
 
@@ -164,7 +164,7 @@ print(codey_llm_result["answers"][0])
 
 ### Imagen API models
 
-You can leverage Imagen models through three components: [VertexAIImageCaptioner](https://docs.haystack.deepset.ai/v2.0/docs/vertexaiimagecaptioner), `VertexAIImageGenerator` and `VertexAIImageQA`.
+You can leverage Imagen models through three components: [VertexAIImageCaptioner](https://docs.haystack.deepset.ai/docs/vertexaiimagecaptioner), `VertexAIImageGenerator` and `VertexAIImageQA`.
 
 **Image Generation with `imagegeneration`**
 

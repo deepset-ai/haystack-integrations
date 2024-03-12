@@ -26,7 +26,7 @@ toc: true
 
 ## Overview
 
-[UpTrain](https://uptrain.ai/) is an open source framework for model-based evaluation to evaluate your LLM applications by quantifying their performance on aspects such as correctness, tonality, hallucination, fluency, etc. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/v2.0/docs/uptrainevaluator).
+[UpTrain](https://uptrain.ai/) is an open source framework for model-based evaluation to evaluate your LLM applications by quantifying their performance on aspects such as correctness, tonality, hallucination, fluency, etc. More information can be found on the [documentation page](https://docs.haystack.deepset.ai/docs/uptrainevaluator).
 
 ## Installation
 
@@ -37,7 +37,7 @@ pip install uptrain-haystack
 
 ## Usage
 
-Once installed, you will have access to an [UpTrainEvaluator](https://docs.haystack.deepset.ai/v2.0/docs/uptrainevaluator) that supports a variety of model-based evaluation metrics: 
+Once installed, you will have access to an [UpTrainEvaluator](https://docs.haystack.deepset.ai/docs/uptrainevaluator) that supports a variety of model-based evaluation metrics: 
 - "context_relevance"
 - "factual_accuracy"
 - "response_relevance"

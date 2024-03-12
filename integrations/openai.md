@@ -28,7 +28,7 @@ toc: true
 
 ## Haystack 2.0
 
-You can use [OpenAI Models](https://openai.com/) in your Haystack 2.0 pipelines with the [Generators](https://docs.haystack.deepset.ai/v2.0/docs/generators), [Embedders](https://docs.haystack.deepset.ai/v2.0/docs/embedders), [LocalWhisperTranscriber](https://docs.haystack.deepset.ai/v2.0/docs/localwhispertranscriber) and [RemoteWhisperTranscriber](https://docs.haystack.deepset.ai/v2.0/docs/remotewhispertranscriber).
+You can use [OpenAI Models](https://openai.com/) in your Haystack 2.0 pipelines with the [Generators](https://docs.haystack.deepset.ai/docs/generators), [Embedders](https://docs.haystack.deepset.ai/docs/embedders), [LocalWhisperTranscriber](https://docs.haystack.deepset.ai/docs/localwhispertranscriber) and [RemoteWhisperTranscriber](https://docs.haystack.deepset.ai/docs/remotewhispertranscriber).
 
 ### Installation
 
@@ -42,7 +42,7 @@ You can use OpenAI models in various ways:
 
 #### Embedding Models
 
-You can leverage embedding models from OpenAI through two components: [OpenAITextEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/openaitextembedder) and [OpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/openaidocumentembedder).
+You can leverage embedding models from OpenAI through two components: [OpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/openaitextembedder) and [OpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/openaidocumentembedder).
 
 To create semantic embeddings for documents, use `OpenAIDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `OpenAITextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and OpenAI API key.
 
@@ -71,7 +71,7 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 #### Generative Models (LLMs)
 
-You can leverage OpenAI models through two components: [OpenAIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaigenerator) and [OpenAIChatGenerator](https://docs.haystack.deepset.ai/v2.0/docs/openaichatgenerator).
+You can leverage OpenAI models through two components: [OpenAIGenerator](https://docs.haystack.deepset.ai/docs/openaigenerator) and [OpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/openaichatgenerator).
 
 To use OpenAI's GPT models for text generation, initialize a `OpenAIGenerator` with the model name and OpenAI API key. You can then use the `OpenAIGenerator` instance in a question answering pipeline after the `PromptBuilder`.  
 
@@ -231,7 +231,7 @@ output = pipeline.run(file_paths=["path/to/audio/file"])
 
 ## Haystack 1.x
 
-You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/docs/prompt_node), and [WhisperTranscriber](https://docs.haystack.deepset.ai/docs/whisper_transcriber).
+You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), and [WhisperTranscriber](https://docs.haystack.deepset.ai/v1.25/docs/whisper_transcriber).
 
 ### Installation (1.x)
 
