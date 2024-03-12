@@ -117,8 +117,6 @@ print(result["meta"])
 ```python
 from haystack_integrations.components.generators.nvidia import NvidiaGenerator, NvidiaGeneratorModel
 from haystack_integrations.components.embedders.nvidia import NvidiaEmbeddingModel, NvidiaDocumentEmbedder
-
-
 from haystack import Pipeline
 from haystack.dataclasses import Document
 from haystack.components.writers import DocumentWriter
