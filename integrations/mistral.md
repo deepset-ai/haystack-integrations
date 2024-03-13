@@ -41,9 +41,9 @@ pip install mistral-haystack
 ## Usage
 ### Components
 This instegration introduces 3 components:
-- The `MistralDocumentEmbedder`: Creates embeddings for Haystack Documents using Mistral embedding models (currently only `mistral-embed`).
-- The `MistralTextEmbedder`: Creates embeddings for texts (such as queries) using Mistral embedding models (currently only `mistral-embed`)
-- The `MistralChatGenerator`: Uses Mistral chat completion models such as `mistral-tiny` (default).
+- The [`MistralDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/mistraldocumentembedder): Creates embeddings for Haystack Documents using Mistral embedding models (currently only `mistral-embed`).
+- The [`MistralTextEmbedder`](https://docs.haystack.deepset.ai/docs/mistraltextembedder): Creates embeddings for texts (such as queries) using Mistral embedding models (currently only `mistral-embed`)
+- The [`MistralChatGenerator`](https://docs.haystack.deepset.ai/docs/mistralchatgenerator): Uses Mistral chat completion models such as `mistral-tiny` (default).
   
 ### Use Mistral Generative Models
 ```python
@@ -51,7 +51,7 @@ import os
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.mistral import MistralChatGenerator
 
-api_key = os.getenv("MISTRAL_API_KEY")
+os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
 model = "mistral-medium"
 
 client = MistralChatGenerator(model=model)
@@ -65,7 +65,7 @@ print(response)
 ```bash
 {'replies': [ChatMessage(content='The "best" French cheese is subjective and depends on personal taste...', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'mistral-medium', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 231, 'prompt_tokens': 16, 'total_tokens': 247}})]}
 ```
-Mistral LLMs also support streaming responses if you pass a callback in to the `MistralChatGenerator` like so:
+Mistral LLMs also support streaming responses if you pass a callback into the `MistralChatGenerator` like so:
 
 ```python
 import os
@@ -74,11 +74,10 @@ from haystack.components.generators.utils import print_streaming_chunk
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.mistral import MistralChatGenerator
 
-api_key = os.getenv("MISTRAL_API_KEY")
+os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
 model = "mistral-medium"
 
 client = MistralChatGenerator(
-    api_key=api_key,
     model=model,
     streaming_callback=print_streaming_chunk
 )
@@ -94,11 +93,11 @@ print(response)
 Use the `MistralDocumentEmbedder` in an indexing pipeline:
 
 ```python
-
 import os
+
 from haystack_integrations.components.embedders.mistral.document_embedder import MistralDocumentEmbedder
 
-api_key = os.getenv("MISTRAL_API_KEY")
+os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
 
 document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
 
@@ -121,14 +120,13 @@ Use the `MistralTextEmbedder` in a RAG pipeline:
 ```python
 import os
 
-from haystack import Document
-from haystack import Pipeline
+from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_integrations.components.embedders.mistral.document_embedder import MistralDocumentEmbedder
 from haystack_integrations.components.embedders.mistral.text_embedder import MistralTextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 
-api_key = os.getenv("MISTRAL_API_KEY")
+os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
 
 document_store = InMemoryDocumentStore()
 
