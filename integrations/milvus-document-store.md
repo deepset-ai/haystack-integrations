@@ -12,6 +12,8 @@ repo: https://github.com/milvus-io/milvus-haystack
 type: Document Store
 report_issue: https://github.com/milvus-io/milvus-haystack/issues
 logo: /logos/milvus.png
+version: Haystack 2.0
+toc: true
 ---
 
 ### Table of Contents
