@@ -55,8 +55,11 @@ Once installed, you will have access to an [UpTrainEvaluator](https://docs.hayst
 To use this integration for calculating model-based evaluation metrics, initialize an `UpTrainEvaluator` with the metric name and metric input parameters: 
 
 ```python
+# A valid OpenAI API key is required to run this example.
+
 from haystack import Pipeline
 from haystack_integrations.components.evaluators.uptrain import UpTrainEvaluator, UpTrainMetric
+from haystack.utils import Secret
 
 QUESTIONS = [
     "Which is the most popular global sport?",
@@ -72,7 +75,7 @@ pipeline = Pipeline()
 evaluator = UpTrainEvaluator(
     metric=UpTrainMetric.FACTUAL_ACCURACY,
     api="openai",
-    api_key_env_var="OPENAI_API_KEY",
+    api_key=Secret.from_env_var("OPENAI_API_KEY"),
 )
 pipeline.add_component("evaluator", evaluator)
 
