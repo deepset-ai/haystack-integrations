@@ -52,19 +52,16 @@ This integration introduces the following components:
 
 - `NvidiaGenerator`:     A component for generating text using generative models provided by NVIDIA AI Foundation Endpoints.
 
-- `NvidiaGeneratorModel` and `NvidiaEmbeddingModel` are enums indicating which NVIDIA models are currently supported by the integration.
-
 ## Use the components on their own:
   
 ### `NvidiaTextEmbedder`:
 
 ```python
-from haystack_integrations.components.embedders.nvidia import NvidiaEmbeddingModel, NvidiaTextEmbedder
-
+from haystack_integrations.components.embedders.nvidia import NvidiaTextEmbedder
 
 text_to_embed = "I love pizza!"
 
-text_embedder = NvidiaTextEmbedder(model=NvidiaEmbeddingModel.NVOLVE_40K)
+text_embedder = NvidiaTextEmbedder(model="nvolveqa_40k")
 text_embedder.warm_up()
 
 print(text_embedder.run(text_to_embed))
@@ -74,7 +71,7 @@ print(text_embedder.run(text_to_embed))
 ### `NvidiaDocumentEmbedder`:
 ```python
 from haystack.dataclasses import Document
-from haystack_integrations.components.embedders.nvidia import NvidiaEmbeddingModel, NvidiaDocumentEmbedder
+from haystack_integrations.components.embedders.nvidia import NvidiaDocumentEmbedder
 
 documents = [Document(content="Pizza is made with dough and cheese"),
              Document(content="Cake is made with floud and sugar"),
@@ -82,18 +79,20 @@ documents = [Document(content="Pizza is made with dough and cheese"),
 
 
 
-document_embedder = NvidiaDocumentEmbedder(model=NvidiaEmbeddingModel.NVOLVE_40K)
+document_embedder = NvidiaDocumentEmbedder(model="nvolveqa_40k")
 document_embedder.warm_up()
 document_embedder.run(documents=documents)
 #{'documents': [Document(id=2136941caed9b4667d83f906a80d9a2fad1ce34861392889016830ac8738e6c4, content: 'Pizza is made with dough and cheese', embedding: vector of size 1024), ... 'meta': {'usage': {'prompt_tokens': 36, 'total_tokens': 36}}}
 ```
+
+
 ### `NvidiaGenerator`:
 
 ```python
-from haystack_integrations.components.generators.nvidia import NvidiaGenerator, NvidiaGeneratorModel
+from haystack_integrations.components.generators.nvidia import NvidiaGenerator
 
 generator = NvidiaGenerator(
-    model=NvidiaGeneratorModel.NV_LLAMA2_RLHF_70B,
+    model="nv_llama2_rlhf_70b",
     model_arguments={
         "temperature": 0.2,
         "top_p": 0.7,
@@ -115,8 +114,8 @@ print(result["meta"])
 
 ### Indexing pipeline
 ```python
-from haystack_integrations.components.generators.nvidia import NvidiaGenerator, NvidiaGeneratorModel
-from haystack_integrations.components.embedders.nvidia import NvidiaEmbeddingModel, NvidiaDocumentEmbedder
+from haystack_integrations.components.generators.nvidia import NvidiaGenerator
+from haystack_integrations.components.embedders.nvidia import NvidiaDocumentEmbedder
 from haystack import Pipeline
 from haystack.dataclasses import Document
 from haystack.components.writers import DocumentWriter
@@ -128,7 +127,7 @@ documents = [Document(content="Tilde lives in San Francisco"),
 
 document_store = InMemoryDocumentStore()
 
-document_embedder = NvidiaDocumentEmbedder(model=NvidiaEmbeddingModel.NVOLVE_40K)
+document_embedder = NvidiaDocumentEmbedder(model="nvolveqa_40k")
 writer = DocumentWriter(document_store=document_store)
 
 indexing_pipeline = Pipeline()
@@ -148,8 +147,8 @@ document_store.filter_documents({})
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders import PromptBuilder
-from haystack_integrations.components.generators.nvidia import NvidiaGenerator, NvidiaGeneratorModel
-from haystack_integrations.components.embedders.nvidia import NvidiaEmbeddingModel, NvidiaTextEmbedder
+from haystack_integrations.components.generators.nvidia import NvidiaGenerator
+from haystack_integrations.components.embedders.nvidia import NvidiaTextEmbedder
 
 prompt = """ Answer the query, based on the
 content in the documents.
@@ -163,10 +162,10 @@ Documents:
 Query: {{query}}
 """
 
-text_embedder = NvidiaTextEmbedder(model=NvidiaEmbeddingModel.NVOLVE_40K)
+text_embedder = NvidiaTextEmbedder(model="nvolveqa_40k"
 retriever = InMemoryEmbeddingRetriever(document_store=document_store)
 prompt_builder = PromptBuilder(template=prompt)
-generator = NvidiaGenerator(model=NvidiaGeneratorModel.NV_LLAMA2_RLHF_70B)
+generator = NvidiaGenerator(model="nv_llama2_rlhf_70b")
 generator.warm_up()
 
 rag_pipeline = Pipeline()
