@@ -32,7 +32,7 @@ This integration supports Anthropic Claude models provided through Anthropic’s
 
 ## Haystack 2.0
 
-You can use Anthropic models with `AnthropicGenerator` and `AnthropicChatGenerator`.
+You can use Anthropic models with [`AnthropicGenerator`](https://docs.haystack.deepset.ai/docs/anthropicgenerator) and [`AnthropicChatGenerator`](https://docs.haystack.deepset.ai/docs/anthropicchatgenerator).
 
 Currently, available models are:
 
@@ -49,7 +49,7 @@ pip install anthropic-haystack
 
 ### Usage
 
-Based on your use case, you can choose between `AnthropicGenerator` or `AnthropicChatGenerator` to work with Anthropic models. Learn more about the difference, visit the [Generators vs Chat Generators](https://docs.haystack.deepset.ai/docs/generators-vs-chat-generators) guide.  
+Based on your use case, you can choose between [`AnthropicGenerator`](https://docs.haystack.deepset.ai/docs/anthropicgenerator) or [`AnthropicChatGenerator`](https://docs.haystack.deepset.ai/docs/anthropicchatgenerator) to work with Anthropic models. To learn more about the difference, visit the [Generators vs Chat Generators](https://docs.haystack.deepset.ai/docs/generators-vs-chat-generators) guide.  
 Before using, make sure to set the `ANTHROPIC_API_KEY` environment variable.
 
 #### Using `AnthropicChatGenerator`
