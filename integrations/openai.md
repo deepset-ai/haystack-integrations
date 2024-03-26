@@ -92,7 +92,7 @@ Context:
     {{ document.content }}
 {% endfor %}
 
-Question: What's the official language of {{ country }}?
+Question: {{query}}
 """
 pipe = Pipeline()
 
@@ -102,11 +102,11 @@ pipe.add_component("llm", OpenAIGenerator(model="gpt-4", api_key=Secret.from_tok
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 
-pipe.run({
-    "prompt_builder": {
-        "country": "France"
-    }
-})   
+result = pipe.run({
+    "documents":documents,
+    "query":"What was the black horse doing?"
+})
+print(result)  
 ```
 
 #### Transcriber Models
