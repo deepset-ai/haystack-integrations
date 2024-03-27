@@ -63,7 +63,7 @@ os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
 gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro")
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
-print(result["answers"][0])
+print(result["replies"][0])
 ```
 
 Output:
@@ -103,7 +103,7 @@ os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
 gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro-vision")
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
-for answer in result["answers"]:
+for answer in result["replies"]:
     print(answer)
 ```
 
@@ -189,7 +189,7 @@ os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
 gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro")
 result = gemini_generator.run("Write a code for calculating fibonacci numbers in JavaScript")
-print(result["answers"][0])
+print(result["replies"][0])
 ```
 
 Output:

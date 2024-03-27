@@ -73,7 +73,7 @@ from haystack_integrations.components.generators.google_vertex import VertexAIGe
 
 gemini_generator = VertexAIGeminiGenerator(model="gemini-pro", project_id=project_id)
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
-print(result["answers"][0])
+print(result["replies"][0])
 ```
 Output: 
 ```shell
@@ -101,7 +101,7 @@ images = [
 ]
 gemini_generator = VertexAIGeminiGenerator(model="gemini-pro-vision", project_id=project_id)
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
-for answer in result["answers"]:
+for answer in result["replies"]:
     print(answer)  
 ```
 Output:
@@ -130,7 +130,7 @@ palm_llm_result = palm_llm.run(
        Text: Google Pixel 7, 5G network, 8GB RAM, Tensor G2 processor, 128GB of storage, Lemongrass
        JSON:
     """)
-print(palm_llm_result["answers"][0])
+print(palm_llm_result["replies"][0])
 ```
 
 ### Codey API Models
@@ -144,7 +144,7 @@ from haystack_integrations.components.generators.google_vertex import VertexAICo
 
 codey_llm = VertexAICodeGenerator(model="code-bison", project_id=project_id)
 codey_llm_result = codey_llm.run("Write a code for calculating fibonacci numbers in JavaScript")
-print(codey_llm_result["answers"][0])
+print(codey_llm_result["replies"][0])
 ```
 
 Here'a an example of using `code-gecko` model for **code completion**:
@@ -159,7 +159,7 @@ codey_llm_result = codey_llm.run("""function fibonacci(n) {
     return n;
   }
 """)
-print(codey_llm_result["answers"][0])
+print(codey_llm_result["replies"][0])
 ```
 
 ### Imagen API models
@@ -201,7 +201,7 @@ print(image_captioner_result["captions"])
 
 **Visual Question Answering (VQA) with `imagetext`** 
 
-To answers questions about an image, initialize a VertexAIImageQA with the `imagetext` model and `project_id`. Then, you can run it with the `image` and the `question`: 
+To answer questions about an image, initialize a VertexAIImageQA with the `imagetext` model and `project_id`. Then, you can run it with the `image` and the `question`: 
 
 ```python
 from haystack.dataclasses.byte_stream import ByteStream
@@ -213,5 +213,5 @@ image = ByteStream.from_file_path("output.png") # you can use the generated imag
 question = "what's the color of the furniture?"
 
 visual_qa_result = visual_qa.run(image=image,question=question) 
-print(visual_qa_result["answers"])
+print(visual_qa_result["replies"])
 ```
