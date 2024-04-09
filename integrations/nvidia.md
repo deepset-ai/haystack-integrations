@@ -162,7 +162,7 @@ Documents:
 Query: {{query}}
 """
 
-text_embedder = NvidiaTextEmbedder(model="nvolveqa_40k"
+text_embedder = NvidiaTextEmbedder(model="nvolveqa_40k")
 retriever = InMemoryEmbeddingRetriever(document_store=document_store)
 prompt_builder = PromptBuilder(template=prompt)
 generator = NvidiaGenerator(model="nv_llama2_rlhf_70b")
