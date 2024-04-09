@@ -24,9 +24,9 @@ toc: true
 
 ## Overview
 
- [NVIDIA AI Foundation Models](https://www.nvidia.com/en-us/ai-data-science/foundation-models/) allow you to reach optimal performance on NVIDIA accelerated infrastructure. With pretrained generative AI models, enterprises can create custom models faster and take advantage of the latest training and inference techniques. And with NVIDIA AI Foundation Endpoints, their applications can be connected to these models running on a fully accelerated stack to test performance.
+[NVIDIA AI Foundation Models](https://www.nvidia.com/en-us/ai-data-science/foundation-models/) and [NVIDIA Inference Microservices](https://build.nvidia.com/explore/discover) allow you to reach optimal performance on NVIDIA accelerated infrastructure. With pretrained generative AI models, enterprises can create custom models faster and take advantage of the latest training and inference techniques. 
 
-This integration allows you to use NVIDIA Foundation Models in your Haystack pipelines.
+This integration allows you to use NVIDIA Foundation Models and NVIDIA Inference Microservices in your Haystack pipelines.
 
 
 In order to use this integration, you'll need a [NVIDIA API key](https://org.ngc.nvidia.com/setup). Set it as an environment variable, `NVIDIA_API_KEY`.
@@ -42,15 +42,15 @@ pip install nvidia-haystack
 This integration introduces the following components:
 
 - `NvidiaTextEmbedder`: 
-    A component for embedding strings, using NVIDIA AI Foundation embedding models.
+    A component for embedding strings, using NVIDIA AI Foundation and NVIDIA Inference Microservices embedding models.
 
     For models that differentiate between query and document inputs,
     this component embeds the input string as a query.
   
 - `NvidiaDocumentEmbedder`:
-    A component for embedding documents, using NVIDIA AI Foundation embedding models.
+    A component for embedding documents, using NVIDIA AI Foundation and NVIDIA Inference Microservices embedding models.
 
-- `NvidiaGenerator`:     A component for generating text using generative models provided by NVIDIA AI Foundation Endpoints.
+- `NvidiaGenerator`:     A component for generating text using generative models provided by NVIDIA AI Foundation Endpoints and NVIDIA Inference Microservices.
 
 ## Use the components on their own:
   
