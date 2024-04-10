@@ -24,12 +24,13 @@ toc: true
   - [Usage](#usage)
     - [Embedding Models](#embedding-models)
     - [Generative Models (LLMs)](#generative-models-llms)
+    - [Ranker Models](#ranker-models)
 - [Haystack 1.x](#haystack-1x)
   - [Installation (1.x)](#installation-1x)
   - [Usage (1.x)](#usage-1x)
     - [Embedding Models](#embedding-models-1)
     - [Generative Models (LLMs)](#generative-models-llms-1)
-    - [Ranker Models](#ranker-models)
+    - [Ranker Models](#ranker-models-1)
 
 ## Haystack 2.0
 
@@ -132,6 +133,39 @@ messages = [system_message, ChatMessage.from_user("What's the official language 
 
 res = pipe.run(data={"prompt_builder": {"template_variables": {"country": "Germany"}, "prompt_source": messages}})
 print(res)
+```
+
+#### Ranker Models
+
+To use `/ranker` models from Cohere, initialize a [CohereRanker](https://docs.haystack.deepset.ai/docs/cohereranker) with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable. You can then use this `CohereRanker` to rank documents based on semantic relevance to a specified query.
+
+Below is the example indexing pipeline with `InMemoryDocumentStore`, `InMemoryBM25Retriever` and `CohereRanker`:
+
+```python
+from haystack import Document, Pipeline
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.rankers.cohere import CohereRanker
+
+docs = [
+    Document(content="Paris is in France"),
+    Document(content="Berlin is in Germany"),
+    Document(content="Lyon is in France"),
+]
+document_store = InMemoryDocumentStore()
+document_store.write_documents(docs)
+
+retriever = InMemoryBM25Retriever(document_store=document_store)
+ranker = CohereRanker()
+
+document_ranker_pipeline = Pipeline()
+document_ranker_pipeline.add_component(instance=retriever, name="retriever")
+document_ranker_pipeline.add_component(instance=ranker, name="ranker")
+
+document_ranker_pipeline.connect("retriever.documents", "ranker.documents")
+
+query = "Cities in France"
+res = document_ranker_pipeline.run(data = {"retriever": {"query": query, "top_k": 3}, "ranker": {"query": query, "top_k": 2}})
 ```
 
 ## Haystack 1.x
