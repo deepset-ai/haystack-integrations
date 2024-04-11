@@ -28,7 +28,9 @@ toc: true
 
 Custom component for [Haystack](https://github.com/deepset-ai/haystack) (2.x) for creating embeddings using the [VoyageAI Embedding Models](https://voyageai.com/).
 
-Voyage’s embedding models, `voyage-2` and `voyage-2-code`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
+Voyage’s embedding models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
+
+The available models can be found on the [Embeddings Documentation.](https://docs.voyageai.com/embeddings/)
 
 ## Installation
 
