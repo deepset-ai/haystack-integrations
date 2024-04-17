@@ -32,6 +32,7 @@ toc: true
   - [Examples](#examples)
     - [Text Generation](#text-generation)
     - [Chat Generation](#chat-generation)
+    - [Document and Text Embedders](#embedders)
 
 ## Introduction
 
@@ -159,4 +160,47 @@ Natural Language Processing (NLP) is a complex field with many different tools a
 
 4. Practice: The best way to learn NLP is by practicing. Start with simple tasks like sentiment analysis or tokenization and work your way up to more complex ones like machine translation
 
+```
+#### Embedders
+
+**OllamaDocumentEmbedder** can be used to compute the embeddings of a list of Documents and update the embedding field of each Document with the embedding vector.
+**OllamaTextEmbedder** computes the embeddings of a particular string.
+Both `OllamaTextEmbedder` and `OllamaDocumentEmbedder` use embedding models compatible with the Ollama Library.
+
+To run the below example, use the below command to serve a `nomic-embed-text` model from Ollama:
+
+```bash
+docker run -d -p 11434:11434 --name ollama ollama/ollama:latest
+docker exec ollama ollama pull nomic-embed-text
+```
+
+```python
+from haystack import Document, Pipeline
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.embedders.ollama.document_embedder import OllamaDocumentEmbedder
+from haystack_integrations.components.embedders.ollama.text_embedder import OllamaTextEmbedder
+
+document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+documents = [
+    Document(content="I saw a black horse running"),
+    Document(content="Germany has many big cities"),
+    Document(content="My name is Wolfgang and I live in Berlin"),
+]
+
+document_embedder = OllamaDocumentEmbedder()
+documents_with_embeddings = document_embedder.run(documents)["documents"]
+document_store.write_documents(documents_with_embeddings)
+
+query_pipeline = Pipeline()
+query_pipeline.add_component("text_embedder", OllamaTextEmbedder())
+query_pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+
+query = "Who lives in Berlin?"
+
+result = query_pipeline.run({"text_embedder": {"text": query}})
+
+print(result["retriever"]["documents"][0])
 ```
