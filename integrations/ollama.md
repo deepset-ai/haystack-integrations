@@ -175,6 +175,7 @@ docker run -d -p 11434:11434 --name ollama ollama/ollama:latest
 docker exec ollama ollama pull nomic-embed-text
 ```
 
+Below is an example that uses both `OllamaDocumentEmbedder` and `OllamaTextEmbedder`.
 ```python
 from haystack import Document, Pipeline
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
