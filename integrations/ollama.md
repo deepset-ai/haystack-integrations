@@ -165,6 +165,7 @@ Natural Language Processing (NLP) is a complex field with many different tools a
 
 - `OllamaDocumentEmbedder` helps compute embeddings for a list of Documents and updates each Document's embedding field with its embedding vector.
 - `OllamaTextEmbedder` computes the embeddings of a particular string.
+
 Both `OllamaTextEmbedder` and `OllamaDocumentEmbedder` use embedding models compatible with the Ollama Library.
 
 To run the below example, use the below command to serve a `nomic-embed-text` model from Ollama:
