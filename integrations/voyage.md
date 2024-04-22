@@ -92,10 +92,10 @@ retriever = InMemoryEmbeddingRetriever(document_store=doc_store)
 doc_writer = DocumentWriter(document_store=doc_store)
 
 doc_embedder = VoyageDocumentEmbedder(
-    model="voyage-2",
+    model="voyage-law-2",
     input_type="document",
 )
-text_embedder = VoyageTextEmbedder(model="voyage-2", input_type="query")
+text_embedder = VoyageTextEmbedder(model="voyage-law-2", input_type="query")
 
 # Indexing Pipeline
 indexing_pipeline = Pipeline()
@@ -113,7 +113,7 @@ print(f"Embedding of first Document: {doc_store.filter_documents()[0].embedding}
 Query the Semantic Search Pipeline using the `InMemoryEmbeddingRetriever` and `VoyageTextEmbedder`:
 
 ```python
-text_embedder = VoyageTextEmbedder(model="voyage-2", input_type="query")
+text_embedder = VoyageTextEmbedder(model="voyage-law-2", input_type="query")
 
 # Query Pipeline
 query_pipeline = Pipeline()
