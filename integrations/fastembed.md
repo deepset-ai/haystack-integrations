@@ -3,11 +3,11 @@ layout: integration
 name: FastEmbed
 description: Use the FastEmbed embedding models
 authors:
-  - name: deepset
-    socials:
-      github: deepset-ai
-      twitter: deepset_ai
-      linkedin: deepset-ai
+    - name: deepset
+      socials:
+        github: deepset-ai
+        twitter: deepset_ai
+        linkedin: deepset-ai
     - name: Nicola Procopio
       socials:
         github: nickprock
