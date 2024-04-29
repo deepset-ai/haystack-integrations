@@ -16,10 +16,10 @@ pypi: https://pypi.org/project/fastembed-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/fastembed
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-# logo: /logos/your-logo.png
 version: Haystack 2.0
 toc: true
 ---
+
 ### **Table of Contents**
 - [Overview](#overview)
 - [Installation](#installation)
