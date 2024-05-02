@@ -18,7 +18,13 @@ version: Haystack 2.0
 
 # Browserbase Haystack Fetcher
 
-[Browserbase](https://browserbase.com) is a serverless platform for running headless browsers, it offers advanced debugging, session recordings, stealth mode, integrated proxies and captcha solving.
+[Browserbase](https://browserbase.com) is a developer platform to reliably run, manage, and monitor headless browsers.
+
+Power your AI data retrievals with:
+- [Serverless Infrastructure](https://docs.browserbase.com/under-the-hood) providing reliable browsers to extract data from complex UIs
+- [Stealth Mode](https://docs.browserbase.com/features/stealth-mode) with included fingerprinting tactics and automatic captcha solving
+- [Session Debugger](https://docs.browserbase.com/features/sessions) to inspect your Browser Session with networks timeline and logs
+- [Live Debug](https://docs.browserbase.com/guides/session-debug-connection/browser-remote-control) to quickly debug your automation
 
 ## Installation and setup
 
@@ -45,10 +51,10 @@ browserbase_fetcher.run(urls=["https://example.com"], text_content=False)
 ### In a pipeline
 
 ```py
-from browserbase_haystack import BrowserbaseFetcher
 from haystack import Pipeline
 from haystack.components.generators import OpenAIGenerator
 from haystack.components.builders import PromptBuilder
+from browserbase_haystack import BrowserbaseFetcher
 
 prompt_template = (
     "Tell me the titles of the given pages. Pages: {{ documents }}"
@@ -56,8 +62,10 @@ prompt_template = (
 prompt_builder = PromptBuilder(template=prompt_template)
 llm = OpenAIGenerator()
 
+browserbase_fetcher = BrowserbaseFetcher()
+
 pipe = Pipeline()
-pipe.add_component("fetcher", self.browserbase_fetcher)
+pipe.add_component("fetcher", browserbase_fetcher)
 pipe.add_component("prompt_builder", prompt_builder)
 pipe.add_component("llm", llm)
 
