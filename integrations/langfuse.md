@@ -13,7 +13,7 @@ pypi: https://pypi.org/project/langfuse-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/langfuse
 type: Evaluation Framework
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/your-logo.png
+logo: /logos/langfuse.png
 version: Haystack 2.0
 toc: true
 ---
@@ -47,7 +47,7 @@ This integration introduces one component:
 
 - The `LangfuseConnector`: 
   
-    `LangfuseConnector`` connects Haystack LLM framework with Langfuse in order to enable the tracing of operations
+    `LangfuseConnector` connects Haystack LLM framework with Langfuse in order to enable the tracing of operations
     and data flow within various components of a pipeline.
     Simply this component to your pipeline, but *do not* connect it to any other component. The `LangfuseConnector`
     will automatically trace the operations and data flow within the pipeline.
@@ -58,7 +58,14 @@ This integration introduces one component:
     In addition, you need to set the `HAYSTACK_CONTENT_TRACING_ENABLED` environment variable to `true` in order to
     enable Haystack tracing in your pipeline.
 
-### Using `LangfuseConnector` in a RAG pipeline:
+    These code examples also require an [`OPENAI_API_KEY`](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key) environment variable to be set. Haystack is model-agnostic and you can [use any model provider we support](https://docs.haystack.deepset.ai/docs/generators), by changing the generator in the code samples below.
+
+### Use `LangfuseConnector` in a RAG pipeline:
+
+First, install a few more dependencies.
+```bash
+pip install sentence-transformers datasets
+```
 ```python
 from datasets import load_dataset
 from haystack import Document, Pipeline
@@ -116,6 +123,40 @@ response = pipeline.run({"text_embedder": {"text": question}, "prompt_builder": 
 # {'tracer': {'name': 'Basic RAG Pipeline', 'trace_url': 'https://cloud.langfuse.com/trace/3d52b8cc-87b6-4977-8927-5e9f3ff5b1cb'}, 'llm': {'replies': ['The Rhodes Statue was described as being about 105 feet tall, with iron tie bars and brass plates forming the skin. It was built on a white marble pedestal near the Rhodes harbour entrance. The statue was filled with stone blocks as construction progressed.', 'The Rhodes Statue was described as being about 32 meters (105 feet) tall, built with iron tie bars, brass plates for skin, and filled with stone blocks. It stood on a 15-meter-high white marble pedestal near the Rhodes harbor entrance.'], 'meta': [{'model': 'gpt-3.5-turbo-0125', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 100, 'prompt_tokens': 453, 'total_tokens': 553}}, {'model': 'gpt-3.5-turbo-0125', 'index': 1, 'finish_reason': 'stop', 'usage': {'completion_tokens': 100, 'prompt_tokens': 453, 'total_tokens': 553}}]}}
 ```
 
+Once you've run these code samples, you can also [use the Langfuse dashboard to see and interact with traces](https://langfuse.com/docs/demo).
+
+### Use `LangfuseConnector` in a RAG pipeline:
+
+```python
+from haystack import Pipeline
+from haystack.components.builders import DynamicChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack_integrations.components.connectors.langfuse import LangfuseConnector
+
+if __name__ == "__main__":
+
+    pipe = Pipeline()
+    pipe.add_component("tracer", LangfuseConnector("Chat example"))
+    pipe.add_component("prompt_builder", DynamicChatPromptBuilder())
+    pipe.add_component("llm", OpenAIChatGenerator(model="gpt-3.5-turbo"))
+
+    pipe.connect("prompt_builder.prompt", "llm.messages")
+
+    messages = [
+        ChatMessage.from_system("Always respond in German even if some input data is in other languages."),
+        ChatMessage.from_user("Tell me about {{location}}"),
+    ]
+
+    response = pipe.run(
+        data={"prompt_builder": {"template_variables": {"location": "Berlin"}, "prompt_source": messages}}
+    )
+    print(response["llm"]["replies"][0])
+    print(response["tracer"]["trace_url"])
+# ChatMessage(content='Berlin ist die Hauptstadt von Deutschland und zugleich eines der bekanntesten kulturellen Zentren Europas. Die Stadt hat eine faszinierende Geschichte, die bis in die Zeiten des Zweiten Weltkriegs und des Kalten Krieges zurückreicht. Heute ist Berlin für seine vielfältige Kunst- und Musikszene, seine historischen Stätten wie das Brandenburger Tor und die Berliner Mauer sowie seine lebendige Street-Food-Kultur bekannt. Berlin ist auch für seine grünen Parks und Seen beliebt, die den Bewohnern und Besuchern Raum für Erholung bieten.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'gpt-3.5-turbo-0125', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 137, 'prompt_tokens': 29, 'total_tokens': 166}})
+# https://cloud.langfuse.com/trace/YOUR_UNIQUE_IDENTIFYING_STRING
+```
+
 ### License
 
-Info about your integration license
+`langfuse-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
