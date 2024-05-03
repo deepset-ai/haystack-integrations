@@ -48,7 +48,7 @@ pip install langfuse-haystack
 ### Components
 This integration introduces one component:
 
-- The `LangfuseConnector`: 
+- The [`LangfuseConnector`](https://docs.haystack.deepset.ai/docs/langfuseconnector): 
   
     `LangfuseConnector` connects Haystack LLM framework with Langfuse in order to enable the tracing of operations
     and data flow within various components of a pipeline.
