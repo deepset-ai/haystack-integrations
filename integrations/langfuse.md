@@ -134,25 +134,22 @@ from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 
-if __name__ == "__main__":
+pipe = Pipeline()
+pipe.add_component("tracer", LangfuseConnector("Chat example"))
+pipe.add_component("prompt_builder", DynamicChatPromptBuilder())
+pipe.add_component("llm", OpenAIChatGenerator(model="gpt-3.5-turbo"))
 
-    pipe = Pipeline()
-    pipe.add_component("tracer", LangfuseConnector("Chat example"))
-    pipe.add_component("prompt_builder", DynamicChatPromptBuilder())
-    pipe.add_component("llm", OpenAIChatGenerator(model="gpt-3.5-turbo"))
+pipe.connect("prompt_builder.prompt", "llm.messages")
+messages = [
+    ChatMessage.from_system("Always respond in German even if some input data is in other languages."),
+    ChatMessage.from_user("Tell me about {{location}}"),
+]
 
-    pipe.connect("prompt_builder.prompt", "llm.messages")
-
-    messages = [
-        ChatMessage.from_system("Always respond in German even if some input data is in other languages."),
-        ChatMessage.from_user("Tell me about {{location}}"),
-    ]
-
-    response = pipe.run(
-        data={"prompt_builder": {"template_variables": {"location": "Berlin"}, "prompt_source": messages}}
-    )
-    print(response["llm"]["replies"][0])
-    print(response["tracer"]["trace_url"])
+response = pipe.run(
+    data={"prompt_builder": {"template_variables": {"location": "Berlin"}, "prompt_source": messages}}
+)
+print(response["llm"]["replies"][0])
+print(response["tracer"]["trace_url"])
 # ChatMessage(content='Berlin ist die Hauptstadt von Deutschland und zugleich eines der bekanntesten kulturellen Zentren Europas. Die Stadt hat eine faszinierende Geschichte, die bis in die Zeiten des Zweiten Weltkriegs und des Kalten Krieges zurückreicht. Heute ist Berlin für seine vielfältige Kunst- und Musikszene, seine historischen Stätten wie das Brandenburger Tor und die Berliner Mauer sowie seine lebendige Street-Food-Kultur bekannt. Berlin ist auch für seine grünen Parks und Seen beliebt, die den Bewohnern und Besuchern Raum für Erholung bieten.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'gpt-3.5-turbo-0125', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 137, 'prompt_tokens': 29, 'total_tokens': 166}})
 # https://cloud.langfuse.com/trace/YOUR_UNIQUE_IDENTIFYING_STRING
 ```
