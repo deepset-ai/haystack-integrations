@@ -11,7 +11,7 @@ authors:
         linkedin: deepset-ai
 pypi: https://pypi.org/project/langfuse-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/langfuse
-type: Evaluation Framework
+type: Monitoring Tool
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/langfuse.png
 version: Haystack 2.0
