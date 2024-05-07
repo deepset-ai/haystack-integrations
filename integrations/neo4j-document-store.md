@@ -28,7 +28,7 @@ An integration of [Neo4j](https://neo4j.com/) graph database with [Haystack v2.0
 by [deepset](https://www.deepset.ai). In Neo4j [Vector search index](https://neo4j.com/docs/cypher-manual/current/indexes-for-vector-search/)
 is being used for storing document embeddings and dense retrievals.
 
-The library allows using Neo4j as a [DocumentStore](https://docs.haystack.deepset.ai/docs/document-store), and implements the required [Protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol) methods. You can start working with the implementation by importing it from `neo4_haystack` package:
+The library allows using Neo4j as a [DocumentStore](https://docs.haystack.deepset.ai/docs/document-store), and implements the required [Protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol) methods. You can start working with the implementation by importing it from `neo4j_haystack` package:
 
 ```python
 from neo4j_haystack import Neo4jDocumentStore
@@ -81,7 +81,7 @@ In the above diagram:
 
 ```bash
 pip install --upgrade pip # optional
-pip install sentence-transformers # required iin order to run pipeline examples given below
+pip install sentence-transformers # required in order to run pipeline examples given below
 pip install neo4j-haystack
 ```
 
