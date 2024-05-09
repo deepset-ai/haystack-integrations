@@ -98,6 +98,17 @@ querying.connect("embedder", "retriever")
 
 results = querying.run({"embedder": {"text": "my query"}})
 ```
+Similarly, you can also retrieve Documents using keyword search.
+
+```python
+from haystack_integrations.components.retrievers.pgvector import PgvectorKeywordRetriever
+from haystack import Pipeline
+
+querying = Pipeline()
+querying.add_component("retriever", PgvectorKeywordRetriever(document_store=document_store, top_k=3))
+
+results = retriever.run(query="languages")
+```
 
 ## Examples
 You can find a code example showing how to use the Document Store and the Retriever under the `examples/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/pgvector).
