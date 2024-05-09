@@ -102,11 +102,8 @@ Similarly, you can also retrieve Documents using keyword search.
 
 ```python
 from haystack_integrations.components.retrievers.pgvector import PgvectorKeywordRetriever
-from haystack import Pipeline
 
-querying = Pipeline()
-querying.add_component("retriever", PgvectorKeywordRetriever(document_store=document_store, top_k=3))
-
+retriever = PgvectorKeywordRetriever(document_store=document_store, top_k=3))
 results = retriever.run(query="languages")
 ```
 
