@@ -84,7 +84,7 @@ indexing.run({"converter": {"sources": file_paths}})
 ```
 
 ### Retrieval from PgvectorDocumentStore
-You can retrieve Documents similar to a given query using a simple Pipeline.
+You can retrieve semantically similar documents to a given query using a simple pipeline that includes the `PgvectorEmbeddingRetriever`.
 
 ```python
 from haystack.components.embedders import SentenceTransformersTextEmbedder
@@ -98,7 +98,8 @@ querying.connect("embedder", "retriever")
 
 results = querying.run({"embedder": {"text": "my query"}})
 ```
-Similarly, you can also retrieve Documents using keyword search.
+
+You can also retrieve Documents based on keyword matching with the `PgvectorKeywordRetriever`.
 
 ```python
 from haystack_integrations.components.retrievers.pgvector import PgvectorKeywordRetriever
