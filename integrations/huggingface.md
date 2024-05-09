@@ -42,9 +42,11 @@ You can use models on Hugging Face in various ways:
 
 #### Embedding Models
 
-You can leverage embedding models from Hugging Face through two components: [SentenceTransformersTextEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformerstextembedder) and [SentenceTransformersDocumentEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformersdocumentembedder).
+You can leverage embedding models from Hugging Face through four components: [SentenceTransformersTextEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformerstextembedder), [SentenceTransformersDocumentEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformersdocumentembedder), [HuggingFaceAPITextEmbedder](https://docs.haystack.deepset.ai/docs/huggingfaceapitextembedder) and [HuggingFaceAPIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/huggingfaceapidocumentembedder).
 
-To create semantic embeddings for documents, use `SentenceTransformersDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `SentenceTransformersTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the desired model name.
+To create semantic embeddings for documents, use a Document Embedder in your indexing pipeline. For generating embeddings for queries, use a Text Embedder.
+
+Depending on the hosting option (local Sentence Transformers model, Serverless Inference API, Inference Endpoints, or self-hosted Text Embeddings Inference), select the suitable Hugging Face Embedder component and initialize it with the model name.
 
 Below is the example indexing pipeline with `InMemoryDocumentStore`, `DocumentWriter` and  `SentenceTransformersDocumentEmbedder`:
 
@@ -72,18 +74,18 @@ indexing_pipeline.run({
 
 #### Generative Models (LLMs) 
 
-You can leverage text generation models from Hugging Face through three components: [HuggingFaceLocalGenerator](https://docs.haystack.deepset.ai/docs/huggingfacelocalgenerator), [HuggingFaceTGIGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgigenerator) and [HuggingFaceTGIChatGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgichatgenerator).
+You can leverage text generation models from Hugging Face through three components: [HuggingFaceLocalGenerator](https://docs.haystack.deepset.ai/docs/huggingfacelocalgenerator), [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/docs/huggingfaceapigenerator) and [HuggingFaceAPIChatGenerator](https://docs.haystack.deepset.ai/docs/huggingfaceapichatgenerator).
 
-Depending on the model type (chat or text completion) and hosting option (TGI, Inference Endpoint, locally hosted), select the suitable Hugging Face Generator component and initialize it with the model name
+Depending on the model type (chat or text completion) and hosting option (local Transformer model, Serverless Inference API, Inference Endpoints, or self-hosted Text Generation Inference), select the suitable Hugging Face Generator component and initialize it with the model name.
 
-Below is the example query pipeline that uses `mistralai/Mistral-7B-v0.1` hosted on Hugging Face Inference endpoints with `HuggingFaceTGIGenerator`:
+Below is the example query pipeline that uses `HuggingFaceH4/zephyr-7b-beta` hosted on Serverless Inference API with `HuggingFaceAPIGenerator`:
 
 ```python
 from haystack import Pipeline
 from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import HuggingFaceTGIGenerator
+from haystack.components.generators import HuggingFaceAPIGenerator
 
 template = """
 Given the following information, answer the question.
@@ -97,9 +99,13 @@ Question: What's the official language of {{ country }}?
 """
 pipe = Pipeline()
 
+generator = HuggingFaceAPIGenerator(api_type="serverless_inference_api",
+                                    api_params={"model": "HuggingFaceH4/zephyr-7b-beta"},
+                                    token=Secret.from_token("YOUR_HF_API_TOKEN"))
+
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=docstore))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", HuggingFaceTGIGenerator(model="mistralai/Mistral-7B-v0.1", token=Secret.from_token("YOUR_HF_API_TOKEN")))
+pipe.add_component("llm", generator)
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 
