@@ -80,6 +80,8 @@ query = "Who supports fastembed?"
 result = query_pipeline.run({"text_embedder": {"text": query}})
 ```
 
+For a more detailed example, see this [notebook](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/rag_fastembed.ipynb).
+
 ### Example with sparse embeddings
 Currently, Sparse Embedding retrieval is only supported by `QdrantDocumentStore`.
 You can install the package as follows: 
@@ -120,6 +122,8 @@ query = "Who supports fastembed?"
 
 result = query_pipeline.run({"sparse_text_embedder": {"text": query}})
 ```
+
+For a more detailed example, see this [notebook](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/sparse_embedding_retrieval.ipynb).
 
 ### License
 
