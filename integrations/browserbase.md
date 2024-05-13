@@ -28,7 +28,7 @@ Power your AI data retrievals with:
 
 ## Installation and setup
 
-- Get an API key from [browserbase.com](https://browserbase.com) and set it in environment variables (`BROWSERBASE_API_KEY`).
+- Get an API key and Project ID from [browserbase.com](https://browserbase.com) and set it in environment variables (`BROWSERBASE_API_KEY`, `BROWSERBASE_PROJECT_ID`).
 - Install the required dependencies:
 
 ```
@@ -73,3 +73,10 @@ pipe.connect("fetcher.documents", "prompt_builder.documents")
 pipe.connect("prompt_builder.prompt", "llm.prompt")
 result = pipe.run(data={"fetcher": {"urls": ["https://example.com"]}})
 ```
+
+### Parameters
+
+- `urls` Required. A list of URLs to fetch
+- `text_content` Optional. Only return page text content
+- `session_id` Optional. The Session ID
+- `proxy` Optional. Enable Proxy
