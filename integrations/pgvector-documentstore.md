@@ -6,7 +6,7 @@ authors:
     - name: deepset
       socials:
         github: deepset-ai
-        twitter: deepset_ai
+        twitter: Haystack_AI
         linkedin: deepset-ai
 pypi: https://pypi.org/project/pgvector-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/pgvector
@@ -66,7 +66,7 @@ document_store = PgvectorDocumentStore(
 ```
 
 ### Writing Documents to PgvectorDocumentStore
-To write documents to `PgvectorDocumentStore`, create an indexing Pipeline.
+To write documents to `PgvectorDocumentStore`, create an indexing pipeline.
 
 ```python
 from haystack import Pipeline
@@ -84,7 +84,7 @@ indexing.run({"converter": {"sources": file_paths}})
 ```
 
 ### Retrieval from PgvectorDocumentStore
-You can retrieve Documents similar to a given query using a simple Pipeline.
+You can retrieve semantically similar documents to a given query using a simple pipeline that includes the [`PgvectorEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/pgvectorembeddingretriever).
 
 ```python
 from haystack.components.embedders import SentenceTransformersTextEmbedder
@@ -97,6 +97,15 @@ querying.add_component("retriever", PgvectorEmbeddingRetriever(document_store=do
 querying.connect("embedder", "retriever")
 
 results = querying.run({"embedder": {"text": "my query"}})
+```
+
+You can also retrieve Documents based on keyword matching with the `PgvectorKeywordRetriever`.
+
+```python
+from haystack_integrations.components.retrievers.pgvector import PgvectorKeywordRetriever
+
+retriever = PgvectorKeywordRetriever(document_store=document_store, top_k=3))
+results = retriever.run(query="my query")
 ```
 
 ## Examples
