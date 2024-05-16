@@ -76,7 +76,7 @@ result = pipe.run(data={"fetcher": {"urls": ["https://example.com"]}})
 
 ### Parameters
 
-- `urls` Required. A list of URLs to fetch
-- `text_content` Optional. Only return page text content
-- `session_id` Optional. The Session ID
-- `proxy` Optional. Enable Proxy
+- `urls` Required. A list of URLs to fetch.
+- `text_content` Retrieve only text content. Default is `False`.
+- `session_id` Optional. Provide an existing Session ID.
+- `proxy` Optional. Enable/Disable Proxies.## Loading images
