@@ -2,7 +2,16 @@
 layout: integration
 name: Groq
 description: Use open Language Models served by Groq
+authors:
+    - name: deepset
+      socials:
+        github: deepset-ai
+        twitter: Haystack_AI
+        linkedin: https://www.linkedin.com/company/deepset-ai
+pypi: https://pypi.org/project/haystack-ai/
+repo: https://github.com/deepset-ai/haystack
 type: Model Provider
+report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/groq.svg
 version: Haystack 2.0
 toc: true
