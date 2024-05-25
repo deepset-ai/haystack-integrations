@@ -1,0 +1,21 @@
+---
+layout: integration
+name: Meilisearch
+description: A hybrid vector database and search index for storing and retrieval. Keyword, Hybrid, and Semantic searches possible.
+authors:
+    - name: Daniel O'Reilly
+      socials:
+        github: doreilly257
+        linkedin: doreilly
+    - name: Meilisearch
+      socials:
+        github: meilisearch        
+        website: meilisearch.com
+        linkedin: meilisearch
+pypi: https://pypi.org/project/meilisearch/
+repo: https://github.com/meilisearch/meilisearch
+report_issue: https://github.com/meilisearch/meilisearch/issues
+type: Document Store
+logo: https://raw.githubusercontent.com/meilisearch/meilisearch/main/assets/logo.svg
+version: Haystack 2.0 (if it's for Haystack 2.0)
+---
