@@ -1,0 +1,21 @@
+---
+layout: integration
+name: MonsterAPI
+description: PaaS API provider for hosting model inference and fine tuning.
+authors:
+    - name: Daniel O'Reilly
+      socials:
+        github: doreilly257
+        linkedin: doreilly
+    - name: MonsterAPI
+      socials:
+        github: monsterapi        
+        website: monsterapi.ai
+        linkedin: monster-api
+pypi: https://pypi.org/project/monsterapi/
+repo: https://monsterapi.gitbook.io/
+report_issue: https://monsterapi.gitbook.io/monster-api-documentation
+type: Model_Provider
+logo: https://monsterapi.ai/images/monster-light.svg
+version: Haystack 2.0
+---
