@@ -10,6 +10,7 @@ pypi: https://pypi.org/project/lancedb-haystack/
 repo: https://github.com/alanmeeson/lancedb-haystack
 type: Document Store
 report_issue: https://github.com/alanmeeson/lancedb-haystack/issues
+logo: /logos/lancedb.png
 version: Haystack 2.0
 toc: true
 ---
@@ -26,7 +27,9 @@ LanceDB-Haystack is an embedded [LanceDB](https://lancedb.github.io/lancedb/) ba
 
 The current simplest way to get LanceDB-Haystack is to install from GitHub via pip:
 
-```pip install lancedb-haystack```
+```shell
+pip install lancedb-haystack
+```
 
 ## Usage
 
@@ -59,7 +62,7 @@ embedding_retriever = LanceDBEmbeddingRetriever(document_store)
 fts_retriever = LanceDBFTSRetriever(document_store)
 ```
 
-See also [`examples/pipeline-usage.ipynb`](https://github.com/alanmeeson/lancedb-haystack/blob/main/examples/pipeline-usage.ipynb) for a full worked example.
+See also [`examples/pipeline-usage.ipynb`](https://github.com/alanmeeson/lancedb-haystack/blob/main/examples/pipeline-usage.ipynb) for a full worked example, and the [API Reference](https://lancedb-haystack.readthedocs.io).
 
 ### License
 
