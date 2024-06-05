@@ -18,14 +18,15 @@ fast**RAG** is a research framework for ***efficient*** and ***optimized*** retr
 incorporating state-of-the-art LLMs and Information Retrieval. fastRAG is designed to empower researchers and developers
 with a comprehensive tool-set for advancing retrieval augmented generation.
 
-Comments, suggestions, issues and pull-requests are welcomed! :heart:
+Comments, suggestions, issues and pull-requests are welcomed! ❤️
 
-> [!IMPORTANT]
+> **IMPORTANT**
+> 
 > Now compatible with Haystack v2+. Please report any possible issues you find.
 
-## :mega: Updates
+## 📣 Updates
 
-- **2024-05**: fastRAG V3 is Haystack 2.0 compatible :fire:
+- **2024-05**: fastRAG V3 is Haystack 2.0 compatible 🔥
 - **2023-12**: Gaudi2 and ONNX runtime support; Optimized Embedding models; Multi-modality and Chat demos; [REPLUG](https://arxiv.org/abs/2301.12652) text generation.
 - **2023-06**: ColBERT index modification: adding/removing documents.
 - **2023-05**: [RAG with LLM and dynamic prompt synthesis example](https://github.com/IntelLabs/fastRAG/blob/main/examples/rag-prompt-hf.ipynb).
@@ -37,7 +38,7 @@ Comments, suggestions, issues and pull-requests are welcomed! :heart:
 - **Optimized for Intel Hardware**: Leverage [Intel extensions for PyTorch (IPEX)](https://github.com/intel/intel-extension-for-pytorch), [🤗 Optimum Intel](https://github.com/huggingface/optimum-intel) and [🤗 Optimum-Habana](https://github.com/huggingface/optimum-habana) for *running as optimal as possible* on Intel® Xeon® Processors and Intel® Gaudi® AI accelerators.
 - **Customizable**: fastRAG is built using [Haystack](https://github.com/deepset-ai/haystack) and HuggingFace. All of fastRAG's components are 100% Haystack compatible.
 
-## :rocket: Components
+## 🚀 Components
 
 For a brief overview of the various unique components in fastRAG refer to the [Components Overview](https://github.com/IntelLabs/fastRAG/blob/main/components.md) page.
 
@@ -100,7 +101,7 @@ For a brief overview of the various unique components in fastRAG refer to the [C
 </tbody>
 </table></div>
 
-## :round_pushpin: Installation
+## 📍 Installation
 
 Preliminary requirements:
 
@@ -114,6 +115,70 @@ git clone https://github.com/IntelLabs/fastRAG.git
 cd fastrag
 pip install .
 ```
+
+## Usage
+
+You can import components from fastRAG and use them in a Haystack pipeline:
+
+```python
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
+from haystack.components.builders.prompt_builder import PromptBuilder
+from haystack.components.rankers import TransformersSimilarityRanker
+
+from fastrag.generators.openvino import OpenVINOGenerator
+
+prompt_template = """
+Given these documents, answer the question.
+Documents:
+{% for doc in documents %}
+    {{ doc.content }}
+{% endfor %}
+Question: {{query}}
+Answer:
+"""
+
+openvino_compressed_model_path = "path/to/quantized/model"
+
+generator = OpenVINOGenerator(
+    model="microsoft/phi-2",
+    compressed_model_dir=openvino_compressed_model_path,
+    device_openvino="CPU",
+    task="text-generation",
+    generation_kwargs={
+        "max_new_tokens": 100,
+    }
+)
+
+pipe = Pipeline()
+
+pipe.add_component("retriever", InMemoryBM25Retriever(document_store=store))
+pipe.add_component("ranker", ransformersSimilarityRanker())
+pipe.add_component("prompt_builder", PromptBuilder(template=prompt_template))
+pipe.add_component("llm", generator)
+
+pipe.connect("retriever.documents", "ranker.documents")
+pipe.connect("ranker", "prompt_builder.documents")
+pipe.connect("prompt_builder", "llm")
+
+query = "Who is the main villan in Lord of the Rings?"
+answer_result = pipe.run({
+    "prompt_builder": {
+        "query": query
+    },
+    "retriever": {
+        "query": query
+    },
+    "ranker": {
+        "query": query,
+        "top_k": 1
+    }
+})
+
+print(answer_result["llm"]["replies"][0])
+#' Sauron\n'
+```
+
+For more examples, check out [Example Use Cases](https://github.com/IntelLabs/fastRAG/blob/main/examples.md). 
 
 ## License
 
