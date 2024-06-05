@@ -18,7 +18,7 @@ version: Haystack 2.0
 
 Component for the Haystack (2.x) LLM framework to easily convert files and directories into Documents using the Unstructured API.
 
-**[Unstructured](https://unstructured-io.github.io/unstructured/index.html)** provides a series of tools to do **ETL for LLMs**. This component calls the Unstructured API that simply extracts text and other information from a vast range of file formats. See [supported file types](https://unstructured-io.github.io/unstructured/api.html#supported-file-types).
+**[Unstructured](https://unstructured-io.github.io/unstructured/index.html)** provides a series of tools to do **ETL for LLMs**. This component calls the Unstructured API that simply extracts text and other information from a vast range of file formats. See [supported file types](https://docs.unstructured.io/api-reference/api-services/overview#supported-file-types).
 
 ## Installation
 
@@ -27,7 +27,7 @@ pip install unstructured-fileconverter-haystack
 ```
 
 ### Hosted API
-If you plan to use the hosted version of the Unstructured API, you just need the **(free) Unsctructured API key**. You can get it by signing up [here](https://unstructured.io/api-key-free).
+If you plan to use the hosted version of the Unstructured API, you just need the **(free) Unstructured API key**. You can get it by signing up [here](https://unstructured.io/api-key-free).
 
 ### Local API (Docker)
 If you want to run your own local instance of the Unstructured API, you need Docker and you can find instructions [here](https://unstructured-io.github.io/unstructured/api.html#using-docker-images).
