@@ -59,7 +59,12 @@ To use Pinecone as your data storage for your Haystack LLM pipelines, you must h
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
 # Make sure you have the PINECONE_API_KEY environment variable set
-document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YOUR_INDEX_NAME", environment = "YOUR_ENVIRONMENT")
+document_store = PineconeDocumentStore(
+  index="YOUR_INDEX_NAME",
+  metric="cosine",
+  dimension=768,
+  spec={"serverless": {"region": "us-east-1", "cloud": "aws"}},
+  )
 ```
 
 #### Writing Documents to PineconeDocumentStore
@@ -78,7 +83,12 @@ from haystack.components.preprocessors import DocumentSplitter
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 
 # Make sure you have the PINECONE_API_KEY environment variable set
-document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YOUR_INDEX_NAME", environment = "YOUR_ENVIRONMENT")
+document_store = PineconeDocumentStore(
+  index="YOUR_INDEX_NAME",
+  metric="cosine",
+  dimension=768,
+  spec={"serverless": {"region": "us-east-1", "cloud": "aws"}},
+  )
 
 indexing = Pipeline()
 indexing.add_component("converter", MarkdownToDocument())
@@ -105,7 +115,12 @@ from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 from haystack_integrations.components.retrievers.pinecone import PineconeEmbeddingRetriever
 
 # Make sure you have the PINECONE_API_KEY environment variable set
-document_store = PineconeDocumentStore(metric="cosine", dimension=768, index="YOUR_INDEX_NAME", environment = "YOUR_ENVIRONMENT")
+document_store = PineconeDocumentStore(
+  index="YOUR_INDEX_NAME",
+  metric="cosine",
+  dimension=768,
+  spec={"serverless": {"region": "us-east-1", "cloud": "aws"}},
+  )
               
 prompt_template = """Answer the following query based on the provided context. If the context does
                      not include an answer, reply with 'I don't know'.\n
