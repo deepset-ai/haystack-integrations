@@ -83,9 +83,9 @@ from haystack.components.embedders import OpenAIDocumentEmbedder
 
 document_store = InMemoryDocumentStore()
 
-documents = [Document(content="My name is Wolfgang and I live in Berlin"),
+documents = [Document(content="The best food in the world is pizza"),
              Document(content="I saw a black horse running"),
-             Document(content="Germany has many big cities")]
+             Document(content="The capital of Sweden is Stockholm"),]
 
 indexing_pipeline = Pipeline()
 indexing_pipeline.add_component("embedder",
@@ -143,10 +143,12 @@ rag_pipe.connect("text_embedder.embedding", "retriever.query_embedding")
 rag_pipe.connect("retriever.documents", "prompt_builder.documents")
 rag_pipe.connect("prompt_builder", "generator")
 
-query = "Who lives in Berlin?"
+query = "What is the best food in the world?"
 
-result = rag_pipe.run({"text_embedder":{"text": query}})
+result = rag_pipe.run({"text_embedder":{"text": query},
+                       "prompt_builder": {"question": query}})
+
 print(result["generator"]["replies"][0])
 
-# Wolfang
+# According to the documents, the best food in the world is pizza.
 ```
