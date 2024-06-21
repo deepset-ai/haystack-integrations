@@ -79,6 +79,7 @@ Below is the example of generative questions answering pipeline using RAG with `
 
 ```python
 from haystack import Pipeline
+from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.generators import OpenAIGenerator
