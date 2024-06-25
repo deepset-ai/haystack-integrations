@@ -20,12 +20,14 @@ toc: true
 ### **Table of Contents**
 
 - [Overview](#overview)
-- [Download and run the model](#download-and-run-the-model)
-- [Usage](#usage)
+- [Download and run the model](#download-and-run-models)
+  - [Generative models](#generative-models)
+  - [Embedding models](#embedding-models)
+- [Usage](#usage-with-haystack)
 
 ## Overview
 
-[llamafile](https://github.com/Mozilla-Ocho/llamafile) is a project that aims to make open LLMs accessible to developers and users.
+[llamafile](https://github.com/Mozilla-Ocho/llamafile) is a project by Mozilla that aims to make open LLMs accessible to developers and users.
 
 To run LLMs locally, simply download a single-file executable ("llamafile") that contains both the model and the inference engine and runs locally on most computers.
 
@@ -152,3 +154,5 @@ print(result["generator"]["replies"][0])
 
 # According to the documents, the best food in the world is pizza.
 ```
+
+For a fun use case, explore this notebook: [Quizzes and Adventures with Character Codex and llamafile](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/charactercodex_llamafile.ipynb).
