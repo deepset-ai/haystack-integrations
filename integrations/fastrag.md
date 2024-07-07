@@ -111,9 +111,15 @@ Preliminary requirements:
 To set up the software, clone the project and run the following, preferably in a newly created virtual environment:
 
 ```bash
-git clone https://github.com/IntelLabs/fastRAG.git
-cd fastrag
-pip install .
+pip install fastrag
+```
+
+There are [additional dependencies](https://github.com/IntelLabs/fastRAG?tab=readme-ov-file#extra-packages) that you can install based on your specific usage of fastRAG.
+
+For the example below, we need to install extra packages via the following command:
+
+```bash
+pip install fastrag[intel, openvino]
 ```
 
 ## Usage
@@ -152,7 +158,7 @@ generator = OpenVINOGenerator(
 pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=store))
-pipe.add_component("ranker", ransformersSimilarityRanker())
+pipe.add_component("ranker", TransformersSimilarityRanker())
 pipe.add_component("prompt_builder", PromptBuilder(template=prompt_template))
 pipe.add_component("llm", generator)
 
