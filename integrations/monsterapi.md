@@ -1,13 +1,13 @@
 ---
 layout: integration
 name: Monster API
-description: Use MonsterAPI with HeyStack
+description: Use MonsterAPI with HayStack
 authors:
-    - name: deepset
+    - name: monsterapi
       socials:
-        github: deepset-ai
-        twitter: deepset_ai
-        linkedin: deepset-ai
+        github: qblocks
+        twitter: monsterapi
+        linkedin: monsterapi
 pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
@@ -25,6 +25,7 @@ toc: true
 ## Overview
 The MonsterAPI integration allows you to leverage the powerful language models provided by MonsterAPI within the Haystack framework. This integration enables text generation using Monster AI generative models, designed to work seamlessly with the MonsterAPI Chat Completion endpoint. It supports streaming responses and customizability through various parameters.
 
+For more information about MonsterAPI LLMs, visit [LLM MonsterAPI documentation](https://llm.monsterapi.ai/docs). 
 For more information, visit the [MonsterAPI documentation](https://developer.monsterapi.ai/).
 
 ## Installation
@@ -35,24 +36,24 @@ pip install haystack-ai
 
 ## Usage
 ### Components
-This integration introduces the `MonsterChatGeneraor` component:
+This integration introduces the `MonsterChatGenerator` component:
 
-- **MonsterChatGeneraor**: Enables the use of MonsterAPI's language models within a Haystack pipeline.
+- **MonsterChatGenerator**: Enables the use of MonsterAPI's language models within a Haystack pipeline.
 
 ### Use MonsterAPI with Haystack
 
-Here's an example of how to use the `MonsterChatGeneraor` integration:
+Here's an example of how to use the `MonsterChatGenerator` integration:
 
 ```python
 from haystack import Pipeline
-from haystack.components.generators.chat import MonsterChatGeneraor
+from haystack.components.generators.chat import MonsterChatGenerator
 from haystack.dataclasses import ChatMessage
 
 # Create chat messages
 messages = [ChatMessage.from_user("What's Natural Language Processing?")]
 
-# Initialize the MonsterChatGeneraor with your API key
-client = MonsterChatGeneraor(api_key="YOUR_MONSTER_API_KEY")
+# Initialize the MonsterChatGenerator with your API key
+client = MonsterChatGenerator(api_key="YOUR_MONSTER_API_KEY")
 
 # Run the client to get responses
 response = client.run(messages)
