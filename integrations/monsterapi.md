@@ -40,6 +40,21 @@ This integration introduces the `MonsterChatGenerator` component:
 
 - **MonsterChatGenerator**: Enables the use of MonsterAPI's language models within a Haystack pipeline.
 
+```
+from haystack.components.generators.chat import MonsterChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack.utils import Secret
+
+generator = MonsterChatGenerator(
+    api_key=Secret.from_token("MONSTER_API_KEY"),  # for compatibility with the OpenAI API, a placeholder api_key is needed
+    model="meta-llama/Meta-Llama-3-8B-Instruct",
+    api_base_url="https://llm.monsterapi.ai/v1/",
+    generation_kwargs = {"max_tokens": 512}
+)
+
+response = generator.run(messages=[ChatMessage.from_user("Hi. Can you help me plan my next trip to Italy?")])
+```
+
 ### Use MonsterAPI with Haystack
 
 Here's an example of how to use the `MonsterChatGenerator` integration:
