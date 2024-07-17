@@ -36,20 +36,20 @@ pip install haystack-ai
 
 ## Usage
 ### Components
-This integration introduces the `MonsterChatGenerator` component:
+This integration introduces the `OpenAIChatGenerator` component:
 
-- **MonsterChatGenerator**: Enables the use of MonsterAPI's language models within a Haystack pipeline.
+- **OpenAIChatGenerator**: Enables the use of MonsterAPI's language models within a Haystack pipeline.
 
 ```
-from haystack.components.generators.chat import MonsterChatGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 from haystack.utils import Secret
 
-generator = MonsterChatGenerator(
+generator = OpenAIChatGenerator(
     api_key=Secret.from_token("MONSTER_API_KEY"),  # for compatibility with the OpenAI API, a placeholder api_key is needed
-    model="meta-llama/Meta-Llama-3-8B-Instruct",
+    model="microsoft/Phi-3-mini-4k-instruct",
     api_base_url="https://llm.monsterapi.ai/v1/",
-    generation_kwargs = {"max_tokens": 512}
+    generation_kwargs = {"max_tokens": 256}
 )
 
 response = generator.run(messages=[ChatMessage.from_user("Hi. Can you help me plan my next trip to Italy?")])
@@ -57,18 +57,18 @@ response = generator.run(messages=[ChatMessage.from_user("Hi. Can you help me pl
 
 ### Use MonsterAPI with Haystack
 
-Here's an example of how to use the `MonsterChatGenerator` integration:
+Here's an example of how to use the `OpenAIChatGenerator` integration:
 
 ```python
 from haystack import Pipeline
-from haystack.components.generators.chat import MonsterChatGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 
 # Create chat messages
 messages = [ChatMessage.from_user("What's Natural Language Processing?")]
 
-# Initialize the MonsterChatGenerator with your API key
-client = MonsterChatGenerator(api_key="YOUR_MONSTER_API_KEY")
+# Initialize the OpenAIChatGenerator with your API key
+client = OpenAIChatGenerator(api_key="YOUR_MONSTER_API_KEY")
 
 # Run the client to get responses
 response = client.run(messages)
@@ -78,7 +78,7 @@ print(response)
 # {'replies': [ChatMessage(content='Natural Language Processing (NLP) is a branch of artificial intelligence
 # that focuses on enabling computers to understand, interpret, and generate human language in a way that is
 # meaningful and useful.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None,
-# meta={'model': 'meta-llama/Meta-Llama-3-8B-Instruct', 'index': 0, 'finish_reason': 'stop',
+# meta={'model': 'microsoft/Phi-3-mini-4k-instruct', 'index': 0, 'finish_reason': 'stop',
 # 'usage': {'prompt_tokens': 15, 'completion_tokens': 36, 'total_tokens': 51}})]}
 ```
 
