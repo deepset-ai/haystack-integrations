@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: Monster API
-description: Use MonsterAPI with HayStack
+name: MonsterAPI
+description: Use open Language Models served by MonsterAPI
 authors:
     - name: monsterapi
       socials:
@@ -11,75 +11,97 @@ authors:
 pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
-report_issue: [[https://github.com/yout-repo/issues](https://github.com/deepset-ai/haystack/issues)](https://github.com/deepset-ai/haystack/issues)
+report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/monsterapi.png
 version: Haystack 2.0
 toc: true
 ---
+
 ### **Table of Contents**
+
 - [Overview](#overview)
-- [Installation](#installation)
 - [Usage](#usage)
-- [License](#license)
 
 ## Overview
-The MonsterAPI integration allows you to leverage the powerful language models provided by MonsterAPI within the Haystack framework. This integration enables text generation using Monster AI generative models, designed to work seamlessly with the MonsterAPI Chat Completion endpoint. It supports streaming responses and customizability through various parameters.
 
-For more information about MonsterAPI LLMs, visit [LLM MonsterAPI documentation](https://llm.monsterapi.ai/docs). 
-For more information, visit the [MonsterAPI documentation](https://developer.monsterapi.ai/).
+MonsterAPI provides access to powerful language models designed for various text generation tasks. With the MonsterAPI integration, you can leverage these models within the Haystack framework for enhanced natural language processing capabilities.
 
-## Installation
-
-```bash
-pip install haystack-ai
-```
+To start using MonsterAPI, sign up for an API key [here](https://monsterapi.ai/). This key provides access to the MonsterAPI, which supports rapid inference and customization through various parameters.
 
 ## Usage
-### Components
-This integration introduces the `OpenAIChatGenerator` component:
 
-- **OpenAIChatGenerator**: Enables the use of MonsterAPI's language models within a Haystack pipeline.
+MonsterAPI's API is OpenAI compatible, making it easy to use within Haystack via OpenAI Generators.
 
+### Using `Generator`
+
+Here's an example of using a model served via MonsterAPI to perform question answering on a web page. You need to set the environment variable `MONSTER_API_KEY` and choose a [compatible model](https://developer.monsterapi.ai/).
+
+```python
+from haystack import Pipeline
+from haystack.utils import Secret
+from haystack.components.fetchers import LinkContentFetcher
+from haystack.components.converters import HTMLToDocument
+from haystack.components.builders import PromptBuilder
+from haystack.components.generators import OpenAIGenerator
+
+fetcher = LinkContentFetcher()
+converter = HTMLToDocument()
+prompt_template = """
+According to the contents of this website:
+{% for document in documents %}
+  {{document.content}}
+{% endfor %}
+Answer the given question: {{query}}
+Answer:
+"""
+prompt_builder = PromptBuilder(template=prompt_template)
+llm = OpenAIGenerator(
+    api_key=Secret.from_env_var("MONSTER_API_KEY"),
+    api_base_url="https://llm.monsterapi.ai/v1/",
+    model="microsoft/Phi-3-mini-4k-instruct",
+    generation_kwargs = {"max_tokens": 256}
+)
+pipeline = Pipeline()
+pipeline.add_component("fetcher", fetcher)
+pipeline.add_component("converter", converter)
+pipeline.add_component("prompt", prompt_builder)
+pipeline.add_component("llm", llm)
+
+pipeline.connect("fetcher.streams", "converter.sources")
+pipeline.connect("converter.documents", "prompt.documents")
+pipeline.connect("prompt.prompt", "llm.prompt")
+
+result = pipeline.run({"fetcher": {"urls": ["https://developer.monsterapi.ai/docs/"]},
+              "prompt": {"query": "What are the features of MonsterAPI?"}})
+
+print(result["llm"]["replies"][0])
 ```
+
+### Using `ChatGenerator`
+
+Here's an example of engaging in a multi-turn conversation with a MonsterAPI model. You need to set the environment variable `MONSTER_API_KEY` and choose a [compatible model](https://developer.monsterapi.ai/).
+
+```python
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 from haystack.utils import Secret
 
 generator = OpenAIChatGenerator(
-    api_key=Secret.from_token("MONSTER_API_KEY"),  # for compatibility with the OpenAI API, a placeholder api_key is needed
-    model="microsoft/Phi-3-mini-4k-instruct",
+    api_key=Secret.from_env_var("MONSTER_API_KEY"),
     api_base_url="https://llm.monsterapi.ai/v1/",
+    model="microsoft/Phi-3-mini-4k-instruct",
     generation_kwargs = {"max_tokens": 256}
 )
 
-response = generator.run(messages=[ChatMessage.from_user("Hi. Can you help me plan my next trip to Italy?")])
+messages = []
+
+while True:
+    msg = input("Enter your message or Q to exit\n ")
+    if msg=="Q":
+        break
+    messages.append(ChatMessage.from_user(msg))
+    response = generator.run(messages=messages)
+    assistant_resp = response['replies'][0]
+    print(assistant_resp.content)
+    messages.append(assistant_resp)
 ```
-
-### Use MonsterAPI with Haystack
-
-Here's an example of how to use the `OpenAIChatGenerator` integration:
-
-```python
-from haystack import Pipeline
-from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.dataclasses import ChatMessage
-
-# Create chat messages
-messages = [ChatMessage.from_user("What's Natural Language Processing?")]
-
-# Initialize the OpenAIChatGenerator with your API key
-client = OpenAIChatGenerator(api_key="YOUR_MONSTER_API_KEY")
-
-# Run the client to get responses
-response = client.run(messages)
-print(response)
-
-# Example output:
-# {'replies': [ChatMessage(content='Natural Language Processing (NLP) is a branch of artificial intelligence
-# that focuses on enabling computers to understand, interpret, and generate human language in a way that is
-# meaningful and useful.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None,
-# meta={'model': 'microsoft/Phi-3-mini-4k-instruct', 'index': 0, 'finish_reason': 'stop',
-# 'usage': {'prompt_tokens': 15, 'completion_tokens': 36, 'total_tokens': 51}})]}
-```
-
-Replace `YOUR_MONSTER_API_KEY` with your actual MonsterAPI key.
