@@ -7,7 +7,7 @@ authors:
       socials:
         github: qblocks
         twitter: monsterapi
-        linkedin: monsterapi
+        linkedin: https://www.linkedin.com/company/monster-api/
 pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
