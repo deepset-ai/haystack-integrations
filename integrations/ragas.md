@@ -42,7 +42,6 @@ Once installed, you will have access to a [RagasEvaluator](https://docs.haystack
 - Answer relevancy
 - Context recall
 - Context precision
-- Context relevancy
 - Aspect Critique
 
 ### RagasEvaluator
