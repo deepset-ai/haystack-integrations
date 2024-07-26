@@ -21,8 +21,8 @@ toc: true
 - [Usage](#usage)
   - [Components](#components)
 - [Examples](#examples)
-  - [Standalone](#standalone-examples)
-  - [Pipeline](#in-pipeline-usage)
+  - [Standalone](#standalone)
+  - [Pipeline](#pipeline)
 - [License](#license)
 
 ## Overview
