@@ -140,4 +140,3 @@ print(document_store.filter_documents())
 
 `deepl-haystack` is distributed under the terms of the
 [MIT](https://opensource.org/license/mit) license.
-Check the [LICENSE](./LICENSE) file for further details.
