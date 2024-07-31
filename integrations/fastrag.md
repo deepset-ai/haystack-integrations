@@ -12,6 +12,7 @@ type: Custom Component
 report_issue: https://github.com/IntelLabs/fastRAG/issues
 logo: /logos/intel-labs.png
 version: Haystack 2.0
+toc: true
 ---
 
 fast**RAG** is a research framework for ***efficient*** and ***optimized*** retrieval augmented generative pipelines,
