@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Apify
-description: Extract data from web and automate web task using Apify-Haystack integration.
+description: Extract data from the web and automate web tasks using Apify-Haystack integration.
 authors:
   - name: apify
     socials:
@@ -41,19 +41,19 @@ pip install apify-haystack
 
 ## Usage
 
-Once installed, you will have access to more than two thousands ready-made apps called Actors at the [Apify Store](https://apify.com/store)
+Once installed, you will have access to more than two thousand ready-made apps called Actors at [Apify Store](https://apify.com/store)
 
-- Load a dataset from Apify and convert it to Haystack Document
+- Load a dataset from Apify and convert it to a Haystack Document
 - Extract data from Facebook/Instagram and save it in the InMemoryDocumentStore
-- Crawl website, scrape text content, and store it in the InMemoryDocumentStore
+- Crawl websites, scrape text content, and store it in the InMemoryDocumentStore
 - Retrieval-Augmented Generation (RAG): Extracting text from a website & question answering
 
-The integration implement the following components:
+The integration implements the following components:
 - `ApifyDatasetLoader`: Load a dataset created by an Apify Actor
-- `ApifyDatasetFromActorCall`: Call an Apify Actor, load the dataset and convert it to Haystack Documents
-- `ApifyDatasetFromTaskCall`: Call an Apify Task, load the dataset and convert it to Haystack Documents
+- `ApifyDatasetFromActorCall`: Call an Apify Actor, load the dataset, and convert it to Haystack Documents
+- `ApifyDatasetFromTaskCall`: Call an Apify task, load the dataset, and convert it to Haystack Documents
 
-You need to have an Apify account and Apify API token to run this example.
+You need to have an Apify account and an Apify API token to run this example.
 You can start with a free account at [Apify](https://apify.com/) and get your [Apify API token](https://docs.apify.com/platform/integrations/api#api-token).
 
 In the examples below, specify `apify_api_token` and run the script.
@@ -62,10 +62,10 @@ In the examples below, specify `apify_api_token` and run the script.
 ### ApifyDatasetFromActorCall on its own
 
 
-Use Apify's [Website Content Crawler](https://apify.com/apify/website-content-crawler) Actor to crawl a website, scrape text content, and convert it into Haystack Documents.
+Use Apify's [Website Content Crawler](https://apify.com/apify/website-content-crawler) to crawl a website, scrape text content, and convert it to Haystack Documents.
 
 In the example below, the text content is extracted from https://haystack.deepset.ai/. 
-You can control the number of crawled pages using `maxCrawlPages` parameter. For the detailed overview of the parameters, please refer to the [Website Content Crawler](https://apify.com/apify/website-content-crawler/input-schema).
+You can control the number of crawled pages using `maxCrawlPages` parameter. For a detailed overview of the parameters, please refer to [Website Content Crawler](https://apify.com/apify/website-content-crawler/input-schema).
 
 The script should produce the following output (truncated to a single Document):
 ```text
@@ -90,9 +90,9 @@ run_input = {
 
 
 def dataset_mapping_function(dataset_item: dict) -> Document:
-    """Convert Apify dataset item to Haystack Document
+    """Convert an Apify dataset item to a Haystack Document
     
-    The Website Content Crawler Actor returns a dataset with the following output fields:
+   Website Content Crawler returns a dataset with the following output fields:
     {
         "url": "https://haystack.deepset.ai",
         "text": "Haystack is an open-source framework for building production-ready LLM applications",
@@ -107,7 +107,7 @@ actor = ApifyDatasetFromActorCall(
     dataset_mapping_function=dataset_mapping_function,
     apify_api_token=apify_api_token,
 )
-print(f"Calling the Apify actor {actor_id} ... crawling will take some time ...")
+print(f"Calling the Apify Actor {actor_id} ... crawling will take some time ...")
 print("You can monitor the progress at: https://console.apify.com/actors/runs")
 
 dataset = actor.run().get("documents")
@@ -158,9 +158,9 @@ run_input = {
 
 
 def dataset_mapping_function(dataset_item: dict) -> Document:
-    """Convert Apify dataset item to Haystack Document
+    """Convert an Apify dataset item to a Haystack Document
     
-    The Website Content Crawler Actor returns a dataset with the following output fields:
+   Website Content Crawler returns a dataset with the following output fields:
     {
         "url": "https://haystack.deepset.ai",
         "text": "Haystack is an open-source framework for building production-ready LLM applications",
