@@ -186,6 +186,8 @@ retriever = InMemoryEmbeddingRetriever(document_store)
 generator = OpenAIGenerator(model="gpt-3.5-turbo")
 
 # Load documents from Apify
+print("Crawling and indexing documents...")
+print("You can visit https://console.apify.com/actors/runs to monitor the progress")
 docs = apify_dataset_loader.run()
 embeddings = docs_embedder.run(docs.get("documents"))
 document_store.write_documents(embeddings["documents"])
