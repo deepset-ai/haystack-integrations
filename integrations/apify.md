@@ -62,7 +62,7 @@ In the examples below, specify `apify_api_token` and run the script.
 ### ApifyDatasetFromActorCall on its own
 
 
-Use Apify's [Website Content Crawler](https://apify.com/apify/website-content-crawler) to crawl a website, scrape text content, and convert it to Haystack Documents.
+Use Apify's [Website Content Crawler](https://apify.com/apify/website-content-crawler) to crawl a website, scrape text content, and convert it to Haystack Documents. You can browse other Actors in [Apify Store](https://apify.com/store)
 
 In the example below, the text content is extracted from https://haystack.deepset.ai/. 
 You can control the number of crawled pages using `maxCrawlPages` parameter. For a detailed overview of the parameters, please refer to [Website Content Crawler](https://apify.com/apify/website-content-crawler/input-schema).
