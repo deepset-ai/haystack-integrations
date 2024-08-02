@@ -221,9 +221,7 @@ pipe.connect("prompt_builder", "llm")
 
 question = "What is haystack?"
 
-print("Running pipeline ... crawling will take some time ...")
-print("You can visit https://console.apify.com/actors/runs to monitor the progress")
-
+print("Running pipeline ... ")
 response = pipe.run({"embedder": {"text": question}, "prompt_builder": {"question": question}})
 
 print(f"question: {question}")
