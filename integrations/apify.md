@@ -229,7 +229,7 @@ print(f"answer: {response['llm']['replies'][0]}")
 
 # Other questions
 examples = [
-    "Who created Haystack AI?",
+    "Who created Haystack?",
     "Are there any upcoming events or community talks?",
 ]
 
