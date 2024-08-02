@@ -132,14 +132,14 @@ Once you've run these code samples, you can also [use the Langfuse dashboard to 
 
 ```python
 from haystack import Pipeline
-from haystack.components.builders import DynamicChatPromptBuilder
+from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 
 pipe = Pipeline()
 pipe.add_component("tracer", LangfuseConnector("Chat example"))
-pipe.add_component("prompt_builder", DynamicChatPromptBuilder())
+pipe.add_component("prompt_builder", ChatPromptBuilder())
 pipe.add_component("llm", OpenAIChatGenerator(model="gpt-3.5-turbo"))
 
 pipe.connect("prompt_builder.prompt", "llm.messages")
@@ -149,7 +149,7 @@ messages = [
 ]
 
 response = pipe.run(
-    data={"prompt_builder": {"template_variables": {"location": "Berlin"}, "prompt_source": messages}}
+    data={"prompt_builder": {"template_variables": {"location": "Berlin"}, "template": messages}}
 )
 print(response["llm"]["replies"][0])
 print(response["tracer"]["trace_url"])

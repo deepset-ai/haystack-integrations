@@ -125,6 +125,7 @@ from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_integrations.components.embedders.mistral.document_embedder import MistralDocumentEmbedder
 from haystack_integrations.components.embedders.mistral.text_embedder import MistralTextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack.components.builders import ChatPromptBuilder
 
 os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
 
@@ -140,7 +141,7 @@ document_store.write_documents(documents)
 
 text_embedder = MistralTextEmbedder()
 retriever = InMemoryEmbeddingRetriever(document_store=document_store)
-prompt_builder = DynamicChatPromptBuilder(runtime_variables=["documents"])
+prompt_builder = ChatPromptBuilder()
 llm = MistralChatGenerator(streaming_callback=print_streaming_chunk)
 
 messages = [ChatMessage.from_user("Here are some the documents: {{documents}} \\n Answer: {{query}}")]
@@ -161,7 +162,7 @@ question = "Who lives in Berlin?"
 result = rag_pipeline.run(
     {
         "text_embedder": {"text": question},
-        "prompt_builder": {"template_variables": {"query": question}, "prompt_source": messages},
+        "prompt_builder": {"template_variables": {"query": question}, "template": messages},
         "llm": {"generation_kwargs": {"max_tokens": 165}},
     }
 )
