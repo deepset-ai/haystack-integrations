@@ -59,7 +59,7 @@ import uuid
 import os
 
 from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.components.builders import DynamicChatPromptBuilder
+from haystack.components.builders import ChatPromptBuilder
 from haystack import Pipeline
 from haystack.dataclasses import ChatMessage
 
@@ -70,7 +70,7 @@ model = "gpt-3.5-turbo"
 os.environ["GETCONTEXT_TOKEN"] = "GETCONTEXT_TOKEN"
 os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
 
-prompt_builder = DynamicChatPromptBuilder()
+prompt_builder = ChatPromptBuilder()
 llm = OpenAIChatGenerator(model=model)
 prompt_analytics = ContextAIAnalytics()
 assistant_analytics = ContextAIAnalytics()

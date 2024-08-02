@@ -117,13 +117,13 @@ Similar to the above example, you can also use [`CohereChatGenerator`](https://d
 
 ```python
 from haystack import Pipeline
-from haystack.components.builders import DynamicChatPromptBuilder
+from haystack.components.builders import ChatPromptBuilder
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.cohere.chat import CohereChatGenerator
 
 
 pipe = Pipeline()
-pipe.add_component("prompt_builder", DynamicChatPromptBuilder())
+pipe.add_component("prompt_builder", ChatPromptBuilder())
 pipe.add_component("llm", CohereChatGenerator())
 pipe.connect("prompt_builder", "llm")
 
