@@ -5,9 +5,9 @@ description: Extract data from the web and automate web tasks using Apify-Haysta
 authors:
   - name: apify
     socials:
-      github: apify
-      twitter: apify
-      linkedin: apify
+      github: https://github.com/apify
+      twitter: https://x.com/apify
+      linkedin: https://www.linkedin.com/company/apifytech
 pypi: https://pypi.org/project/apify-haystack
 repo: https://github.com/apify/apify-haystack
 type: Data Ingestion
@@ -48,7 +48,7 @@ Once installed, you will have access to more than two thousand ready-made apps c
 - Crawl websites, scrape text content, and store it in the InMemoryDocumentStore
 - Retrieval-Augmented Generation (RAG): Extracting text from a website & question answering
 
-The integration implements the following components:
+The integration implements the following components (you can find their usage in these [examples](https://github.com/apify/apify-haystack/tree/main/src/apify_haystack/examples)):
 - `ApifyDatasetLoader`: Load a dataset created by an Apify Actor
 - `ApifyDatasetFromActorCall`: Call an Apify Actor, load the dataset, and convert it to Haystack Documents
 - `ApifyDatasetFromTaskCall`: Call an Apify task, load the dataset, and convert it to Haystack Documents
