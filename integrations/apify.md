@@ -62,7 +62,7 @@ In the examples below, specify `apify_api_token` and run the script.
 ### ApifyDatasetFromActorCall on its own
 
 
-Use Apify's [Website Content Crawler](https://apify.com/apify/website-content-crawler) to crawl a website, scrape text content, and convert it to Haystack Documents.
+Use Apify's [Website Content Crawler](https://apify.com/apify/website-content-crawler) to crawl a website, scrape text content, and convert it to Haystack Documents. You can browse other Actors in [Apify Store](https://apify.com/store)
 
 In the example below, the text content is extracted from https://haystack.deepset.ai/. 
 You can control the number of crawled pages using `maxCrawlPages` parameter. For a detailed overview of the parameters, please refer to [Website Content Crawler](https://apify.com/apify/website-content-crawler/input-schema).
@@ -186,6 +186,8 @@ retriever = InMemoryEmbeddingRetriever(document_store)
 generator = OpenAIGenerator(model="gpt-3.5-turbo")
 
 # Load documents from Apify
+print("Crawling and indexing documents...")
+print("You can visit https://console.apify.com/actors/runs to monitor the progress")
 docs = apify_dataset_loader.run()
 embeddings = docs_embedder.run(docs.get("documents"))
 document_store.write_documents(embeddings["documents"])
@@ -219,9 +221,7 @@ pipe.connect("prompt_builder", "llm")
 
 question = "What is haystack?"
 
-print("Running pipeline ... crawling will take some time ...")
-print("You can visit https://console.apify.com/actors/runs to monitor the progress")
-
+print("Running pipeline ... ")
 response = pipe.run({"embedder": {"text": question}, "prompt_builder": {"question": question}})
 
 print(f"question: {question}")
@@ -229,7 +229,7 @@ print(f"answer: {response['llm']['replies'][0]}")
 
 # Other questions
 examples = [
-    "Who created Haystack AI?",
+    "Who created Haystack?",
     "Are there any upcoming events or community talks?",
 ]
 
