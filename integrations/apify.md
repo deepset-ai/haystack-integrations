@@ -32,6 +32,8 @@ toc: true
 It helps automate web tasks and extract content from e-commerce websites, social media (Facebook, Instagram, TikTok), search engines, online maps, and more. 
 Apify provides more than two thousand ready-made cloud solutions called Actors.
 
+> Follow 🧑‍🍳 [Cookbook: Extract and use website content for question answering with Apify-Haystack integration](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/apify_haystack_rag.ipynb) for the full example
+
 ## Installation
 
 Install the Apify-haystack integration:
@@ -75,12 +77,14 @@ Haystack is an open-source framework fo...', meta: {'url': 'https://docs.haystac
 
 ```python
 from dotenv import load_dotenv
+import os
 from haystack import Document
 
 from apify_haystack import ApifyDatasetFromActorCall
 
-# Set APIFY-API-TOKEN here or load it from .env file
-apify_api_token = "" or load_dotenv()
+# Use APIFY_API_TOKEN from .env file or set it
+load_dotenv()
+os.environ["APIFY_API_TOKEN"] = "YOUR APIFY_API_TOKEN"
 
 actor_id = "apify/website-content-crawler"
 run_input = {
@@ -104,8 +108,7 @@ def dataset_mapping_function(dataset_item: dict) -> Document:
 actor = ApifyDatasetFromActorCall(
     actor_id=actor_id,
     run_input=run_input,
-    dataset_mapping_function=dataset_mapping_function,
-    apify_api_token=apify_api_token,
+    dataset_mapping_function=dataset_mapping_function
 )
 print(f"Calling the Apify Actor {actor_id} ... crawling will take some time ...")
 print("You can monitor the progress at: https://console.apify.com/actors/runs")
@@ -117,7 +120,7 @@ for d in dataset:
     print(d)
 ```
 
-### ApifyDatasetFromActorCall in a [RAG pipeline](https://haystack.deepset.ai/tutorials/27_first_rag_pipeline)
+### ApifyDatasetFromActorCall in a RAG pipeline
 
 *Retrieval-Augmented Generation (RAG):* Extracting text content from a website and using it for question answering.
 Answer questions about the https://haystack.deepset.ai website using the extracted text content.
@@ -128,7 +131,7 @@ question: "What is haystack?"
 answer: Haystack is an open-source framework for building production-ready LLM applications
 ``````
 
-In addition to the `Apify API token`, you also need to specify `OpenAI API token` to run this example.
+In addition to the `APIFY_API_TOKEN`, you also need to specify `OPENAI_API_KEY` to run this example.
 
 ```python
 
@@ -145,10 +148,10 @@ from haystack.utils.auth import Secret
 
 from apify_haystack import ApifyDatasetFromActorCall
 
-# Set APIFY-API-TOKEN here or use it from .env file
+# Set APIFY_API_TOKEN and OPENAI_API_KEY here or use it from .env file
 load_dotenv()
-apify_api_token = "" or os.getenv("APIFY_API_TOKEN")
-openai_api_key = "" or os.getenv("OPENAI_API_KEY")
+os.environ["APIFY_API_TOKEN"] = getpass("Enter YOUR APIFY_API_TOKEN")
+os.environ["OPENAI_API_KEY"] = getpass("Enter YOUR OPENAI_API_KEY")
 
 actor_id = "apify/website-content-crawler"
 run_input = {
@@ -172,16 +175,15 @@ def dataset_mapping_function(dataset_item: dict) -> Document:
 apify_dataset_loader = ApifyDatasetFromActorCall(
     actor_id=actor_id,
     run_input=run_input,
-    dataset_mapping_function=dataset_mapping_function,
-    apify_api_token=apify_api_token,
+    dataset_mapping_function=dataset_mapping_function
 )
 
 # Components
 print("Initializing components...")
 document_store = InMemoryDocumentStore()
 
-docs_embedder = OpenAIDocumentEmbedder(api_key=Secret.from_token(openai_api_key))
-text_embedder = OpenAITextEmbedder(api_key=Secret.from_token(openai_api_key))
+docs_embedder = OpenAIDocumentEmbedder()
+text_embedder = OpenAITextEmbedder()
 retriever = InMemoryEmbeddingRetriever(document_store)
 generator = OpenAIGenerator(model="gpt-3.5-turbo")
 
