@@ -5,9 +5,9 @@ description: Extract data from the web and automate web tasks using Apify-Haysta
 authors:
   - name: apify
     socials:
-      github: https://github.com/apify
-      twitter: https://x.com/apify
-      linkedin: https://www.linkedin.com/company/apifytech
+      github: apify
+      twitter: apify
+      linkedin: apifytech
 pypi: https://pypi.org/project/apify-haystack
 repo: https://github.com/apify/apify-haystack
 type: Data Ingestion
