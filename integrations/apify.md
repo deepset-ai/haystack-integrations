@@ -32,8 +32,6 @@ toc: true
 It helps automate web tasks and extract content from e-commerce websites, social media (Facebook, Instagram, TikTok), search engines, online maps, and more. 
 Apify provides more than two thousand ready-made cloud solutions called Actors.
 
-> Follow 🧑‍🍳 [Cookbook: Extract and use website content for question answering with Apify-Haystack integration](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/apify_haystack_rag.ipynb) for the full example
-
 ## Installation
 
 Install the Apify-haystack integration:
@@ -121,6 +119,8 @@ for d in dataset:
 ```
 
 ### ApifyDatasetFromActorCall in a RAG pipeline
+
+> Follow 🧑‍🍳 [Cookbook: Extract and use website content for question answering with Apify-Haystack integration](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/apify_haystack_rag.ipynb) for the full runnable example.
 
 *Retrieval-Augmented Generation (RAG):* Extracting text content from a website and using it for question answering.
 Answer questions about the https://haystack.deepset.ai website using the extracted text content.
