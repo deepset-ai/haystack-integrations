@@ -104,14 +104,9 @@ print(
 To use the DeepL components in a Haystack pipeline, 
 you can use them as any other Haystack component.
 
-> To run this example, you'll need to have the `MarkdownToDocument` requirements installed:
-> ```shell
-> pip install markdown-it-py, mdit-plain
-> ```
-
 ```python
 from haystack import Pipeline
-from haystack.components.converters import MarkdownToDocument
+from haystack.components.converters import TextFileToDocument
 from haystack.components.writers import DocumentWriter
 from haystack.dataclasses.byte_stream import ByteStream
 from haystack.document_stores.in_memory import InMemoryDocumentStore
@@ -121,7 +116,7 @@ from deepl_haystack import DeepLDocumentTranslator
 document_store = InMemoryDocumentStore()
 
 pipeline = Pipeline()
-pipeline.add_component(instance=MarkdownToDocument(), name="converter")
+pipeline.add_component(instance=TextFileToDocument(), name="converter")
 pipeline.add_component(
     instance=DeepLDocumentTranslator(target_lang="ES"),
     name="translator",
@@ -131,7 +126,7 @@ pipeline.add_component(
 )
 pipeline.connect("converter", "translator")
 pipeline.connect("translator", "document_store")
-pipeline.run({"converter": {"sources": [ByteStream.from_string("# Hello world!")]}})
+pipeline.run({"converter": {"sources": [ByteStream.from_string("Hello world!")]}})
 print(document_store.filter_documents())
 # [Document(id=..., content: '¡Hola, mundo!', meta: {'source_lang': 'EN', 'language': 'ES'})]
 ```
