@@ -3,7 +3,7 @@ layout: integration
 name: DeepL
 description: Use DeepL translation services with Haystack
 authors:
-    - name: dribia
+    - name: Dribia Data Research
       socials:
         github: dribia
         linkedin: https://www.linkedin.com/company/dribia
