@@ -135,6 +135,8 @@ docker run \
 `Neo4jEmbeddingRetriever` component can be used to retrieve documents from Neo4j by querying vector index using an embedded query. Below is a pipeline which finds documents using query embedding as well as [metadata filtering](https://docs.haystack.deepset.ai/docs/metadata-filtering):
 
 ```python
+from typing import List
+
 from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder, SentenceTransformersDocumentEmbedder
 from neo4j_haystack import Neo4jEmbeddingRetriever, Neo4jDocumentStore
@@ -150,7 +152,7 @@ document_store = Neo4jDocumentStore(
 documents = [
     Document(content="My name is Morgan and I live in Paris.", meta={"release_date": "2018-12-09"})]
 
-document_embedder = SentenceTransformersDocumentEmbedder(model=model_name)  
+document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")  
 document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
