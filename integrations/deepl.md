@@ -11,7 +11,7 @@ pypi: https://pypi.org/project/deepl-haystack/
 repo: https://github.com/dribia/deepl-haystack
 type: Custom Component
 report_issue: https://github.com/dribia/deepl-haystack/issues
-logo: /logos/deepl.png
+logo: /logos/deepl.svg
 version: Haystack 2.0
 toc: true
 ---
