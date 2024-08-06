@@ -38,9 +38,6 @@ pip install deepl-haystack
 
 ## Usage
 
-To use the DeepL Haystack integration, you'll need to provide a DeepL API key.
-You can get one by signing up at the [DeepL API website](https://www.deepl.com/en/pro#developer).
-
 ### Components
 
 The DeepL Haystack integration introduces two components that can be used to
@@ -49,23 +46,29 @@ obtain translations using the [DeepL API](https://www.deepl.com/en/pro-api).
 - The `DeepLTextTranslator` to translate plain text (Python strings).
 - The `DeepLDocumentTranslator` to translate Haystack `Document` objects.
 
-## Examples
+### API Key
 
-To use the `DeepLTextTranslator` component, you need to provide a 
-DeepL API key and the source and target languages. 
+To use the DeepL Haystack integration, you'll need to provide a DeepL API key.
+You can get one by signing up at the [DeepL API website](https://www.deepl.com/en/pro#developer).
+
+Once obtained, **make sure to export it as an environment variable named `DEEPL_API_KEY`**
+in you working environment before running the examples below. Both the `DeepLTextTranslator`
+and the `DeepLDocumentTranslator` component constructors will expect this variable to be set.
+
+An alternative way to provide the API key, although not recommended, would be to pass it through the
+`api_key` parameter of the components' constructor, using the Haystack
+[Secret](https://docs.haystack.deepset.ai/reference/utils-api#secret) utility.
+
+## Examples
 
 ### Standalone
 
 The following example shows how to translate a simple text:
 
 ```python
-from haystack.utils import Secret
-
 from deepl_haystack import DeepLTextTranslator
 
-translator = DeepLTextTranslator(
-    api_key=Secret.from_token("your_api_key_here"), source_lang="EN", target_lang="ES"
-)
+translator = DeepLTextTranslator(source_lang="EN", target_lang="ES")
 
 translated_text = translator.run("Hello, world!")
 print(translated_text)
@@ -76,13 +79,10 @@ Here, instead, we show how to translate a list of `Document` objects:
 
 ```python
 from haystack.dataclasses import Document
-from haystack.utils import Secret
 
 from deepl_haystack import DeepLDocumentTranslator
 
-translator = DeepLDocumentTranslator(
-    api_key=Secret.from_token("your_api_key_here"), source_lang="EN", target_lang="ES"
-)
+translator = DeepLDocumentTranslator(source_lang="EN", target_lang="ES")
 
 documents_to_translate = [
     Document(content="Hello, world!"),
@@ -90,7 +90,11 @@ documents_to_translate = [
 ]
 
 translated_documents = translator.run(documents_to_translate)
-print("\n".join([f"{doc.content}, {doc.meta}" for doc in translated_documents]))
+print(
+    "\n".join(
+        [f"{doc.content}, {doc.meta}" for doc in translated_documents["documents"]]
+    )
+)
 # ¡Hola, mundo!, {'source_lang': 'EN', 'target_lang': 'ES'}
 # ¡Adiós, Joe!, {'name': 'Joe', 'source_lang': 'EN', 'target_lang': 'ES'}
 ```
@@ -111,7 +115,6 @@ from haystack.components.converters import MarkdownToDocument
 from haystack.components.writers import DocumentWriter
 from haystack.dataclasses.byte_stream import ByteStream
 from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.utils import Secret
 
 from deepl_haystack import DeepLDocumentTranslator
 
@@ -120,10 +123,7 @@ document_store = InMemoryDocumentStore()
 pipeline = Pipeline()
 pipeline.add_component(instance=MarkdownToDocument(), name="converter")
 pipeline.add_component(
-    instance=DeepLDocumentTranslator(
-        api_key=Secret.from_token("f9b24fba-2267-463a-97b1-6f211ad6197a:fx"),
-        target_lang="ES",
-    ),
+    instance=DeepLDocumentTranslator(target_lang="ES"),
     name="translator",
 )
 pipeline.add_component(
