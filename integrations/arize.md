@@ -24,11 +24,11 @@ toc: true
 
 ## Overview
 
-Arize is AI Observability and Evaluation platform designed to help you troubleshoot, evaluate, and experiment on LLM and ML applications. Developers use Arize to get applications working quickly, evaluate performance, detect and prevent production issues, and curate datasets.
+Arize is an AI Observability and Evaluation platform designed to help you troubleshoot, evaluate, and experiment on LLM and ML applications. Developers use Arize to get applications working quickly, evaluate performance, detect and prevent production issues, and curate datasets.
 
 **Phoenix** is Arize's open-source library that offers developers the quickest way to troubleshoot, evaluate, and experiment with LLM applications.
 
-You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS offering), with options on either using the Phoenix API or opting for the self-hosted version.
+You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS offering). Both integrations use the same underlying library, `openinference-instrumentation-haystack`.
 
 - [Documentation for Arize AI + Haystack](https://docs.arize.com/arize/large-language-models/tracing/auto-instrumentation/haystack)
 - [Documentation for Phoenix + Haystack](https://docs.arize.com/phoenix/tracing/integrations-tracing/haystack)
@@ -45,10 +45,11 @@ pip install openinference-instrumentation-haystack haystack-ai arize-otel opente
 To trace any Haystack pipeline with Phoenix, you have to create a `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Phoenix.
 You have 2 options:
 - The easiest option is to [launch a hosted phoenix instance](https://phoenix.arize.com/) and set your Phoenix API key with the `PHOENIX_API_KEY` environment variable
-- There is also the option to slef-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
+- There is also the option to self-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
 
 ```python
 from arize_otel import register_otel, Endpoints
+from openinference.instrumentation.haystack import HaystackInstrumentor
 
 # Setup OTEL tracing for hosted Phoenix
 register_otel(
@@ -60,9 +61,9 @@ HaystackInstrumentor().instrument()
 ```
 
 Now, you can run a Haystack pipeline within the same environment, resulting in the following trace:
-> To run the example below, export your OpenAI Key to the `OPENAI_API_KEY` environment variable.
 
 ![Arize Demo](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/arize-demo.gif)
+> To run the example below, export your OpenAI Key to the `OPENAI_API_KEY` environment variable.
 ```python 
 import os
 from haystack import Pipeline, Document
