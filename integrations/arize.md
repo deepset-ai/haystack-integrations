@@ -6,7 +6,7 @@ authors:
     - name: Arize AI
       socials:
         github: Arize-ai
-        twitter: arizeai
+        twitter: ArizePhoenix
         linkedin: arizeai
 pypi: https://pypi.org/project/openinference-instrumentation-haystack/
 repo: https://github.com/Arize-ai/openinference
@@ -20,14 +20,13 @@ toc: true
 - [Overview](#overview)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+- [Use Arize Phoenix](#usage)
 
 ## Overview
 
 Arize is AI Observability and Evaluation platform designed to help you troubleshoot, evaluate, and experiment on LLM and ML applications. Developers use Arize to get applications working quickly, evaluate performance, detect and prevent production issues, and curate datasets.
 
-Phoenix is Arize's open-source library. Phoenix focuses specifically on LLM applications, and provides similar troubleshooting, evaluate, and experimentation functionality as Arize.
+**Phoenix** is Arize's open-source library that offers developers the quickest way to troubleshoot, evaluate, and experiment with LLM applications.
 
 You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS offering), with options on either using the Phoenix API or opting for the self-hosted version.
 
@@ -40,25 +39,21 @@ You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS o
 pip install openinference-instrumentation-haystack haystack-ai arize-otel opentelemetry-sdk opentelemetry-exporter-otlp
 ```
 
-## Usage
+## Use Arize Phoenix
 ### Setting up the `HaystackInstrumentor`
 
 To trace any Haystack pipeline with Phoenix, you have to create a `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Phoenix.
 You have 2 options:
-- If you'd like to use hosted Phoenix, set your Phoenix API key with the `PHOENIX_API_KEY` environment variable
-- Or, follow instructions to self-host Phoenix [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
+- The easiest option is to [launch a hosted phoenix instance](https://phoenix.arize.com/) and set your Phoenix API key with the `PHOENIX_API_KEY` environment variable
+- There is also the option to slef-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
 
 ```python
-from openinference.instrumentation.haystack import HaystackInstrumentor
-# Import open-telemetry dependencies
 from arize_otel import register_otel, Endpoints
 
-# Setup OTEL via our convenience function
+# Setup OTEL tracing for hosted Phoenix
 register_otel(
-    endpoints = Endpoints.ARIZE,
-    space_key = "your-space-key", # in app space settings page
-    api_key = "your-api-key", # in app space settings page
-    model_id = "your-model-id", # name this to whatever you would like
+    endpoints=[Endpoints.HOSTED_PHOENIX],
+    api_key="YOUR_HOSTED_PHOENIX_API_KEY"
 )
 
 HaystackInstrumentor().instrument()
