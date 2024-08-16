@@ -1,12 +1,12 @@
 ---
 layout: integration
 name: Arize AI
-description: Trace your Haystack pipelines Arize and Phoenix
+description: Trace and Monitor your Haystack pipelines with Arize AI
 authors:
   - name: Arize AI
     socials:
       github: Arize-ai
-      twitter: ArizePhoenix
+      twitter: arizeai
       linkedin: arizeai
 pypi: https://pypi.org/project/openinference-instrumentation-haystack/
 repo: https://github.com/Arize-ai/openinference
@@ -21,19 +21,13 @@ toc: true
 
 - [Overview](#overview)
 - [Installation](#installation)
-- [Use Arize Phoenix](#use-arize-phoenix)
-  - [Setting up the `HaystackInstrumentor`](#setting-up-the-haystackinstrumentor)
+- [Usage](#usage)
 
 ## Overview
 
 Arize is AI Observability and Evaluation platform designed to help you troubleshoot, evaluate, and experiment on LLM and ML applications. Developers use Arize to get applications working quickly, evaluate performance, detect and prevent production issues, and curate datasets.
 
-**Arize Phoenix** is Arize's open-source library that offers developers the quickest way to troubleshoot, evaluate, and experiment with LLM applications.
-
-You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS offering), with options on either using [hosted Phoenix](https://phoenix.arize.com) or opting for the [self-hosted version](https://docs.arize.com/phoenix/deployment).
-
 - [Documentation for Arize AI + Haystack](https://docs.arize.com/arize/large-language-models/tracing/auto-instrumentation/haystack)
-- [Documentation for Phoenix + Haystack](https://docs.arize.com/phoenix/tracing/integrations-tracing/haystack)
 
 ## Installation
 
@@ -41,27 +35,22 @@ You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS o
 pip install openinference-instrumentation-haystack haystack-ai arize-otel opentelemetry-sdk opentelemetry-exporter-otlp
 ```
 
-## Use Arize Phoenix
+## Usage
 
-### Setting up the `HaystackInstrumentor`
-
-To trace any Haystack pipeline with Phoenix, simply initialize OpenTelemetry and the `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Phoenix.
-You have 2 options:
-
-- The easiest option is to [launch a hosted phoenix instance](https://phoenix.arize.com/) for free and to use the provided API key to [connect to it](https://docs.arize.com/phoenix/hosted-phoenix).
-- There is also the option to self-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
+To trace any Haystack pipeline with Arize, simply initialize OpenTelemetry and the `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Arize.
 
 ```python
-from arize_otel import register_otel, Endpoints
 from openinference.instrumentation.haystack import HaystackInstrumentor
+# Import open-telemetry dependencies
+from arize_otel import register_otel, Endpoints
 
-# Setup OpenTelemetry and configure it to send traces to Phoenix or Arize
+# Setup OTEL via our convenience function
 register_otel(
-    endpoints=[Endpoints.HOSTED_PHOENIX],
-    api_key="YOUR_HOSTED_PHOENIX_API_KEY"
+    endpoints = Endpoints.ARIZE,
+    space_id = "your-space-id", # in app space settings page
+    api_key = "your-api-key", # in app space settings page
+    model_id = "your-model-id", # name this to whatever you would like
 )
-
-HaystackInstrumentor().instrument()
 ```
 
 Now, you can run a Haystack pipeline within the same environment, resulting in the following trace:
