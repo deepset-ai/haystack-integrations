@@ -53,6 +53,7 @@ You have 2 options:
 
 ```python
 from arize_otel import register_otel, Endpoints
+from openinference.instrumentation.haystack import HaystackInstrumentor
 
 # Setup OpenTelemetry and configure it to send traces to Phoenix or Arize
 register_otel(
