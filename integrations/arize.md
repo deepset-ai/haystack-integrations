@@ -3,11 +3,11 @@ layout: integration
 name: Arize AI
 description: Trace your Haystack pipelines Arize and Phoenix
 authors:
-    - name: Arize AI
-      socials:
-          github: Arize-ai
-          twitter: ArizePhoenix
-          linkedin: arizeai
+  - name: Arize AI
+    socials:
+      github: Arize-ai
+      twitter: ArizePhoenix
+      linkedin: arizeai
 pypi: https://pypi.org/project/openinference-instrumentation-haystack/
 repo: https://github.com/Arize-ai/openinference
 type: Monitoring Tool
@@ -19,10 +19,10 @@ toc: true
 
 ### **Table of Contents**
 
--   [Overview](#overview)
--   [Installation](#installation)
--   [Use Arize Phoenix](#use-arize-phoenix)
-    -   [Setting up the `HaystackInstrumentor`](#setting-up-the-haystackinstrumentor)
+- [Overview](#overview)
+- [Installation](#installation)
+- [Use Arize Phoenix](#use-arize-phoenix)
+  - [Setting up the `HaystackInstrumentor`](#setting-up-the-haystackinstrumentor)
 
 ## Overview
 
@@ -32,8 +32,8 @@ Arize is AI Observability and Evaluation platform designed to help you troublesh
 
 You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS offering), with options on either using [hosted Phoenix](https://phoenix.arize.com) or opting for the [self-hosted version](https://docs.arize.com/phoenix/deployment).
 
--   [Documentation for Arize AI + Haystack](https://docs.arize.com/arize/large-language-models/tracing/auto-instrumentation/haystack)
--   [Documentation for Phoenix + Haystack](https://docs.arize.com/phoenix/tracing/integrations-tracing/haystack)
+- [Documentation for Arize AI + Haystack](https://docs.arize.com/arize/large-language-models/tracing/auto-instrumentation/haystack)
+- [Documentation for Phoenix + Haystack](https://docs.arize.com/phoenix/tracing/integrations-tracing/haystack)
 
 ## Installation
 
@@ -48,8 +48,8 @@ pip install openinference-instrumentation-haystack haystack-ai arize-otel opente
 To trace any Haystack pipeline with Phoenix, simply initialize OpenTelemetry and the `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Phoenix.
 You have 2 options:
 
--   The easiest option is to [launch a hosted phoenix instance](https://phoenix.arize.com/) for free and to use the provided API key to [connect to it](https://docs.arize.com/phoenix/hosted-phoenix).
--   There is also the option to self-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
+- The easiest option is to [launch a hosted phoenix instance](https://phoenix.arize.com/) for free and to use the provided API key to [connect to it](https://docs.arize.com/phoenix/hosted-phoenix).
+- There is also the option to self-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
 
 ```python
 from arize_otel import register_otel, Endpoints
