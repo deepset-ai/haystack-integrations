@@ -47,9 +47,9 @@ from arize_otel import register_otel, Endpoints
 # Setup OTEL via our convenience function
 register_otel(
     endpoints = Endpoints.ARIZE,
-    space_id = "your-space-id", # in app space settings page
-    api_key = "your-api-key", # in app space settings page
-    model_id = "your-model-id", # name this to whatever you would like
+    space_id = "<your-space-id>", # from the space settings page
+    api_key = "<your-api-key>", # from the space settings page
+    model_id = "<your-haystack-app-name>", # name this to whatever you would like
 )
 ```
 
@@ -60,14 +60,11 @@ Now, you can run a Haystack pipeline within the same environment, resulting in t
 ![Arize Demo](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/arize-demo.gif)
 
 ```python
-import os
-from haystack import Pipeline, Document
-from haystack.utils import Secret
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
-from haystack.components.generators import OpenAIGenerator
-from haystack.components.builders.answer_builder import AnswerBuilder
+from haystack import Document, Pipeline
 from haystack.components.builders.prompt_builder import PromptBuilder
+from haystack.components.generators import OpenAIGenerator
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 
 document_store = InMemoryDocumentStore()
 document_store.write_documents([
@@ -104,5 +101,4 @@ results = rag_pipeline.run(
         "prompt_builder": {"question": question},
     }
 )
-
 ```
