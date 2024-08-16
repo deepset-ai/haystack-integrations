@@ -1,13 +1,13 @@
 ---
 layout: integration
 name: Arize AI
-description: Monitor and trace your Haystack pipelines Arize and Phoenix
+description: Trace and Monitor your Haystack pipelines with Arize AI
 authors:
-    - name: Arize AI
-      socials:
-        github: Arize-ai
-        twitter: ArizePhoenix
-        linkedin: arizeai
+  - name: Arize AI
+    socials:
+      github: Arize-ai
+      twitter: arizeai
+      linkedin: arizeai
 pypi: https://pypi.org/project/openinference-instrumentation-haystack/
 repo: https://github.com/Arize-ai/openinference
 type: Monitoring Tool
@@ -16,22 +16,18 @@ logo: /logos/arize.png
 version: Haystack 2.0
 toc: true
 ---
+
 ### **Table of Contents**
+
 - [Overview](#overview)
-- [Features](#features)
 - [Installation](#installation)
-- [Use Arize Phoenix](#usage)
+- [Usage](#usage)
 
 ## Overview
 
 Arize is AI Observability and Evaluation platform designed to help you troubleshoot, evaluate, and experiment on LLM and ML applications. Developers use Arize to get applications working quickly, evaluate performance, detect and prevent production issues, and curate datasets.
 
-**Phoenix** is Arize's open-source library that offers developers the quickest way to troubleshoot, evaluate, and experiment with LLM applications.
-
-You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS offering), with options on either using the Phoenix API or opting for the self-hosted version.
-
 - [Documentation for Arize AI + Haystack](https://docs.arize.com/arize/large-language-models/tracing/auto-instrumentation/haystack)
-- [Documentation for Phoenix + Haystack](https://docs.arize.com/phoenix/tracing/integrations-tracing/haystack)
 
 ## Installation
 
@@ -39,31 +35,31 @@ You can bring your Haystack pipelines to both Arize and Arize Phoenix (the OSS o
 pip install openinference-instrumentation-haystack haystack-ai arize-otel opentelemetry-sdk opentelemetry-exporter-otlp
 ```
 
-## Use Arize Phoenix
-### Setting up the `HaystackInstrumentor`
+## Usage
 
-To trace any Haystack pipeline with Phoenix, you have to create a `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Phoenix.
-You have 2 options:
-- The easiest option is to [launch a hosted phoenix instance](https://phoenix.arize.com/) and set your Phoenix API key with the `PHOENIX_API_KEY` environment variable
-- There is also the option to slef-host Phoenix if you prefer, [here](https://docs.arize.com/phoenix/deployment/deploying-phoenix)
+To trace any Haystack pipeline with Arize, simply initialize OpenTelemetry and the `HaystackInstrumentor`. Haystack pipelines that run within the same environment send traces to Arize.
 
 ```python
+from openinference.instrumentation.haystack import HaystackInstrumentor
+# Import open-telemetry dependencies
 from arize_otel import register_otel, Endpoints
 
-# Setup OTEL tracing for hosted Phoenix
+# Setup OTEL via our convenience function
 register_otel(
-    endpoints=[Endpoints.HOSTED_PHOENIX],
-    api_key="YOUR_HOSTED_PHOENIX_API_KEY"
+    endpoints = Endpoints.ARIZE,
+    space_id = "your-space-id", # in app space settings page
+    api_key = "your-api-key", # in app space settings page
+    model_id = "your-model-id", # name this to whatever you would like
 )
-
-HaystackInstrumentor().instrument()
 ```
 
 Now, you can run a Haystack pipeline within the same environment, resulting in the following trace:
+
 > To run the example below, export your OpenAI Key to the `OPENAI_API_KEY` environment variable.
 
 ![Arize Demo](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/arize-demo.gif)
-```python 
+
+```python
 import os
 from haystack import Pipeline, Document
 from haystack.utils import Secret
@@ -75,8 +71,8 @@ from haystack.components.builders.prompt_builder import PromptBuilder
 
 document_store = InMemoryDocumentStore()
 document_store.write_documents([
-    Document(content="My name is Jean and I live in Paris."), 
-    Document(content="My name is Mark and I live in Berlin."), 
+    Document(content="My name is Jean and I live in Paris."),
+    Document(content="My name is Mark and I live in Berlin."),
     Document(content="My name is Giorgio and I live in Rome.")
 ])
 
