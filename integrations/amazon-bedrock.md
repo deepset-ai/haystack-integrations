@@ -89,7 +89,7 @@ print(response)
 ```
 Output: 
 ```shell
-{'replies': [ChatMessage(content='  Procesamiento del Lenguaje Natural (PLN) es una rama de la inteligencia artificial que se enfoca en el desarrollo de algoritmos y modelos computacionales para analizar, comprender y generar texto y lenguaje humano.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'prompt_token_count': 46, 'generation_token_count': 60, 'stop_reason': 'stop'})]}
+{'replies': [ChatMessage(content='  Procesamiento del Lenguaje Natural (PLN) es una rama de la inteligencia artificial que se enfoca en el desarrollo de algoritmos y modelos que permiten a las computadoras comprender y procesar el lenguaje natural, como el hablado o escrito por los humanos.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'stop_reason': 'stop', 'usage': {'prompt_tokens': 44, 'completion_tokens': 71}})]}
 ```
 
 ### AmazonBedrockTextEmbedder and AmazonBedrockDocumentEmbedder
