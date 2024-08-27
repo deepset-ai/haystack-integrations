@@ -119,7 +119,7 @@ In this example, the container is started using Couchbase Server version `7.6.2`
 Once you have the package installed and the database running, you can start using `CouchbaseDocumentStore` as any other document stores that support embeddings.
 
 ```python
-from couchbase_haystack import CouchbaseDocumentStore
+from couchbase_haystack import CouchbaseDocumentStore, CouchbasePasswordAuthenticator
 
 document_store = CouchbaseDocumentStore(
     cluster_connection_string=Secret.from_env_var("CB_CONNECTION_STRING"),
