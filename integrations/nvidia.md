@@ -52,6 +52,8 @@ This integration introduces the following components:
 
 - `NvidiaGenerator`:     A component for generating text using generative models provided by NVIDIA AI Foundation Endpoints and NVIDIA Inference Microservices.
 
+- `NvidiaRanker`: A component for ranking documents, using [NVIDIA NIMs](https://ai.nvidia.com).
+
 ## Use the components on their own:
   
 ### `NvidiaTextEmbedder`:
@@ -108,6 +110,31 @@ result = generator.run(prompt="When was the Golden Gate Bridge built?")
 print(result["replies"])
 print(result["meta"])
 # ['The Golden Gate Bridge was built in 1937 and was completed and opened to the public on May 29, 1937....'[{'role': 'assistant', 'finish_reason': 'stop'}]
+```
+
+
+### `NvidiaRanker`:
+
+```python
+from haystack_integrations.components.rankers.nvidia import NvidiaRanker
+from haystack import Document
+from haystack.utils import Secret
+
+ranker = NvidiaRanker(
+    api_key=Secret.from_env_var("NVIDIA_API_KEY"),
+)
+ranker.warm_up()
+
+query = "What is the capital of Germany?"
+documents = [
+    Document(content="Berlin is the capital of Germany."),
+    Document(content="The capital of Germany is Berlin."),
+    Document(content="Germany's capital is Berlin."),
+]
+
+result = ranker.run(query, documents, top_k=1)
+print(result["documents"][0].content)
+# The capital of Germany is Berlin.
 ```
 
 ## Use NVIDIA components in Haystack pipelines
