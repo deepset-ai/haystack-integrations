@@ -10,7 +10,7 @@ authors:
 pypi: https://pypi.org/project/needle-haystack-ai
 repo: https://github.com/JANHMS/needle-haystack
 type: Document Store
-report_issue: https://github.com/JANHMS/needle-haystack-ai/issues
+report_issue: https://github.com/JANHMS/needle-haystack/issues
 logo: /logos/needle.png
 version: Haystack 2.x
 ---
