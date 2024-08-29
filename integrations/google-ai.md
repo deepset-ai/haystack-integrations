@@ -22,7 +22,7 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Multimodality with `gemini-pro-vision`](#multimodality-with-gemini-pro-vision)
+  - [Multimodality with `gemini-1.5-flash`](#multimodality-with-gemini-1.5-flash)
   - [Function calling](#function-calling)
   - [Code generation](#code-generation)
 
@@ -44,8 +44,8 @@ pip install google-ai-haystack
 
 Once installed, you will have access to various Haystack Generators:
 
-- [`GoogleAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminigenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-pro-vision**', '**gemini-ultra**' for text generation and multimodal prompts.
-- [`GoogleAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-pro-vision**' and '**gemini-ultra**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [`GoogleAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminigenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-1.5-flash**', '**gemini-ultra**' for text generation and multimodal prompts.
+- [`GoogleAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-1.5-flash**' and '**gemini-ultra**' for text generation, multimodal prompts and function calling in chat completion setting.
 
 To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` environment variable. If neither is set you won't be able to use the generators.
 
@@ -72,9 +72,9 @@ Output:
 Assemblage in art refers to the creation of a three-dimensional artwork by combining various found objects...
 ```
 
-### Multimodality with `gemini-pro-vision`
+### Multimodality with `gemini-1.5-flash`
 
-To use `gemini-pro-vision` model for visual question answering, initialize a `GoogleAIGeminiGenerator` with `"gemini-pro-vision"` and `project_id`. Then, run it with the images as well as the prompt:
+To use `gemini-1.5-flash` model for visual question answering, initialize a `GoogleAIGeminiGenerator` with `"gemini-1.5-flash"` and `project_id`. Then, run it with the images as well as the prompt:
 
 ```python
 import requests
@@ -101,7 +101,7 @@ images = [
 
 os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro-vision")
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-1.5-flash")
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
 for answer in result["replies"]:
     print(answer)

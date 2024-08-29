@@ -47,8 +47,8 @@ pip install google-vertex-haystack
 ## Usage
 
 Once installed, you will have access to various Haystack Generators: 
-- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation and multimodal prompts.
-- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-pro-vision**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-1.5-flash**' for text generation and multimodal prompts.
+- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-1.5-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
 - `VertexAITextGenerator`: Use this component with PaLM models for text generation.
 - `VertexAICodeGenerator`: Use this component with Codey model for code generation and code completion.
 - `VertexAIImageGenerator`: Use this component with Imagen model '**imagegeneration**' for image generation.
@@ -80,9 +80,9 @@ Output:
 Assemblage in art refers to the creation of a three-dimensional artwork by combining various found objects...
 ```
 
-**Multimodality with `gemini-pro-vision`** 
+**Multimodality with `gemini-1.5-flash`** 
 
-To use `gemini-pro-vision` model for visual question answering, initialize a `VertexAIGeminiGenerator` with `"gemini-pro-vision"` and `project_id`. Then, run it with the images as well as the prompt:
+To use `gemini-1.5-flash` model for visual question answering, initialize a `VertexAIGeminiGenerator` with `"gemini-1.5-flash"` and `project_id`. Then, run it with the images as well as the prompt:
 
 ```python
 import requests
@@ -99,7 +99,7 @@ images = [
     ByteStream(data=requests.get(url).content, mime_type="image/jpeg")
     for url in URLS
 ]
-gemini_generator = VertexAIGeminiGenerator(model="gemini-pro-vision", project_id=project_id)
+gemini_generator = VertexAIGeminiGenerator(model="gemini-1.5-flash", project_id=project_id)
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
 for answer in result["replies"]:
     print(answer)  
