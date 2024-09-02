@@ -90,4 +90,4 @@ For more details on the configuration options, refer to the [duckduckgo_search d
 
 ### License
 
-Info about your integration license
+Apache 2.0
