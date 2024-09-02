@@ -1,18 +1,14 @@
 ---
-layout: integration
-name: Your integration name
-description: The description of your integration
+layout: duckduckgo-api-haystack
+name: DuckduckgoApiWebsearch
+description: Uses Duckduckgo API for websearches
 authors:
-    - name: Author Name
+    - name: Giovanni Alzetta
       socials:
-        github: author-github-username
-        twitter: author-twitter-username
-        linkedin: author-linkedin-url
-pypi: https://pypi.org/project/your-project
-repo: https://github.com/your-repo
-type: Type of your integration (like Model Provider or Document Store etc)
-report_issue: https://github.com/yout-repo/issues
-logo: /logos/your-logo.png
+        github: https://github.com/GivAlz/
+pypi: https://pypi.org/project/duckduckgo-api-haystack/
+repo: https://github.com/GivAlz/duckduckgo-api-haystack
+type: WebSearch
 version: Haystack 2.0
 toc: true
 ---
