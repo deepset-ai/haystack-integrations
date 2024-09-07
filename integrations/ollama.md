@@ -107,7 +107,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OllamaGenerator(model="orca-mini", url="http://localhost:11434/api/generate"))
+pipe.add_component("llm", OllamaGenerator(model="orca-mini", url="http://localhost:11434"))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 
@@ -140,7 +140,7 @@ messages = [
     ),
     ChatMessage.from_user("How do I get started?"),
 ]
-client = OllamaChatGenerator(model="orca-mini", timeout=45, url="http://localhost:11434/api/chat")
+client = OllamaChatGenerator(model="orca-mini", timeout=45, url="http://localhost:11434")
 
 response = client.run(messages, generation_kwargs={"temperature": 0.2})
 
