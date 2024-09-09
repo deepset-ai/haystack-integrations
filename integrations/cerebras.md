@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/haystack-ai/
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack/issues
-logo: /logos/cerebras.png
+logo: /logos/cerebras.jpeg
 version: Haystack 2.0
 toc: true
 ---
