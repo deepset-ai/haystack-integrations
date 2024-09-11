@@ -44,15 +44,16 @@ pip install weaviate-haystack
 
 ## Usage
 
-Once installed, initialize your Weaviate database to use it with Haystack 2.0:
+Once installed, initialize your Weaviate database to use it with Haystack 2.x.
+
+In this example, we use the temporary embedded version for simplicity.
+To use a self-hosted Docker container or Weaviate Cloud Service, take a look at the [docs](https://docs.haystack.deepset.ai/docs/weaviatedocumentstore).
 
 ```python
-from haystack.utils.auth import Secret
-from haystack_integrations.document_stores.weaviate import WeaviateDocumentStore, AuthApiKey
+from haystack_integrations.document_stores.weaviate import WeaviateDocumentStore
+from weaviate.embedded import EmbeddedOptions
 
-
-auth_client_secret = AuthApiKey(Secret.from_token("MY_WEAVIATE_API_KEY"))
-document_store = WeaviateDocumentStore(auth_client_secret=auth_client_secret)
+document_store = WeaviateDocumentStore(embedded_options=EmbeddedOptions())
 ```
 
 ### Writing Documents to WeaviateDocumentStore
