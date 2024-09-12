@@ -75,5 +75,5 @@ indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(model="jina-emb
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
-indexing_pipeline.run({"embedder": {"documents": documents, "task_type": "retrieval.query"}})
+indexing_pipeline.run({"embedder": {"documents": documents, "parameters": {"task_type": "retrieval.query"}}})
 ```
