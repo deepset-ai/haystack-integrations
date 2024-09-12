@@ -39,6 +39,8 @@ toc: true
 pip install --upgrade pymilvus milvus-haystack
 ```
 
+*If you are using Google Colab, you may need to restart the runtime to enable dependencies just installed.*
+
 ### Usage
 
 Use the `MilvusDocumentStore` in a Haystack pipeline as a quick start.
@@ -151,8 +153,7 @@ rag_pipeline = Pipeline()
 rag_pipeline.add_component("text_embedder", OpenAITextEmbedder())
 rag_pipeline.add_component("retriever", MilvusEmbeddingRetriever(document_store=document_store, top_k=3))
 rag_pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-rag_pipeline.add_component("generator", OpenAIGenerator(api_key=Secret.from_token(os.getenv("OPENAI_API_KEY")),
-                                                        generation_kwargs={"temperature": 0}))
+rag_pipeline.add_component("generator", OpenAIGenerator(generation_kwargs={"temperature": 0}))
 rag_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 rag_pipeline.connect("retriever.documents", "prompt_builder.documents")
 rag_pipeline.connect("prompt_builder", "generator")
