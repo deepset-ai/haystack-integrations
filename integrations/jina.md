@@ -3,11 +3,11 @@ layout: integration
 name: Jina AI
 description: Use the latest Jina AI embedding models
 authors:
-    - name: deepset
-      socials:
-        github: deepset-ai
-        twitter: deepset_ai
-        linkedin: deepset-ai
+  - name: deepset
+    socials:
+      github: deepset-ai
+      twitter: deepset_ai
+      linkedin: deepset-ai
 pypi: https://pypi.org/project/jina-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/jina
 type: Model Provider
@@ -17,8 +17,8 @@ version: Haystack 2.0
 toc: true
 ---
 
-This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings-v2` and [reranking models](https://jina.ai/reranker/) in their pipelines. [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
- 
+This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings-v3` and [reranking models](https://jina.ai/reranker/) in their pipelines. [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
+
 Jina Embeddings v2 are state-of-the-art models, trained to understand and process large volumes of text data efficiently. The unique selling points include:
 
 1. Extended Document Handling: The ability to process and encode up to 8192 tokens is crucial for enterprises dealing with lengthy documents, such as legal documents, technical manuals, or comprehensive reports.
@@ -52,7 +52,7 @@ You can use the Jina Reranker models with one component: [`JinaRanker`](https://
 To create semantic embeddings for documents, use `JinaDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `JinaTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Jina API key. You can also
 set the environment variable JINA_API_KEY instead of passing the api key as an argument.
 
-Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and  `DocumentWriter`:
+Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and `DocumentWriter`:
 
 ```python
 import os
@@ -71,10 +71,9 @@ documents = [Document(content="I enjoy programming in Python"),
              Document(content="Thomas is injured and can't play sports")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(model="jina-embeddings-v2-base-en"))
+indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(model="jina-embeddings-v3", api_key=Secret.from_token("<your-api-key>")))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
-indexing_pipeline.run({"embedder": {"documents": documents}})
+indexing_pipeline.run({"embedder": {"documents": documents, "task_type": "retrieval.query"}})
 ```
-
