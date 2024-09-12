@@ -1,20 +1,21 @@
 ---
-layout: duckduckgo-api-haystack
-name: DuckduckgoApiWebsearch
-description: Uses Duckduckgo API for websearches
+layout: integration
+name: DuckDuckGo
+description: Uses DuckDuckGo API for web searches
 authors:
     - name: Giovanni Alzetta
       socials:
         github: https://github.com/GivAlz/
 pypi: https://pypi.org/project/duckduckgo-api-haystack/
 repo: https://github.com/GivAlz/duckduckgo-api-haystack
-type: WebSearch
+type: Data Ingestion
+logo: /logos/duckduckgo.svg
 version: Haystack 2.0
 toc: true
 ---
-# Duckduckgo API Websearch
+# DuckDuckGo API Websearch
 
-Implements a component of the kind *WebSearch*, but through the freely available duckduckgo API.
+Implements a component of the kind *WebSearch*, but through the freely available DuckDuckGo API.
 
 ### **Table of Contents**
 - [Overview](# Overview)
@@ -24,13 +25,12 @@ Implements a component of the kind *WebSearch*, but through the freely available
 
 ## Overview
 
-This repository implements a module in the style of **SearchApiWebSearch**
-and **SerperDevWebSearch**, but using the freely-available duckduckgo API.
+`DuckduckgoApiWebSearch` performs web searches using the DuckDuckGo search engine.
 
-This repository provides a Python module similar to **SearchApiWebSearch** and **SerperDevWebSearch**,
+This repository provides a Python module similar to `SearchApiWebSearch` and `SerperDevWebSearch`,
 but utilizes the free DuckDuckGo API.
 
-When you pass a query to **DuckduckgoWebSearch**, it returns a list of URLs that are most relevant to your search.
+When you pass a query to `DuckduckgoWebSearch`, it returns a list of URLs that are most relevant to your search.
 The results are based on page snippets (the brief text displayed beneath the page titles in search results) rather
 than the content of the entire page.
 
