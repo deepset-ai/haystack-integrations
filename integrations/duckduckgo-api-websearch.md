@@ -18,10 +18,10 @@ toc: true
 Implements a component of the kind *WebSearch*, but through the freely available DuckDuckGo API.
 
 ### **Table of Contents**
-- [Overview](# Overview)
-- [Installation](# Installation)
-- [Usage](# Usage)
-- [License](# License)
+- [Overview](#Overview)
+- [Installation](#Installation)
+- [Usage](#Usage)
+- [License](#License)
 
 ## Overview
 
