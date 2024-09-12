@@ -9,7 +9,7 @@ authors:
 pypi: https://pypi.org/project/duckduckgo-api-haystack/
 repo: https://github.com/GivAlz/duckduckgo-api-haystack
 type: Data Ingestion
-logo: /logos/duckduckgo.svg
+logo: /logos/duckduckgo.png
 version: Haystack 2.0
 toc: true
 ---
