@@ -49,6 +49,12 @@ Include `task_type` in your request to tailor the model for your specific applic
 
 > **Note:** The default dimension is 1024, with recommended values ranging from 256 to 1024.
 
+You can reference the table below for hints on dimension vs. performance:
+
+|                Dimension                |  32   |  64   |  128  |  256  |  512  | 768  | 1024  |
+| :-------------------------------------: | :---: | :---: | :---: | :---: | :---: | :--: | :---: |
+| Average Retrieval Performance (nDCG@10) | 52.54 | 58.54 | 61.64 | 62.72 | 63.16 | 63.3 | 63.35 |
+
 ### **Table of Contents**
 
 - [Haystack 2.0](#haystack-20)
