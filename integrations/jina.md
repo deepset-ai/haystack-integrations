@@ -35,7 +35,7 @@ We recommend `jina-embeddings-v3` as the latest and most performant embedding mo
 
 **Task-Specific Adapters:**
 
-Include `task_type` in your request to tailor the model for your specific application:
+Include `task` in your request to tailor the model for your specific application:
 
 - **retrieval.query**: Used to encode user queries or questions in retrieval tasks.
 - **retrieval.passage**: Used to encode large documents in retrieval tasks at indexing time.
