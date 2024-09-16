@@ -105,7 +105,7 @@ indexing_pipeline.add_component(
     api_key=Secret.from_token("<your-api-key>"),
     model="jina-embeddings-v3",
     dimensions=1024,
-    task_type="retrieval.passage"
+    task="retrieval.passage"
   )
 )
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
