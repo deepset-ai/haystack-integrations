@@ -14,7 +14,7 @@ authors:
 pypi: https://pypi.org/project/snowflake-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/snowflake
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-type: Retriever
+type: Data Ingestion
 logo: /logos/snowflake.png
 version: Haystack 2.0
 ---
