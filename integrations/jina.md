@@ -17,15 +17,43 @@ version: Haystack 2.0
 toc: true
 ---
 
-This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings-v2` and [reranking models](https://jina.ai/reranker/) in their pipelines. [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
- 
-Jina Embeddings v2 are state-of-the-art models, trained to understand and process large volumes of text data efficiently. The unique selling points include:
+This integration allows users of Haystack to seamlessly use Jina AI's`jina-embeddings`and [reranking models](https://jina.ai/reranker/) in their pipelines. [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
 
-1. Extended Document Handling: The ability to process and encode up to 8192 tokens is crucial for enterprises dealing with lengthy documents, such as legal documents, technical manuals, or comprehensive reports.
-2. Enhanced Semantic Understanding: The extended context length allows for a richer and more nuanced understanding of text, improving applications like document summarization, topic extraction, and semantic search.
-3. Efficient Information Retrieval and Clustering: For tasks requiring clustering or retrieval of large documents, the model's capability to handle extended texts ensures more accurate and relevant results.
+Jina AI offers several models so people can use and chose whatever fits best to their needs:
 
-Jina AI is paving the way towards the future of AI as a multimodal reality. We recognize that the existing machine learning and software ecosystems face challenges in handling multimodal AI. Our vision is to play a crucial role in helping the world harness the vast potential of multimodal AI and truly revolutionize the way we interpret and interact with information.
+|           Model            | Dimension |          Language           | MRL (matryoshka) | Context |
+| :------------------------: | :-------: | :-------------------------: | :--------------: | :-----: |
+|     jina-embeddings-v3     |   1024    | Multilingual (89 languages) |       Yes        |  8192   |
+| jina-embeddings-v2-base-en |    768    |           English           |        No        |  8192   |
+| jina-embeddings-v2-base-de |    768    |      German & English       |        No        |  8192   |
+| jina-embeddings-v2-base-es |    768    |      Spanish & English      |        No        |  8192   |
+| jina-embeddings-v2-base-zh |    768    |      Chinese & English      |        No        |  8192   |
+
+**Recommended Model: jina-embeddings-v3 :**
+
+We recommend `jina-embeddings-v3` as the latest and most performant embedding model from Jina AI. This model features 5 task-specific adapters trained on top of its backbone, optimizing various embedding use cases.
+
+**Task-Specific Adapters:**
+
+Include `task` in your request to tailor the model for your specific application:
+
+- **retrieval.query**: Used to encode user queries or questions in retrieval tasks.
+- **retrieval.passage**: Used to encode large documents in retrieval tasks at indexing time.
+- **classification**: Used to encode text for text classification tasks.
+- **text-matching**: Used to encode text for similarity matching, such as measuring similarity between two sentences.
+- **separation**: Used for clustering or reranking tasks.
+
+**Matryoshka Representation Learning**:
+
+`jina-embeddings-v3` supports Matryoshka Representation Learning, allowing users to control embedding dimensions with minimal performance impact. Specify `dimensions` in your request to select the desired dimension.
+
+> **Note:** The default dimension is 1024, with recommended values ranging from 256 to 1024.
+
+You can reference the table below for hints on dimension vs. performance:
+
+|                Dimension                |  32   |  64   |  128  |  256  |  512  | 768  | 1024  |
+| :-------------------------------------: | :---: | :---: | :---: | :---: | :---: | :--: | :---: |
+| Average Retrieval Performance (nDCG@10) | 52.54 | 58.54 | 61.64 | 62.72 | 63.16 | 63.3 | 63.35 |
 
 ### **Table of Contents**
 
@@ -52,7 +80,7 @@ You can use the Jina Reranker models with one component: [`JinaRanker`](https://
 To create semantic embeddings for documents, use `JinaDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `JinaTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Jina API key. You can also
 set the environment variable JINA_API_KEY instead of passing the api key as an argument.
 
-Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and  `DocumentWriter`:
+Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and `DocumentWriter`:
 
 ```python
 import os
@@ -71,10 +99,17 @@ documents = [Document(content="I enjoy programming in Python"),
              Document(content="Thomas is injured and can't play sports")]
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_component("embedder", JinaDocumentEmbedder(model="jina-embeddings-v2-base-en"))
+indexing_pipeline.add_component(
+  "embedder",
+  JinaDocumentEmbedder(
+    api_key=Secret.from_token("<your-api-key>"),
+    model="jina-embeddings-v3",
+    dimensions=1024,
+    task="retrieval.passage"
+  )
+)
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
 indexing_pipeline.run({"embedder": {"documents": documents}})
 ```
-
