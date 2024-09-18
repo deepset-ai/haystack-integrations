@@ -55,6 +55,10 @@ You can reference the table below for hints on dimension vs. performance:
 | :-------------------------------------: | :---: | :---: | :---: | :---: | :---: | :--: | :---: |
 | Average Retrieval Performance (nDCG@10) | 52.54 | 58.54 | 61.64 | 62.72 | 63.16 | 63.3 | 63.35 |
 
+**Late Chunking in Long-Context Embedding Models**
+
+`jina-embeddings-v3` supports [Late Chunking](https://jina.ai/news/late-chunking-in-long-context-embedding-models/), the technique to leverage the model's long-context capabilities for generating contextual chunk embeddings. Include `late_chunking=True` in your request to enable contextual chunked representation. When set to true, Jina AI API will concatenate all sentences in the input field and feed them as a single string to the model. Internally, the model embeds this long concatenated string and then performs late chunking, returning a list of embeddings that matches the size of the input list. 
+
 ### **Table of Contents**
 
 - [Haystack 2.0](#haystack-20)
@@ -105,7 +109,8 @@ indexing_pipeline.add_component(
     api_key=Secret.from_token("<your-api-key>"),
     model="jina-embeddings-v3",
     dimensions=1024,
-    task="retrieval.passage"
+    task="retrieval.passage",
+    late_chunking=True,
   )
 )
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
