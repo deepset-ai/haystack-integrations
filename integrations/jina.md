@@ -55,6 +55,9 @@ You can reference the table below for hints on dimension vs. performance:
 | :-------------------------------------: | :---: | :---: | :---: | :---: | :---: | :--: | :---: |
 | Average Retrieval Performance (nDCG@10) | 52.54 | 58.54 | 61.64 | 62.72 | 63.16 | 63.3 | 63.35 |
 
+**Late Chunking in Long-Context Embedding Models**
+Include `late_chunking` in your request to apply the late chunking technique to leverage the model's long-context capabilities for generating contextual chunk embeddings.
+
 ### **Table of Contents**
 
 - [Haystack 2.0](#haystack-20)
@@ -105,7 +108,8 @@ indexing_pipeline.add_component(
     api_key=Secret.from_token("<your-api-key>"),
     model="jina-embeddings-v3",
     dimensions=1024,
-    task="retrieval.passage"
+    task="retrieval.passage",
+    late_chunking=True,
   )
 )
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
