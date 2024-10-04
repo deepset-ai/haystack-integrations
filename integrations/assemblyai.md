@@ -7,7 +7,7 @@ authors:
       socials:
         twitter: assemblyai
         github: AssemblyAI
-        linkedin: assemblyai
+        linkedin: https://www.linkedin.com/company/assemblyai/
 pypi: https://pypi.org/project/assemblyai-haystack/
 repo: https://github.com/AssemblyAI/assemblyai-haystack
 type: Model Provider

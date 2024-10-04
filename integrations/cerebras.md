@@ -7,7 +7,7 @@ authors:
       socials:
         github: deepset-ai
         twitter: Haystack_AI
-        linkedin: https://www.linkedin.com/company/deepset-ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/haystack-ai/
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider

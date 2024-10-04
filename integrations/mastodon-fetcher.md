@@ -7,7 +7,7 @@ authors:
       socials:
         github: tuanacelik
         twitter: tuanacelik
-        linkedin: tuanacelik
+        linkedin: https://www.linkedin.com/in/tuanacelik
 pypi: https://pypi.org/project/mastodon-fetcher-haystack/
 repo: https://github.com/tuanacelik/mastodon-fetcher-haystack
 type: Data Ingestion

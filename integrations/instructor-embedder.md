@@ -7,12 +7,12 @@ authors:
       socials:
         github: awinml
         twitter: awinml
-        linkedin: ashwin-mathur-ds
+        linkedin: https://www.linkedin.com/in/ashwin-mathur-ds
     - name: Varun Mathur
       socials:
         github: vrunm
         twitter: vrunmnlp
-        linkedin: varun-mathur-ds
+        linkedin: https://www.linkedin.com/in/varun-mathur-ds
 pypi: https://pypi.org/project/instructor-embedders-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/instructor_embedders
 type: Model Provider

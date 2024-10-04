@@ -6,6 +6,7 @@ authors:
     - name: Intel Labs
       socials:
         github: IntelLabs
+        linkedin: https://www.linkedin.com/company/intel-labs/
 pypi:
 repo: https://github.com/IntelLabs/fastRAG
 type: Custom Component
