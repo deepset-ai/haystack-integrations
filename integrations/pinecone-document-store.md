@@ -7,17 +7,17 @@ authors:
       socials:
         github: deepset-ai
         twitter: deepset_ai
-        linkedin: deepset-ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
     - name: Ashwin Mathur
       socials:
         github: awinml
         twitter: awinml
-        linkedin: ashwin-mathur-ds
+        linkedin: https://www.linkedin.com/in/ashwin-mathur-ds
     - name: Varun Mathur
       socials:
         github: vrunm
         twitter: vrunmnlp
-        linkedin: varun-mathur-ds        
+        linkedin: https://www.linkedin.com/in/varun-mathur-ds        
 pypi: https://pypi.org/project/pinecone_haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/pinecone
 type: Document Store

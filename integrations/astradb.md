@@ -10,7 +10,7 @@ authors:
     socials:
       github: deepset-ai
       twitter: deepset_ai
-      linkedin: deepset-ai
+      linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/astra-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/astra
 type: Document Store

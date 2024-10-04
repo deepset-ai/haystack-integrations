@@ -7,7 +7,7 @@ authors:
     socials:
       github: deepset-ai
       twitter: deepset_ai
-      linkedin: deepset-ai
+      linkedin: https://www.linkedin.com/company/deepset-ai/
   - name: Qdrant
     socials:
       github: qdrant

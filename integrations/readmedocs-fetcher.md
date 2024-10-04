@@ -7,11 +7,11 @@ authors:
       socials:
         github: tuanacelik
         twitter: tuanacelik
-        linkedin: tuanacelik
+        linkedin: https://www.linkedin.com/in/tuanacelik
     - name: Silvano Cerza
       socials:
         github: silvanocerza
-        linkedin: silvanocerza
+        linkedin: https://www.linkedin.com/in/silvanocerza
 pypi: https://pypi.org/project/readmedocs-fetcher-haystack/
 repo: https://github.com/tuanacelik/readmedocs-fetcher-haystack
 type: Data Ingestion

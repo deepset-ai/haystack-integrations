@@ -7,7 +7,7 @@ authors:
       socials:
         github: deepset-ai
         twitter: Haystack_AI
-        linkedin: deepset-ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/pgvector-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/pgvector
 type: Document Store

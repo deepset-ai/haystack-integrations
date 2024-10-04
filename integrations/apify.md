@@ -7,7 +7,7 @@ authors:
     socials:
       github: apify
       twitter: apify
-      linkedin: apifytech
+      linkedin: https://www.linkedin.com/company/apifytech/
 pypi: https://pypi.org/project/apify-haystack
 repo: https://github.com/apify/apify-haystack
 type: Data Ingestion

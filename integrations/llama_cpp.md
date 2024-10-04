@@ -7,7 +7,7 @@ authors:
     socials:
       github: awinml
       twitter: awinml
-      linkedin: ashwin-mathur-ds
+      linkedin: https://www.linkedin.com/in/ashwin-mathur-ds
 pypi: https://pypi.org/project/llama-cpp-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/llama_cpp
 type: Model Provider

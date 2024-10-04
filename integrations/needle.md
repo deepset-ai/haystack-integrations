@@ -6,7 +6,7 @@ authors:
     - name: Needle Team
       socials:
         twitter: needlexAI
-        linkedin: needlexai
+        linkedin: https://www.linkedin.com/company/needlexai
 pypi: https://pypi.org/project/needle-haystack-ai
 repo: https://github.com/JANHMS/needle-haystack
 type: Document Store

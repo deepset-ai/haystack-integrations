@@ -7,7 +7,7 @@ authors:
     socials:
       github: awinml
       twitter: awinml
-      linkedin: ashwin-mathur-ds
+      linkedin: https://www.linkedin.com/in/ashwin-mathur-ds
 pypi: https://pypi.org/project/voyage-embedders-haystack/
 repo: https://github.com/awinml/voyage-embedders-haystack/tree/main
 type: Model Provider

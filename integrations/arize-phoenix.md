@@ -7,7 +7,7 @@ authors:
     socials:
       github: Arize-ai
       twitter: ArizePhoenix
-      linkedin: arizeai
+      linkedin: https://www.linkedin.com/company/arizeai/
 pypi: https://pypi.org/project/openinference-instrumentation-haystack/
 repo: https://github.com/Arize-ai/phoenix
 type: Monitoring Tool
