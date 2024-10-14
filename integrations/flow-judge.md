@@ -56,15 +56,15 @@ pip install haystack-ai
 ```
 
 ## Usage 
-Flow Judge integration with Haystack is designed to facilitate the evaluation of Haystack pipelines using Flow Judge. This integration allows you to seamlessly integrate Flow-Judge into your Haystack workflows, enabling you to evaluate and improve your LLM systems with precision and efficiency. 
+Flow Judge integration with Haystack is designed to facilitate the evaluation of Haystack pipelines using Flow Judge. This integration allows you to seamlessly integrate Flow Judge into your Haystack workflows, enabling you to evaluate and improve your LLM systems with precision and efficiency. 
 
-Flow-Judge offers a set-of built-in metrics and easy-to-create custom metrics. 
+Flow Judge offers a set-of built-in metrics and easy-to-create custom metrics. 
 
 ### Components
 This integration introduces `HaystackFlowJudge` component.
   
-### Use Flow-Judge with Haystack 
-We have created a comprehensive guide on how to effectively use Flow-Judge with Haystack. You can access it [here](https://github.com/flowaicom/flow-judge/blob/main/examples/5_evaluate_haystack_rag_pipeline.ipynb). This tutorial demonstrates how to evaluate a RAG pipeline built with Haystack using Flow Judge. 
+### Use Flow Judge with Haystack 
+We have created a comprehensive guide on how to effectively use Flow Judge with Haystack. You can access it [here](https://github.com/flowaicom/flow-judge/blob/main/examples/5_evaluate_haystack_rag_pipeline.ipynb). This tutorial demonstrates how to evaluate a RAG pipeline built with Haystack using Flow Judge. 
 
 ### Quick Example
 The code snippet below provides a simpler example of how to integrate Flow Judge with Haystack. However, we recommend following the full tutorial for a deeper understanding of the concepts and implementation. 
