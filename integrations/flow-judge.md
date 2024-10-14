@@ -8,7 +8,6 @@ authors:
         github: flowaicom
         twitter: flowaicom
         linkedin: https://www.linkedin.com/company/flowaicom/ 
-   - name:
 pypi: https://pypi.org/project/flow-judge/
 repo: https://github.com/flowaicom/flow-judge
 type: Evaluation Framework
