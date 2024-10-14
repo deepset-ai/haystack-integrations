@@ -50,7 +50,7 @@ pip install flow-judge[llamafile]
 pip install 'flash_attn>=2.6.3' --no-build-isolation
 ```
 
-In addition install haystack-ai 
+Finally install haystack-ai 
 ```bash
 pip install haystack-ai
 ```
