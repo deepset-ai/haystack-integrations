@@ -66,14 +66,20 @@ Flow Judge offers a set-of built-in metrics and easy-to-create custom metrics.
 Built-in metrics come with 3 different scoring scales Binary, 3-point Likert and 5-point Likert: 
 - Response Correctness
 - Response Faithfulness
-- Response Relevance
+- Response Relevance  
+
+To check the available metrics you can run:
+```python
+from flow_judge.metrics import list_all_metrics
+list_all_metrics()
+```
 
 While these preset metrics provide a solid foundation for evaluation, the true power of Flow Judge lies in its ability to create custom metrics tailored to your specific requirements. This flexibility allows for a more nuanced and comprehensive assessment of your LLM systems.
 
 ### Components
 This integration introduces `HaystackFlowJudge` component, which is used just like other evaluator components in Haystack. 
 
-For details about the use and parameters of this component please refer to Haystack's [LLMEvaluator component](https://docs.haystack.deepset.ai/reference/evaluators-api#module-llm_evaluator) and the [HaystackFlowjudge class](https://github.com/flowaicom/flow-judge/blob/main/flow_judge/integrations/haystack.py).
+For details about the use and parameters of this component please refer to [HaystackFlowJudge class](https://github.com/flowaicom/flow-judge/blob/main/flow_judge/integrations/haystack.py) and Haystack's [LLMEvaluator component](https://docs.haystack.deepset.ai/reference/evaluators-api#module-llm_evaluator).
   
 ### Use Flow Judge with Haystack 
 We have created a comprehensive guide on how to effectively use Flow Judge with Haystack. You can access it [here](https://github.com/flowaicom/flow-judge/blob/main/examples/5_evaluate_haystack_rag_pipeline.ipynb). This tutorial demonstrates how to evaluate a RAG pipeline built with Haystack using Flow Judge. 
