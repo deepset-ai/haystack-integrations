@@ -49,6 +49,7 @@ For running Flow Judge with Llamafile on macOS:
 pip install flow-judge[llamafile]
 pip install 'flash_attn>=2.6.3' --no-build-isolation
 ```
+To learn more about the installation, visit the [Flow Judge Installation](https://pypi.org/project/flow-judge/) page.
 
 Finally install Haystack:
 ```bash
@@ -60,8 +61,19 @@ Flow Judge integration with Haystack is designed to facilitate the evaluation of
 
 Flow Judge offers a set-of built-in metrics and easy-to-create custom metrics. 
 
+### Available Built-in Metrics  
+
+Built-in metrics come with 3 different scoring scales Binary, 3-point Likert and 5-point Likert: 
+- Response Correctness
+- Response Faithfulness
+- Response Relevance
+
+While these preset metrics provide a solid foundation for evaluation, the true power of Flow Judge lies in its ability to create custom metrics tailored to your specific requirements. This flexibility allows for a more nuanced and comprehensive assessment of your LLM systems.
+
 ### Components
-This integration introduces `HaystackFlowJudge` component.
+This integration introduces `HaystackFlowJudge` component, which is used just like other evaluator components in Haystack. 
+
+For details about the use and parameters of this component please refer to Haystack's [LLMEvaluator component](https://docs.haystack.deepset.ai/reference/evaluators-api#module-llm_evaluator) and the [HaystackFlowjudge class](https://github.com/flowaicom/flow-judge/blob/main/flow_judge/integrations/haystack.py).
   
 ### Use Flow Judge with Haystack 
 We have created a comprehensive guide on how to effectively use Flow Judge with Haystack. You can access it [here](https://github.com/flowaicom/flow-judge/blob/main/examples/5_evaluate_haystack_rag_pipeline.ipynb). This tutorial demonstrates how to evaluate a RAG pipeline built with Haystack using Flow Judge. 
@@ -84,7 +96,8 @@ questions = ["What is the termination clause in the contract?"]
 contexts = ["This contract may be terminated by either party upon providing thirty (30) days written notice to the other party. In the event of a breach of contract, the non-breaching party may terminate the contract immediately."]
 answers = ["The contract can be terminated by either party with thirty days written notice."] 
 
-# Define the HaystackFlowJudge evaluator, we will use the built-in metric for faithfulness
+# Define the HaystackFlowJudge evaluator, we will use the built-in metric for faithfulness 
+# For parameters refer to Haystack's [LLMEvaluator](https://docs.haystack.deepset.ai/reference/evaluators-api#module-llm_evaluator) and HaystackFlowJudge class. 
 ff_evaluator = HaystackFlowJudge(
     metric=RESPONSE_FAITHFULNESS_5POINT,
     model=model,
