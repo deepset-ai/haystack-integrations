@@ -74,7 +74,7 @@ from flow_judge.metrics import list_all_metrics
 list_all_metrics()
 ```
 
-While these preset metrics provide a solid foundation for evaluation, the true power of Flow Judge lies in its ability to create custom metrics tailored to your specific requirements. This flexibility allows for a more nuanced and comprehensive assessment of your LLM systems. Please refer to our [tutorial]("https://github.com/flowaicom/flow-judge/blob/main/examples/2_custom_evaluation_criteria.ipynb") for creating custom metrics for more details.
+While these preset metrics provide a solid foundation for evaluation, the true power of Flow Judge lies in its ability to create custom metrics tailored to your specific requirements. This flexibility allows for a more nuanced and comprehensive assessment of your LLM systems. Please refer to our [tutorial](https://github.com/flowaicom/flow-judge/blob/main/examples/2_custom_evaluation_criteria.ipynb) for creating custom metrics for more details.
 
 ### Components
 This integration introduces `HaystackFlowJudge` component, which is used just like other evaluator components in Haystack. 
