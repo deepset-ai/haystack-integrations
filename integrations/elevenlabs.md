@@ -26,7 +26,7 @@ toc: true
 
 This repository contains an integration of ElevenLabs' Text-to-Speech API with Haystack pipelines. This package allows you to convert text to speech using ElevenLabs' API and optionally save the generated audio to AWS S3.
 
-# Installation
+## Installation
 
 ```bash
 pip install elevenlabs_haystack
