@@ -32,7 +32,7 @@ This repository contains an integration of ElevenLabs' Text-to-Speech API with H
 pip install elevenlabs_haystack
 ```
 
-# Usage
+## Usage
 
 #### **ElevenLabs API Key**
 
