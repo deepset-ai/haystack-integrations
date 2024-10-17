@@ -77,7 +77,7 @@ from elevenlabs_haystack import ElevenLabsTextToSpeech
 tts = ElevenLabsTextToSpeech(
     elevenlabs_api_key=Secret.from_env_var("ELEVENLABS_API_KEY"),
     output_folder="audio_files",  # Save the generated audio locally
-    voice_id="K8lgMMdmFr7QoEooafEf",  # ElevenLabs voice ID
+    voice_id="Alice",  # ElevenLabs voice ID
     aws_s3_bucket_name=Secret.from_env_var("AWS_S3_BUCKET_NAME"),  # S3 bucket for optional upload
     aws_s3_output_folder="s3_files",  # Save the generated audio to AWS S3
     aws_access_key_id=Secret.from_env_var("AWS_ACCESS_KEY_ID"),
@@ -145,7 +145,7 @@ text_pipeline.add_component(
     instance=ElevenLabsTextToSpeech(
         elevenlabs_api_key=Secret.from_env_var("ELEVENLABS_API_KEY"),
         output_folder="audio_files",  # Save the generated audio locally
-        voice_id="K8lgMMdmFr7QoEooafEf",  # ElevenLabs voice ID
+        voice_id="Alice",  # ElevenLabs voice ID
         aws_s3_bucket_name=Secret.from_env_var("AWS_S3_BUCKET_NAME"),  # S3 bucket for optional upload
         aws_s3_output_folder="s3_files",  # Save the generated audio to AWS S3
         aws_access_key_id=Secret.from_env_var("AWS_ACCESS_KEY_ID"),
