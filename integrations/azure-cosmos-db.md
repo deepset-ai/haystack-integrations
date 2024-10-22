@@ -28,7 +28,7 @@ version: Haystack 2.0
 
 [Azure Cosmos DB for MongoDB](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/introduction) makes it easy to use Azure Cosmos DB as if it were a MongoDB database. You can use your existing MongoDB skills and continue to use your favorite MongoDB drivers, SDKs, and tools by pointing your application to the connection string for your account using the API for MongoDB. Learn more in the [Azure Cosmos DB for MongoDB documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/).
 
-[Azure Cosmos DB for PostgreSQL](https://learn.microsoft.com/en-us/azure/cosmos-db/postgresql/introduction) is a managed service for PostgreSQL extended with the Citus open source superpower of distributed tables. This superpower enables you to build highly scalable relational apps. You can start building apps on a single node cluster, the same way you would with PostgreSQL. As your app's scalability and performance requirements grow, you can seamlessly scale to multiple nodes by transparently distributing your tables. Learn more in the [Azure Cosmos DB for PostgreSQL documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/postgresql/).
+[Azure Cosmos DB for PostgreSQL](https://learn.microsoft.com/en-us/azure/cosmos-db/postgresql/introduction) is a managed service for PostgreSQL extended with the Citus open source superpower of distributed tables. This superpower enables you to build highly scalable relational apps. You can start building apps on a single node cluster, as you would with PostgreSQL. As your app's scalability and performance requirements grow, you can seamlessly scale to multiple nodes by transparently distributing your tables. Learn more in the [Azure Cosmos DB for PostgreSQL documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/postgresql/).
 
 ## Installation
 
@@ -76,6 +76,7 @@ document_store = MongoDBAtlasDocumentStore(
 
 document_store.write_documents([Document(content="this is my first doc")])
 ```
+Now, you can go ahead and build your Haystack pipeline using `MongoDBAtlasEmbeddingRetriever`. Check out the [MongoDBAtlasEmbeddingRetriever docs](https://docs.haystack.deepset.ai/docs/mongodbatlasembeddingretriever) for the full pipeline example.
 
 ## Usage (PostgreSQL)
 
@@ -100,3 +101,4 @@ document_store = PgvectorDocumentStore(
     recreate_table=True,
 )
 ```
+Now, you can go ahead and build your Haystack pipeline using `PgvectorEmbeddingRetriever` and `PgvectorKeywordRetriever`. Check out the [PgvectorEmbeddingRetriever docs](https://docs.haystack.deepset.ai/docs/pgvectorembeddingretriever) for the full pipeline example.
