@@ -100,5 +100,3 @@ document_store = PgvectorDocumentStore(
     recreate_table=True,
 )
 ```
-
-
