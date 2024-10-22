@@ -73,7 +73,7 @@ document_store.write_documents([Document(content="this is my first doc")])
 
 ### Example pipelines
 
-Here is some example code of an end-to-end RAG app built on MongoDB Atlas: one indexing pipeline that embeds the documents,
+Here is some example code of an end-to-end RAG app built on Azure Cosmos DB: one indexing pipeline that embeds the documents,
 and a generative pipeline that can be used for question answering.
 
 ```python
