@@ -32,7 +32,7 @@ toc: true
 - Light and fast: quantized model weights; ONNX Runtime for inference via Optimum.
 - Performant embedding models: list of [supported models](https://qdrant.github.io/fastembed/examples/Supported_Models/) - including multilingual models.
 - Support for sparse embedding models.
-- Synergize very well with Qdrant document store and retrievers
+- Good integration with Qdrant document store and retrievers.
 
 
 ## Installation
