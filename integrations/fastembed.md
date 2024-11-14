@@ -27,11 +27,12 @@ toc: true
 - [License](#license)
 
 ## Overview
-[FastEmbed](https://qdrant.github.io/fastembed/) is a lightweight, fast, Python library built for embedding generation.
+[FastEmbed](https://qdrant.github.io/fastembed/) is a lightweight, fast, Python library built for embedding generation and document ranking.
 
 - Light and fast: quantized model weights; ONNX Runtime for inference via Optimum.
 - Performant embedding models: list of [supported models](https://qdrant.github.io/fastembed/examples/Supported_Models/) - including multilingual models.
 - Support for sparse embedding models.
+- Good integration with Qdrant document store and retrievers.
 
 
 ## Installation
@@ -43,10 +44,13 @@ pip install fastembed-haystack
 ## Usage
 ### Components
 The `fastembed-haystack` integrations provides the following components:
-- `FastembedTextEmbedder`: creates a dense embedding for text (used in query/RAG pipelines).
-- `FastembedDocumentEmbedder`: enriches documents with dense embeddings (used in indexing pipelines).
-- `FastembedSparseTextEmbedder`: creates a sparse embedding for text (used in query/RAG pipelines).
-- `FastembedSparseDocumentEmbedder`: enriches documents with sparse embeddings (used in indexing pipelines).
+- Embedders:
+	- `FastembedTextEmbedder`: creates a dense embedding for text (used in query/RAG pipelines).
+	- `FastembedDocumentEmbedder`: enriches documents with dense embeddings (used in indexing pipelines).
+	- `FastembedSparseTextEmbedder`: creates a sparse embedding for text (used in query/RAG pipelines).
+	- `FastembedSparseDocumentEmbedder`: enriches documents with sparse embeddings (used in indexing pipelines).
+- Ranker:
+	- `FastembedRanker`: ranks documents based on a query (used in query/RAG pipelines after the retrieval).
   
 ### Example with dense embeddings
 
@@ -124,6 +128,42 @@ result = query_pipeline.run({"sparse_text_embedder": {"text": query}})
 ```
 
 For a more detailed example, see this [notebook](https://github.com/deepset-ai/haystack-cookbook/blob/main/notebooks/sparse_embedding_retrieval.ipynb).
+
+### Example with ranker
+
+```python
+from haystack import Document, Pipeline
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.embedders.fastembed import FastembedDocumentEmbedder, FastembedTextEmbedder
+from haystack_integrations.components.rankers.fastembed import FastembedRanker
+
+document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+query = "Who supports fastembed?"
+
+documents = [
+    Document(content="My name is Wolfgang and I live in Berlin"),
+    Document(content="I saw a black horse running"),
+    Document(content="Germany has many big cities"),
+    Document(content="fastembed is supported by and maintained by Qdrant."),
+]
+
+document_embedder = FastembedDocumentEmbedder()
+document_embedder.warm_up()
+documents_with_embeddings = document_embedder.run(documents)["documents"]
+document_store.write_documents(documents_with_embeddings)
+
+query_pipeline = Pipeline()
+query_pipeline.add_component("text_embedder", FastembedTextEmbedder())
+query_pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
+query_pipeline.add_component("ranker", FastembedRanker(top_k=2))
+query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+query_pipeline.connect("retriever.documents", "ranker.documents")
+
+
+result = query_pipeline.run({"text_embedder": {"text": query}, "ranker": { "query" : query }})
+```
 
 ### License
 
