@@ -118,3 +118,19 @@ indexing_pipeline.connect("embedder", "writer")
 
 indexing_pipeline.run({"embedder": {"documents": documents}})
 ```
+
+You can use the Jina Reader API with one component: [`JinaReaderConnector`](https://docs.haystack.deepset.ai/reference/integrations-jina#jinareaderconnector)
+
+Below is an example of using the `JinaReaderConnector` in the READ mode:
+
+```python
+from haystack_integrations.components.connectors.jina import JinaReaderConnector
+
+reader = JinaReaderConnector(mode="read")
+query = "https://example.com"
+result = reader.run(query=query)
+document = result["documents"][0]
+print(document.content)
+
+>>> "This domain is for use in illustrative examples..."
+```
