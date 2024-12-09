@@ -26,11 +26,11 @@ toc: true
 
 `AzureAIDocumentStore` supports an integration of [Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search) which is an enterprise-ready search and retrieval system with [Haystack](https://haystack.deepset.ai/) by [deepset](https://www.deepset.ai).
 
-This integration allows using search indexes in Azure AI Search as a document store to build RAG-based applications on Azure, with native LLM integrations. To retrieve data from the documentstore, the integration supports three types of retrievers:
+This integration allows using search indexes in Azure AI Search as a document store to build RAG-based applications on Azure, with native LLM integrations. To retrieve data from the documentstore, the integration supports three types of retrieval techniques:
 
 1. **Embedding Retrieval**: For vector-based searches.
-2. **BM25 Retrieval**: Semantic retrieval utilizing the BM25 algorithm.
-3. **Hybrid Retrieval**: Combining vector and BM25 retrieval methods for optimal results.
+2. **BM25 Retrieval**: Keyword retrieval utilizing the BM25 algorithm.
+3. **Hybrid Retrieval**: A combination of vector and BM25 retrieval methods.
 
 ## Installation
 
@@ -48,11 +48,37 @@ To use the `AzureAISearchDocumentStore`, you need to have an active [Azure subsc
 from haystack_integrations.document_stores.azure_ai_search import AzureAISearchDocumentStore
 from haystack import Document
 
-document_store = AzureAISearchDocumentStore(index_name="haystack-docs")
-document_store.write_documents([
-    Document(content="This is the first document."),
-    Document(content="This is the second document.")
-])
+document_store = AzureAISearchDocumentStore(
+    metadata_fields={"version": float, "label": str},
+    index_name="document-store-example",
+)
+
+documents = [
+    Document(
+        content="This is an introduction to using Python for data analysis.",
+        meta={"version": 1.0, "label": "chapter_one"},
+    ),
+    Document(
+        content="Learn how to use Python libraries for machine learning.",
+        meta={"version": 1.5, "label": "chapter_two"},
+    ),
+    Document(
+        content="Advanced Python techniques for data visualization.",
+        meta={"version": 2.0, "label": "chapter_three"},
+    ),
+]
+document_store.write_documents(documents)
+
+filters = {
+    "operator": "AND",
+    "conditions": [
+        {"field": "meta.version", "operator": ">", "value": 1.2},
+        {"field": "meta.label", "operator": "in", "value": ["chapter_one", "chapter_three"]},
+    ],
+}
+
+results = document_store.filter_documents(filters)
+print(results)
 ```
 
 You can supply all supported parameters as `index_creation_kwargs` for `SearchIndex` during the initialization of the `AzureAISearchDocumentStore` to customize index creation. Additionally, the `AzureAISearchDocumentStore` supports semantic ranking, which can be enabled by including the `SemanticSearch` configuration in index_creation_kwargs during initialization and utilizing it through one of the retrievers. For further details, refer to the [Azure AI tutorial](https://learn.microsoft.com/en-us/azure/search/search-get-started-semantic?tabs=dotnet) on this feature.
