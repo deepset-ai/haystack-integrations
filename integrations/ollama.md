@@ -144,7 +144,7 @@ client = OllamaChatGenerator(model="orca-mini", timeout=45, url="http://localhos
 
 response = client.run(messages, generation_kwargs={"temperature": 0.2})
 
-print(response["replies"][0].content)
+print(response["replies"][0].text)
 
 ```
 You should receive an output like (output is not deterministic):

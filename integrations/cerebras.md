@@ -101,6 +101,6 @@ while True:
     messages.append(ChatMessage.from_user(msg))
     response = generator.run(messages=messages)
     assistant_resp = response['replies'][0]
-    print("🤖 "+assistant_resp.content)
+    print("🤖 "+assistant_resp.text)
     messages.append(assistant_resp)
 ```
