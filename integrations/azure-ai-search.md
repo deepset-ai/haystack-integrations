@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/azure-ai-search
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/azure-ai-search
-type: Model Provider
+type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/azure-ai.png
 version: Haystack 2.0
@@ -26,7 +26,7 @@ toc: true
 
 `AzureAIDocumentStore` supports an integration of [Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search) which is an enterprise-ready search and retrieval system with [Haystack](https://haystack.deepset.ai/) by [deepset](https://www.deepset.ai).
 
-This integration allows using search indexes in Azure AI Search as a document store to build RAG-based applications on Azure, with native LLM integrations. To retrieve data from the documentstore, the integration supports three types of retrieval techniques:
+This integration allows using search indexes in Azure AI Search as a document store to build RAG-based applications on Azure, with native LLM integrations. To retrieve data from the document store, the integration supports three types of retrieval techniques:
 
 1. **Embedding Retrieval**: For vector-based searches.
 2. **BM25 Retrieval**: Keyword retrieval utilizing the BM25 algorithm.
