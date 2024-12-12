@@ -122,6 +122,7 @@ When chatting with Gemini we can also use function calls.
 
 ```python
 import os
+import json
 from google.ai.generativelanguage import FunctionDeclaration, Tool
 from haystack.dataclasses import ChatMessage
 
@@ -161,14 +162,14 @@ messages = [
     ChatMessage.from_user(content="What is the temperature in celsius in Berlin?")
 ]
 res = gemini_chat.run(messages=messages)
-weather = get_current_weather(**res["replies"][0].content)
+weather = get_current_weather(**json.loads(res["replies"][0].text))
 
 messages += res["replies"] + [
     ChatMessage.from_function(content=weather, name="get_current_weather")
 ]
 
 res = gemini_chat.run(messages=messages)
-print(res["replies"][0].content)
+print(res["replies"][0].text)
 ```
 
 Will output:
