@@ -23,7 +23,7 @@ toc: true
 
 ## Overview
 
-SambaNova is an AI company that developes SN40L Reconfigurable Dataflow Unit (RDU), a processor that provides native dataflow processing and high-performance for fast inference of Large Language Models.
+SambaNova is an AI company that develops SN40L Reconfigurable Dataflow Unit (RDU), a processor that provides native dataflow processing and high-performance for fast inference of Large Language Models.
 
 To start using SambaNova, sign up for an API key [here](https://cloud.sambanova.ai/).
 This will give you access to SambaNova Cloud API, which offers rapid inference of open Language Models like Llama 3 and Qwen.
