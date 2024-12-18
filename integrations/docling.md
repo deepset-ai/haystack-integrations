@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Docling Converter
+name: Docling
 description: Use Docling to locally parse and chunk PDF, DOCX, and other document types in Haystack
 authors:
     - name: DS4SD
