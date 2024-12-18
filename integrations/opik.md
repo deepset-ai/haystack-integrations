@@ -24,7 +24,7 @@ toc: true
 
 ## Overview
 
-Opik is an Open Source tool that helps you to trace, evaluate and monitor your LLM applications. With the Opik platform you can:
+[Opik](https://www.comet.com/site/products/opik/) is an open source tool that helps you to trace, evaluate and monitor your LLM applications. With the Opik platform, you can:
 
 - Debug your pipelines
 - Automatically evaluate your pipelines with built-in metrics like hallucinations or context relevance
