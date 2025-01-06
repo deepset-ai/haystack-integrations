@@ -61,9 +61,9 @@ The `.run()` method takes an optional `extraction_kwargs` parameter which is the
    - `include_comments=True` (comment sections at the bottom of articles)
    - `include_images=True`
    - `include_tables=True` (active by default)
-   - `prune_xpath=["//p[@class='discarded']"]` (XPath expressions to prune the tree before extraction)
-- Optimization for precision or recall:
-   - `favor_precision=True`: if your results contain too much noise
-   - `favor_recall=True`: if parts of your documents are missing
+   - `prune_xpath=["//p[@class='discarded']"]` (pruning the tree before extraction)
+- Optimization for precision or recall
+   - `favor_precision=True` (if your results contain too much noise)
+   - `favor_recall=True` (if parts of your documents are missing)
 
 For more information see the [Python usage](https://trafilatura.readthedocs.io/en/latest/usage-python.html) and [function description](https://trafilatura.readthedocs.io/en/latest/corefunctions.html#extract) parts of the official documentation.
