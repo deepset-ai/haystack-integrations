@@ -11,6 +11,7 @@ authors:
 pypi: https://pypi.org/project/trafilatura/
 repo: https://github.com/adbar/trafilatura
 report_issue: https://github.com/adbar/trafilatura/issues
+logo: /logos/trafilatura.png
 type: Data Ingestion
 version: Haystack 2.0
 ---
