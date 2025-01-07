@@ -55,7 +55,7 @@ print(documents[0].content)
 
 ### Settings
 
-The `.run()` method takes an optional `extraction_kwargs` parameter which is then passed to Trafilatura. It has to be a dictionary of arguments known to the package, here are useful ideas in this context:
+The `__init__` and `run` methods take an optional `extraction_kwargs` parameter which is then passed to Trafilatura. It has to be a dictionary of arguments known to the package, here are useful ideas in this context:
 
 - Choice of HTML elements
    - `include_comments=True` (comment sections at the bottom of articles)
