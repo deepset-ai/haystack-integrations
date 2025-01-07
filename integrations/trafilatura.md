@@ -24,7 +24,7 @@ version: Haystack 2.0
 - [Settings](#settings)
 
 
-### Overview
+## Overview
 
 Trafilatura is a cutting-edge Python package and command-line tool designed to gather text on the Web and simplify the process of turning raw HTML into structured, meaningful data. Its extraction component is seamlessly integrated into Haystack.
 
