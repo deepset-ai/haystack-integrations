@@ -38,7 +38,7 @@ pip install haystack-ai trafilatura
 ```
 
 
-### Usage
+## Usage
 
 Trafilatura powers the `HTMLToDocument` class in Haystack's converters. Here is how to use it:
 
