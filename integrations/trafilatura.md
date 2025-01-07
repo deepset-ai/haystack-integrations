@@ -31,7 +31,7 @@ Trafilatura is a cutting-edge Python package and command-line tool designed to g
 Going from HTML bulk to essential parts can alleviate many problems related to text quality by focusing on the actual content and avoiding the noise, which is beneficial for LLM applications.
 
 
-### Installation
+## Installation
 
 ```bash
 pip install haystack-ai trafilatura
