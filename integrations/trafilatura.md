@@ -40,7 +40,7 @@ pip install haystack-ai trafilatura
 
 ## Usage
 
-Trafilatura powers the `HTMLToDocument` class in Haystack's converters. Here is how to use it:
+Trafilatura powers the [`HTMLToDocument`](https://docs.haystack.deepset.ai/docs/htmltodocument) component in Haystack's converters. Here is how to use it:
 
 ```python
 from haystack.components.converters import HTMLToDocument
