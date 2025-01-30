@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Voyage AI
-description: A component for computing embeddings using Voyage AI embedding models - built for Haystack 2.0.
+description: A component for computing embeddings using Voyage AI embedding models
 authors:
   - name: Ashwin Mathur
     socials:
@@ -28,9 +28,9 @@ toc: true
 
 Custom component for [Haystack](https://github.com/deepset-ai/haystack) (2.x) for creating embeddings using the [VoyageAI Embedding Models](https://voyageai.com/).
 
-Voyage’s embedding models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
+Voyage’s embedding and ranking models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
 
-The available models can be found on the [Embeddings Documentation.](https://docs.voyageai.com/embeddings/)
+The available models can be found on the [Embeddings Documentation](https://docs.voyageai.com/embeddings/).
 
 ## Installation
 
@@ -40,14 +40,13 @@ pip install voyage-embedders-haystack
 
 ## Usage
 
-You can use Voyage Embedding models with two components: [VoyageTextEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_text_embedder.py) and [VoyageDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_document_embedder.py).
+You can use Voyage models with three components: [VoyageTextEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_text_embedder.py), [VoyageDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_document_embedder.py) and [VoyageRanker](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/rankers/voyage/ranker.py)
 
-To create semantic embeddings for documents, use `VoyageDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `VoyageTextEmbedder`.
+To create semantic embeddings for documents, use `VoyageDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `VoyageTextEmbedder`. For reranking, use `VoyageRanker` with [Voyage Rerankers](https://docs.voyageai.com/docs/reranker)
 
-Once you've selected the suitable component for your specific use case, initialize the component with the model name and VoyageAI API key. You can also
-set the environment variable `VOYAGE_API_KEY` instead of passing the API key as an argument.
+Once you've selected the suitable component for your specific use case, initialize the component with the model name and VoyageAI API key. You can also set the environment variable `VOYAGE_API_KEY` instead of passing the API key as an argument.
 
-Information about the supported models, can be found on the [Embeddings Documentation.](https://docs.voyageai.com/embeddings/)
+Information about the supported models, can be found on the [Embeddings Documentation](https://docs.voyageai.com/embeddings/).
 
 To get an API key, please see the [Voyage AI website.](https://www.voyageai.com/)
 
