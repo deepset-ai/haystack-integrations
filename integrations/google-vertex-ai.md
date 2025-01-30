@@ -33,7 +33,7 @@ toc: true
 
 Haystack supports [Gemini API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#gemini-models), [PaLM API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#palm-models), [Codey APIs models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#codey-models), and [Imagen API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#imagen-models) for task such as **text generation**, **function calling**, **image generation**, **visual question answering**, **code generation**, and **image captioning**.
 
-> To learn more about the use cases and test Vertex AI models with Haystack, follow this [Colab Notebook](https://colab.research.google.com/drive/1hOLxbLHsyGsOd6E9qjA-CnZSH-eoLxp8?usp=sharing).
+> To learn more about the use cases and test Vertex AI models with Haystack, follow this [Notebook](https://haystack.deepset.ai/cookbook/vertexai-gemini-examples).
 
 > There is an article about Gemini models and how to use them with Haystack: [Gemini Models with Google Vertex AI Integration for Haystack](https://haystack.deepset.ai/blog/gemini-models-with-google-vertex-for-haystack)
 
@@ -113,7 +113,7 @@ The third image is of Gort from the 1951 film The Day the Earth Stood Still...
 The fourth image is of Marvin from the 1977 film The Hitchhiker's Guide to the Galaxy...
 ```
 
-*For function calling with `gemini-pro`, refer to the [Colab Notebook](https://colab.research.google.com/drive/1hOLxbLHsyGsOd6E9qjA-CnZSH-eoLxp8?usp=sharing).*
+*For function calling with `gemini-pro`, refer to the [Notebook](https://haystack.deepset.ai/cookbook/vertexai-gemini-examples).*
 
 ### PaLM API Models
 
