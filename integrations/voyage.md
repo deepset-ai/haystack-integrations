@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Voyage AI
-description: A component for computing embeddings using Voyage AI embedding models
+description: Use text embeddings and rerankers from Voyage AI
 authors:
   - name: Ashwin Mathur
     socials:
@@ -26,9 +26,7 @@ toc: true
 - [Usage](#usage)
 - [Example](#example)
 
-Custom component for [Haystack](https://github.com/deepset-ai/haystack) (2.x) for creating embeddings using the [VoyageAI Embedding Models](https://voyageai.com/).
-
-Voyage’s embedding and ranking models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
+[Voyage AI](https://voyageai.com/)’s embedding and ranking models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
 
 The available models can be found on the [Embeddings Documentation](https://docs.voyageai.com/embeddings/).
 
