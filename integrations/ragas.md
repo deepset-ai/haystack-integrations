@@ -346,64 +346,11 @@ Evaluating: 100%|██████████| 9/9 [00:21<00:00,  2.35s/it]
 {'answer_relevancy': 0.9715, 'context_precision': 1.0000, 'faithfulness': 1.0000}
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="styled-table">
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>user_input</th>
-      <th>retrieved_contexts</th>
-      <th>response</th>
-      <th>reference</th>
-      <th>answer_relevancy</th>
-      <th>context_precision</th>
-      <th>faithfulness</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Who are the major players in the large languag...</td>
-      <td>[In the rapidly advancing field of artificial ...</td>
-      <td>The major players in the large language model ...</td>
-      <td>The major players include OpenAI (GPT Series),...</td>
-      <td>1.000000</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>What is Microsoft’s Azure AI platform known for?</td>
-      <td>[Microsoft’s Azure AI platform is famous for i...</td>
-      <td>Microsoft’s Azure AI platform is known for int...</td>
-      <td>Microsoft’s Azure AI platform is known for int...</td>
-      <td>1.000000</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>What kind of models does Cohere provide?</td>
-      <td>[Cohere is well-known for its language models ...</td>
-      <td>Cohere provides language models tailored for b...</td>
-      <td>Cohere provides language models tailored for b...</td>
-      <td>0.914599</td>
-      <td>1.0</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
+| user_input | retrieved_contexts | response | reference | answer_relevancy | context_precision | faithfulness |
+| --- | --- | --- | --- | --- | --- | -- |
+| Who are the major players in the large languag... | [In the rapidly advancing field of artificial ... | The major players in the large language model ... | The major players include OpenAI (GPT Series),... | 1.000000 | 1.0 | 1.0 |
+| What is Microsoft’s Azure AI platform known for? | [Microsoft’s Azure AI platform is famous for i... | Microsoft’s Azure AI platform is known for int... | Microsoft’s Azure AI platform is known for int... | 1.000000 | 1.0 | 1.0 |
+| What kind of models does Cohere provide? | [Cohere is well-known for its language models ... | Cohere provides language models tailored for b.. | Cohere provides language models tailored for b.. | 0.914599 | 1.0 | 1.0 |
 </div>
