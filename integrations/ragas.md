@@ -65,12 +65,12 @@ from haystack.components.embedders import OpenAITextEmbedder, OpenAIDocumentEmbe
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders import ChatPromptBuilder
 from haystack.dataclasses import ChatMessage
+from haystack.components.generators import OpenAIGenerator
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.builders import AnswerBuilder
 from haystack_integrations.components.evaluators.ragas import RagasEvaluator
 
-from langchain_openai import ChatOpenAI
-from ragas.llms import LangchainLLMWrapper
+from ragas.llms import HaystackLLMWrapper
 from ragas.metrics import AnswerRelevancy, ContextPrecision, Faithfulness
 ```
 
@@ -143,8 +143,8 @@ For example:
 Make sure to include all relevant data for each metric to ensure accurate evaluation.
 
 ```py
-llm = ChatOpenAI(model="gpt-4o-mini")
-evaluator_llm = LangchainLLMWrapper(llm)
+llm = OpenAIGenerator(model="gpt-4o-mini")
+evaluator_llm = HaystackLLMWrapper(llm)
 
 ragas_evaluator = RagasEvaluator(
     ragas_metrics=[AnswerRelevancy(), ContextPrecision(), Faithfulness()],
@@ -326,8 +326,8 @@ from ragas.dataset_schema import EvaluationDataset
 
 evaluation_dataset = EvaluationDataset.from_list(evals_list)
 
-llm = ChatOpenAI(model="gpt-4o-mini")
-evaluator_llm = LangchainLLMWrapper(llm)
+llm = OpenAIGenerator(model="gpt-4o-mini")
+evaluator_llm = HaystackLLMWrapper(llm)
 
 result = evaluate(
     dataset=evaluation_dataset,
