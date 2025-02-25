@@ -26,9 +26,7 @@ Language models are able to generate text, but when requiring a precise output f
 Install the format enforcer via pip:  `pip install lm-format-enforcer`
 
 ## Usage
-This integration supports both Haystack 1.x and Haystack 2.0:
-- `LMFormatEnforcerPromptNode`: A Haystack 1.x `PromptNode` that activates the format enforcer.
-- `LMFormatEnforcerLocalGenerator`: A Haystack 2.0 Generator component that activates the format enforcer.
+- `LMFormatEnforcerLocalGenerator`: A Haystack Generator component that activates the format enforcer.
 
 Important note: LM Format Enforcer requires a LOCAL generator - currently only Local HuggingFace transformers are supported, vLLM support is coming soon.
 
@@ -50,44 +48,8 @@ class AnswerFormat(BaseModel):
 
 parser = JsonSchemaParser(AnswerFormat.schema())
 ```
-### Haystack 1.x Integration
-<a target="_blank" href="https://colab.research.google.com/github/noamgat/lm-format-enforcer/blob/main/samples/colab_haystackv1_integration.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
 
-To activate the the enforcer with Haystack V1, a `LMFormatEnforcerPromptNode` has to be used. 
-
-Here is a simple example:
-```python
-from haystack.nodes import PromptModel
-from lmformatenforcer.integrations.haystackv1 import LMFormatEnforcerPromptNode
-
-question = 'Please give me information about {query}. You MUST answer using the following json schema: '
-schema_json_str = AnswerFormat.schema_json().replace("{", "{{").replace("}", "}}")
-question_with_schema = f'{question}{schema_json_str}'
-prompt = get_prompt(question_with_schema)
-
-
-model = PromptModel(model_name_or_path="meta-llama/Llama-2-7b-chat-hf")
-prompt_node = LMFormatEnforcerPromptNode(model, prompt, character_level_parser=parser)
-
-result = prompt_node(query='Michael Jordan')
-print(result[0])
-
-```
-The model will be inferred with the format enforcer, and the output will look like this:
-
-```
-{
-"first_name": "Michael",
-"last_name": "Jordan",
-"year_of_birth": 1963,
-"num_seasons_in_nba": 15
-}
-```
-For a full example, see the [example notebook](https://github.com/noamgat/lm-format-enforcer/blob/main/samples/colab_haystackv1_integration.ipynb)
-
-### Haystack 2.0 Integration
+### Haystack Integration
 <a target="_blank" href="https://colab.research.google.com/github/noamgat/lm-format-enforcer/blob/main/samples/colab_haystackv2_integration.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>

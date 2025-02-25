@@ -19,28 +19,25 @@ toc: true
 
 ### Table of Contents
 
-- [Haystack 2.0](#haystack-20)
-  - [Installation](#installation)
-  - [Usage](#usage)
-- [Haystack 1.x](#haystack-1x)
-  - [Installation (1.x)](#installation-1x)
-  - [Usage (1.x)](#usage-1x)
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
 
-## Haystack 2.0
+## Overview
 
-You can use [OpenAI Models](https://openai.com/) in your Haystack 2.0 pipelines with the [Generators](https://docs.haystack.deepset.ai/docs/generators), [Embedders](https://docs.haystack.deepset.ai/docs/embedders), [LocalWhisperTranscriber](https://docs.haystack.deepset.ai/docs/localwhispertranscriber) and [RemoteWhisperTranscriber](https://docs.haystack.deepset.ai/docs/remotewhispertranscriber).
+You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [Generators](https://docs.haystack.deepset.ai/docs/generators), [Embedders](https://docs.haystack.deepset.ai/docs/embedders), [LocalWhisperTranscriber](https://docs.haystack.deepset.ai/docs/localwhispertranscriber) and [RemoteWhisperTranscriber](https://docs.haystack.deepset.ai/docs/remotewhispertranscriber).
 
-### Installation
+## Installation
 
 ```bash
 pip install haystack-ai
 ```
 
-### Usage
+## Usage
 
 You can use OpenAI models in various ways:
 
-#### Embedding Models
+### Embedding Models
 
 You can leverage embedding models from OpenAI through two components: [OpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/openaitextembedder) and [OpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/openaidocumentembedder).
 
@@ -69,7 +66,7 @@ indexing_pipeline.connect("embedder", "writer")
 indexing_pipeline.run({"embedder": {"documents": documents}})
 ```
 
-#### Generative Models (LLMs)
+### Generative Models (LLMs)
 
 You can leverage OpenAI models through two components: [OpenAIGenerator](https://docs.haystack.deepset.ai/docs/openaigenerator) and [OpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/openaichatgenerator).
 
@@ -121,7 +118,7 @@ res=pipe.run({
 print(res)   
 ```
 
-#### Transcriber Models
+### Transcriber Models
 
 To use Whisper models from OpenAI, initialize a `LocalWhisperTranscriber` or `RemoteWhisperTranscriber` based on hosting options. To use Whisper locally, install it following the instructions on the Whisper [GitHub repo](https://github.com/openai/whisper). To use the OpenAI API, provide an API key. You can then use the suitable component to transcribe audio files.
 
@@ -152,179 +149,4 @@ pipeline.connect("cleaner.documents", "splitter.documents")
 pipeline.connect("splitter.documents", "writer.documents")
 
 pipeline.run({"transcriber": {"audio_files": list(Path("path/to/audio/folder").iterdir())}})
-```
-
-
-### Installation (1.x)
-
-```bash
-pip install farm-haystack
-```
-
-### Usage (1.x)
-
-You can use OpenAI models in various ways:
-
-#### Embedding Models
-
-To use embedding models from OpenAI, initialize an `EmbeddingRetriever` with the model name and OpenAI API key. You can then use this `EmbeddingRetriever` in an indexing pipeline to create OpenAI embeddings for documents and index them to a document store. 
-
-Below is the example indexing pipeline with `PreProcessor`, `InMemoryDocumentStore` and  `EmbeddingRetriever`:
-
-```python
-from haystack.nodes import EmbeddingRetriever
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.pipelines import Pipeline
-from haystack.schema import Document
-
-document_store = InMemoryDocumentStore(embedding_dim=1024)
-preprocessor = PreProcessor()
-retriever = EmbeddingRetriever(
-    embedding_model="babbage-002", document_store=document_store, api_key=OPENAI_API_KEY
-)
-
-indexing_pipeline = Pipeline()
-indexing_pipeline.add_node(component=preprocessor, name="Preprocessor", inputs=["File"])
-indexing_pipeline.add_node(component=retriever, name="Retriever", inputs=["Preprocessor"])
-indexing_pipeline.add_node(component=document_store, name="document_store", inputs=["Retriever"])
-indexing_pipeline.run(documents=[Document("This is my document")])
-```
-
-#### Generative Models (LLMs) 
-
-To use GPT models from OpenAI, initialize a `PromptNode` with the model name, OpenAI API key and the prompt template. You can then use this `PromptNode` in a question answering pipeline to generate answers based on the given context.  
-
-Below is the example of generative questions answering pipeline using RAG with `EmbeddingRetriever` and  `PromptNode`:
-
-```python
-from haystack.nodes import PromptNode, EmbeddingRetriever
-from haystack.pipelines import Pipeline
-
-retriever = EmbeddingRetriever(
-    embedding_model="babbage", document_store=document_store, api_key=OPENAI_API_KEY
-)
-prompt_node = PromptNode(
-    model_name_or_path="gpt-3.5-turbo", 
-    api_key=OPENAI_API_KEY, 
-    default_prompt_template="deepset/question-answering"
-)
-
-query_pipeline = Pipeline()
-query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
-query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
-query_pipeline.run("YOUR_QUERY")
-```
-
-#### Transcriber Models
-
-To use Whisper models from OpenAI, initialize a `WhisperTranscriber`. To use Whisper locally, install it following the instructions on the Whisper [GitHub repo](https://github.com/openai/whisper). To use the API implementation, provide an API key. You can then use this `WhisperTranscriber` to transcribe audio files.
-
-Below is the example of summarization pipeline with `WhisperTranscriber` and  `PromptNode`:
-
-```python
-from haystack.nodes import WhisperTranscriber, PromptNode
-from haystack.pipelines import Pipeline
-
-whisper = WhisperTranscriber(api_key=api_key)
-prompt_node = PromptNode(
-        model_name_or_path="gpt-4", 
-        api_key=api_key,
-        default_prompt_template="deepset/summarization"
-)
-
-pipeline = Pipeline()
-pipeline.add_node(component=whisper, name="whisper", inputs=["File"])
-pipeline.add_node(component=prompt_node, name="prompt", inputs=["whisper"])
-
-output = pipeline.run(file_paths=["path/to/audio/file"])
-```
-
-
-
-## Haystack 1.x
-
-You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [EmbeddingRetriever](https://docs.haystack.deepset.ai/v1.25/docs/retriever#embedding-retrieval-recommended), [PromptNode](https://docs.haystack.deepset.ai/v1.25/docs/prompt_node), and [WhisperTranscriber](https://docs.haystack.deepset.ai/v1.25/docs/whisper_transcriber).
-
-### Installation (1.x)
-
-```bash
-pip install farm-haystack
-```
-
-### Usage (1.x)
-
-You can use OpenAI models in various ways:
-
-#### Embedding Models
-
-To use embedding models from OpenAI, initialize an `EmbeddingRetriever` with the model name and OpenAI API key. You can then use this `EmbeddingRetriever` in an indexing pipeline to create OpenAI embeddings for documents and index them to a document store. 
-
-Below is the example indexing pipeline with `PreProcessor`, `InMemoryDocumentStore` and  `EmbeddingRetriever`:
-
-```python
-from haystack.nodes import EmbeddingRetriever
-from haystack.document_stores import InMemoryDocumentStore
-from haystack.pipelines import Pipeline
-from haystack.schema import Document
-
-document_store = InMemoryDocumentStore(embedding_dim=1024)
-preprocessor = PreProcessor()
-retriever = EmbeddingRetriever(
-    embedding_model="babbage-002", document_store=document_store, api_key=OPENAI_API_KEY
-)
-
-indexing_pipeline = Pipeline()
-indexing_pipeline.add_node(component=preprocessor, name="Preprocessor", inputs=["File"])
-indexing_pipeline.add_node(component=retriever, name="Retriever", inputs=["Preprocessor"])
-indexing_pipeline.add_node(component=document_store, name="document_store", inputs=["Retriever"])
-indexing_pipeline.run(documents=[Document("This is my document")])
-```
-
-#### Generative Models (LLMs) 
-
-To use GPT models from OpenAI, initialize a `PromptNode` with the model name, OpenAI API key and the prompt template. You can then use this `PromptNode` in a question answering pipeline to generate answers based on the given context.  
-
-Below is the example of generative questions answering pipeline using RAG with `EmbeddingRetriever` and  `PromptNode`:
-
-```python
-from haystack.nodes import PromptNode, EmbeddingRetriever
-from haystack.pipelines import Pipeline
-
-retriever = EmbeddingRetriever(
-    embedding_model="babbage", document_store=document_store, api_key=OPENAI_API_KEY
-)
-prompt_node = PromptNode(
-    model_name_or_path="gpt-3.5-turbo", 
-    api_key=OPENAI_API_KEY, 
-    default_prompt_template="deepset/question-answering"
-)
-
-query_pipeline = Pipeline()
-query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
-query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
-query_pipeline.run("YOUR_QUERY")
-```
-
-#### Transcriber Models
-
-To use Whisper models from OpenAI, initialize a `WhisperTranscriber`. To use Whisper locally, install it following the instructions on the Whisper [GitHub repo](https://github.com/openai/whisper). To use the API implementation, provide an API key. You can then use this `WhisperTranscriber` to transcribe audio files.
-
-Below is the example of summarization pipeline with `WhisperTranscriber` and  `PromptNode`:
-
-```python
-from haystack.nodes import WhisperTranscriber, PromptNode
-from haystack.pipelines import Pipeline
-
-whisper = WhisperTranscriber(api_key=api_key)
-prompt_node = PromptNode(
-        model_name_or_path="gpt-4", 
-        api_key=api_key,
-        default_prompt_template="deepset/summarization"
-)
-
-pipeline = Pipeline()
-pipeline.add_node(component=whisper, name="whisper", inputs=["File"])
-pipeline.add_node(component=prompt_node, name="prompt", inputs=["whisper"])
-
-output = pipeline.run(file_paths=["path/to/audio/file"])
 ```
