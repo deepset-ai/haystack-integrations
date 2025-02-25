@@ -20,11 +20,10 @@ toc: true
 ### Table of Contents
 
 - [Overview](#overview)
-- [Haystack 2.0](#haystack-20)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Embedding Models](#embedding-models)
-    - [Generative Models (LLMs)](#generative-models-llms)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Embedding Models](#embedding-models)
+  - [Generative Models (LLMs)](#generative-models-llms)
 
 ## Overview
 
@@ -32,7 +31,7 @@ toc: true
 
 ## Installation
 
-Install Haystack 2.0:
+Install Haystack:
 
 ```bash
 pip install haystack-ai

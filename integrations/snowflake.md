@@ -38,7 +38,7 @@ Use `pip` to install Snowflake:
 pip install snowflake-haystack
 ```
 ## Usage
-Once installed, initialize the `SnowflakeTableRetriever` to use it with Haystack 2.0:
+Once installed, initialize the `SnowflakeTableRetriever` to use it with Haystack:
 
 ```python
 from haystack_integrations.components.retrievers.snowflake import SnowflakeTableRetriever

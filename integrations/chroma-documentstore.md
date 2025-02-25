@@ -40,7 +40,7 @@ Use `pip` to install Chroma:
 pip install chroma-haystack
 ```
 ## Usage
-Once installed, initialize your Chroma database to use it with Haystack 2.0:
+Once installed, initialize your Chroma database to use it with Haystack:
 
 ```python
 from haystack_integrations.document_stores.chroma import ChromaDocumentStore

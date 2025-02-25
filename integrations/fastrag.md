@@ -22,10 +22,6 @@ with a comprehensive tool-set for advancing retrieval augmented generation.
 
 Comments, suggestions, issues and pull-requests are welcomed! ❤️
 
-> **IMPORTANT**
-> 
-> Now compatible with Haystack v2+. Please report any possible issues you find.
-
 ## 📣 Updates
 
 - **2024-05**: fastRAG V3 is Haystack 2.0 compatible 🔥

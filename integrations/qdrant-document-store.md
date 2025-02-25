@@ -40,19 +40,6 @@ pip install qdrant-haystack
 poetry add qdrant-haystack
 ```
 
-## Installation (1.x)
-
-Latest versions of `qdrant-haystack` are compatible only with Haystack 2.x.
-If you're using Haystack 1.x you need to specify the version explicitly.
-
-```bash
-pip install "qdrant-haystack<2.0.0"
-```
-
-```bash
-poetry add "qdrant-haystack<2.0.0"
-```
-
 ## Usage
 
 Once installed, you can already start using `QdrantDocumentStore` as any other store that supports
@@ -60,9 +47,6 @@ embeddings.
 
 ```python
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
-# Note: for Haystack 1.x use the following import instead:
-# from qdrant_haystack import QdrantDocumentStore
-
 
 document_store = QdrantDocumentStore(
     url="localhost",
@@ -93,9 +77,6 @@ instance of `QdrantDocumentStore`.
 
 ```python
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
-# Note: for Haystack 1.x use the following import instead:
-# from qdrant_haystack import QdrantDocumentStore
-
 
 document_store = QdrantDocumentStore(
     ":memory:",
@@ -114,9 +95,6 @@ the data.
 
 ```python
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
-# Note: for Haystack 1.x use the following import instead:
-# from qdrant_haystack import QdrantDocumentStore
-
 
 document_store = QdrantDocumentStore(
     path="/home/qdrant/storage_local",
@@ -135,9 +113,6 @@ might be a better option.
 ```python
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 from haystack.utils import Secret
-# Note: for Haystack 1.x use the following import instead:
-# from qdrant_haystack import QdrantDocumentStore
-
 
 document_store = QdrantDocumentStore(
     url="https://YOUR-CLUSTER-URL.aws.cloud.qdrant.io",

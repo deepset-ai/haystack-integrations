@@ -30,12 +30,8 @@ toc: true
 ### Table of Contents
 
 - [Overview](#overview)
-- [Haystack 2.0](#haystack-20)
-  - [Installation](#installation)
-  - [Usage](#usage)
-- [Haystack 1.x](#haystack-1x)
-  - [Installation (1.x)](#installation-1x)
-  - [Usage (1.x)](#usage-1x)
+- [Installation](#installation)
+- [Usage](#usage)
 
 ## Overview
 
@@ -43,15 +39,13 @@ toc: true
 
 For a detailed overview of all the available methods and settings for the `PineconeDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/integrations-pinecone#pineconedocumentstore).
 
-## Haystack 2.x
-
-### Installation
+## Installation
 
 ```bash
 pip install pinecone-haystack
 ```
 
-### Usage
+## Usage
 
 To use Pinecone as your data storage for your Haystack LLM pipelines, you must have an account with Pinecone and an API Key. Once you have those, you can initialize a `PineconeDocumentStore` for Haystack:
 
@@ -67,12 +61,12 @@ document_store = PineconeDocumentStore(
   )
 ```
 
-#### Writing Documents to PineconeDocumentStore
+### Writing Documents to PineconeDocumentStore
 
 To write documents to your `PineconeDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
 For this step, you may make use of the available [Converters](https://docs.haystack.deepset.ai/docs/converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessors), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Pinecone database.
 
-#### Indexing Pipeline
+### Indexing Pipeline
 
 ```python
 from haystack import Pipeline
@@ -148,87 +142,4 @@ results = query_pipeline.run(
         "prompt_builder": {"query": query},
     }
 )
-```
-
-
-## Haystack 1.x
-
-### Installation
-
-```bash
-pip install farm-haystack[pinecone]
-```
-
-### Usage
-
-To use Pinecone as your data storage for your Haystack LLM pipelines, you must have an account with Pinecone and an API Key. Once you have those, you can initialize a `PineconeDocumentStore` for Haystack:
-
-```python
-from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-
-
-document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
-                                       similarity="cosine",
-                                       embedding_dim=768)
-```
-
-#### Writing Documents to PineconeDocumentStore
-
-To write documents to your `PineconeDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Pinecone database.
-
-#### Indexing Pipeline
-
-```python
-from haystack import Pipeline
-from haystack.nodes import MarkdownConverter, PreProcessor
-from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-
-
-document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
-                                       similarity="cosine",
-                                       embedding_dim=768)
-converter = MarkdownConverter()
-preprocessor = PreProcessor()
-
-indexing_pipeline = Pipeline()
-indexing_pipeline.add_node(component=converter, name="PDFConverter", inputs=["File"])
-indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=["PDFConverter"])
-indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["PreProcessor"])
-
-indexing_pipeline.run(file_paths=["filename.md"])
-```
-
-### Using Pinecone in a Query Pipeline
-
-Once you have documents in your `PineconeDocumentStore`, it's ready to be used in any Haystack pipeline. For example, below is a pipeline that makes use of a custom prompt that is designed to answer questions for the retrieved documents.
-
-```python
-from haystack import Pipeline
-from haystack.nodes import AnswerParser, EmbeddingRetriever, PromptNode, PromptTemplate
-from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-
-
-document_store = PineconeDocumentStore(api_key='YOUR_API_KEY',
-                                       similarity="cosine",
-                                       embedding_dim=768)
-              
-retriever = EmbeddingRetriever(document_store = document_store,
-                               embedding_model="sentence-transformers/multi-qa-mpnet-base-dot-v1")
-prompt_template = PromptTemplate(prompt = """"Answer the following query based on the provided context. If the context does
-                                              not include an answer, reply with 'I don't know'.\n
-                                              Query: {query}\n
-                                              Documents: {join(documents)}
-                                              Answer: 
-                                          """,
-                                          output_parser=AnswerParser())
-prompt_node = PromptNode(model_name_or_path = "gpt-4",
-                         api_key = "YOUR_OPENAI_KEY",
-                         default_prompt_template = prompt_template)
-
-query_pipeline = Pipeline()
-query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
-query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
-
-query_pipeline.run(query = "What is Pinecone", params={"Retriever" : {"top_k": 5}})
 ```

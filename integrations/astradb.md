@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: AstraDB
-description: A Document Store for storing and retrieval from AstraDB - built for Haystack 2.0.
+description: A Document Store for storing and retrieval from AstraDB.
 authors:
   - name: Nicholas Brackley
     socials:
@@ -33,7 +33,7 @@ toc: true
 DataStax Astra DB is a serverless vector database built on Apache Cassandra, and it supports vector-based search and auto-scaling. You can deploy it on AWS, GCP, or Azure and easily expand to one or more regions within those clouds for multi-region availability, low latency data access, data sovereignty, and to avoid cloud vendor lock-in. For more information, see the [DataStax documentation](https://docs.datastax.com/en/astra-serverless/docs/).
 
 
-This integration allows you to use AstraDB for document storage and retrieval in your Haystack 2.0 pipelines. This page provides instructions on how to initialize an AstraDB instance and connect with Haystack.
+This integration allows you to use AstraDB for document storage and retrieval in your Haystack pipelines. This page provides instructions on how to initialize an AstraDB instance and connect with Haystack.
 
 ## Components
 
@@ -52,7 +52,7 @@ pip install astra-haystack
 ```
 ## Usage
 
-This package includes Astra Document Store and Astra Retriever classes that integrate with Haystack 2.0, allowing you to easily perform document retrieval or RAG with AstraDB, and include those functions in Haystack pipelines.
+This package includes Astra Document Store and Astra Retriever classes that integrate with Haystack, allowing you to easily perform document retrieval or RAG with AstraDB, and include those functions in Haystack pipelines.
 
 In order to connect AstraDB with Haystack, you'll need these pieces of information from your Datastax console:
 - Database API Endpoint

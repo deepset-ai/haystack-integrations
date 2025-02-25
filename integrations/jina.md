@@ -63,25 +63,25 @@ You can reference the table below for hints on dimension vs. performance:
 
 ### **Table of Contents**
 
-- [Haystack 2.0](#haystack-20)
+- [Overview](#overview)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Embedding Models](#embedding-models)
     - [Jina Reader API](#jina-reader-api)
 
-## Haystack 2.0
+## Overview
 
-You can use [Jina embedding Models](https://jina.ai/embeddings) and [Jina Rerankers](https://jina.ai/reranker/) in your Haystack 2.0 pipelines with the Jina [Embedders](https://docs.haystack.deepset.ai/docs/embedders) and Jina [Ranker](https://docs.haystack.deepset.ai/docs/jinaranker)
+You can use [Jina embedding Models](https://jina.ai/embeddings) and [Jina Rerankers](https://jina.ai/reranker/) in your Haystack pipelines with the Jina [Embedders](https://docs.haystack.deepset.ai/docs/embedders) and Jina [Ranker](https://docs.haystack.deepset.ai/docs/jinaranker)
 
-### Installation
+## Installation
 
 ```bash
 pip install jina-haystack
 ```
 
-### Usage
+## Usage
 
-#### Embedding Models
+### Embedding Models
 
 You can use Jina Embedding models with two components: [`JinaTextEmbedder`](https://docs.haystack.deepset.ai/docs/jinatextembedder) and [`JinaDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/jinadocumentembedder).
 
@@ -125,7 +125,7 @@ indexing_pipeline.connect("embedder", "writer")
 indexing_pipeline.run({"embedder": {"documents": documents}})
 ```
 
-#### Jina Reader API
+### Jina Reader API
 
 The Jina Reader API converts a URL/query into a LLM-friendly format.
 It supports three modes of operation:

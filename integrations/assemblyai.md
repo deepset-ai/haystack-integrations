@@ -28,7 +28,7 @@ toc: true
 
 ## Introduction
 
-You can use [AssemblyAI](https://www.assemblyai.com/) trancriptions in your Haystack 2.0 pipelines with the AssemblyAITranscriber.
+You can use [AssemblyAI](https://www.assemblyai.com/) trancriptions in your Haystack pipelines with the AssemblyAITranscriber.
 
 With this integration, you can perform [speech recognition](https://www.assemblyai.com/docs/speech-to-text/speech-recognition), [speaker diarization](https://www.assemblyai.com/docs/speech-to-text/speaker-diarization) and [summarization](https://www.assemblyai.com/docs/audio-intelligence/summarization).
 
