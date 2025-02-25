@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-langfuse-haystack integrates tracing capabilities into [Haystack](https://github.com/deepset-ai/haystack) (2.x) pipelines using [Langfuse](https://langfuse.com/). This package enhances the visibility of pipeline runs by capturing comprehensive details of the execution traces, including API calls, context data, prompts, and more. Whether you're monitoring model performance, pinpointing areas for improvement, or creating datasets for fine-tuning and testing from your pipeline executions, langfuse-haystack is the right tool for you.
+langfuse-haystack integrates tracing capabilities into [Haystack](https://github.com/deepset-ai/haystack) pipelines using [Langfuse](https://langfuse.com/). This package enhances the visibility of pipeline runs by capturing comprehensive details of the execution traces, including API calls, context data, prompts, and more. Whether you're monitoring model performance, pinpointing areas for improvement, or creating datasets for fine-tuning and testing from your pipeline executions, langfuse-haystack is the right tool for you.
 
 ### Features
 

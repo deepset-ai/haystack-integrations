@@ -41,7 +41,7 @@ pip install weaviate-haystack
 
 ## Usage
 
-Once installed, initialize your Weaviate database to use it with Haystack 2.x.
+Once installed, initialize your Weaviate database to use it with Haystack.
 
 In this example, we use the temporary embedded version for simplicity.
 To use a self-hosted Docker container or Weaviate Cloud Service, take a look at the [docs](https://docs.haystack.deepset.ai/docs/weaviatedocumentstore).

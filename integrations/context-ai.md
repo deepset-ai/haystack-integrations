@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Context AI
-description: A component to log conversations for analytics by Context.ai - built for Haystack 2.0.
+description: A component to log conversations for analytics by Context.ai - built for Haystack.
 authors:
     - name: Alec Barber
       socials:

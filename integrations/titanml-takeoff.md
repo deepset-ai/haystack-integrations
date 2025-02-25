@@ -28,9 +28,9 @@ toc: true
 - [Example](#example)
 
 ## Overview
-You can use the Takeoff inference server to deploy local models efficiently in your Haystack 2.0 pipelines. Takeoff is a state-of-the art inference server focused on deploying openly available language models at scale. It can run LLMs on local machines with consumer GPUs, and on cloud infrastructure. 
+You can use the Takeoff inference server to deploy local models efficiently in your Haystack pipelines. Takeoff is a state-of-the art inference server focused on deploying openly available language models at scale. It can run LLMs on local machines with consumer GPUs, and on cloud infrastructure. 
 
-The TakeoffGenerator component in Haystack 2.0 is a wrapper around the Takeoff server API, and can be used to serve takeoff-deployed models efficiently in Haystack pipelines.
+The TakeoffGenerator component in Haystack is a wrapper around the Takeoff server API, and can be used to serve takeoff-deployed models efficiently in Haystack pipelines.
 
 ## Installation
 
