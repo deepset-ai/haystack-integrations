@@ -44,16 +44,16 @@ pip install google-ai-haystack
 
 Once installed, you will have access to various Haystack Generators:
 
-- [`GoogleAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminigenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-1.5-flash**', '**gemini-1.5-pro**' for text generation and multimodal prompts.
-- [`GoogleAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-1.5-flash**' and '**gemini-1.5-pro**' for text generatio and and function calling in chat completion setting.
+- [`GoogleAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminigenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**', '**gemini-1.5-flash**', '**gemini-1.5-pro**' for text generation and multimodal prompts.
+- [`GoogleAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**', '**gemini-1.5-flash**' and '**gemini-1.5-pro**' for text generation and and function calling in chat completion setting.
 
 To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` environment variable. If neither is set you won't be able to use the generators.
 
 To get an API key visit [Google AI Studio](https://aistudio.google.com/).
 
-**Text Generation with `gemini-pro`**
+**Text Generation with `gemini-1.5-pro`**
 
-To use Gemini model for text generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleAIGeminiGenerator` with `"gemini-pro"`:
+To use Gemini model for text generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleAIGeminiGenerator` with `"gemini-1.5-pro"`:
 
 ```python
 import os
@@ -61,7 +61,7 @@ from haystack_integrations.components.generators.google_ai import GoogleAIGemini
 
 os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro")
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-1.5-pro")
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
 print(result["replies"][0])
 ```
@@ -174,7 +174,7 @@ from haystack_integrations.components.generators.google_ai import GoogleAIGemini
 
 os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro")
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-1.5-pro")
 result = gemini_generator.run("Write a code for calculating fibonacci numbers in JavaScript")
 print(result["replies"][0])
 ```
