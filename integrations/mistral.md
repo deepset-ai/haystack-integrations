@@ -88,13 +88,16 @@ response = client.run(
 print(response)
 ```
 
-### Use a Mistral Embedding Models
+### Use a Mistral Embedding Model
 
 Use the `MistralDocumentEmbedder` in an indexing pipeline:
 
 ```python
 import os
 
+from haystack import Document, Pipeline
+from haystack.components.writers import DocumentWriter
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_integrations.components.embedders.mistral.document_embedder import MistralDocumentEmbedder
 
 os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
@@ -111,6 +114,8 @@ writer = DocumentWriter(document_store=document_store)
 indexing_pipeline = Pipeline()
 indexing_pipeline.add_component(name="embedder", instance=embedder)
 indexing_pipeline.add_component(name="writer", instance=writer)
+
+indexing_pipeline.connect("embedder", "writer")
 
 indexing_pipeline.run(data={"embedder": {"documents": documents}})
 ```
