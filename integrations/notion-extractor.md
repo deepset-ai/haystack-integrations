@@ -10,6 +10,7 @@ pypi: https://pypi.org/project/notion-haystack/
 repo: https://github.com/bogdankostic/notion-haystack
 type: Data Ingestion
 report_issue: https://github.com/bogdankostic/notion-haystack/issues
+version: Haystack 2.0
 logo: /logos/notion.png
 ---
 This Haystack component allows you to easily export your Notion pages to Haystack Documents by providing a Notion API token.
@@ -42,19 +43,27 @@ exported_pages = exporter.run(file_paths=["<list-of-page-ids>"])
 
 The following example shows how to use the `NotionExporter` inside an indexing pipeline:
 ```python
-from notion_haystack import NotionExporter
-from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack import Pipeline
 
+from notion_haystack import NotionExporter
+from haystack.components.preprocessors import DocumentSplitter
+from haystack.components.writers import DocumentWriter
+from haystack.document_stores import InMemoryDocumentStore
+
 document_store = InMemoryDocumentStore()
-exporter = NotionExporter(api_token="<your-token>")
+exporter = NotionExporter(api_token="YOUR_API_KEY")
+splitter = DocumentSplitter()
+writer = DocumentWriter(document_store=document_store)
 
 indexing_pipeline = Pipeline()
-indexing_pipeline.add_node(component=exporter, name="exporter", inputs=["File"])
-indexing_pipeline.add_node(component=document_store, name="document_store", inputs=["exporter"])
-indexing_pipeline.run(file_paths=["<list-of-page-ids>"])
+indexing_pipeline.add_component(instance=exporter, name="exporter")
+indexing_pipeline.add_component(instance=splitter, name="splitter")
+indexing_pipeline.add_component(instance=writer, name="writer")
 
-# The pages will now be indexed in the document store
+indexing_pipeline.connect("exporter.documents", "splitter.documents")
+indexing_pipeline.connect("splitter", "writer")
+
+indexing_pipeline.run(data={"exporter": {"page_ids": ["your_page_id"] }})
 ```
 
 The `NotionExporter` class takes the following arguments:
@@ -67,5 +76,5 @@ The `NotionExporter` class takes the following arguments:
                               useful for example to exclude pages that are archived. Defaults to `None`.
 
 The `NotionExporter.run` method takes the following arguments:
-- `file_paths`: A list of page ids to export. If `export_child_pages` is `True`, all child pages of these pages will be
+- `page_ids`: A list of page ids to export. If `export_child_pages` is `True`, all child pages of these pages will be
                 exported as well.
