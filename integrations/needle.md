@@ -12,7 +12,7 @@ repo: https://github.com/JANHMS/needle-haystack
 type: Document Store
 report_issue: https://github.com/JANHMS/needle-haystack/issues
 logo: /logos/needle.png
-version: Haystack 2.x
+version: Haystack 2.0
 ---
 
 # Needle RAG tools for Haystack

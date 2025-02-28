@@ -12,6 +12,7 @@ repo: https://github.com/traceloop/openllmetry
 type: Monitoring Tool
 report_issue: https://github.com/traceloop/openllmetry/issues
 logo: /logos/traceloop.png
+version: Haystack 2.0
 toc: true
 ---
 
@@ -55,29 +56,41 @@ If you have an account with Traceloop and would like to see your traces on your 
 ### Trace Haystack Pipelines
 
 Once you've initialized a Traceloop app, any Haystack pipeline that you run in the same environment will get logged in the dashboard provided by the generated Traceloop URL.
-For example, below is a simple Haystack pipeline and its traceloop logs:
+For example, below is a simple Haystack pipeline and its traceloop logs. It requires an OPENAI_API_KEY to be set. 
 
 ```python
-from haystack.nodes import PromptNode, PromptTemplate, AnswerParser
-from haystack.pipelines import Pipeline
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack import Pipeline
+
 from traceloop.sdk import Traceloop
 
 Traceloop.init(app_name="haystack_app")
 
-prompt = PromptTemplate(
-    prompt="Tell me a joke about {query}\n",
-    output_parser=AnswerParser(),
-)
+prompt_builder = ChatPromptBuilder()
+llm = OpenAIChatGenerator()
 
-prompt_node = PromptNode(
-    model_name_or_path="gpt-4",
-    api_key=api_key,
-    default_prompt_template=prompt,
-)
+location = "Berlin"
+messages = [ChatMessage.from_system("Always respond in German even if some input data is in other languages."),
+            ChatMessage.from_user("Tell me about {{location}}")]
 
-pipeline = Pipeline()
-pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Query"])
-result = pipeline.run("Haystack")
+pipe = Pipeline()
+pipe.add_component("prompt_builder", prompt_builder)
+pipe.add_component("llm", llm)
+pipe.connect("prompt_builder.prompt", "llm.messages")
+
+pipe.run(data={"prompt_builder": {"template_variables":{"location": location}, "template": messages}})
+```
+```bash
+>> {'llm': {'replies': [ChatMessage(content='Berlin ist die Hauptstadt Deutschlands und die größte Stadt des Landes.
+>> Es ist eine lebhafte Metropole, die für ihre Geschichte, Kultur und einzigartigen Sehenswürdigkeiten bekannt ist.
+>> Berlin bietet eine vielfältige Kulturszene, beeindruckende architektonische Meisterwerke wie den Berliner Dom
+>> und das Brandenburger Tor, sowie weltberühmte Museen wie das Pergamonmuseum. Die Stadt hat auch eine pulsierende
+>> Clubszene und ist für ihr aufregendes Nachtleben berühmt. Berlin ist ein Schmelztiegel verschiedener Kulturen und
+>> zieht jedes Jahr Millionen von Touristen an.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None,
+>> metadata={'model': 'gpt-4o-mini', 'index': 0, 'finish_reason': 'stop', 'usage': {'prompt_tokens': 32,
+>> 'completion_tokens': 153, 'total_tokens': 185}})]}}
 ```
 
 <img width="1798" alt="image" src="https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/traceloop-tracing.png">

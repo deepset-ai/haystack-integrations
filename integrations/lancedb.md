@@ -21,7 +21,7 @@ toc: true
 - [License](#license)
 
 ## Overview
-LanceDB-Haystack is an embedded [LanceDB](https://lancedb.github.io/lancedb/) backed Document Store for [Haystack 2.X](https://github.com/deepset-ai/haystack/).
+LanceDB-Haystack is an embedded [LanceDB](https://lancedb.github.io/lancedb/) backed Document Store for [Haystack](https://github.com/deepset-ai/haystack/).
 
 ## Installation
 

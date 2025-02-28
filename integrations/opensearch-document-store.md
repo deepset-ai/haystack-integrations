@@ -25,14 +25,11 @@ toc: true
 
 ### Table of Contents
 
-- [Haystack 2.0](#haystack-20)
-  - [Installation](#installation)
-  - [Usage](#usage)
-- [Haystack 1.x](#haystack-1x)
-  - [Installation (1.x)](#installation-1x)
-  - [Usage (1.x)](#usage-1x)
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
 
-## Haystack 2.0
+## Overview
 
 [![PyPI - Version](https://img.shields.io/pypi/v/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
@@ -47,7 +44,7 @@ Use `pip` to install OpenSearch:
 pip install opensearch-haystack
 ```
 ## Usage
-Once installed, initialize your OpenSearch database to use it with Haystack 2.0:
+Once installed, initialize your OpenSearch database to use it with Haystack:
 
 ```python
 from haystack_integrations.document_stores.opensearch import OpenSearchDocumentStore
@@ -72,70 +69,3 @@ indexing.run({"converter": {"paths": file_paths}})
 ### License
 
 `opensearch-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
-
-## Haystack 1.x
-You can use [OpenSearch](https://opensearch.org/docs/latest/#docker-quickstart) in your Haystack pipelines with the [OpenSearchDocumentStore](https://docs.haystack.deepset.ai/v1.25/docs/document_store#initialization)
-
-For a detailed overview of all the available methods and settings for the `OpenSearchDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#opensearchdocumentstore)
-
-## Installation (1.x)
-
-```bash
-pip install farm-haystack[opensearch]
-```
-
-## Usage (1.x)
-
-Once installed and running, you can start using OpenSearch with Haystack by initializing it: 
-
-```python
-from haystack.document_stores import OpenSearchDocumentStore
-
-document_store = OpenSearchDocumentStore()
-```
-
-### Writing Documents to OpenSearchDocumentStore
-
-To write documents to your `OpenSearchDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [FileConverters](https://docs.haystack.deepset.ai/v1.25/docs/file_converters) and [PreProcessors](https://docs.haystack.deepset.ai/v1.25/docs/preprocessor), as well as other [Integrations](/integrations) that might help you fetch data from other resources.
-
-#### Indexing Pipeline
-
-```python
-from haystack import Pipeline
-from haystack.document_stores import OpenSearchDocumentStore
-from haystack.nodes import PDFToTextConverter, PreProcessor
-
-document_store = OpenSearchDocumentStore()
-converter = PDFToTextConverter()
-preprocessor = PreProcessor()
-
-indexing_pipeline = Pipeline()
-indexing_pipeline.add_node(component=converter, name="PDFConverter", inputs=["File"])
-indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=["PDFConverter"])
-indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["PreProcessor"])
-
-indexing_pipeline.run(file_paths=["filename.pdf"])
-```
-
-### Using OpenSearch in a Query Pipeline
-
-Once you have documents in your `OpenSearchDocumentStore`, it's ready to be used in any Haystack pipeline. For example, below is a pipeline that makes use of the ["deepset/question-generation"](https://prompthub.deepset.ai/?prompt=deepset%2Fquestion-generation) prompt that is designed to generate questions for the retrieved documents. If our `OpenSearchDocumentStore` had documents about food in it, you could generate questions about "Pizzas" in the following way:
-
-```python
-from haystack import Pipeline
-from haystack.document_stores import OpenSearchDocumentStore
-from haystack.nodes import BM25Retriever, PromptNode
-
-document_store = OpenSearchDocumentStore()
-retriever = BM25Retriever(document_sotre = document_store)
-prompt_node = PromptNode(model_name_or_path = "gpt-4",
-                         api_key = "YOUR_OPENAI_KEY",
-                         default_prompt_template = "deepset/question-generation")
-
-query_pipeline = Pipeline()
-query_pipeline.add_node(component=retriever, name="Retriever", inputs=["Query"])
-query_pipeline.add_node(component=prompt_node, name="PromptNode", inputs=["Retriever"])
-
-query_pipeline.run(query = "Pizzas")
-```

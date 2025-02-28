@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Marqo
-description: A Document Store for storing and retrieval from Marqo - built for Haystack 2.0
+description: A Document Store for storing and retrieval from Marqo
 authors:
   - name: marqo-ai
     socials:
@@ -22,7 +22,7 @@ toc: true
 
 ## Overview
 
-This integration allows you to use [Marqo DB](https://www.marqo.ai/) as the document store for your Haystack pipelines. This page provides simple instructions on how to start it up and how to initialize a `MarqoDocumentStore` that can be used in any Haystack 2.0 pipeline.
+This integration allows you to use [Marqo DB](https://www.marqo.ai/) as the document store for your Haystack pipelines. This page provides simple instructions on how to start it up and how to initialize a `MarqoDocumentStore` that can be used in any Haystack pipeline.
 
 ## Installation
 
@@ -31,7 +31,7 @@ pip install marqo-haystack
 ```
 ## Usage
 
-Once installed, you can start using your Marqo database with Haystack 2.0. The `MarqoDocumentStore` is compatible with the open-source Marqo Docker container and with the Marqo managed cloud offering.
+Once installed, you can start using your Marqo database with Haystack. The `MarqoDocumentStore` is compatible with the open-source Marqo Docker container and with the Marqo managed cloud offering.
 
 ### Getting Started Locally with the Marqo Docker Container
 

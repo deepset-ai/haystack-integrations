@@ -29,7 +29,7 @@ toc: true
 
 
 ## Overview
-Component for the Haystack (2.x) LLM framework to convert files and directories into Documents using the Unstructured API.
+Component for the Haystack LLM framework to convert files and directories into Documents using the Unstructured API.
 
 **[Unstructured](https://unstructured-io.github.io/unstructured/index.html)** provides ETL tools for LLMs, extracting text and other information from various file formats. See [supported file types](https://docs.unstructured.io/api-reference/api-services/overview#supported-file-types) for more details.
 

@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: INSTRUCTOR Embedders
-description: A component for computing embeddings using INSTRUCTOR embedding models - built for Haystack 2.0.
+description: A component for computing embeddings using INSTRUCTOR embedding models.
 authors:
     - name: Ashwin Mathur
       socials:
@@ -24,7 +24,7 @@ version: Haystack 2.0
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instructor-embedders-haystack.svg)](https://pypi.org/project/instructor-embedders-haystack)
 
 
-This custom component for Haystack 2.0 can be used to create embeddings using the [INSTRUCTOR Embedding Models](https://instructor-embedding.github.io/). 
+This custom component for Haystack can be used to create embeddings using the [INSTRUCTOR Embedding Models](https://instructor-embedding.github.io/). 
 
 
 **INSTRUCTOR** is an instruction-finetuned text embedding model that can generate text embeddings tailored to any task (e.g., classification, retrieval, clustering, text evaluation, etc.) and domains (e.g., science, finance, etc.) ***by simply providing the task instruction, without any finetuning***. INSTRUCTOR achieves SOTA on 70 diverse embedding tasks ([MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard)). For more details, check out [the paper](https://arxiv.org/abs/2212.09741) and [project page](https://instructor-embedding.github.io/). The model checkpoints can be found on [HuggingFace](https://huggingface.co/hkunlp?search_models=instructor).
