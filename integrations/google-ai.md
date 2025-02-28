@@ -7,7 +7,7 @@ authors:
     socials:
       github: deepset-ai
       twitter: deepset_ai
-      linkedin: deepset-ai
+      linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/google-ai-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/google_ai
 type: Model Provider
@@ -22,13 +22,13 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Multimodality with `gemini-pro-vision`](#multimodality-with-gemini-pro-vision)
+  - [Multimodality with `gemini-1.5-flash`](#multimodality-with-gemini-1.5-flash)
   - [Function calling](#function-calling)
   - [Code generation](#code-generation)
 
 ## Overview
 
-[Google AI](https://ai.google.dev/) is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. This integration enables the usage of Google generative models via their Makersuite REST API.
+[Google AI](https://ai.google.dev/) is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. This integration enables the usage of Google generative models via Google AI Studio.
 
 Haystack supports all the available [multimodal Gemini models](https://ai.google.dev/models/gemini) for tasks such as **text generation**, **function calling**, **visual question answering**, **code generation**, and **image captioning**.
 
@@ -44,12 +44,12 @@ pip install google-ai-haystack
 
 Once installed, you will have access to various Haystack Generators:
 
-- [`GoogleAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminigenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-pro-vision**', '**gemini-ultra**' for text generation and multimodal prompts.
-- [`GoogleAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-pro-vision**' and '**gemini-ultra**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [`GoogleAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminigenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-1.5-flash**', '**gemini-1.5-pro**' for text generation and multimodal prompts.
+- [`GoogleAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/googleaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**', '**gemini-1.5-flash**' and '**gemini-1.5-pro**' for text generatio and and function calling in chat completion setting.
 
 To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` environment variable. If neither is set you won't be able to use the generators.
 
-To get an API key visit [Google Makersuite](https://makersuite.google.com).
+To get an API key visit [Google AI Studio](https://aistudio.google.com/).
 
 **Text Generation with `gemini-pro`**
 
@@ -72,9 +72,9 @@ Output:
 Assemblage in art refers to the creation of a three-dimensional artwork by combining various found objects...
 ```
 
-### Multimodality with `gemini-pro-vision`
+### Multimodality with `gemini-1.5-flash`
 
-To use `gemini-pro-vision` model for visual question answering, initialize a `GoogleAIGeminiGenerator` with `"gemini-pro-vision"` and `project_id`. Then, run it with the images as well as the prompt:
+To use `gemini-1.5-flash` model for visual question answering, initialize a `GoogleAIGeminiGenerator` with `"gemini-1.5-flash"` and `project_id`. Then, run it with the images as well as the prompt:
 
 ```python
 import requests
@@ -101,7 +101,7 @@ images = [
 
 os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
-gemini_generator = GoogleAIGeminiGenerator(model="gemini-pro-vision")
+gemini_generator = GoogleAIGeminiGenerator(model="gemini-1.5-flash")
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
 for answer in result["replies"]:
     print(answer)
@@ -121,60 +121,47 @@ The fourth image is of Marvin from the 1977 film The Hitchhiker's Guide to the G
 When chatting with Gemini we can also use function calls.
 
 ```python
-import os
-from google.ai.generativelanguage import FunctionDeclaration, Tool
-from haystack.dataclasses import ChatMessage
+from typing import Annotated
+from haystack.utils import Secret
+from haystack.dataclasses.chat_message import ChatMessage
+from haystack.components.tools import ToolInvoker
+from haystack.tools import create_tool_from_function
 
 from haystack_integrations.components.generators.google_ai import GoogleAIGeminiChatGenerator
 
-# Define a function that return always some nice weather
-def get_current_weather(location: str, unit: str = "celsius"):
-    return {"weather": "sunny", "temperature": 21.8, "unit": unit}
 
-# Class that defines the arguments of a function so Gemini
-# knows how it should be called
-get_current_weather_func = FunctionDeclaration(
-    name="get_current_weather",
-    description="Get the current weather in a given location",
-    parameters={
-        "type_": "OBJECT",
-        "properties": {
-            "location": {"type_": "STRING", "description": "The city and state, e.g. San Francisco, CA"},
-            "unit": {
-                "type_": "STRING",
-                "enum": [
-                    "celsius",
-                    "fahrenheit",
-                ],
-            },
-        },
-        "required": ["location"],
-    },
+# example function to get the current weather
+def get_current_weather(
+    location: Annotated[str, "The city for which to get the weather, e.g. 'San Francisco'"] = "Munich",
+    unit: Annotated[str, "The unit for the temperature, e.g. 'celsius'"] = "celsius",
+) -> str:
+    return f"The weather in {location} is sunny. The temperature is 20 {unit}."
+
+tool = create_tool_from_function(get_current_weather)
+tool_invoker = ToolInvoker(tools=[tool])
+
+gemini_chat = GoogleAIGeminiChatGenerator(
+    model="gemini-2.0-flash-exp",
+    api_key=Secret.from_token("<MY_API_KEY>"),
+    tools=[tool],
 )
-tool = Tool(function_declarations=[get_current_weather_func])
+user_message = [ChatMessage.from_user("What is the temperature in celsius in Berlin?")]
+replies = gemini_chat.run(messages=user_message)["replies"]
+print(replies[0].tool_calls)
 
-os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+# actually invoke the tool
+tool_messages = tool_invoker.run(messages=replies)["tool_messages"]
+messages = user_message + replies + tool_messages
 
-gemini_chat = GoogleAIGeminiChatGenerator(model="gemini-pro", tools=[tool])
-
-messages = [
-    ChatMessage.from_user(content="What is the temperature in celsius in Berlin?")
-]
-res = gemini_chat.run(messages=messages)
-weather = get_current_weather(**res["replies"][0].content)
-
-messages += res["replies"] + [
-    ChatMessage.from_function(content=weather, name="get_current_weather")
-]
-
-res = gemini_chat.run(messages=messages)
-print(res["replies"][0].content)
+# transform the tool call result into a human readable message
+final_replies = gemini_chat.run(messages=messages)["replies"]
+print(final_replies[0].text)
 ```
 
 Will output:
 
 ```
-In Berlin, the weather is sunny with a temperature of 21.8 degrees Celsius.
+In Berlin, the weather is sunny with a temperature of 20 degrees Celsius.
 ```
 
 ### Code generation

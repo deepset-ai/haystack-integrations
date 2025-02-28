@@ -7,7 +7,7 @@ authors:
     socials:
       github: awinml
       twitter: awinml
-      linkedin: ashwin-mathur-ds
+      linkedin: https://www.linkedin.com/in/ashwin-mathur-ds
 pypi: https://pypi.org/project/llama-cpp-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/llama_cpp
 type: Model Provider
@@ -191,7 +191,7 @@ from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 from haystack.components.retrievers import InMemoryEmbeddingRetriever
 from haystack.components.writers import DocumentWriter
-from haystack.document_stores import InMemoryDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 
 # Import LlamaCppGenerator
 from haystack_integrations.components.generators.llama_cpp import LlamaCppGenerator

@@ -14,7 +14,7 @@ authors:
       socials:
         github: deepset-ai
         twitter: deepset_ai
-        linkedin: deepset-ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/ollama-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/ollama
 type: Model Provider
@@ -107,7 +107,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OllamaGenerator(model="orca-mini", url="http://localhost:11434/api/generate"))
+pipe.add_component("llm", OllamaGenerator(model="orca-mini", url="http://localhost:11434"))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 
@@ -140,11 +140,11 @@ messages = [
     ),
     ChatMessage.from_user("How do I get started?"),
 ]
-client = OllamaChatGenerator(model="orca-mini", timeout=45, url="http://localhost:11434/api/chat")
+client = OllamaChatGenerator(model="orca-mini", timeout=45, url="http://localhost:11434")
 
 response = client.run(messages, generation_kwargs={"temperature": 0.2})
 
-print(response["replies"][0].content)
+print(response["replies"][0].text)
 
 ```
 You should receive an output like (output is not deterministic):

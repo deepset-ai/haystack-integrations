@@ -8,7 +8,7 @@ authors:
       socials:
         github: deepset-ai
         twitter: haystack_ai
-        linkedin: deepset-ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/langfuse-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/langfuse
 type: Monitoring Tool

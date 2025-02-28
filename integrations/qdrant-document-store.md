@@ -7,7 +7,7 @@ authors:
     socials:
       github: deepset-ai
       twitter: deepset_ai
-      linkedin: deepset-ai
+      linkedin: https://www.linkedin.com/company/deepset-ai/
   - name: Qdrant
     socials:
       github: qdrant
@@ -142,7 +142,7 @@ from haystack.utils import Secret
 document_store = QdrantDocumentStore(
     url="https://YOUR-CLUSTER-URL.aws.cloud.qdrant.io",
     index="Document",
-    api_key=Secret.from_env("QDRANT_API_KEY"),
+    api_key=Secret.from_env_var("QDRANT_API_KEY"),
     embedding_dim=512,
     recreate_index=True,
 )

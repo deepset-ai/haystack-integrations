@@ -7,7 +7,7 @@ authors:
       socials:
         github: deepset-ai
         twitter: deepset_ai
-        linkedin: deepset-ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/haystack-ai
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
@@ -105,7 +105,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=docstore))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"))
+pipe.add_component("llm", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY")))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 
