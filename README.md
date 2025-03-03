@@ -8,11 +8,6 @@ These integrations are maintained by their respective owner or authors. You can 
 
 Haystack Integrations are a Document Store, Model Provider, Custom Component, Monitoring Tool or Evaluation Framework that are either external packages or additional technologies that can be used with Haystack. Some integrations may be maintained by the deepset team, others are community contributions owned by the authors of the integration. Read more about Haystack Integrations in [Introduction to Integrations](https://docs.haystack.deepset.ai/docs/integrations).
 
-## Looking for prompts?
-
-Prompts for the `PromptNode` and `Agent` can be found on our [Prompt Hub](https://prompthub.deepset.ai).
-To contribute a prompt, follow instructions in the [`prompthub`](https://github.com/deepset-ai/prompthub) repo.
-
 ## How to contribute
 To contribute, create a PR add an `.md` file to the `integrations/` directory.
 👉 You can start off with the [draft integration page](https://github.com/deepset-ai/haystack-integrations/blob/main/draft-integration.md)
