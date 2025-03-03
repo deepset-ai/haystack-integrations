@@ -128,7 +128,7 @@ response = pipeline.run({"text_embedder": {"text": question}, "prompt_builder": 
 
 Once you've run these code samples, you can also [use the Langfuse dashboard to see and interact with traces](https://langfuse.com/docs/demo).
 
-### Use `LangfuseConnector` in a RAG pipeline:
+### Use `LangfuseConnector` in a pipeline with `OpenAIChatGenerator` and `ChatPromptBuilder`:
 
 ```python
 from haystack import Pipeline
