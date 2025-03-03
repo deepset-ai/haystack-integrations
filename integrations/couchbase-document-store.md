@@ -119,6 +119,7 @@ Once you have the package installed and the database running, you can start usin
 
 ```python
 from couchbase_haystack import CouchbaseSearchDocumentStore, CouchbasePasswordAuthenticator
+from haystack.utils.auth import Secret
 
 document_store = CouchbaseSearchDocumentStore(
     cluster_connection_string=Secret.from_env_var("CB_CONNECTION_STRING"),
@@ -216,7 +217,7 @@ from haystack import Document
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.writers import DocumentWriter
 from haystack.pipeline import Pipeline
-
+from haystack.utils.auth import Secret
 from couchbase_haystack import CouchbaseSearchDocumentStore, CouchbasePasswordAuthenticator
 
 documents = [Document(content="This is document 1"), Document(content="This is document 2")]
@@ -257,7 +258,7 @@ from typing import List
 
 from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
-
+from haystack.utils.auth import Secret
 from couchbase_haystack.document_store import CouchbaseSearchDocumentStore, CouchbasePasswordAuthenticator
 from couchbase_haystack.component.retriever import CouchbaseSearchEmbeddingRetriever
 
