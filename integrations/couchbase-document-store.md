@@ -72,7 +72,7 @@ In the above diagram:
 
 - **Data service**: Supports the storing, setting, and retrieving of documents, specified by key. Basically where the documents are stored in key value.
 - **Properties**: Document [attributes](https://docs.haystack.deepset.ai/docs/data-classes#document) stored as part of the Document.
-- **Embedding**: Is also a property of the Document (just shown separately in the diagram for clarity) which is a vector of type `LIST[FLOAT]`.
+- **Embedding**: Property of the Document (just shown separately in the diagram for clarity) which is a vector of type `LIST[FLOAT]`.
 - **Search service**: Where indexes specially purposed for Full Text Search and Vector search are created. The Search Service allows for efficient querying and retrieval based on both text content and vector embeddings.
 
 `CouchbaseSearchDocumentStore` requires the vector index to be created manually either by SDK or UI. Before writing documents, you should make sure Documents are embedded by one of the provided [embedders](https://docs.haystack.deepset.ai/v2.0/docs/embedders). For example, [SentenceTransformersDocumentEmbedder](https://docs.haystack.deepset.ai/v2.0/docs/sentencetransformersdocumentembedder) can be used in the indexing pipeline to calculate document embeddings before writing those to Couchbase.
