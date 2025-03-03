@@ -36,7 +36,7 @@ from couchbase_haystack import CouchbaseSearchDocumentStore
 
 In addition to the `CouchbaseSearchDocumentStore`, the library includes the following Haystack components which can be used in a pipeline:
 
-- **CouchbaseSearchEmbeddingRetriever**: A typical [retriever component](https://docs.haystack.deepset.ai/v2.0/docs/retrievers) which can be used to query the vector store index and find related Documents. The component uses `CouchbaseSearchDocumentStore` to query embeddings.
+- **CouchbaseSearchEmbeddingRetriever**: A typical [retriever component](https://docs.haystack.deepset.ai/docs/retrievers) which can be used to query the vector store index and find related Documents. The component uses `CouchbaseSearchDocumentStore` to query embeddings.
 
 The `couchbase-haystack` library uses [Python Driver](https://docs.couchbase.com/python-sdk/current/hello-world/start-using-sdk.html).
 
