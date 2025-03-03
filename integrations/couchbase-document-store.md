@@ -316,7 +316,7 @@ documents: List[Document] = result["retriever"]["documents"]
 You can find more examples in the implementation [repository](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples):
 
 - [indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/indexing_pipeline.py) - Indexing text files (documents) from a remote HTTP location.
-- [rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/rag_pipeline.py) - Generative question answering RAG pipeline using `CouchbaseSearchEmbeddingRetriever` to fetch documents from Couchbase document store and answer questions using [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator).
+- [rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/rag_pipeline.py) - Generative question answering RAG pipeline using `CouchbaseSearchEmbeddingRetriever` to fetch documents from Couchbase document store and answer questions using [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgigenerator).
 
 ## License
 
