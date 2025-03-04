@@ -37,7 +37,7 @@ pip install weights_biases-haystack
 ## Usage
 
 ### Components
-This integration introduces one new component, a connector named `WeaveConnector` which only responsibility is to send
+This integration introduces one new component, a connector named `WeaveConnector` whose only responsibility is to send
 traces to Weights & Biases.
 
 Note that you need to have the `WANDB_API_KEY` environment variable set to your Weights & Biases API key.
