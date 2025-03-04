@@ -48,7 +48,7 @@ be stored in ~/.netrc
 In addition, you need to set the `HAYSTACK_CONTENT_TRACING_ENABLED` environment variable to `true` in order to
 enable Haystack tracing in your pipeline.
 
-To use this connector simply add it to your pipeline without any connections, and it will automatically start
+To use this connector, simply add it to your pipeline without any connections, and it will automatically start
 sending traces to Weights & Biases.
 
 
