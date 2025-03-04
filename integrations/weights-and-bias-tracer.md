@@ -63,9 +63,15 @@ from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.connectors import WeaveConnector
 
 os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
+messages = [
+    ChatMessage.from_system(
+        "Always respond in German even if some input data is in other languages."
+    ),
+    ChatMessage.from_user("Tell me about {{location}}"),
+]
 
 pipe = Pipeline()
-pipe.add_component("prompt_builder", ChatPromptBuilder())
+pipe.add_component("prompt_builder", ChatPromptBuilder(template=messages))
 pipe.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 pipe.connect("prompt_builder.prompt", "llm.messages")
 
