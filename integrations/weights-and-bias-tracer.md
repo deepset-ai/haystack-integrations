@@ -78,18 +78,10 @@ pipe.connect("prompt_builder.prompt", "llm.messages")
 connector = WeaveConnector(pipeline_name="test_pipeline")
 pipe.add_component("weave", connector)
 
-messages = [
-    ChatMessage.from_system(
-        "Always respond in German even if some input data is in other languages."
-    ),
-    ChatMessage.from_user("Tell me about {{location}}"),
-]
-
 response = pipe.run(
     data={
         "prompt_builder": {
-            "template_variables": {"location": "Berlin"},
-            "template": messages,
+            "location": "Berlin"
         }
     }
 )
