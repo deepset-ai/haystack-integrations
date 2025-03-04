@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/weights_biases-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weights_biases
-type: Tracer
+type: Monitoring Tool
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/weighs_and_bias.png
 version: Haystack 2.0
