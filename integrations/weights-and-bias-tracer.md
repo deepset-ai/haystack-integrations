@@ -42,7 +42,7 @@ traces to Weights & Biases.
 
 Note that you need to have the `WANDB_API_KEY` environment variable set to your Weights & Biases API key.
 
-NOTE: If you don't have a Weights & Biases account it will interactively ask you to set one and your input will then 
+NOTE: If you don't have a Weights & Biases account, it will interactively ask you to set one and your input will then 
 be stored in ~/.netrc
 
 In addition, you need to set the `HAYSTACK_CONTENT_TRACING_ENABLED` environment variable to `true` in order to
