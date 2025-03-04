@@ -90,6 +90,10 @@ response = pipe.run(
 print(response["llm"]["replies"][0])
 ```
 
+You should then head to `https://wandb.ai/<user_name>/projects` and see the complete trace for your pipeline under
+the pipeline name you specified, when creating the `WeaveConnector`.
+
+
 ### License
 
 Info about your integration license
