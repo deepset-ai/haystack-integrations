@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/weights_biases-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weights_biases
 type: Tracer
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/weighs_biases.jpeg
+logo: /logos/weighs_and_bias.png
 version: Haystack 2.0
 toc: true
 ---
