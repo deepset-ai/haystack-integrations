@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Weights & Biases Weave Tracer
-description: A connector that sends haystack traces to Weights & Biases for monitoring and visualization
+description: Send Haystack traces to Weights & Biases for monitoring and visualization
 authors:
     - name: deepset
       socials:
