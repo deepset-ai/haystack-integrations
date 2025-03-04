@@ -66,7 +66,7 @@ os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
 
 pipe = Pipeline()
 pipe.add_component("prompt_builder", ChatPromptBuilder())
-pipe.add_component("llm", OpenAIChatGenerator(model="gpt-3.5-turbo"))
+pipe.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 pipe.connect("prompt_builder.prompt", "llm.messages")
 
 connector = WeaveConnector(pipeline_name="test_pipeline")
