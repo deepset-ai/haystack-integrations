@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/weights_biases-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weights_biases
 type: Monitoring Tool
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/weighs_and_bias.png
+logo: /logos/weights_and_bias.png
 version: Haystack 2.0
 toc: true
 ---
@@ -24,10 +24,9 @@ toc: true
 
 ## Overview
 
-This integration allows you to use Weights & Biases Weave framework for tracing and monitoring Haystack pipeline 
+This integration allows you to use [Weights & Biases Weave framework](https://wandb.ai/site/weave/) for tracing and monitoring Haystack pipeline 
 components. It provides a connector that sends Haystack traces to Weights & Biases for monitoring and visualization.
  
-
 ## Installation
 
 ```bash
@@ -37,7 +36,7 @@ pip install weights_biases-haystack
 ## Usage
 
 ### Components
-This integration introduces one new component, a connector named `WeaveConnector` whose only responsibility is to send
+This integration introduces one new component, a connector named [`WeaveConnector`](https://docs.haystack.deepset.ai/docs/weaveconnector) whose only responsibility is to send
 traces to Weights & Biases.
 
 Note that you need to have the `WANDB_API_KEY` environment variable set to your Weights & Biases API key.
@@ -91,7 +90,6 @@ print(response["llm"]["replies"][0])
 You should then head to `https://wandb.ai/<user_name>/projects` and see the complete trace for your pipeline under
 the pipeline name you specified, when creating the `WeaveConnector`.
 
-
 ### License
 
-Info about your integration license
+`weights_biases-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
