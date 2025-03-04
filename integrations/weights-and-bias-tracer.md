@@ -25,7 +25,7 @@ toc: true
 ## Overview
 
 This integration allows you to use Weights & Biases Weave framework for tracing and monitoring Haystack pipeline 
-components. It provides a connector that sends haystack traces to Weights & Biases for monitoring and visualization.
+components. It provides a connector that sends Haystack traces to Weights & Biases for monitoring and visualization.
  
 
 ## Installation
