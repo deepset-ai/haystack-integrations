@@ -52,7 +52,7 @@ document_store = QdrantDocumentStore(
     url="localhost",
     index="Document",
     embedding_dim=512,
-    recreate_index=True,
+    recreate_index=False,
     hnsw_config={"m": 16, "ef_construct": 64}  # Optional
 )
 ```
@@ -82,7 +82,7 @@ document_store = QdrantDocumentStore(
     ":memory:",
     index="Document",
     embedding_dim=512,
-    recreate_index=True,
+    recreate_index=False,
     hnsw_config={"m": 16, "ef_construct": 64}  # Optional
 )
 ```
@@ -100,7 +100,7 @@ document_store = QdrantDocumentStore(
     path="/home/qdrant/storage_local",
     index="Document",
     embedding_dim=512,
-    recreate_index=True,
+    recreate_index=False,
     hnsw_config={"m": 16, "ef_construct": 64}  # Optional
 )
 ```
@@ -119,7 +119,7 @@ document_store = QdrantDocumentStore(
     index="Document",
     api_key=Secret.from_env_var("QDRANT_API_KEY"),
     embedding_dim=512,
-    recreate_index=True,
+    recreate_index=False,
 )
 ```
 
