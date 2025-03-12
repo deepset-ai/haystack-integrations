@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: mcp
-description: Integration for the Model Context Protocol (MCP) - a standardized way for applications to provide context to LLMs.
+description: Haystack Tool Integration with the Model Context Protocol (MCP)
 
 authors:
     - name: deepset
