@@ -1,7 +1,7 @@
 ---
 layout: integration
-name: mcp
-description: Haystack Tool Integration with the Model Context Protocol (MCP)
+name: Model Context Protocol - MCP
+description: Haystack Tool Integration with the MCP
 
 authors:
     - name: deepset
@@ -142,14 +142,19 @@ result = pipeline.run({"llm": {"messages": [user_input_msg]}, "adapter": {"initi
 print(result["response_llm"]["replies"][0].text)
 
 ```
+Whe you run:
+```bash
+python examples/time_pipeline.py
+```
+
 The output will be something similar to:
 ## The current time in New York is 1:57 PM.
 
-This example creates a pipeline that:
+In a nutshell, this example creates a pipeline that:
 
 1. Takes a user query about the current time in a city
 2. Uses an LLM (GPT-4o-mini) to interpret the query and decide which tool to use
-3. Invokes the time tool with the appropriate parameters (using uvx behind the scenes)
+3. Invokes the MCP time tool with the appropriate parameters (using uvx behind the scenes)
 4. Sends the tool's response back to the LLM to generate a final answer
 
 This demonstrates how MCPTool can be seamlessly integrated into Haystack's agentic architecture, allowing LLMs to use external tools via the Model Context Protocol.
