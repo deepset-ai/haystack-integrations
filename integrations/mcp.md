@@ -63,7 +63,7 @@ This example demonstrates how to create a simple calculator server using MCP and
 
 **Step 1: Run the MCP Server**
 
-First, run the server that exposes calculator functionality (addition and subtraction) via MCP:
+First, run the [server](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/mcp/examples/mcp_sse_server.py) that exposes calculator functionality (addition and subtraction) via MCP:
 
 ```bash
 python examples/mcp_sse_server.py
@@ -78,7 +78,7 @@ The server runs on http://localhost:8000 by default.
 
 **Step 2: Connect with the MCP Client**
 
-In a separate terminal, run the client that connects to the calculator server:
+In a separate terminal, run the [client](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/mcp/examples/mcp_sse_client.py) that connects to the calculator server:
 
 ```bash
 python examples/mcp_sse_client.py
@@ -88,7 +88,7 @@ The client creates MCPTool instances that connect to the server, inspect the too
 
 ### Example 2: MCP with StdIO Transport
 
-This example shows how to use MCPTool with stdio transport to execute a local program directly:
+This [example](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/mcp/examples/mcp_stdio_client.py) shows how to use MCPTool with stdio transport to execute a local program directly:
 
 ```bash
 python examples/mcp_stdio_client.py
@@ -100,11 +100,50 @@ This demonstrates how MCPTool can work with local programs without running a sep
 
 ### Example 3: MCPTool in a Haystack Pipeline
 
-This example showcases how to integrate MCPTool into a Haystack pipeline along with an LLM:
+This [example](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/mcp/examples/time_pipeline.py) showcases how to integrate MCPTool into a Haystack pipeline along with an LLM:
 
-```bash
-python examples/time_pipeline.py
+
+
+```python
+from haystack import Pipeline
+from haystack.components.converters import OutputAdapter
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.components.tools import ToolInvoker
+from haystack.dataclasses import ChatMessage
+
+from haystack_integrations.tools.mcp.mcp_tool import MCPTool, StdioServerInfo
+
+time_tool = MCPTool(
+    name="get_current_time",
+    server_info=StdioServerInfo(command="uvx", args=["mcp-server-time", "--local-timezone=Europe/Berlin"]),
+)
+pipeline = Pipeline()
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini", tools=[time_tool]))
+pipeline.add_component("tool_invoker", ToolInvoker(tools=[time_tool]))
+pipeline.add_component(
+    "adapter",
+    OutputAdapter(
+        template="{{ initial_msg + initial_tool_messages + tool_messages }}",
+        output_type=list[ChatMessage],
+        unsafe=True,
+    ),
+)
+pipeline.add_component("response_llm", OpenAIChatGenerator(model="gpt-4o-mini"))
+pipeline.connect("llm.replies", "tool_invoker.messages")
+pipeline.connect("llm.replies", "adapter.initial_tool_messages")
+pipeline.connect("tool_invoker.tool_messages", "adapter.tool_messages")
+pipeline.connect("adapter.output", "response_llm.messages")
+
+user_input = "What is the time in New York? Be brief."  # can be any city
+user_input_msg = ChatMessage.from_user(text=user_input)
+
+result = pipeline.run({"llm": {"messages": [user_input_msg]}, "adapter": {"initial_msg": [user_input_msg]}})
+
+print(result["response_llm"]["replies"][0].text)
+
 ```
+The output will be something similar to:
+## The current time in New York is 1:57 PM.
 
 This example creates a pipeline that:
 
