@@ -172,8 +172,6 @@ rag_pipeline.connect("retriever", "prompt_builder")
 rag_pipeline.connect("prompt_builder.prompt", "llm.messages")
 rag_pipeline.connect("llm.replies", "answer_builder.replies")
 rag_pipeline.connect("retriever", "answer_builder.documents")
-rag_pipeline.connect("llm.replies", "answer_builder.replies")
-rag_pipeline.connect("retriever", "answer_builder.documents")
 rag_pipeline.connect("retriever", "ragas_evaluator.documents")
 rag_pipeline.connect("llm.replies", "ragas_evaluator.response")
 ```
