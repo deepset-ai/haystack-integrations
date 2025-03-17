@@ -2,7 +2,6 @@
 layout: integration
 name: Model Context Protocol - MCP
 description: Haystack Tool Integration with the MCP
-
 authors:
     - name: deepset
       socials:
@@ -142,13 +141,13 @@ result = pipeline.run({"llm": {"messages": [user_input_msg]}, "adapter": {"initi
 print(result["response_llm"]["replies"][0].text)
 
 ```
-Whe you run:
+When you run:
 ```bash
 python examples/time_pipeline.py
 ```
 
 The output will be something similar to:
-## The current time in New York is 1:57 PM.
+```## The current time in New York is 1:57 PM.```
 
 In a nutshell, this example creates a pipeline that:
 
