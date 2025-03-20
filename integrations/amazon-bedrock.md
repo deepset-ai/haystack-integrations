@@ -22,8 +22,6 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-    - [AmazonBedrockGenerator](#amazonbedrockgenerator)
-    - [AmazonBedrockChatGenerator](#amazonbedrockchatgenerator)
 
 ## Overview
 
