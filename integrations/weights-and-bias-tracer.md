@@ -8,8 +8,8 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/weights_biases-haystack/
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weights_biases
+pypi: https://pypi.org/project/weave-haystack/
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/weights_and_biases_weave
 type: Monitoring Tool
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/weights_and_bias.png
@@ -30,7 +30,7 @@ components. It provides a connector that sends Haystack traces to Weights & Bias
 ## Installation
 
 ```bash
-pip install weights_biases-haystack
+pip install weave-haystack
 ```
 
 ## Usage
