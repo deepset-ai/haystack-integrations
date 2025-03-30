@@ -38,7 +38,7 @@ pip install mcp-haystack
 ## Usage
 
 ```python
-from haystack_integrations.components.tools.mcp import MCPTool, SSEServerInfo
+from haystack_integrations.tools.mcp import MCPTool, SSEServerInfo
 
 # Create an MCP tool that connects to an HTTP server
 server_info = SSEServerInfo(base_url="http://localhost:8000")
@@ -110,7 +110,7 @@ from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.tools import ToolInvoker
 from haystack.dataclasses import ChatMessage
 
-from haystack_integrations.tools.mcp.mcp_tool import MCPTool, StdioServerInfo
+from haystack_integrations.tools.mcp import MCPTool, StdioServerInfo
 
 time_tool = MCPTool(
     name="get_current_time",
