@@ -79,4 +79,4 @@ result = pipe.run(data={"fetcher": {"urls": ["https://example.com"]}})
 - `urls` Required. A list of URLs to fetch.
 - `text_content` Retrieve only text content. Default is `False`.
 - `session_id` Optional. Provide an existing Session ID.
-- `proxy` Optional. Enable/Disable Proxies.## Loading images
+- `proxy` Optional. Enable/Disable Proxies.
