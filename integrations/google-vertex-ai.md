@@ -47,8 +47,8 @@ pip install google-vertex-haystack
 ## Usage
 
 Once installed, you will have access to various Haystack Generators: 
-- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-1.5-flash**' for text generation and multimodal prompts.
-- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-pro**' and '**gemini-1.5-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation and multimodal prompts.
+- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
 - `VertexAITextGenerator`: Use this component with PaLM models for text generation.
 - `VertexAICodeGenerator`: Use this component with Codey model for code generation and code completion.
 - `VertexAIImageGenerator`: Use this component with Imagen model '**imagegeneration**' for image generation.
@@ -56,6 +56,8 @@ Once installed, you will have access to various Haystack Generators:
 - `VertexAIImageQA`: Use this component with Imagen model '**imagetext**' for visual question answering.
 
 To use Vertex AI models, you need to have a Google Cloud Platform account and be logged in using Application Default Credentials (ADCs). For more info see the [official documentation](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fcloud.google.com%2Fdocs%2Fauthentication%2Fprovide-credentials-adc). 
+`VertexAIGeminiGenerator` and `VertexAIGeminiChatGenerator` support both `gemini-1.5-pro` and `gemini-1.5-flash`/ `gemini-2.0-flash` models. 
+Note that [Google recommends upgrading](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions) from `gemini-1.5-pro` to `gemini-2.0-flash`.
 
 To start using Vertex AI generators in Haystack, it is essential that your account has access to a project authorized to use Google Vertex AI endpoints. The `project_id` needed for initialization of Vertex AI generators is set during GCP authentication mentioned above. Additonally, you can also set a different `project_id` by passing it as a variable during initialization of the generator.
 You can find your `project_id` in the [GCP resource manager](https://console.cloud.google.com/cloud-resource-manager) or locally by running `gcloud projects list` in your terminal. For more info on the gcloud CLI see the [official documentation](https://cloud.google.com/cli).
@@ -64,15 +66,15 @@ You can find your `project_id` in the [GCP resource manager](https://console.clo
 
 You can leverage Gemini models through two components: [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator) and [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator). You can use these components on their own or in a pipeline.  
 
-**Text Generation with `gemini-pro`** 
+**Text Generation with `gemini-1.5-pro`** 
 
-To use Gemini model for text generation, initialize a `VertexAIGeminiGenerator` with `"gemini-pro"` and `project_id`: 
+To use Gemini model for text generation, initialize a `VertexAIGeminiGenerator` with `"gemini-1.5-pro"` and `project_id`: 
 
 ```python
 from haystack_integrations.components.generators.google_vertex import VertexAIGeminiGenerator
 
 
-gemini_generator = VertexAIGeminiGenerator(model="gemini-pro")
+gemini_generator = VertexAIGeminiGenerator(model="gemini-1.5-pro")
 result = gemini_generator.run(parts = ["What is assemblage in art?"])
 print(result["replies"][0])
 ```
@@ -81,9 +83,9 @@ Output:
 Assemblage in art refers to the creation of a three-dimensional artwork by combining various found objects...
 ```
 
-**Multimodality with `gemini-1.5-flash`** 
+**Multimodality with `gemini-2.0-flash`** 
 
-To use `gemini-1.5-flash` model for visual question answering, initialize a `VertexAIGeminiGenerator` with `"gemini-1.5-flash"`. Then, run it with the images as well as the prompt:
+To use `gemini-2.0-flash` model for visual question answering, initialize a `VertexAIGeminiGenerator` with `"gemini-2.0-flash"`. Then, run it with the images as well as the prompt:
 
 ```python
 import requests
@@ -100,7 +102,7 @@ images = [
     ByteStream(data=requests.get(url).content, mime_type="image/jpeg")
     for url in URLS
 ]
-gemini_generator = VertexAIGeminiGenerator(model="gemini-1.5-flash")
+gemini_generator = VertexAIGeminiGenerator(model="gemini-2.0-flash")
 result = gemini_generator.run(parts = ["What can you tell me about these robots?", *images])
 for answer in result["replies"]:
     print(answer)  
@@ -113,7 +115,7 @@ The third image is of Gort from the 1951 film The Day the Earth Stood Still...
 The fourth image is of Marvin from the 1977 film The Hitchhiker's Guide to the Galaxy...
 ```
 
-*For function calling with `gemini-pro`, refer to the [Notebook](https://haystack.deepset.ai/cookbook/vertexai-gemini-examples).*
+*For function calling with `gemini-1.5-pro`, refer to the [Notebook](https://haystack.deepset.ai/cookbook/vertexai-gemini-examples).*
 
 ### PaLM API Models
 
