@@ -23,16 +23,19 @@ authors:
       socials:
         github: include if desired
         twitter: include if desired
+        linkedin: include if desired (full url)
     - name: Name of Author 2
       socials:
         github: include if desired
         twitter: include if desired
+        linkedin: include if desired (full url)
 pypi: url of pypi package if exists
 repo: url of GitHub repo if exists
 report_issue: url to where people can report an issue with the integration 
-type: Document Store OR Model Provider OR Data Ingestion OR Monitoring Tool or Evaluation Framework OR Custom Component (required)
+type: Document Store OR Model Provider OR Data Ingestion OR Monitoring Tool OR Evaluation Framework OR Custom Component OR Tool Integration OR something new! (required)
+toc: true (optional)
 logo: /logos/your-logo.png (optional)
-version: Haystack 2.0 (if it's for Haystack 2.0)
+version: Haystack 2.0
 ---
 ```
 Note that there should be at least one of either the `pypi` or `repo` fields for us to merge the integration.
