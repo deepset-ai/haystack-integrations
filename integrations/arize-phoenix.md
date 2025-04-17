@@ -115,7 +115,7 @@ results = rag_pipeline.run(
 
 ## Resources
 
-- Check out the Phoenix [GitHub repository](github.com/Arize-ai/phoenix)
+- Check out the Phoenix [GitHub repository](https://github.com/Arize-ai/phoenix)
 - For an in-depth guide on how to host your own Phoenix instance, see the [Phoenix documentation](https://docs.arize.com/phoenix/deployment)
 - Try out free hosted Phoenix instances at [phoenix.arize.com](https://phoenix.arize.com/)
 - Check out the [Phoenix documentation](https://docs.arize.com/phoenix)
