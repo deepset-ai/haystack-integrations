@@ -13,7 +13,6 @@ logo: /logos/duckduckgo.png
 version: Haystack 2.0
 toc: true
 ---
-# DuckDuckGo API Websearch
 
 Implements a component of the kind *WebSearch*, but through the freely available DuckDuckGo API.
 
@@ -78,7 +77,7 @@ websearch = DuckduckgoApiWebSearch(
     region="wt-wt",           # Region for search results (default: no region)
     safesearch="moderate",    # SafeSearch setting ("on", "moderate", or "off")
     timelimit=None,           # Time limit for results (e.g., "d" for day, "w" for week, "m" for month)
-    backend="api",            # Search backend ("api", "html", or "lite")
+    backend="auto",           # Search backend ("auto", "html", or "lite")
     allowed_domain="",        # Restrict search to a specific domain
     timeout=10,               # Timeout for each search request (in seconds)
     use_answers=False,        # Include DuckDuckGo's answer box in results
