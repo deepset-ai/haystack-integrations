@@ -26,7 +26,7 @@ toc: true
 document formats into a rich standardized representation (incl. layout, tables etc.),
 which it can then export to Markdown, JSON, and others.
 
-Check out the [Docling docs](https://ds4sd.github.io/docling/) for more details.
+Check out the [Docling docs](https://docling-project.github.io/docling/) for more details.
 
 This integration introduces Docling support, enabling Haystack users to:
 - use various document types in LLM applications with ease and speed, and
@@ -54,8 +54,8 @@ argument further below.
 
 `DoclingConverter` creation can be parametrized via the following `__init__()`
 arguments, most of which refer to the initialization and usage of the underlying Docling
-[`DocumentConverter`](https://ds4sd.github.io/docling/usage/) and
-[chunker](https://ds4sd.github.io/docling/concepts/chunking/) instances:
+[`DocumentConverter`](https://docling-project.github.io/docling/usage/) and
+[chunker](https://docling-project.github.io/docling/concepts/chunking/) instances:
 
 - `converter`: The Docling `DocumentConverter` to use; if not set, a system default is
   used.
@@ -86,7 +86,7 @@ print(repr(documents[2].content))
 
 #### In a Pipeline
 
-Check out [this notebook](https://ds4sd.github.io/docling/examples/rag_haystack/)
+Check out [this notebook](https://docling-project.github.io/docling/examples/rag_haystack/)
 illustrating usage in a complete example with indexing and RAG pipelines.
 
 ### License
