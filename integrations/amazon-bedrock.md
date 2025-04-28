@@ -36,48 +36,34 @@ pip install amazon-bedrock-haystack
 
 ## Usage
 
-Once installed, you will have access to [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockgenerator) and [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockchatgenerator) components that support generative language models on Amazon Bedrock.
+Once installed, you will have access to [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockchatgenerator) and [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockgenerator) components that support generative language models on Amazon Bedrock. 
 You will also have access to the [AmazonBedrockTextEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrocktextembedder) and [AmazonBedrockDocumentEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentembedder), which can be used to compute embeddings.
 
-### AmazonBedrockGenerator
+To use this integration, set the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/docs/secret-management) arguments. 
 
-To use this integration for text generation, initialize an `AmazonBedrockGenerator` with the model name, the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) should be set as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/docs/secret-management) arguments. 
-Note, make sure the region you set supports Amazon Bedrock. 
-
-Currently, the following models are supported: 
-
-- AI21 Labs' Jurassic-2
-- Amazon Titan language models
-- Anthropic's Claude
-- Cohere's Command
-- Meta's Llama 2
-
-```python
-from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockGenerator
-
-generator = AmazonBedrockGenerator(model="anthropic.claude-v2")
-result = generator.run("Who is the best American actor?")
-for reply in result["replies"]:
-    print(reply)
-```
-Output: 
-```shell
-'There is no definitive "best" American actor, as acting skill and talent a# re subjective. However, some of the most acclaimed and influential American act# ors include Tom Hanks, Daniel Day-Lewis, Denzel Washington, Meryl Streep, Rober# t De Niro, Al Pacino, Marlon Brando, Jack Nicholson, Leonardo DiCaprio and John# ny Depp. Choosing a single "best" actor comes down to personal preference.'
-```
+> Note: Make sure the region you set supports Amazon Bedrock.
 
 ### AmazonBedrockChatGenerator
 
-To use this integration for chat models, initialize an `AmazonBedrockChatGenerator` with the model name and AWS credentials:
+To use this integration for chat models, initialize an `AmazonBedrockChatGenerator` with the model name:
 
-Currently, the following models are supported: 
-- Anthropic's Claude 2, Claude 3 Sonnet
-- Meta's Llama 2
+Some supported models are: 
+- **AI21 Labs'** Jamba 1.5 Large, Jamba 1.5 Mini
+- **Amazon's** Nova Canvas, Nova Lite, Nova Pro
+- **Amazon's** Titan Text G1 - Express, Titan Text G1 - Lite
+- **Anthropic's** Claude chat models
+- **Cohere's** Command, Command Light and other Command models
+- **DeepSeek's** DeepSeek-R1
+- **Meta's** Llama models
+- **Mistral AI's** 
+
+Get the complete list of models in [Supported foundation models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
 
 ```python
 from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockChatGenerator
 from haystack.dataclasses import ChatMessage
     
-generator = AmazonBedrockChatGenerator(model="meta.llama2-70b-chat-v1")
+generator = AmazonBedrockChatGenerator(model="amazon.nova-pro-v1:0")
 messages = [ChatMessage.from_system("You are a helpful assistant that answers question in Spanish only"), 
             ChatMessage.from_user("What's Natural Language Processing? Be brief.")]
     
@@ -86,14 +72,30 @@ print(response)
 
 ```
 Output: 
+```js
+{'replies': [ChatMessage(_role=<ChatRole.ASSISTANT: 'assistant'>, _content=[TextContent(text='El procesamiento del lenguaje natural (PLN) es una rama de la inteligencia artificial que permite a las computadoras comprender, interpretar y generar lenguaje humano.')], _name=None, _meta={'model': 'amazon.nova-pro-v1:0', 'index': 0, 'finish_reason': 'end_turn', 'usage': {'prompt_tokens': 21, 'completion_tokens': 31, 'total_tokens': 52}})]}
+```
+
+### AmazonBedrockGenerator 
+
+Most [supported models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html) can be used with `AmazonBedrockGenerator`, but we highly recommend using the `AmazonBedrockChatGenerator` instead.
+
+```python
+from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockGenerator
+
+generator = AmazonBedrockGenerator(model="mistral.mixtral-8x7b-instruct-v0:1")
+result = generator.run("Who is the best American actor?")
+print(result)
+```
+Output: 
 ```shell
-{'replies': [ChatMessage(content='  Procesamiento del Lenguaje Natural (PLN) es una rama de la inteligencia artificial que se enfoca en el desarrollo de algoritmos y modelos que permiten a las computadoras comprender y procesar el lenguaje natural, como el hablado o escrito por los humanos.', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'stop_reason': 'stop', 'usage': {'prompt_tokens': 44, 'completion_tokens': 71}})]}
+{'replies': ['It\'s subjective to determine the "best" American actor as it depends on personal preferences, critical acclaim, and the impact of their work. However, some of the most renowned and influential American actors include:\n\n1. Daniel Day-Lewis - Known for his versatility and commitment to his roles, Day-Lewis is a three-time Academy Award winner for Best Actor.\n2. Meryl Streep - With a record 21 Academy Award nominations and three wins, Streep is widely regarded as one of the greatest actresses in American film history.\n3. Jack Nicholson - A three-time Academy Award winner and 12-time nominee, Nicholson is known for his iconic roles in films like "One Flew Over the Cuckoo\'s Nest," "Terms of Endearment," and "As Good as It Gets."\n4. Robert De Niro - A two-time Academy Award winner, De Niro is known for his collaborations with Martin Scorsese and his memorable roles in films like "Taxi Driver," "Raging Bull," and "The Godfather: Part II."\n5. Leonardo DiCaprio - A four-time Academy Award nominee and one-time winner, DiCaprio has had a successful career in both blockbusters and independent films.\n\nThese are just a few examples of highly acclaimed American actors, and there are many other talented actors who could be considered for this title.'], 'meta': {'RequestId': 'ed9c8566-0b13-4c08-ba72-c88be1aecd02', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Mon, 28 Apr 2025 11:00:15 GMT', 'content-type': 'application/json', 'content-length': '1322', 'connection': 'keep-alive', 'x-amzn-requestid': 'ed9c8566-0b13-4c08-ba72-c88be1aecd02', 'x-amzn-bedrock-invocation-latency': '7065', 'x-amzn-bedrock-output-token-count': '323', 'x-amzn-bedrock-input-token-count': '16'}, 'RetryAttempts': 0}}
 ```
 
 ### AmazonBedrockTextEmbedder and AmazonBedrockDocumentEmbedder
 
-These two components can be used to compute embeddings for text and Documents respectively. 
-Supported models are "amazon.titan-embed-text-v1", "cohere.embed-english-v3" and "cohere.embed-multilingual-v3".
+These two components can compute embeddings for text and Documents, respectively. 
+The supported models are "amazon.titan-embed-text-v1", "amazon.titan-embed-text-v2:0", "cohere.embed-english-v3," and "cohere.embed-multilingual-v3."
 
 See them in action:
 
