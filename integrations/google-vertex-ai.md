@@ -23,15 +23,16 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
     - [Gemini API models](#gemini-api-models)
+    - [Text Embedder API models](#text-embedder-api-models)
     - [PaLM API models](#palm-api-models)
     - [Codey API models](#codey-api-models)
     - [Imagen API models](#imagen-api-models)
 
 ## Overview
 
-[Vertex AI](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/overview) is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. This integration enables the usage of [models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models) through Vertex AI API on Google Cloud Platform (GCP). 
+[Vertex AI](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/overview) is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. This integration enables the usage of [generative models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models) and [embedding models](https://cloud.google.com/vertex-ai/generative-ai/docs/models#embeddings-models) through Vertex AI API on Google Cloud Platform (GCP). 
 
-Haystack supports [Gemini API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#gemini-models), [PaLM API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#palm-models), [Codey APIs models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#codey-models), and [Imagen API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#imagen-models) for task such as **text generation**, **function calling**, **image generation**, **visual question answering**, **code generation**, and **image captioning**.
+Haystack supports [Gemini API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#gemini-models), [PaLM API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#palm-models), [Codey APIs models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#codey-models), and [Imagen API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#imagen-models) and [](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/text-embeddings-api) for task such as **text generation**, **function calling**, **image generation**, **visual question answering**, **code generation**, and **image captioning** as well as **embedding generation**.
 
 > To learn more about the use cases and test Vertex AI models with Haystack, follow this [Notebook](https://haystack.deepset.ai/cookbook/vertexai-gemini-examples).
 
@@ -46,14 +47,16 @@ pip install google-vertex-haystack
 
 ## Usage
 
-Once installed, you will have access to various Haystack Generators: 
-- [`VertexAIGeminiGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation and multimodal prompts.
-- [`VertexAIGeminiChatGenerator`](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
-- `VertexAITextGenerator`: Use this component with PaLM models for text generation.
-- `VertexAICodeGenerator`: Use this component with Codey model for code generation and code completion.
-- `VertexAIImageGenerator`: Use this component with Imagen model '**imagegeneration**' for image generation.
-- [`VertexAIImageCaptioner`](https://docs.haystack.deepset.ai/docs/vertexaiimagecaptioner): Use this component with Imagen model '**imagetext**' for image captioning.
-- `VertexAIImageQA`: Use this component with Imagen model '**imagetext**' for visual question answering.
+Once installed, you will have access to various Haystack Generators and Embedders: 
+- [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation and multimodal prompts.
+- [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [VertexAITextGenerator](https://docs.haystack.deepset.ai/docs/vertexaitextgenerator): Use this component with PaLM models for text generation.
+- [VertexAICodeGenerator](https://docs.haystack.deepset.ai/docs/vertexaicodegenerator): Use this component with Codey model for code generation and code completion.
+- [VertexAIImageGenerator](https://docs.haystack.deepset.ai/docs/vertexaiimagegenerator): Use this component with Imagen model '**imagegeneration**' for image generation.
+- [VertexAIImageCaptioner](https://docs.haystack.deepset.ai/docs/vertexaiimagecaptioner): Use this component with Imagen model '**imagetext**' for image captioning.
+- [VertexAIImageQA](https://docs.haystack.deepset.ai/docs/vertexaiimageqa): Use this component with Imagen model '**imagetext**' for visual question answering.
+- `VertexAITextEmbedder`: Use this component to create embeddings for text data using Vertex AI Text Embedder API.
+- `VertexAIDocumentEmbedder`: Use this component to create embeddings for Document using Vertex AI Text Embedder API.
 
 To use Vertex AI models, you need to have a Google Cloud Platform account and be logged in using Application Default Credentials (ADCs). For more info see the [official documentation](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fcloud.google.com%2Fdocs%2Fauthentication%2Fprovide-credentials-adc). 
 `VertexAIGeminiGenerator` and `VertexAIGeminiChatGenerator` support both `gemini-1.5-pro` and `gemini-1.5-flash`/ `gemini-2.0-flash` models. 
@@ -116,6 +119,21 @@ The fourth image is of Marvin from the 1977 film The Hitchhiker's Guide to the G
 ```
 
 *For function calling with `gemini-1.5-pro`, refer to the [Notebook](https://haystack.deepset.ai/cookbook/vertexai-gemini-examples).*
+
+### Text Embedder API models
+
+You can leverage Text Embedder API models `text-embedding-005`, `text-multilingual-embedding-002`, `text-embedding-large-exp-03-07`, `text-embedding-004`, and `textembedding-gecko-multilingual@001`.
+
+```python
+from haystack_integrations.components.embedders.google_vertex import VertexAITextEmbedder
+
+text_to_embed = "I love pizza!"
+
+text_embedder = VertexAITextEmbedder(model="text-embedding-005")
+
+print(text_embedder.run(text_to_embed))
+# {'embedding': [-0.08127457648515701, 0.03399784862995148, -0.05116401985287666, ...]
+```
 
 ### PaLM API Models
 
