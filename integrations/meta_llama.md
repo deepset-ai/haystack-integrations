@@ -56,7 +56,6 @@ This example showcases how to build a complete RAG system that can answer questi
 ```python
 # To run this example, you will need to set a `LLAMA_API_KEY` environment variable.
 
-# Copyright (c) Meta Platforms, Inc. and affiliates
 from haystack import Document, Pipeline
 from haystack.components.builders.chat_prompt_builder import ChatPromptBuilder
 from haystack.components.generators.utils import print_streaming_chunk
