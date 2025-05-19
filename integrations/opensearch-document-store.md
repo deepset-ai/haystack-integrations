@@ -28,8 +28,9 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Hybrid Retriever](#hybrid-retriever)
 
-## Overview
+# Overview
 
 [![PyPI - Version](https://img.shields.io/pypi/v/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
@@ -65,6 +66,35 @@ indexing.add_component("writer", DocumentWriter(document_store))
 indexing.connect("converter", "writer")
 indexing.run({"converter": {"paths": file_paths}})
 ```
+
+### Hybrid-Retriever
+
+This integration also provides a hybrid retriever. The `OpenSearchHybridRetriever` combines the capabilities of a vector search and a keyword search. It uses the OpenSearch document store to retrieve documents based on both semantic and keyword-based queries.
+
+You can use the `OpenSearchHybridRetriever` together with the `OpenSearchDocumentStore` to perform hybrid retrieval.
+
+```python
+from haystack_integrations.components.retrievers.opensearch import OpenSearchHybridRetriever
+from haystack_integrations.document_stores.opensearch import OpenSearchDocumentStore
+
+# Initialize the document store
+document_store = OpenSearchDocumentStore(
+    hosts=["http://localhost:9200"],
+    index="document_store",
+    embedding_dim=384,
+)
+
+# Initialize the retriever
+retriever = OpenSearchHybridRetriever(
+    document_store=document_store,
+    embedding_dim=384,
+    top_k=10,
+)
+
+pipeline.run(query="What is the capital of France?")
+```
+
+You can learn more about the `OpenSearchHybridRetriever` in the [documentation]().
 
 ### License
 
