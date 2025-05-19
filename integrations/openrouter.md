@@ -16,6 +16,7 @@ logo: /logos/openrouter.png
 version: Haystack 2.0
 toc: true
 ---
+
 ### **Table of Contents**
 - [Overview](#overview)
 - [Installation](#installation)
@@ -47,7 +48,9 @@ pip install openrouter-haystack
 ```
 
 ## Usage
-### Standalone
+You can use [OpenRouterChatGenerator](https://docs.haystack.deepset.ai/docs/openrouterchatgenerator) as standalone, within a [pipeline](https://docs.haystack.deepset.ai/docs/pipelines) or with the [Agent component](https://docs.haystack.deepset.ai/docs/agent).
+
+Here's an example of using it as a standalone component:
 
 ```python
 import os
@@ -55,6 +58,7 @@ from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.openrouter import OpenRouterChatGenerator
 
 os.environ["OPENROUTER_API_KEY"] = "YOUR_OPENROUTER_API_KEY"
+
 client = OpenRouterChatGenerator() # defaults to openai/gpt-4o-mini
 response = client.run(
     [ChatMessage.from_user("What are Agentic Pipelines? Be brief.")]
