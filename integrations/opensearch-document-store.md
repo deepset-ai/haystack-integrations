@@ -30,7 +30,7 @@ toc: true
 - [Usage](#usage)
 - [Hybrid Retriever](#hybrid-retriever)
 
-# Overview
+## Overview
 
 [![PyPI - Version](https://img.shields.io/pypi/v/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/opensearch-haystack.svg)](https://pypi.org/project/opensearch-haystack)
