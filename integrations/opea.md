@@ -6,7 +6,7 @@ authors:
   - name: OPEA-Project
     socials:
       github: opea-project
-pypi: 
+pypi: https://pypi.org/project/haystack-opea/
 repo: https://github.com/opea-project/Haystack-OPEA
 type: Distributed Computing
 report_issue: https://github.com/opea-project/Haystack-OPEA/issues
