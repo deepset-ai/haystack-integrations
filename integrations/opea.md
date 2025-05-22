@@ -45,7 +45,7 @@ poetry install --with test
 
 ## Usage
 
-Below are quickstart examples for embeddings and LLM generation. Make sure your OPEA backend is running (e.g. via the provided Docker Compose in `samples/`).
+Below are quickstart examples for embeddings and LLM generation. Make sure your OPEA backend is running: e.g. via the provided [Docker Compose](https://github.com/opea-project/Haystack-OPEA/blob/main/samples/compose.yaml) file. OPEA services can be configured to use a variety of model serving backends like TGI, vLLM, ollama, OVMS... and offer validated runtime settings for good performance on various hardware's including Intel Gaudi, see the [LLM](https://github.com/opea-project/GenAIComps/tree/main/comps/llms/src/text-generation) section in the OPEA components library.
 
 ### Embeddings
 
