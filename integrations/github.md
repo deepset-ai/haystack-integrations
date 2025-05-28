@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/github-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/github
-type: Tools
+type: Tool Integration
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/github.png
 version: Haystack 2.0
