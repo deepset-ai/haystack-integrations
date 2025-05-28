@@ -29,7 +29,7 @@ The GitHub integration for Haystack provides a set of components and tools to in
 
 
 Some of the components and tools in this integration require GitHub authentication with a personal access token. 
-For example, it is required to post a comment on GitHub, fork a repository or open a pull request. You can create a (fine-graind personal access token)[https://github.com/settings/personal-access-tokens] or a [classic personal access token](https://github.com/settings/tokens) on GitHub and then expose it via an environment variable called `GITHUB_API_KEY`.
+For example, authentication is required to post a comment on GitHub, fork a repository, or open a pull request. You can create a (fine-graind personal access token)[https://github.com/settings/personal-access-tokens] or a [classic personal access token](https://github.com/settings/tokens) on GitHub and then expose it via an environment variable called `GITHUB_API_KEY`.
 
 
 ## Installation
@@ -83,6 +83,7 @@ def create_comment(comment: str) -> str:
     """
     Use this to create a Github comment once you finished your exploration.
     """
+    # A mockup tool to showcase how Agent uses tools. You should use `GitHubIssueCommenterTool` instead of this one to write comments on GitHub.
     return comment
 
 chat_generator = AnthropicChatGenerator(model="claude-3-5-sonnet-latest", generation_kwargs={"max_tokens": 8000})
@@ -120,8 +121,8 @@ pipeline.add_component("agent", agent)
 pipeline.connect("issue_fetcher.documents", "issue_builder.documents")
 pipeline.connect("issue_builder.prompt", "agent.messages")
 
-issue_url = "https://github.com/deepset-ai/haystack-core-integrations/issues/1268"
+issue_url = "https://github.com/<owner>/<repo>/issues/1268"
 
 result = pipeline.run({"url": issue_url})
-print(result["agent"]["messages"][-1].tool_call_result.result)
+print(result["agent"]["last_message"].tool_call_result.result)
 ```
