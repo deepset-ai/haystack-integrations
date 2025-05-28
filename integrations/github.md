@@ -72,11 +72,8 @@ from haystack.tools.from_function import tool
 
 from haystack_integrations.components.connectors.github import GitHubIssueViewer
 from haystack_integrations.components.generators.anthropic import AnthropicChatGenerator
-
 from haystack_integrations.prompts.github import SYSTEM_PROMPT
-
 from haystack_integrations.tools.github import GitHubRepoViewerTool
-repo_viewer_tool = GitHubRepoViewerTool()
 
 @tool
 def create_comment(comment: str) -> str:
@@ -85,6 +82,8 @@ def create_comment(comment: str) -> str:
     """
     # A mockup tool to showcase how Agent uses tools. You should use `GitHubIssueCommenterTool` instead of this one to write comments on GitHub.
     return comment
+
+repo_viewer_tool = GitHubRepoViewerTool()
 
 chat_generator = AnthropicChatGenerator(model="claude-3-5-sonnet-latest", generation_kwargs={"max_tokens": 8000})
 
@@ -106,7 +105,7 @@ Issue from: {{ url }}
 {{document.content}}
 </issue-comment>
 {% endfor %}
-    """
+"""
 
 issue_builder = ChatPromptBuilder(template=[ChatMessage.from_user(issue_template)], required_variables="*")
 
