@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: github
+name: GitHub
 description: Interact with GitHub repositories, issues, and pull requests within Haystack
 authors:
     - name: deepset
