@@ -62,14 +62,11 @@ This integration comes with several components and tools:
 ### Example Usage
 
 ```python
-import os
-from getpass import getpass
 from typing import List
 
 from haystack import Pipeline
 from haystack.components.agents import Agent
 from haystack.components.builders import ChatPromptBuilder
-from haystack.components.converters import OutputAdapter
 from haystack.dataclasses import ChatMessage, Document
 from haystack.tools.from_function import tool
 
