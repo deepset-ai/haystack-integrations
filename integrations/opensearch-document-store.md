@@ -105,6 +105,9 @@ docs = doc_embedder.run(docs)
 # Write the documents to the OpenSearch document store
 doc_store.write_documents(docs['documents'])
 
+# Initialize some haystack text embedder, in this case the SentenceTransformersTextEmbedder
+embedder = SentenceTransformersTextEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
+
 # Initialize the hybrid retriever
 retriever = OpenSearchHybridRetriever(
     document_store=doc_store,
