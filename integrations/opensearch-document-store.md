@@ -67,7 +67,7 @@ indexing.connect("converter", "writer")
 indexing.run({"converter": {"paths": file_paths}})
 ```
 
-### Hybrid-Retriever
+### Hybrid Retriever
 
 This integration also provides a hybrid retriever. The `OpenSearchHybridRetriever` combines the capabilities of a vector search and a keyword search. It uses the OpenSearch document store to retrieve documents based on both semantic and keyword-based queries.
 
