@@ -28,7 +28,6 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Hybrid Retriever](#hybrid-retriever)
 
 ## Overview
 
