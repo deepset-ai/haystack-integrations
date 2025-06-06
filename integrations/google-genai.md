@@ -44,7 +44,7 @@ pip install google-genai-haystack
 
 Once installed, you will have access to the Haystack Chat Generator:
 
-- [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaicchatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**' for chat completion and function calling.
+- [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**' for chat completion and function calling.
 
 To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` environment variable. If neither is set you won't be able to use the generator.
 
