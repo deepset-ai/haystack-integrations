@@ -8,6 +8,12 @@ authors:
       github: deepset-ai
       twitter: deepset_ai
       linkedin: https://www.linkedin.com/company/deepset-ai/
+  - name: Gary Badwal
+    socials:
+      website: garybadwal.com
+      github: garybadwal
+      twitter: garybadwal_
+      linkedin: https://www.linkedin.com/in/garybadwal/
 pypi: https://pypi.org/project/google-genai-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/google_genai
 type: Model Provider
