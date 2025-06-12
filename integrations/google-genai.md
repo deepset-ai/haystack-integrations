@@ -36,7 +36,7 @@ toc: true
 
 [Google Gen AI](https://ai.google.dev/) provides access to Google's Gemini models through the new Google Gen AI SDK. This integration enables the usage of Google's latest generative models via the updated API interface.
 
-Haystack supports the latest [Gemini models](https://ai.google.dev/models/gemini) including **gemini-2.0-flash** for tasks such as **chat completion**, **function calling**, and **streaming responses**.
+Haystack supports the latest [Gemini models](https://ai.google.dev/models/gemini) like `gemini-2.0-flash` and `text-embedding-004` for tasks such as **chat completion**, **function calling**, **streaming responses** and **embedding generation**.
 
 ## Installation
 
@@ -51,6 +51,8 @@ pip install google-genai-haystack
 Once installed, you will have access to the Haystack Chat Generator:
 
 - [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**' for chat completion and function calling.
+- `GoogleGenAIDocumentEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings.
+- `GoogleGenAIChatGenerator`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings.
 
 To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable. If neither is set you won't be able to use the generator.
 
