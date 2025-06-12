@@ -53,10 +53,10 @@ pip install google-genai-haystack
 Once installed, you will have access to the Haystack Chat components:
 
 - [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**' for chat completion and function calling.
-- `GoogleGenAIDocumentEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings.
-- `GoogleGenAIChatGenerator`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings.
+- `GoogleGenAIDocumentEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings for documents.
+- `GoogleGenAITextEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings for text.
 
-To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable. If neither is set you won't be able to use the generator.
+To use Google Gemini models, you need an API key. You can either pass it as an init argument or set a `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable. If neither is set, you won't be able to use the generator.
 
 To get an API key visit [Google AI Studio](https://aistudio.google.com/).
 
