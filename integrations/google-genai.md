@@ -52,13 +52,13 @@ Once installed, you will have access to the Haystack Chat Generator:
 
 - [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**' for chat completion and function calling.
 
-To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` environment variable. If neither is set you won't be able to use the generator.
+To use Google Gemini models you need an API key. You can either pass it as init argument or set a `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable. If neither is set you won't be able to use the generator.
 
 To get an API key visit [Google AI Studio](https://aistudio.google.com/).
 
 ### Chat Generation with `gemini-2.0-flash`
 
-To use Gemini model for chat generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleGenAIChatGenerator` with `"gemini-2.0-flash"`:
+To use Gemini model for chat generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAIChatGenerator` with `"gemini-2.0-flash"`:
 
 ```python
 import os
@@ -157,3 +157,48 @@ Output:
 ```shell
 The weather in Paris is sunny and 25°C.
 ``` 
+
+### Document Embedding
+
+To use Google model for embedding generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleGenAIDocumentEmbedder`:
+
+```python
+import os
+from haystack import Document
+from haystack_integrations.components.embedders.google_genai import GoogleGenAIDocumentEmbedder
+
+os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+
+# Initialize the embedder
+embedder = GoogleGenAIDocumentEmbedder()
+
+# Generate a response
+doc = Document(content="some text")
+docs_w_embeddings = embedder.run(documents=[doc])["documents"]
+```
+
+### Text Embedding
+
+To use Google model for embedding generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleGenAITextEmbedder`:
+
+```python
+import os
+from haystack_integrations.components.embedders.google_genai import GoogleGenAITextEmbedder
+
+os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
+
+text_to_embed = "I love pizza!"
+
+# Initialize the text embedder
+text_embedder = GoogleGenAITextEmbedder()
+
+# Generate a response
+print(text_embedder.run(text_to_embed))
+```
+
+Output:
+
+```shell
+{'embedding': [-0.052871075, -0.035282962, ...., -0.04802792], 
+'meta': {'model': 'text-embedding-004'}}
+```
