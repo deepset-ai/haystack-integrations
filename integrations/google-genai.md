@@ -160,7 +160,7 @@ The weather in Paris is sunny and 25°C.
 
 ### Document Embedding
 
-To use Google model for embedding generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleGenAIDocumentEmbedder`:
+To use Google model for embedding generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAIDocumentEmbedder`:
 
 ```python
 import os
@@ -179,7 +179,7 @@ docs_w_embeddings = embedder.run(documents=[doc])["documents"]
 
 ### Text Embedding
 
-To use Google model for embedding generation, set the `GOOGLE_API_KEY` environment variable and then initialize a `GoogleGenAITextEmbedder`:
+To use Google model for embedding generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAITextEmbedder`:
 
 ```python
 import os
