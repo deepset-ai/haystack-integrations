@@ -31,6 +31,8 @@ toc: true
   - [Chat Generation with `gemini-2.0-flash`](#chat-generation-with-gemini-20-flash)
   - [Streaming Chat Generation](#streaming-chat-generation)
   - [Function calling](#function-calling)
+  - [Document Embedding](#document-embedding)
+  - [Text Embedding](#text-embedding)
 
 ## Overview
 
@@ -48,7 +50,7 @@ pip install google-genai-haystack
 
 ## Usage
 
-Once installed, you will have access to the Haystack Chat Generator:
+Once installed, you will have access to the Haystack Chat components:
 
 - [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as '**gemini-2.0-flash**' for chat completion and function calling.
 - `GoogleGenAIDocumentEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings.
