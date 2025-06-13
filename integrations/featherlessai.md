@@ -1,13 +1,13 @@
 ---
 layout: integration
 name: Featherless AI
-description: Featherless.ai provides access to thousands of open source language models
+description: Get access to thousands of open source language models hosted by Featherless.ai
 authors:
     - name: Featherless AI
       socials:
         github: featherlessai
         twitter: FeatherlessAI
-        linkedin: https://www.linkedin.com/company//feather-serverless-ai/
+        linkedin: https://www.linkedin.com/company/feather-serverless-ai/
         
 pypi: https://pypi.org/project/haystack-ai/
 repo: https://github.com/deepset-ai/haystack
@@ -34,56 +34,10 @@ To start using Featherless, sign up for an API key [here](https://featherless.ai
 Featherless AI is OpenAI compatible, making it easy to use in Haystack via OpenAI Generators.
 
 
-### Using `Generator`
-
-Here's an example of using Llama served via Featherless AI to perform question perform question answering on a docs page.
-You need to set the environment variable `FEATHERLESS_API_KEY` and choose a model from our [catalog](https://featherless.ai/models).
-
-```python
-from haystack import Pipeline
-from haystack.utils import Secret
-from haystack.components.fetchers import LinkContentFetcher
-from haystack.components.converters import HTMLToDocument
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
-import os 
-os.environ["FEATHERLESS_API_KEY"] = "YOUR FEATHERLESS API KEY"
-
-fetcher = LinkContentFetcher()
-converter = HTMLToDocument()
-prompt_template = """
-According to the contents of this website:
-{% for document in documents %}
-  {{document.content}}
-{% endfor %}
-Answer the given question: {{query}}
-Answer:
-"""
-prompt_builder = PromptBuilder(template=prompt_template)
-llm = OpenAIGenerator(
-    api_key=Secret.from_env_var("FEATHERLESS_API_KEY"),
-    api_base_url="https://api.featherless.ai/v1",
-    model="deepseek-ai/DeepSeek-V3-0324"
-)
-pipeline = Pipeline()
-pipeline.add_component("fetcher", fetcher)
-pipeline.add_component("converter", converter)
-pipeline.add_component("prompt", prompt_builder)
-pipeline.add_component("llm", llm)
-
-pipeline.connect("fetcher.streams", "converter.sources")
-pipeline.connect("converter.documents", "prompt.documents")
-pipeline.connect("prompt.prompt", "llm.prompt")
-
-result = pipeline.run({"fetcher": {"urls": ["https://featherless.ai/docs/getting-started"]},
-              "prompt": {"query": "What is the mission of Featherless AI?"}})
-
-print(result["llm"]["replies"][0])
-```
 
 ### Using `ChatGenerator`
 
-See an example of engaging in a multi-turn conversation with mistralai/Mistral-Small-24B-Instruct-2501
+See an example of engaging in a multi-turn conversation with `mistralai/Mistral-Small-24B-Instruct-2501`
 You need to set the environment variable `FEATHERLESS_API_KEY` and choose a model from our [catalog](https://featherless.ai/models).
 
 ```python
