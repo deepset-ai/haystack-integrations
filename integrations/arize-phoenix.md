@@ -33,7 +33,7 @@ For a detailed integration guide, see the [documentation for Phoenix + Haystack]
 ## Installation
 
 ```bash
-pip install openinference-instrumentation-haystack haystack-ai opentelemetry-sdk opentelemetry-exporter-otlp arize-phoenix
+pip install openinference-instrumentation-haystack haystack-ai arize-phoenix
 ```
 
 ## Usage
@@ -43,22 +43,16 @@ To trace any Haystack pipeline with Phoenix, simply initialize OpenTelemetry and
 First, start a Phoenix instance to send traces to.
 
 ```sh
-python -m phoenix.server.main serve
+phoenix serve
 ```
 
 Now let's connect our Haystack pipeline to Phoenix using OpenTelemetry.
 
 ```python
 from openinference.instrumentation.haystack import HaystackInstrumentor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import (
-    OTLPSpanExporter,
-)
-from opentelemetry.sdk import trace as trace_sdk
-from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+from phoenix.otel import register
 
-endpoint = "http://localhost:6006/v1/traces" # The URL to your Phoenix instance
-tracer_provider = trace_sdk.TracerProvider()
-tracer_provider.add_span_processor(SimpleSpanProcessor(OTLPSpanExporter(endpoint)))
+tracer_provider = register(endpoint="http://localhost:4317")
 
 HaystackInstrumentor().instrument(tracer_provider=tracer_provider)
 ```
