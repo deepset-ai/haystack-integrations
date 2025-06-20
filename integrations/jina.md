@@ -17,7 +17,7 @@ version: Haystack 2.0
 toc: true
 ---
 
-This integration allows users of Haystack to seamlessly use Jina AI's`jina-embeddings`and [reranking models](https://jina.ai/reranker/) in their pipelines. Haystack also integrates the [Jina Reader API](https://jina.ai/reader/).
+This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings` and [reranking models](https://jina.ai/reranker/) in their pipelines. Haystack also integrates the [Jina Reader API](https://jina.ai/reader/).
 
 [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
 
@@ -59,7 +59,7 @@ You can reference the table below for hints on dimension vs. performance:
 
 **Late Chunking in Long-Context Embedding Models**
 
-`jina-embeddings-v3` supports [Late Chunking](https://jina.ai/news/late-chunking-in-long-context-embedding-models/), the technique to leverage the model's long-context capabilities for generating contextual chunk embeddings. Include `late_chunking=True` in your request to enable contextual chunked representation. When set to true, Jina AI API will concatenate all sentences in the input field and feed them as a single string to the model. Internally, the model embeds this long concatenated string and then performs late chunking, returning a list of embeddings that matches the size of the input list. 
+`jina-embeddings-v3` supports [Late Chunking](https://jina.ai/news/late-chunking-in-long-context-embedding-models/), the technique to leverage the model's long-context capabilities for generating contextual chunk embeddings. Include `late_chunking=True` in your request to enable contextual chunked representation. When set to true, Jina AI API will concatenate all sentences in the input field and feed them as a single string to the model. Internally, the model embeds this long concatenated string and then performs late chunking, returning a list of embeddings that matches the size of the input list.
 
 ### **Table of Contents**
 
@@ -71,7 +71,7 @@ You can reference the table below for hints on dimension vs. performance:
 
 ## Overview
 
-You can use [Jina embedding Models](https://jina.ai/embeddings) and [Jina Rerankers](https://jina.ai/reranker/) in your Haystack pipelines with the Jina [Embedders](https://docs.haystack.deepset.ai/docs/embedders) and Jina [Ranker](https://docs.haystack.deepset.ai/docs/jinaranker)
+You can use [Jina embedding Models](https://jina.ai/embeddings) and [Jina Rerankers](https://jina.ai/reranker/) in your Haystack pipelines with the Jina [Embedders](https://docs.haystack.deepset.ai/docs/embedders) and Jina [Ranker](https://docs.haystack.deepset.ai/docs/jinaranker).
 
 ## Installation
 
@@ -85,10 +85,10 @@ pip install jina-haystack
 
 You can use Jina Embedding models with two components: [`JinaTextEmbedder`](https://docs.haystack.deepset.ai/docs/jinatextembedder) and [`JinaDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/jinadocumentembedder).
 
-You can use the Jina Reranker models with one component: [`JinaRanker`](https://docs.haystack.deepset.ai/docs/jinaranker)
+You can use the Jina Reranker models with one component: [`JinaRanker`](https://docs.haystack.deepset.ai/docs/jinaranker).
 
 To create semantic embeddings for documents, use `JinaDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `JinaTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Jina API key. You can also
-set the environment variable JINA_API_KEY instead of passing the api key as an argument.
+set the environment variable `JINA_API_KEY` instead of passing the api key as an argument.
 
 Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and `DocumentWriter`:
 
