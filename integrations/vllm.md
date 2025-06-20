@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: vLLM Invocation Layer
+name: vLLM
 description: Use the vLLM inference engine with Haystack
 authors:
     - name: deepset
