@@ -3,28 +3,20 @@ layout: integration
 name: vLLM Invocation Layer
 description: Use the vLLM inference engine with Haystack
 authors:
-  - name: Lukas Kreussel
-    socials:
-      github: LLukas22
-pypi: https://pypi.org/project/vllm-haystack/
-repo: https://github.com/LLukas22/vLLM-haystack-adapter
+    - name: deepset
+      socials:
+        github: deepset-ai
+        twitter: deepset_ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
+pypi: https://pypi.org/project/haystack-ai
+repo: https://github.com/deepset-ai/haystack
 type: Model Provider
-report_issue: https://github.com/LLukas22/vLLM-haystack-adapter/issues
+report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/vllm.png
 version: Haystack 2.0
 toc: true
 ---
-[![PyPI - Version](https://img.shields.io/pypi/v/vllm-haystack.svg)](https://pypi.org/project/vllm-haystack)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/vllm-haystack.svg)](https://pypi.org/project/vllm-haystack)
-
 Simply use [vLLM](https://github.com/vllm-project/vllm) in your haystack pipeline, to utilize fast, self-hosted LLMs. 
-
-<p align="center">
-    <img alt="vLLM" src="https://raw.githubusercontent.com/vllm-project/vllm/main/docs/source/assets/logos/vllm-logo-text-light.png" width="45%" style="vertical-align: middle;">
-    <a href="https://www.deepset.ai/haystack/">
-        <img src="https://raw.githubusercontent.com/deepset-ai/haystack/main/docs/img/haystack_logo_colored.png" alt="Haystack" width="45%" style="vertical-align: middle;">
-    </a>
-</p>
 
 ### Table of Contents
 
@@ -47,6 +39,9 @@ For an end-to-end example of [vLLM + Haystack, see this notebook](https://colab.
 vLLM should be installed.
 - you can use `pip`: `pip install vllm` (more information in the [vLLM documentation](https://docs.vllm.ai/en/latest/getting_started/installation.html))
 - for production use cases, there are many other options, including Docker ([docs](https://docs.vllm.ai/en/latest/serving/deploying_with_docker.html))
+```bash
+pip install haystack-ai vllm
+```
 
 ## Usage
 You first need to run an vLLM OpenAI-compatible server. You can do that using [Python](https://docs.vllm.ai/en/latest/getting_started/quickstart.html#openai-compatible-server) or [Docker](https://docs.vllm.ai/en/latest/serving/deploying_with_docker.html). 
