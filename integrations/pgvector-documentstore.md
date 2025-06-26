@@ -35,7 +35,7 @@ toc: true
 
 To quickly set up a PostgreSQL database with pgvector, you can use Docker:
 ```bash
-docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres ankane/pgvector
+docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres pgvector/pgvector:pg17
 ```
 
 For more information on how to install pgvector, visit the [pgvector GitHub repository](https://github.com/pgvector/pgvector).
