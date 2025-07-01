@@ -59,7 +59,7 @@ from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 
-from haystack_integrations.components.connectors import WeaveConnector
+from haystack_integrations.components.connectors.weave import WeaveConnector
 
 os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
 messages = [
