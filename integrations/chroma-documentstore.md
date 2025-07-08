@@ -20,12 +20,6 @@ version: Haystack 2.0
 toc: true
 ---
 
-[![PyPI - Version](https://img.shields.io/pypi/v/chroma-haystack.svg)](https://pypi.org/project/chroma-haystack)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/chroma-haystack.svg)](https://pypi.org/project/chroma-haystack)
-[![test](https://github.com/masci/chroma-haystack/actions/workflows/test.yml/badge.svg)](https://github.com/masci/chroma-haystack/actions/workflows/test.yml)
-
------
-
 **Table of Contents**
 
 - [Chroma Document Store for Haystack](#chroma-document-store-for-haystack)
@@ -64,7 +58,7 @@ indexing.run({"converter": {"sources": file_paths}})
 ```
 
 ## Examples
-You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/chroma).
+You can find a code example showing how to use the Document Store and the Retriever under the `example/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/chroma) or follow [📓 Chroma Indexing and RAG Examples](https://haystack.deepset.ai/cookbook/chroma-indexing-and-rag-examples).
 
 ## License
 
