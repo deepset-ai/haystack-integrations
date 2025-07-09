@@ -16,8 +16,6 @@ logo: /logos/browserbase.png
 version: Haystack 2.0
 ---
 
-# Browserbase Haystack Fetcher
-
 [Browserbase](https://browserbase.com) is a developer platform to reliably run, manage, and monitor headless browsers.
 
 Power your AI data retrievals with:
