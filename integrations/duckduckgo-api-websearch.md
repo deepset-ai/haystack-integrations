@@ -5,7 +5,7 @@ description: Uses DuckDuckGo API for web searches
 authors:
     - name: Giovanni Alzetta
       socials:
-        github: https://github.com/GivAlz/
+        github: GivAlz
 pypi: https://pypi.org/project/duckduckgo-api-haystack/
 repo: https://github.com/GivAlz/duckduckgo-api-haystack
 type: Data Ingestion
