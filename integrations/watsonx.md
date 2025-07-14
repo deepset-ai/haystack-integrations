@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: IBM Watsonx
-description: Use IBM’s watsonx models with Haystack for chat and embedding tasks via the new Watsonx SDK integration.
+description: Use IBM’s watsonx models with Haystack via Watsonx SDK.
 authors:
   - name: deepset
     socials:
@@ -69,8 +69,6 @@ os.environ["WATSONX_API_KEY"] = "your_watsonx_api_key"
 os.environ["WATSONX_PROJECT_ID"] = "your_watsonx_project_id"
 
 generator = WatsonxChatGenerator(
-    api_key=Secret.from_env_var("WATSONX_API_KEY"),
-    project_id=Secret.from_env_var("WATSONX_PROJECT_ID"),
     model="ibm/granite-3-2b-instruct"
 )
 
@@ -107,8 +105,6 @@ def print_streaming_chunk(chunk: StreamingChunk):
 
 # Initialize with streaming callback
 generator = WatsonxChatGenerator(
-    api_key=Secret.from_env_var("WATSONX_API_KEY"),
-    project_id=Secret.from_env_var("WATSONX_PROJECT_ID"),
     model="ibm/granite-3-2b-instruct",
     streaming_callback=print_streaming_chunk
 )
@@ -134,8 +130,6 @@ os.environ["WATSONX_PROJECT_ID"] = "your_watsonx_project_id"
 
 document_embedder = WatsonxDocumentEmbedder(
     model="ibm/slate-125m-english-rtrvr",
-    api_key=Secret.from_env_var("WATSONX_API_KEY"),
-    project_id=Secret.from_env_var("WATSONX_PROJECT_ID"),
     api_base_url="https://us-south.ml.cloud.ibm.com"
 )
 
@@ -164,8 +158,6 @@ os.environ["WATSONX_PROJECT_ID"] = "your_watsonx_project_id"
 
 text_embedder = WatsonxTextEmbedder(
     model="ibm/slate-125m-english-rtrvr",
-    api_key=Secret.from_env_var("WATSONX_API_KEY"),
-    project_id=Secret.from_env_var("WATSONX_PROJECT_ID"),
     api_base_url="https://us-south.ml.cloud.ibm.com"
 )
 
