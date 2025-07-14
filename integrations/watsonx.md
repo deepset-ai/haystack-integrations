@@ -120,4 +120,47 @@ generator.run(messages=messages)
 
 ### Document Embedding
 
+To use Watsonx models for document embedding, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variable and then initialize a `WatsonxDocumentEmbedder` with `"ibm/slate-125m-english-rtrvr"`:
 
+```python
+import os
+from haystack import Document
+from haystack.utils import Secret
+from haystack_integrations.components.embedders.watsonx.document_embedder import WatsonxDocumentEmbedder
+
+os.environ["WATSONX_API_KEY"] = "your_watsonx_api_key"
+os.environ["WATSONX_PROJECT_ID"] = "your_watsonx_project_id"
+
+document_embedder = WatsonxDocumentEmbedder(
+    model="ibm/slate-125m-english-rtrvr",
+    api_key=Secret.from_env_var("WATSONX_API_KEY"),
+    project_id=Secret.from_env_var("WATSONX_PROJECT_ID"),
+    api_base_url="https://us-south.ml.cloud.ibm.com"
+)
+
+documents = [Document(content="Germany has many big cities.")]
+docs_with_embeddings = document_embedder.run(documents)["documents"]
+```
+
+### Text Embedding
+
+To use Watsonx models for text embedding, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variable and then initialize a `WatsonxTextEmbedder` with `"ibm/slate-125m-english-rtrvr"`:
+
+```python
+import os
+from haystack.utils import Secret
+from haystack_integrations.components.embedders.watsonx.text_embedder import WatsonxTextEmbedder
+
+os.environ["WATSONX_API_KEY"] = "your_watsonx_api_key"
+os.environ["WATSONX_PROJECT_ID"] = "your_watsonx_project_id"
+
+text_embedder = WatsonxTextEmbedder(
+    model="ibm/slate-125m-english-rtrvr",
+    api_key=Secret.from_env_var("WATSONX_API_KEY"),
+    project_id=Secret.from_env_var("WATSONX_PROJECT_ID"),
+    api_base_url="https://us-south.ml.cloud.ibm.com"
+)
+
+text = "I love pizza!"
+embeddings = text_embedder.run(text=text)["embeddings"]
+```
