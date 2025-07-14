@@ -44,20 +44,20 @@ pip install watsonx-haystack
 
 ## Usage
 
-Once installed, you will have access to the Haystack Chat components:
-- [`WatsonxChatGenerator`](https://docs.haystack.deepset.ai/docs/watsonxchatgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for chat generation.
-- [`WatsonxGenerator`](https://docs.haystack.deepset.ai/docs/watsonxgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for simple text generation tasks.
-- [`WatsonxDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/watsonxdocumentembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating document embeddings.
-- [`WatsonxTextEmbedder`](https://docs.haystack.deepset.ai/docs/watsonxtextembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating text embeddings and retrieval.
+Once installed, you will have access to the Haystack components:
+- [`WatsonxChatGenerator`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxchatgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for chat generation.
+- [`WatsonxGenerator`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for simple text generation tasks.
+- [`WatsonxDocumentEmbedder`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxdocumentembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating document embeddings.
+- [`WatsonxTextEmbedder`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxtextembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating text embeddings and retrieval.
 
-To use the Watsonx integration, you must provide your `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` via environment variables or as an init argument. If neither is set, you won't be able to use the generator.
+To use the Watsonx integration, you must provide your `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` via environment variables or as an init argument. If neither is set, you won't be able to use the components.
 
 To get an API key, you can follow the sign-up process for [watsonx.ai](https://www.ibm.com/products/watsonx-ai).
 
 
 ### Chat Generation with `granite-3-2b-instruct`
 
-To use Watsonx models for chat generation, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variable and then initialize a `WatsonxChatGenerator` with `"ibm/granite-3-2b-instruct"`:
+To use Watsonx models for chat generation, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variables and then initialize a `WatsonxChatGenerator` with `"ibm/granite-3-2b-instruct"`:
 
 ```python
 import os
@@ -117,7 +117,7 @@ generator.run(messages=messages)
 
 ### Document Embedding
 
-To use Watsonx models for document embedding, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variable and then initialize a `WatsonxDocumentEmbedder` with `"ibm/slate-125m-english-rtrvr"`:
+To use Watsonx models for document embedding, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variables and then initialize a `WatsonxDocumentEmbedder` with `"ibm/slate-125m-english-rtrvr"`:
 
 ```python
 import os
@@ -146,7 +146,7 @@ Output:
 
 ### Text Embedding
 
-To use Watsonx models for text embedding, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variable and then initialize a `WatsonxTextEmbedder` with `"ibm/slate-125m-english-rtrvr"`:
+To use Watsonx models for text embedding, set the `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` environment variables and then initialize a `WatsonxTextEmbedder` with `"ibm/slate-125m-english-rtrvr"`:
 
 ```python
 import os
