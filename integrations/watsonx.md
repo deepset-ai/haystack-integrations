@@ -141,6 +141,13 @@ document_embedder = WatsonxDocumentEmbedder(
 
 documents = [Document(content="Germany has many big cities.")]
 docs_with_embeddings = document_embedder.run(documents)["documents"]
+print(docs_with_embeddings)
+```
+
+Output:
+
+```shell
+[Document(id=..., content: 'Germany has many big cities.', embedding: vector of size 768)]
 ```
 
 ### Text Embedding
@@ -163,5 +170,13 @@ text_embedder = WatsonxTextEmbedder(
 )
 
 text = "I love pizza!"
-embeddings = text_embedder.run(text=text)["embeddings"]
+result = text_embedder.run(text=text)
+print(result)
+```
+
+Output:
+
+```shell
+{'embedding': [0.123, -0.456, 0.789, ...], 
+'meta': {'model': 'ibm/slate-125m-english-rtrvr', 'truncated_input_tokens': None}}
 ```
