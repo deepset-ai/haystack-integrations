@@ -26,9 +26,9 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
   - [Chat Generation with `granite-3-2b-instruct`](#chat-generation-with-granite-3-2b-instruct)
-  - [Streaming Chat](#streaming-chat)
+  - [Streaming Chat Generation](#streaming-chat-generation)
   - [Document Embedding](#document-embedding)
-  - [Text Embedding and Retrieval](#text-embedding-and-retrieval)
+  - [Text Embedding](#text-embedding)
 
 ## Overview
 
@@ -46,6 +46,7 @@ pip install watsonx-haystack
 
 Once installed, you will have access to the Haystack Chat components:
 - [`WatsonxChatGenerator`](https://docs.haystack.deepset.ai/docs/watsonxchatgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for chat generation.
+- [`WatsonxGenerator`](https://docs.haystack.deepset.ai/docs/watsonxgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for simple text generation tasks.
 - [`WatsonxDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/watsonxdocumentembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating document embeddings.
 - [`WatsonxTextEmbedder`](https://docs.haystack.deepset.ai/docs/watsonxtextembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating text embeddings and retrieval.
 
