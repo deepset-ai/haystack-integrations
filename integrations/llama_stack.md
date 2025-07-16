@@ -24,9 +24,15 @@ toc: true
 
 ## Overview
 
-`LlamaStackChatGenerator` lets you use any available LLMs provided by inference providers running on a Llama Stack server. For more information on the providers supported by Llama Stack, see the [Llama Stack docs](https://llama-stack.readthedocs.io/en/latest/providers/inference/index.html). You can use the same client-side code with different inference providers on the Llama Stack server.
+[Llama Stack](https://llama-stack.readthedocs.io/en/latest/index.html) is an open-source framework consisting of AI building blocks and unified APIs that standardizes building AI Apps across different environments.
 
-To follow this guide, you need a running Llama Stack server (remote or local) and a `model` name for `LlamaStackChatGenerator`, which varies by provider. Below are examples for the Llama-3.2-3B model:
+The `LlamaStackChatGenerator` allows you to leverage any LLMs made available by inference providers hosted on a Llama Stack server. It abstracts away the specifics of the underlying provider, enabling you to use the same client-side code across different inference backends. For a list of supported providers and configuration details, refer to the [Llama Stack documentation](https://llama-stack.readthedocs.io/en/latest/providers/inference/index.html).
+
+To use this chat generator, you’ll need:
+- A running instance of a Llama Stack server (either local or remote)
+- A valid model name supported by your chosen inference provider
+
+Below are example configurations for using the Llama-3.2-3B model:
 
 Ollama as the inference provider:
 
@@ -65,14 +71,12 @@ print(response["replies"])
 import os
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.llama-stack import LlamaStackChatGenerator
+from haystack.components.generators.utils import print_streaming_chunk
 
-
-def show(chunk):                              # simple streaming callback
-    print(chunk.content, end="", flush=True)
 
 client = LlamaStackChatGenerator(
     model="meta-llama/Llama-3.2-3B",
-    streaming_callback=show,
+    streaming_callback=print_streaming_chunk,
 )
 
 response = client.run([ChatMessage.from_user("Summarize RAG in two lines.")])
