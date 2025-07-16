@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/llama-stack-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/llama_stack
-type: Provider
+type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/meta.png
 version: Haystack 2.0
