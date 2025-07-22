@@ -3,6 +3,9 @@ layout: integration
 name: HanLP
 description: Use HanLP for Chinese text processing with Haystack
 authors:
+  - name: MaChi
+    socials:
+      github: mc112611
   - name: deepset
     socials:
       github: deepset-ai
