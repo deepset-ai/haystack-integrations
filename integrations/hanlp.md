@@ -32,7 +32,7 @@ toc: true
 
 ## Overview
 
-You can use [HanLP (Han Language Processing)](https://github.com/hankcs/HanLP) in your Haystack pipelines or as a standalone component for Chinese text processing. HanLP is a comprehensive NLP library for Chinese language processing that provides advanced tokenization, sentence segmentation, and other linguistic analysis capabilities.
+You can use [HanLP (Han Language Processing)](https://github.com/hankcs/HanLP) in your Haystack pipelines or as a standalone component for **Chinese text processing**. HanLP is a comprehensive NLP library for Chinese language processing that provides advanced tokenization, sentence segmentation, and other linguistic analysis capabilities.
 
 The integration provides a specialized `ChineseDocumentSplitter` component that understands the unique characteristics of Chinese text, such as the lack of spaces between words and the multi-character nature of Chinese words.
 
