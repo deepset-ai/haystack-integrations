@@ -30,6 +30,10 @@ toc: true
 
 ## Overview
 
+🚧 **This integration uses a deprecated SDK.**
+
+**We recommend switching to the new [Google GenAI](https://haystack.deepset.ai/integrations/google-genai) integration instead.**
+
 [Vertex AI](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/overview) is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. This integration enables the usage of [generative models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models) and [embedding models](https://cloud.google.com/vertex-ai/generative-ai/docs/models#embeddings-models) through Vertex AI API on Google Cloud Platform (GCP). 
 
 Haystack supports [Gemini API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#gemini-models), [PaLM API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#palm-models), [Codey APIs models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#codey-models), and [Imagen API models](https://cloud.google.com/vertex-ai/docs/generative-ai/learn/models#imagen-models) and [](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/text-embeddings-api) for task such as **text generation**, **function calling**, **image generation**, **visual question answering**, **code generation**, and **image captioning** as well as **embedding generation**.

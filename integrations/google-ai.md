@@ -28,6 +28,10 @@ toc: true
 
 ## Overview
 
+🚧 **This integration uses a deprecated SDK.**
+
+**We recommend switching to the new [Google GenAI](https://haystack.deepset.ai/integrations/google-genai) integration instead.**
+
 [Google AI](https://ai.google.dev/) is a machine learning (ML) platform that lets you train and deploy ML models and AI applications, and customize large language models (LLMs) for use in your AI-powered applications. This integration enables the usage of Google generative models via Google AI Studio.
 
 Haystack supports all the available [multimodal Gemini models](https://ai.google.dev/models/gemini) for tasks such as **text generation**, **function calling**, **visual question answering**, **code generation**, and **image captioning**.
