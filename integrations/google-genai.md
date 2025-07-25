@@ -89,7 +89,7 @@ chat_generator = GoogleGenAIChatGenerator(
 ```python
 from haystack_integrations.components.generators.google_genai import GoogleGenAIChatGenerator
 
-# export the environment variable (GOOGLE_API_KEY or GEMINI_API_KEY)
+# set the environment variable (GOOGLE_API_KEY or GEMINI_API_KEY)
 chat_generator = GoogleGenAIChatGenerator(api="vertex")
 ```
 
