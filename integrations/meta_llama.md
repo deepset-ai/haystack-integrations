@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/meta-llama-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/meta_llama
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/llama.png
+logo: /logos/llama.svg
 version: Haystack 2.0
 toc: true
 ---
