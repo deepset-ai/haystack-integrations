@@ -37,6 +37,7 @@ toc: true
 ## Overview
 
 [Google Gen AI](https://ai.google.dev/) provides access to Google's Gemini models through the new Google Gen AI SDK. This integration enables the usage of Google's latest generative models via the updated API interface.
+Google Gen AI is compatible with both the Gemini Developer API and the Vertex AI API.
 
 Haystack supports the latest [Gemini models](https://ai.google.dev/models/gemini) like `gemini-2.0-flash` and `text-embedding-004` for tasks such as **chat completion**, **function calling**, **streaming responses** and **embedding generation**.
 
@@ -56,9 +57,41 @@ Once installed, you will have access to the Haystack Chat components:
 - `GoogleGenAIDocumentEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings for documents.
 - `GoogleGenAITextEmbedder`: Use this component with [Google GenAI models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as '**text-embedding-004**' for generating embeddings for text.
 
-To use Google Gemini models, you need an API key. You can either pass it as an init argument or set a `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable. If neither is set, you won't be able to use the generator.
+To use this component with the Gemini Developer API and get an API key, visit [Google AI Studio](https://aistudio.google.com/).
+To use this component with the Vertex AI API, visit [Google Cloud > Vertex AI](https://cloud.google.com/vertex-ai).
 
-To get an API key visit [Google AI Studio](https://aistudio.google.com/).
+### Authentication
+
+The following examples show how to use the component with the Gemini Developer API and the Vertex AI API. They are also valid
+for the Embedders.
+
+#### Gemini Developer API (API Key Authentication)
+```python
+from haystack_integrations.components.generators.google_genai import GoogleGenAIChatGenerator
+
+# set the environment variable (GOOGLE_API_KEY or GEMINI_API_KEY)
+chat_generator = GoogleGenAIChatGenerator()
+```
+
+#### Vertex AI (Application Default Credentials)
+```python
+from haystack_integrations.components.generators.google_genai import GoogleGenAIChatGenerator
+
+# Using Application Default Credentials (requires gcloud auth setup)
+chat_generator = GoogleGenAIChatGenerator(
+    api="vertex",
+    vertex_ai_project="my-project",
+    vertex_ai_location="us-central1",
+)
+```
+
+#### Vertex AI (API Key Authentication)
+```python
+from haystack_integrations.components.generators.google_genai import GoogleGenAIChatGenerator
+
+# set the environment variable (GOOGLE_API_KEY or GEMINI_API_KEY)
+chat_generator = GoogleGenAIChatGenerator(api="vertex")
+```
 
 ### Chat Generation with `gemini-2.0-flash`
 
@@ -164,8 +197,6 @@ The weather in Paris is sunny and 25°C.
 
 ### Document Embedding
 
-To use Google model for embedding generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAIDocumentEmbedder`:
-
 ```python
 import os
 from haystack import Document
@@ -182,8 +213,6 @@ docs_w_embeddings = embedder.run(documents=[doc])["documents"]
 ```
 
 ### Text Embedding
-
-To use Google model for embedding generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAITextEmbedder`:
 
 ```python
 import os
