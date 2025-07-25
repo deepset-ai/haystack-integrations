@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: Meta Llama API
+name: Llama API
 description: Use Llama Models with Haystack
 authors:
     - name: Young Han
@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/meta-llama-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/meta_llama
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/meta_llama.png
+logo: /logos/llama.png
 version: Haystack 2.0
 toc: true
 ---
