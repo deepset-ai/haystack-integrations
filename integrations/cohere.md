@@ -42,11 +42,13 @@ You can use Cohere models in various ways:
 
 ### Embedding Models
 
-You can leverage `/embed` models from Cohere through two components: [CohereTextEmbedder](https://docs.haystack.deepset.ai/docs/coheretextembedder) and [CohereDocumentEmbedder](https://docs.haystack.deepset.ai/docs/coheredocumentembedder). These components support both **Embed v2** and **Embed v3** models.
+You can leverage `/embed` models from Cohere through three components: [CohereTextEmbedder](https://docs.haystack.deepset.ai/docs/coheretextembedder), [CohereDocumentEmbedder](https://docs.haystack.deepset.ai/docs/coheredocumentembedder) and [CohereDocumentImageEmbedder](https://docs.haystack.deepset.ai/docs/coheredocumentimageembedder). These components support the Embed series of models.
 
-To create semantic embeddings for documents, use `CohereDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `CohereTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable.
+To create semantic embeddings for textual documents, use `CohereDocumentEmbedder` in your indexing pipeline.
+To create semantic embeddings for image-based documents, use `CohereDocumentImageEmbedder` in your indexing pipeline.
+For generating embeddings for queries, use `CohereTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable.
 
-Below is the example indexing pipeline with `InMemoryDocumentStore`, `CohereDocumentEmbedder` and `DocumentWriter`:
+Below is the example indexing pipeline with `InMemoryDocumentStore`, `CohereDocumentEmbedder` and `DocumentWriter` for textual documents:
 
 ```python
 from haystack import Document, Pipeline
@@ -63,6 +65,27 @@ documents = [Document(content="My name is Wolfgang and I live in Berlin"),
 
 indexing_pipeline = Pipeline()
 indexing_pipeline.add_component("embedder", CohereDocumentEmbedder(model="embed-multilingual-v3.0", input_type="search_document"))
+indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
+indexing_pipeline.connect("embedder", "writer")
+
+indexing_pipeline.run({"embedder": {"documents": documents}})
+```
+
+Below is the example indexing pipeline with `InMemoryDocumentStore`, `CohereDocumentImageEmbedder` and `DocumentWriter` for image-based documents:
+
+```python
+from haystack import Document, Pipeline
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.components.writers import DocumentWriter
+from haystack_integrations.components.embedders.cohere import CohereDocumentImageEmbedder
+
+documents = [
+    Document(content="A photo of a cat", meta={"file_path": "cat.jpg"}),
+    Document(content="A photo of a dog", meta={"file_path": "dog.jpg"}),
+]
+
+indexing_pipeline = Pipeline()
+indexing_pipeline.add_component("embedder", CohereDocumentImageEmbedder(model="embed-v4.0"))
 indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 indexing_pipeline.connect("embedder", "writer")
 
