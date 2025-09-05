@@ -17,7 +17,7 @@ version: Haystack 2.0
 toc: true
 ---
 
-This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings` and [reranking models](https://jina.ai/reranker/) in their pipelines. Haystack also integrates the [Jina Reader API](https://jina.ai/reader/).
+This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings`and [reranking models](https://jina.ai/reranker/) in their pipelines. Haystack also integrates the [Jina Reader API](https://jina.ai/reader/).
 
 [Jina AI](https://jina.ai/embeddings/) is a multimodal AI company, with a vision to revolutionize the way we interpret and interact with information with its prompt and model technologies.
 
@@ -83,11 +83,11 @@ pip install jina-haystack
 
 ### Embedding Models
 
-You can use Jina Embedding models with two components: [`JinaTextEmbedder`](https://docs.haystack.deepset.ai/docs/jinatextembedder) and [`JinaDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/jinadocumentembedder).
+You can use Jina Embedding models with three components: [`JinaTextEmbedder`](https://docs.haystack.deepset.ai/docs/jinatextembedder), [`JinaDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/jinadocumentembedder), and [`JinaDocumentImageEmbedder`](https://docs.haystack.deepset.ai/docs/jinadocumentimageembedder).
 
 You can use the Jina Reranker models with one component: [`JinaRanker`](https://docs.haystack.deepset.ai/docs/jinaranker).
 
-To create semantic embeddings for documents, use `JinaDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `JinaTextEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Jina API key. You can also
+To create semantic embeddings for documents, use `JinaDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `JinaTextEmbedder`. For image-based embeddings, use `JinaDocumentImageEmbedder`. Once you've selected the suitable component for your specific use case, initialize the component with the model name and Jina API key. You can also
 set the environment variable `JINA_API_KEY` instead of passing the api key as an argument.
 
 Below is the example indexing pipeline with `InMemoryDocumentStore`, `JinaDocumentEmbedder` and `DocumentWriter`:
@@ -124,6 +124,68 @@ indexing_pipeline.connect("embedder", "writer")
 
 indexing_pipeline.run({"embedder": {"documents": documents}})
 ```
+
+#### Image Embedding
+
+  For embedding images, you can use `JinaDocumentImageEmbedder` with Jina's multimodal models that support both text and image
+   inputs:
+
+  **Supported Models:**
+  - `jina-clip-v1`: Basic multimodal model for text-image tasks
+  - `jina-clip-v2`: Advanced model with higher resolution support (512×512) and improved performance
+  - `jina-embeddings-v4`: Unified embeddings for text, images, and visual documents
+
+  **Key Features:**
+  - **Image resizing**: Automatically resize images to optimal dimensions
+  - **Batch processing**: Process multiple images efficiently with configurable batch sizes
+  - **PDF support**: Extract and embed images from PDF documents
+  - **Multiple formats**: Support for JPEG, PNG, and PDF files
+
+  Below is an example indexing pipeline for images using `JinaDocumentImageEmbedder`:
+
+  ```python
+  import os
+  from haystack import Document, Pipeline
+  from haystack.document_stores.in_memory import InMemoryDocumentStore
+  from haystack.components.writers import DocumentWriter
+  from haystack.utils import Secret
+  from haystack_integrations.components.embedders.jina import JinaDocumentImageEmbedder
+
+  os.environ["JINA_API_KEY"] = "your-jina-api-key"
+
+  document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+  # Documents with image file paths
+  documents = [
+      Document(content="A cat sitting on a chair", meta={"file_path": "cat.jpg"}),
+      Document(content="A dog running in the park", meta={"file_path": "dog.png"}),
+      Document(content="City skyline at sunset", meta={"file_path": "city.jpeg"}),
+  ]
+
+  indexing_pipeline = Pipeline()
+  indexing_pipeline.add_component(
+      "image_embedder",
+      JinaDocumentImageEmbedder(
+          api_key=Secret.from_token("<your-api-key>"),
+          model="jina-clip-v2",  # Recommended for image tasks
+          embedding_dimension=768,
+          image_size=(512, 512),  # Optional: resize images
+          batch_size=5,  # Process 5 images per API call
+      )
+  )
+  indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
+  indexing_pipeline.connect("image_embedder", "writer")
+
+  indexing_pipeline.run({"image_embedder": {"documents": documents}})
+
+  The JinaDocumentImageEmbedder automatically:
+  - Loads images from the file paths specified in document metadata
+  - Converts images to the appropriate format for the Jina API
+  - Resizes images if image_size is specified
+  - Processes multiple images in batches for optimal performance
+  - Supports PDF documents by extracting individual pages as images
+```
+
 
 ### Jina Reader API
 
