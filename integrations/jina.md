@@ -166,7 +166,6 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
   indexing_pipeline.add_component(
       "image_embedder",
       JinaDocumentImageEmbedder(
-          api_key=Secret.from_token("<your-api-key>"),
           model="jina-clip-v2",  # Recommended for image tasks
           embedding_dimension=768,
           image_size=(512, 512),  # Optional: resize images
@@ -177,6 +176,7 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
   indexing_pipeline.connect("image_embedder", "writer")
 
   indexing_pipeline.run({"image_embedder": {"documents": documents}})
+  ```
 
   The JinaDocumentImageEmbedder automatically:
   - Loads images from the file paths specified in document metadata
@@ -184,7 +184,6 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
   - Resizes images if image_size is specified
   - Processes multiple images in batches for optimal performance
   - Supports PDF documents by extracting individual pages as images
-```
 
 
 ### Jina Reader API
