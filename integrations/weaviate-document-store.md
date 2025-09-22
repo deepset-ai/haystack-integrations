@@ -51,6 +51,7 @@ from haystack_integrations.document_stores.weaviate import WeaviateDocumentStore
 from weaviate.embedded import EmbeddedOptions
 
 document_store = WeaviateDocumentStore(embedded_options=EmbeddedOptions())
+# document_store = WeaviateDocumentStore(url="http://localhost:8080")
 ```
 
 ### Writing Documents to WeaviateDocumentStore
@@ -67,6 +68,15 @@ indexing.add_component("writer", DocumentWriter(document_store))
 indexing.connect("converter", "writer")
 indexing.run({"converter": {"paths": file_paths}})
 ```
+
+### Retrieval
+
+The integration supports different retrieval types through different retriever components:
+
+[`WeaviateBM25Retriever`](https://docs.haystack.deepset.ai/docs/weaviatebm25retriever): A keyword-based retriever that fetches documents matching a query from the Document Store.
+[`WeaviateEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/weaviateembeddingretriever): Compares the query and document embeddings and fetches the documents most relevant to the query.
+[`WeaviateHybridRetriever`](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/weaviate/src/haystack_integrations/components/retrievers/weaviate/hybrid_retriever.py): A retriever that uses hybrid search to find similar documents based on the embeddings of the query.
+
 
 ### License
 
