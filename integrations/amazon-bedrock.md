@@ -138,5 +138,39 @@ result = query_pipeline.run({"text_embedder":{"text": query}})
 print(result['retriever']['documents'][0])
 
 # Document(id=..., content: 'My name is Wolfgang and I live in Berlin')
+```
 
-For examples with `AmazonBedrockDocumentImageEmbedder`, refer to [documentation](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentimageembedder).
+An example using `AmazonBedrockDocumentImageEmbedder` and `AmazonBedrockTextEmbedder`:
+
+```python
+from haystack import Document, Pipeline
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.components.writers import DocumentWriter
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack_integrations.components.embedders.amazon_bedrock import (
+    AmazonBedrockDocumentImageEmbedder,
+    AmazonBedrockTextEmbedder,
+)
+
+document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+
+documents = [
+    Document(content="A hyena", meta={"file_path": "hyena.png"}),
+    Document(content="A dog", meta={"file_path": "dog.jpg"}),
+]
+
+indexing = Pipeline()
+indexing.add_component("image_embedder", AmazonBedrockDocumentImageEmbedder(model="cohere.embed-english-v3"))
+indexing.add_component("writer", DocumentWriter(document_store=document_store))
+indexing.connect("image_embedder", "writer")
+indexing.run({"image_embedder": {"documents": documents}})
+
+
+query = Pipeline()
+query.add_component("text_embedder", AmazonBedrockTextEmbedder(model="cohere.embed-english-v3"))
+query.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
+query.connect("text_embedder.embedding", "retriever.query_embedding")
+
+res = query.run({"text_embedder": {"text": "man's best friend"}})
+```
