@@ -92,12 +92,15 @@ Output:
 {'replies': ['It\'s subjective to determine the "best" American actor as it depends on personal preferences, critical acclaim, and the impact of their work. However, some of the most renowned and influential American actors include:\n\n1. Daniel Day-Lewis - Known for his versatility and commitment to his roles, Day-Lewis is a three-time Academy Award winner for Best Actor.\n2. Meryl Streep - With a record 21 Academy Award nominations and three wins, Streep is widely regarded as one of the greatest actresses in American film history.\n3. Jack Nicholson - A three-time Academy Award winner and 12-time nominee, Nicholson is known for his iconic roles in films like "One Flew Over the Cuckoo\'s Nest," "Terms of Endearment," and "As Good as It Gets."\n4. Robert De Niro - A two-time Academy Award winner, De Niro is known for his collaborations with Martin Scorsese and his memorable roles in films like "Taxi Driver," "Raging Bull," and "The Godfather: Part II."\n5. Leonardo DiCaprio - A four-time Academy Award nominee and one-time winner, DiCaprio has had a successful career in both blockbusters and independent films.\n\nThese are just a few examples of highly acclaimed American actors, and there are many other talented actors who could be considered for this title.'], 'meta': {'RequestId': 'ed9c8566-0b13-4c08-ba72-c88be1aecd02', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Mon, 28 Apr 2025 11:00:15 GMT', 'content-type': 'application/json', 'content-length': '1322', 'connection': 'keep-alive', 'x-amzn-requestid': 'ed9c8566-0b13-4c08-ba72-c88be1aecd02', 'x-amzn-bedrock-invocation-latency': '7065', 'x-amzn-bedrock-output-token-count': '323', 'x-amzn-bedrock-input-token-count': '16'}, 'RetryAttempts': 0}}
 ```
 
-### AmazonBedrockTextEmbedder and AmazonBedrockDocumentEmbedder
+### Embedders
 
-These two components can compute embeddings for text and Documents, respectively. 
+Three components are available for using embedding models with Amazon Bedrock: [`AmazonBedrockTextEmbedder`](https://docs.haystack.deepset.ai/docs/amazonbedrocktextembedder), [`AmazonBedrockDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentembedder) and [`AmazonBedrockDocumentImageEmbedder`](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentimageembedder).
+
 The supported models are "amazon.titan-embed-text-v1", "amazon.titan-embed-text-v2:0", "cohere.embed-english-v3," and "cohere.embed-multilingual-v3."
 
-See them in action:
+To create embeddings for textual documents, use `AmazonBedrockDocumentEmbedder` in your indexing pipeline. To create embeddings for image-based documents, use `AmazonBedrockDocumentImageEmbedder`. For generating embeddings for queries, use `AmazonBedrockTextEmbedder`. 
+
+An example using `AmazonBedrockDocumentEmbedder` and `AmazonBedrockTextEmbedder`:
 
 ```python
 from haystack import Pipeline
@@ -135,3 +138,39 @@ result = query_pipeline.run({"text_embedder":{"text": query}})
 print(result['retriever']['documents'][0])
 
 # Document(id=..., content: 'My name is Wolfgang and I live in Berlin')
+```
+
+An example using `AmazonBedrockDocumentImageEmbedder` and `AmazonBedrockTextEmbedder`:
+
+```python
+from haystack import Document, Pipeline
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.components.writers import DocumentWriter
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack_integrations.components.embedders.amazon_bedrock import (
+    AmazonBedrockDocumentImageEmbedder,
+    AmazonBedrockTextEmbedder,
+)
+
+document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
+
+
+documents = [
+    Document(content="A hyena", meta={"file_path": "hyena.png"}),
+    Document(content="A dog", meta={"file_path": "dog.jpg"}),
+]
+
+indexing = Pipeline()
+indexing.add_component("image_embedder", AmazonBedrockDocumentImageEmbedder(model="cohere.embed-english-v3"))
+indexing.add_component("writer", DocumentWriter(document_store=document_store))
+indexing.connect("image_embedder", "writer")
+indexing.run({"image_embedder": {"documents": documents}})
+
+
+query = Pipeline()
+query.add_component("text_embedder", AmazonBedrockTextEmbedder(model="cohere.embed-english-v3"))
+query.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
+query.connect("text_embedder.embedding", "retriever.query_embedding")
+
+res = query.run({"text_embedder": {"text": "man's best friend"}})
+```
