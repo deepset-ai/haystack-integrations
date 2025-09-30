@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-This integration supports Anthropic Claude models such as Claude Haiku 3.5, Claude Sonnet 3.7, and Claude Sonnet 4 through Anthropic’s inference infrastructure. For a complete list of available models, check out [the Anthropic Claude documentation](https://docs.anthropic.com/en/docs/about-claude/models/overview).
+This integration supports Anthropic Claude models such as Claude Haiku 3.5, Claude Sonnet 3.7, and Claude Sonnet 4.5 through Anthropic’s inference infrastructure. For a complete list of available models, check out [the Anthropic Claude documentation](https://docs.claude.com/en/docs/about-claude/models/overview).
 
 You can use Anthropic models with [`AnthropicGenerator`](https://docs.haystack.deepset.ai/docs/anthropicgenerator) and [`AnthropicChatGenerator`](https://docs.haystack.deepset.ai/docs/anthropicchatgenerator).
 
@@ -46,6 +46,7 @@ Below is an example RAG Pipeline where we answer a predefined question using the
 
 ```python
 # To run this example, you need to set the `ANTHROPIC_API_KEY` environment variable.
+# !pip install trafilatura
 
 from haystack import Pipeline
 from haystack.components.builders import ChatPromptBuilder
