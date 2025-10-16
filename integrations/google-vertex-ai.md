@@ -52,8 +52,8 @@ pip install google-vertex-haystack
 ## Usage
 
 Once installed, you will have access to various Haystack Generators and Embedders: 
-- [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation and multimodal prompts.
-- [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-1.5-flash**', '**gemini-2.0-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
+- [VertexAIGeminiGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminigenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-2.0-flash**' and '**gemini-2.5-flash**' for text generation and multimodal prompts.
+- [VertexAIGeminiChatGenerator](https://docs.haystack.deepset.ai/docs/vertexaigeminichatgenerator): Use this component with Gemini models '**gemini-1.5-pro**', '**gemini-2.0-flash**' and '**gemini-2.5-flash**' for text generation, multimodal prompts and function calling in chat completion setting.
 - [VertexAITextGenerator](https://docs.haystack.deepset.ai/docs/vertexaitextgenerator): Use this component with PaLM models for text generation.
 - [VertexAICodeGenerator](https://docs.haystack.deepset.ai/docs/vertexaicodegenerator): Use this component with Codey model for code generation and code completion.
 - [VertexAIImageGenerator](https://docs.haystack.deepset.ai/docs/vertexaiimagegenerator): Use this component with Imagen model '**imagegeneration**' for image generation.
@@ -63,7 +63,7 @@ Once installed, you will have access to various Haystack Generators and Embedder
 - `VertexAIDocumentEmbedder`: Use this component to create embeddings for Document using Vertex AI Text Embedder API.
 
 To use Vertex AI models, you need to have a Google Cloud Platform account and be logged in using Application Default Credentials (ADCs). For more info see the [official documentation](https://colab.research.google.com/corgiredirector?site=https%3A%2F%2Fcloud.google.com%2Fdocs%2Fauthentication%2Fprovide-credentials-adc). 
-`VertexAIGeminiGenerator` and `VertexAIGeminiChatGenerator` support both `gemini-1.5-pro` and `gemini-1.5-flash`/ `gemini-2.0-flash` models. 
+`VertexAIGeminiGenerator` and `VertexAIGeminiChatGenerator` support both `gemini-1.5-pro` and `gemini-2.0-flash`/`gemini-2.5-flash` models. 
 Note that [Google recommends upgrading](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions) from `gemini-1.5-pro` to `gemini-2.0-flash`.
 
 To start using Vertex AI generators in Haystack, it is essential that your account has access to a project authorized to use Google Vertex AI endpoints. The `project_id` needed for initialization of Vertex AI generators is set during GCP authentication mentioned above. Additonally, you can also set a different `project_id` by passing it as a variable during initialization of the generator.
