@@ -38,19 +38,65 @@ Use `pip` to install Snowflake:
 pip install snowflake-haystack
 ```
 ## Usage
-Once installed, initialize the `SnowflakeTableRetriever` to use it with Haystack:
+Once installed, initialize the `SnowflakeTableRetriever` to use it with Haystack. The integration supports multiple authentication methods including Multi-Factor Authentication (MFA).
 
+### Authentication Methods
+
+#### Password Authentication
 ```python
 from haystack_integrations.components.retrievers.snowflake import SnowflakeTableRetriever
+from haystack.utils import Secret
 
-# Provide your Snowflake credentials during intialization.
+# Traditional password authentication
 executor = SnowflakeTableRetriever(
     user="<ACCOUNT-USER>",
     account="<ACCOUNT-IDENTIFIER>",
+    authenticator="SNOWFLAKE",
     api_key=Secret.from_env_var("SNOWFLAKE_API_KEY"),
     warehouse="<WAREHOUSE-NAME>",
 )
 ```
+
+#### Key-pair Authentication (MFA)
+```python
+# JWT-based authentication using private key files
+executor = SnowflakeTableRetriever(
+    user="<ACCOUNT-USER>",
+    account="<ACCOUNT-IDENTIFIER>",
+    authenticator="SNOWFLAKE_JWT",
+    private_key_file=Secret.from_env_var("SNOWFLAKE_PRIVATE_KEY_FILE"),
+    private_key_file_pwd=Secret.from_env_var("SNOWFLAKE_PRIVATE_KEY_PWD"),  # Optional if key is encrypted
+    warehouse="<WAREHOUSE-NAME>",
+)
+```
+
+#### OAuth Authentication (MFA)
+```python
+# OAuth-based authentication
+executor = SnowflakeTableRetriever(
+    user="<ACCOUNT-USER>",
+    account="<ACCOUNT-IDENTIFIER>",
+    authenticator="OAUTH",
+    oauth_client_id=Secret.from_env_var("SNOWFLAKE_OAUTH_CLIENT_ID"),
+    oauth_client_secret=Secret.from_env_var("SNOWFLAKE_OAUTH_CLIENT_SECRET"),
+    oauth_token_request_url="<TOKEN-REQUEST-URL>",
+    warehouse="<WAREHOUSE-NAME>",
+)
+```
+
+### Authentication Parameters
+
+The `SnowflakeTableRetriever` supports three authentication methods:
+
+- **`SNOWFLAKE`**: Traditional password authentication
+  - Requires: `api_key` (password)
+- **`SNOWFLAKE_JWT`**: Key-pair authentication with JWT tokens (MFA)
+  - Requires: `private_key_file` (path to private key file)
+  - Optional: `private_key_file_pwd` (passphrase if key is encrypted)
+- **`OAUTH`**: OAuth-based authentication (MFA)
+  - Requires: `oauth_client_id`, `oauth_client_secret`, `oauth_token_request_url`
+
+### Database Access
 
 Ensure you have `select` access to the tables before querying the database. More details [here](https://docs.snowflake.com/en/user-guide/security-access-control-privileges):
 ```python
@@ -93,6 +139,7 @@ from haystack_integrations.components.retrievers.snowflake import SnowflakeTable
 executor = SnowflakeTableRetriever(
     user="<ACCOUNT-USER>",
     account="<ACCOUNT-IDENTIFIER>",
+    authenticator="SNOWFLAKE",
     api_key=Secret.from_env_var("SNOWFLAKE_API_KEY"),
     warehouse="<WAREHOUSE-NAME>",
 )
