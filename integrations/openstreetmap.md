@@ -5,12 +5,12 @@ description: Haystack component to fetch geographic data via the freely availabl
 authors:
     - name: Wyatt "Huaye" Wei
       socials:
-        github: https://github.com/grexrr
+        github: "https://github.com/grexrr"
         twitter: @grexrr_w
-        linkedin: www.linkedin.com/in/wyatt-wei-89052341
-pypi: https://pypi.org/project/osm-integration-haystack/
-repo: https://github.com/grexrr/osm-integration-haystack
-report_issue: tweet me on X 
+        linkedin: "www.linkedin.com/in/wyatt-wei-89052341"
+pypi: "https://pypi.org/project/osm-integration-haystack/"
+repo: "https://github.com/grexrr/osm-integration-haystack"
+report_issue: "please tweet me on X"
 type: Data Integration
 toc: true (optional)
 logo: /logos/osm_logo.png
