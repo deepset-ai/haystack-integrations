@@ -3,14 +3,14 @@ layout: integration
 name: OpenStreetMap
 description: Haystack component to fetch geographic data via the freely available OpenStreetMap (OSM) Overpass API.
 authors:
-    - name: Wyatt "Huaye" Wei
+    - name: Wyatt Wei
       socials:
-        github: "https://github.com/grexrr"
-        twitter: @grexrr_w
-        linkedin: "www.linkedin.com/in/wyatt-wei-89052341"
-pypi: "https://pypi.org/project/osm-integration-haystack/"
-repo: "https://github.com/grexrr/osm-integration-haystack"
-report_issue: "please tweet me on X"
+        github: grexrr
+        twitter: grexrr_w
+        linkedin: https://www.linkedin.com/in/wyatt-wei-89052341/
+pypi: https://pypi.org/project/osm-integration-haystack/
+repo: https://github.com/grexrr/osm-integration-haystack
+report_issue: https://github.com/grexrr/osm-integration-haystack/issues
 type: Data Integration
 toc: true (optional)
 logo: /logos/osm_logo.png
