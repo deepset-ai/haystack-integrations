@@ -21,6 +21,10 @@ version: Haystack 2.0
 - [License](#license)
 
 ## Overview
+[Isaacus](https://isaacus.com/) is a foundational legal AI research company building AI models, apps, and tools for the legal tech ecosystem.
+
+Isaacus' offering includes [Kanon 2 Embedder](https://isaacus.com/blog/introducing-kanon-2-embedder), the world's best legal embedding model (as measured on the [Massive Legal Embedding Benchmark](https://isaacus.com/blog/introducing-mleb)), as well as [legal zero-shot classification](https://docs.isaacus.com/models/introduction#universal-classification) and [legal extractive question answering models](https://docs.isaacus.com/models/introduction#answer-extraction).
+
 Isaacus currently supports the following models in Haystack:
 - **Kanon 2 embedder** – the best performing model on the [Massive Legal Embedding Benchmark (MLEB)](https://isaacus.com/blog/introducing-kanon-2-embedder). It is a legal domain-specific embedding model that can be used for semantic search, question answering, and other NLP tasks.
 
