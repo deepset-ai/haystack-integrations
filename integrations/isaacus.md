@@ -42,16 +42,23 @@ from haystack import Pipeline, Document
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.utils import Secret
-from haystack_integrations.components.embedders.isaacus import (Kanon2TextEmbedder, Kanon2DocumentEmbedder)
+from haystack_integrations.components.embedders.isaacus import (IsaacusTextEmbedder, IsaacusDocumentEmbedder)
 
 store = InMemoryDocumentStore(embedding_similarity_function="dot_product")
-embedder = Kanon2DocumentEmbedder(api_key=Secret.from_env_var("ISAACUS_API_KEY"))
+embedder = IsaacusDocumentEmbedder(
+    api_key=Secret.from_env_var("ISAACUS_API_KEY"),
+    model="kanon-2-embedder",          # choose any supported Isaacus embedding model
+    # dimensions=1792,                 # optionally set to match your vector DB
+)
 
 raw_docs = [Document(content="Isaacus releases Kanon 2 Embedder: the world's best legal embedding model.")]
 store.write_documents(embedder.run(raw_docs)["documents"])
 
 pipe = Pipeline()
-pipe.add_component("q", Kanon2TextEmbedder(api_key=Secret.from_env_var("ISAACUS_API_KEY")))
+pipe.add_component("q", IsaacusTextEmbedder(
+    api_key=Secret.from_env_var("ISAACUS_API_KEY"),
+    model="kanon-2-embedder",
+))
 pipe.add_component("ret", InMemoryEmbeddingRetriever(document_store=store))
 pipe.connect("q.embedding", "ret.query_embedding")
 
@@ -64,3 +71,4 @@ print(pipe.run({"q": {"text": "Who built Kanon 2 Embedder?"}}))
 
 ## License
 Apache-2.0
+ 
