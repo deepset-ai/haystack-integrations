@@ -12,7 +12,7 @@ type: Model Provider
 logo: /logos/isaacus.png
 version: Haystack 2.0
 ---
-### **Table of Contents**
+### Table of Contents
 - [Overview](#overview)
 - [Installation](#installation)
 - [Components](#components)
@@ -42,13 +42,13 @@ pip install isaacus-haystack
 from haystack import Pipeline, Document
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
-from haystack.utils.auth import Secret
-from isaacus_haystack.kanon2_embedder import Kanon2TextEmbedder, Kanon2DocumentEmbedder
+from haystack.utils import Secret
+from haystack_integrations.components.embedders.isaacus import (Kanon2TextEmbedder, Kanon2DocumentEmbedder)
 
 store = InMemoryDocumentStore(embedding_similarity_function="dot_product")
 embedder = Kanon2DocumentEmbedder(api_key=Secret.from_env_var("ISAACUS_API_KEY"))
 
-raw_docs = [Document(content="Isaacus built Kanon 2: the best performing model on the Massive Legal Embedding Benchmark (MLEB).")]
+raw_docs = [Document(content="Isaacus builds Kanon 2: the best performing model on the Massive Legal Embedding Benchmark (MLEB).")]
 store.write_documents(embedder.run(raw_docs)["documents"])
 
 pipe = Pipeline()
@@ -64,4 +64,4 @@ print(pipe.run({"q": {"text": "Who builds Kanon 2?"}}))
 - Haystack: https://haystack.deepset.ai/
 
 ## License
-MIT
+Apache-2.0
