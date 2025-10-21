@@ -25,8 +25,7 @@ version: Haystack 2.0
 
 Isaacus' offering includes [Kanon 2 Embedder](https://isaacus.com/blog/introducing-kanon-2-embedder), the world's best legal embedding model (as measured on the [Massive Legal Embedding Benchmark](https://isaacus.com/blog/introducing-mleb)), as well as [legal zero-shot classification](https://docs.isaacus.com/models/introduction#universal-classification) and [legal extractive question answering models](https://docs.isaacus.com/models/introduction#answer-extraction).
 
-Isaacus currently supports the following models in Haystack:
-- **Kanon 2 embedder** – the best performing model on the [Massive Legal Embedding Benchmark (MLEB)](https://isaacus.com/blog/introducing-kanon-2-embedder). It is a legal domain-specific embedding model that can be used for semantic search, question answering, and other NLP tasks.
+Isaacus offers first-class support for Haystack through the `isaacus-haystack` integration package.
 
 ## Installation
 ```bash
@@ -48,7 +47,7 @@ from haystack_integrations.components.embedders.isaacus import (Kanon2TextEmbedd
 store = InMemoryDocumentStore(embedding_similarity_function="dot_product")
 embedder = Kanon2DocumentEmbedder(api_key=Secret.from_env_var("ISAACUS_API_KEY"))
 
-raw_docs = [Document(content="Isaacus builds Kanon 2: the best performing model on the Massive Legal Embedding Benchmark (MLEB).")]
+raw_docs = [Document(content="Isaacus releases Kanon 2 Embedder: the world's best legal embedding model.")]
 store.write_documents(embedder.run(raw_docs)["documents"])
 
 pipe = Pipeline()
@@ -56,7 +55,7 @@ pipe.add_component("q", Kanon2TextEmbedder(api_key=Secret.from_env_var("ISAACUS_
 pipe.add_component("ret", InMemoryEmbeddingRetriever(document_store=store))
 pipe.connect("q.embedding", "ret.query_embedding")
 
-print(pipe.run({"q": {"text": "Who builds Kanon 2?"}}))
+print(pipe.run({"q": {"text": "Who built Kanon 2 Embedder?"}}))
 ```
 
 ## Docs
