@@ -28,15 +28,23 @@ Isaacus' offering includes [Kanon 2 Embedder](https://isaacus.com/blog/introduci
 Isaacus offers first-class support for Haystack through the `isaacus-haystack` integration package.
 
 ## Installation
+You can install the Isaacus Haystack integration via pip:
+
 ```bash
 pip install isaacus-haystack
 ```
 
 ## Components
+
+Once installed, you will have access to the following Haystack components:
+
 - `IsaacusTextEmbedder` – embeds query text into a vector.
 - `IsaacusDocumentEmbedder` – embeds Haystack `Document`s and writes to `document.embedding`.
 
-## Quick Example
+## Example
+
+This code snippet demonstrates how you could use the Isaacus embedding models in a Haystack pipeline for semantic search.
+
 ```python
 from haystack import Pipeline, Document
 from haystack.document_stores.in_memory import InMemoryDocumentStore
