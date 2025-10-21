@@ -71,4 +71,3 @@ print(pipe.run({"q": {"text": "Who built Kanon 2 Embedder?"}}))
 
 ## License
 Apache-2.0
- 
