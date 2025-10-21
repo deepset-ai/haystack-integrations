@@ -33,8 +33,8 @@ pip install isaacus-haystack
 ```
 
 ## Components
-- `Kanon2TextEmbedder` – embeds query text into a vector.
-- `Kanon2DocumentEmbedder` – embeds Haystack `Document`s and writes to `document.embedding`.
+- `IsaacusTextEmbedder` – embeds query text into a vector.
+- `IsaacusDocumentEmbedder` – embeds Haystack `Document`s and writes to `document.embedding`.
 
 ## Quick Example
 ```python
