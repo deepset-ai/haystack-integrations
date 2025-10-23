@@ -48,9 +48,11 @@ pip install ollama-haystack
 
 ## Usage
 
-This integration provides 2 components that allow you to leverage Ollama models:
+This integration provides 4 components that allow you to leverage Ollama models:
 - The [`OllamaGenerator`](https://docs.haystack.deepset.ai/docs/ollamagenerator)
 - The [`OllamaChatGenerator`](https://docs.haystack.deepset.ai/docs/ollamachatgenerator)
+- The [`OllamaTextEmbedder`](https://docs.haystack.deepset.ai/docs/ollamatextembedder)
+- The [`OllamaDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/ollamadocumentembedder)
 
 To use an Ollama model:
 
