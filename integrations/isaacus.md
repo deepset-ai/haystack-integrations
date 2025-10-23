@@ -7,12 +7,15 @@ authors:
     socials:
       github: isaacus-dev
       linkedin: https://www.linkedin.com/company/isaacus/
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/isaacus
 type: Model Provider
 logo: /logos/isaacus.png
 version: Haystack 2.0
+repo: https://github.com/isaacus-dev/isaacus-haystack
+pypi: https://pypi.org/project/isaacus-haystack
+report_issue: https://github.com/isaacus-dev/isaacus-haystack/issues
 ---
-### Table of Contents
+
+### ***Table of Contents***
 - [Overview](#overview)
 - [Installation](#installation)
 - [Components](#components)
@@ -23,28 +26,18 @@ version: Haystack 2.0
 ## Overview
 [Isaacus](https://isaacus.com/) is a foundational legal AI research company building AI models, apps, and tools for the legal tech ecosystem.
 
-Isaacus' offering includes [Kanon 2 Embedder](https://isaacus.com/blog/introducing-kanon-2-embedder), the world's best legal embedding model (as measured on the [Massive Legal Embedding Benchmark](https://isaacus.com/blog/introducing-mleb)), as well as [legal zero-shot classification](https://docs.isaacus.com/models/introduction#universal-classification) and [legal extractive question answering models](https://docs.isaacus.com/models/introduction#answer-extraction).
-
-Isaacus offers first-class support for Haystack through the `isaacus-haystack` integration package.
+Isaacus offers first-class support for Haystack via the `isaacus-haystack` package, providing embedders optimized for legal retrieval—most notably **Kanon 2**, a high-performing legal embedding model (see the [Kanon 2 overview](https://isaacus.com/blog/introducing-kanon-2-embedder) and the [Massive Legal Embedding Benchmark](https://isaacus.com/blog/introducing-mleb)).
 
 ## Installation
-You can install the Isaacus Haystack integration via pip:
-
 ```bash
 pip install isaacus-haystack
 ```
 
 ## Components
-
-Once installed, you will have access to the following Haystack components:
-
 - `IsaacusTextEmbedder` – embeds query text into a vector.
 - `IsaacusDocumentEmbedder` – embeds Haystack `Document`s and writes to `document.embedding`.
 
-## Example
-
-This code snippet demonstrates how you could use the Isaacus embedding models in a Haystack pipeline for semantic search.
-
+## Quick Example
 ```python
 from haystack import Pipeline, Document
 from haystack.document_stores.in_memory import InMemoryDocumentStore
@@ -59,7 +52,8 @@ embedder = IsaacusDocumentEmbedder(
     # dimensions=1792,                 # optionally set to match your vector DB
 )
 
-raw_docs = [Document(content="Isaacus releases Kanon 2 Embedder: the world's best legal embedding model.")]
+raw_docs = [Document(content="Isaacus releases Kanon 2 Embedder: the world's best legal embedding model."),
+            Document(content="Isaacus also offers legal zero-shot classification and extractive question answering models.")]
 store.write_documents(embedder.run(raw_docs)["documents"])
 
 pipe = Pipeline()
