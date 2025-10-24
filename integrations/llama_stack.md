@@ -36,7 +36,7 @@ Below are example configurations for using the Llama-3.2-3B model:
 
 Ollama as the inference provider:
 
-```chat_generator = LlamaStackChatGenerator(model="llama3.2:3b")```
+```chat_generator = LlamaStackChatGenerator(model="ollama/llama3.2:3b")```
 
 vLLM as the inference provider:
 ```chat_generator = LlamaStackChatGenerator(model="meta-llama/Llama-3.2-3B")```
