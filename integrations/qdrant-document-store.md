@@ -28,6 +28,8 @@ The library finally allows using Qdrant as a document store, and provides an in-
 for any other vector embeddings store. Thus, you should expect any kind of application to be working
 smoothly just by changing the provider to `QdrantDocumentStore`.
 
+> 🎥 Learn how to build a movie recommendation assistant powered by Haystack and Qdrant in [👩🏻‍🍳 Notebook: Agent-Powered Retrieval with Haystack](https://haystack.deepset.ai/cookbook/agent_powered_retrieval). 
+
 ## Installation
 
 `qdrant-haystack` might be installed as any other Python library, using pip or poetry:
