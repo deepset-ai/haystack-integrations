@@ -174,7 +174,7 @@ result = converter.run(
 # Documents now include enriched content and metadata
 doc = result["documents"][0]
 print(doc.content)  # Markdown with image annotations inline
-print(doc.meta["source_topics"])    # e.g., ["transformers", "attention"]
+print(doc.meta["source_topics"])    # e.g., ["finance", "quarterly report", "revenue", "expenses", "performance"]
 print(doc.meta["source_urls"])      # e.g., ["https://example.com", ...]
 ```
 
