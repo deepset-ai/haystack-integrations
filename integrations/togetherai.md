@@ -25,14 +25,14 @@ toc: true
 
 ## Overview
 
-`TogetherAIChatGenerator` lets you call any LLMs available on [TogetherAI](https://www.together.ai/), including:
+Once installed you will have access to [TogetherAIGenerator] and [TogetherAIChatGenerator] that allow
+you to call any LLMs available on [TogetherAI](https://www.together.ai/), including:
 
 - OpenAI variants such as `oopenai/gpt-oss-120B`
 - deepseek-ai's `deepseek-ai/DeepSeek-R1`
 - Other open-source models (Llama 2, Mixtral, etc.)
 
 For more information on models available via the TogetherAI API, see [the TogetherAI docs](https://www.together.ai/models).
-
 
 In order to follow along with this guide, you'll need a TogetherAI API key. Add it as an environment variable, `TOGETHER_API_KEY`.
 
@@ -54,7 +54,7 @@ from haystack_integrations.components.generators.togetherai import TogetherAICha
 
 os.environ["TOGETHER_API_KEY"] = "YOUR_TOGETHER_API_KEY"
 
-client = TogetherAIChatGenerator() # defaults to openai/gpt-4o-mini
+client = TogetherAIChatGenerator() # defaults to "meta-llama/Llama-3.3-70B-Instruct-Turbo",
 response = client.run(
     [ChatMessage.from_user("What are Agentic Pipelines? Be brief.")]
 )
@@ -62,7 +62,7 @@ print(response["replies"])
 
 ```
 ```bash
-{'replies': [ChatMessage(_role=<ChatRole.ASSISTANT: 'assistant'>, _content=[TextContent(text='The capital of Vietnam is Hanoi.')], _name=None, _meta={'model': 'openai/gpt-4o-mini', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 8, 'prompt_tokens': 13, 'total_tokens': 21, 'completion_tokens_details': CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=0, rejected_prediction_tokens=None), 'prompt_tokens_details': PromptTokensDetails(audio_tokens=None, cached_tokens=0)}})]}
+{'replies': [ChatMessage(_role=<ChatRole.ASSISTANT: 'assistant'>, _content=[TextContent(text='The capital of Vietnam is Hanoi.')], _name=None, _meta={'model': 'meta-llama/Llama-3.3-70B-Instruct-Turbo', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 8, 'prompt_tokens': 13, 'total_tokens': 21, 'completion_tokens_details': CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=0, rejected_prediction_tokens=None), 'prompt_tokens_details': PromptTokensDetails(audio_tokens=None, cached_tokens=0)}})]}
 ```
 `TogetherAIChatGenerator` also support streaming responses if you pass a streaming callback:
 
@@ -79,7 +79,7 @@ def show(chunk):                              # simple streaming callback
 client = TogetherAIChatGenerator(
     model="deepseek-ai/DeepSeek-R1",
     streaming_callback=show,
-    generation_kwargs={}
+    generation_kwargs={"max_tokens": 100, "temperature": 0.7, "top_p": 0.9},
 )
 
 response = client.run([ChatMessage.from_user("Summarize RAG in two lines.")])
