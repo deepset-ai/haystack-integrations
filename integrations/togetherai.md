@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/togetherai-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/togetherai
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/togetherai.png
+logo: /logos/togetherai.jpeg
 version: Haystack 2.0
 toc: true
 ---
@@ -83,7 +83,6 @@ client = TogetherAIChatGenerator(
 )
 
 response = client.run([ChatMessage.from_user("Summarize RAG in two lines.")])
-
 print (response)
 
 ```
