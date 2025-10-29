@@ -32,12 +32,14 @@ Isaacus offers first-class support for Haystack via the `isaacus-haystack` packa
 ```bash
 pip install isaacus-haystack
 ```
+## Usage
+Learn more about the embedding models in [Isaacus Embeddings API docs](https://docs.isaacus.com/capabilities/embedding)
 
-## Components
+### Components
 - `IsaacusTextEmbedder` – embeds query text into a vector.
 - `IsaacusDocumentEmbedder` – embeds Haystack `Document`s and writes to `document.embedding`.
 
-## Quick Example
+### Quick Example
 ```python
 from haystack import Pipeline, Document
 from haystack.document_stores.in_memory import InMemoryDocumentStore
