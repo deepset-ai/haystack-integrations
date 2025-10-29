@@ -71,5 +71,6 @@ print(pipe.run({"q": {"text": "Who built Kanon 2 Embedder?"}}))
 - Isaacus Embeddings API: https://docs.isaacus.com/capabilities/embedding
 - Haystack: https://haystack.deepset.ai/
 
-## License
-Apache-2.0
+### License
+
+`isaacus-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
