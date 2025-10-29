@@ -18,9 +18,7 @@ report_issue: https://github.com/isaacus-dev/isaacus-haystack/issues
 ### ***Table of Contents***
 - [Overview](#overview)
 - [Installation](#installation)
-- [Components](#components)
-- [Quick Example](#quick-example)
-- [Docs](#docs)
+- [Usage](#usage)
 - [License](#license)
 
 ## Overview
