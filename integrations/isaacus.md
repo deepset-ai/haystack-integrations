@@ -69,9 +69,6 @@ pipe.connect("q.embedding", "ret.query_embedding")
 print(pipe.run({"q": {"text": "Who built Kanon 2 Embedder?"}}))
 ```
 
-## Docs
-- Isaacus Embeddings API: https://docs.isaacus.com/capabilities/embedding
-- Haystack: https://haystack.deepset.ai/
 
 ### License
 
