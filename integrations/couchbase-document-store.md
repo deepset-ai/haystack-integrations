@@ -15,67 +15,92 @@ version: Haystack 2.0
 toc: true
 ---
 
-**Table of Contents**
+# Table of Contents
 
+- [Breaking Changes in Version 2.0.0](#breaking-changes-in-version-200)
 - [Overview](#overview)
+- [Choosing the Right Document Store](#choosing-the-right-document-store)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Running Couchbase](#running-couchbase)
+  - [CouchbaseSearchDocumentStore (FTS-based)](#couchbasesearchdocumentstore-fts-based)
+  - [CouchbaseQueryDocumentStore (GSI-based)](#couchbasequerydocumentstore-gsi-based)
+  - [More Examples](#more-examples)
 - [License](#license)
+
+## Breaking Changes in Version 2.0.0
+
+> **Important Note:**  
+> In version 2.0.0, the following component names have been changed:
+>
+> - `CouchbaseDocumentStore` is now `CouchbaseSearchDocumentStore`
+> - `CouchbaseEmbeddingRetriever` is now `CouchbaseSearchEmbeddingRetriever`
+>
+> Please update your code accordingly if upgrading from an earlier version.
 
 ## Overview
 
-An integration of [Couchbase](https://www.couchbase.com) NoSQL database with [Haystack v2.0](https://docs.haystack.deepset.ai/docs/intro)
-by [deepset](https://www.deepset.ai). In Couchbase [Vector search index](https://docs.couchbase.com/server/current/vector-search/vector-search.html)
-is being used for indexing document embeddings and dense retrievals.
+An integration of [Couchbase](https://www.couchbase.com) NoSQL database with [Haystack v2.0](https://docs.haystack.deepset.ai/v2.0/docs/intro)
+by [deepset](https://www.deepset.ai). Couchbase supports three types of [vector indexes](https://docs.couchbase.com/server/current/vector-search/vector-search.html) for AI applications, and this library provides document stores for two of them:
 
-The library allows using Couchbase as a [DocumentStore](https://docs.haystack.deepset.ai/docs/document-store), and implements the required [Protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol) methods. You can start working with the implementation by importing it from `couchbase_haystack` package:
+### Document Stores
+
+The library provides two document store implementations:
+
+- **`CouchbaseSearchDocumentStore`** - Uses Couchbase Search Vector Index (FTS-based)
+- **`CouchbaseQueryDocumentStore`** - Uses Hyperscale Vector Index or  Composite Vector Index
+
+You can start working with these implementations by importing from the `couchbase_haystack` package:
 
 ```python
-from couchbase_haystack import CouchbaseSearchDocumentStore
+from couchbase_haystack import CouchbaseSearchDocumentStore, CouchbaseQueryDocumentStore
 ```
 
-In addition to the `CouchbaseSearchDocumentStore`, the library includes the following Haystack components which can be used in a pipeline:
+### Retrievers
 
-- **CouchbaseSearchEmbeddingRetriever**: A typical [retriever component](https://docs.haystack.deepset.ai/docs/retrievers) which can be used to query the vector store index and find related Documents. The component uses `CouchbaseSearchDocumentStore` to query embeddings.
+In addition to the document stores, the library includes the following [retriever components](https://docs.haystack.deepset.ai/v2.0/docs/retrievers):
 
-The `couchbase-haystack` library uses [Python Driver](https://docs.couchbase.com/python-sdk/current/hello-world/start-using-sdk.html).
+- **`CouchbaseSearchEmbeddingRetriever`** - Works with `CouchbaseSearchDocumentStore` to perform hybrid searches combining vector similarity with full-text and geospatial queries.
 
-`CouchbaseSearchDocumentStore` will store Documents as JSON documents in Couchbase. Embeddings are stored as part of the document, with indexing and querying of vector embeddings managed by Couchbase's dedicated [Vector Search Index](https://docs.couchbase.com/server/current/vector-search/vector-search.html).
+- **`CouchbaseQueryEmbeddingRetriever`** - Works with `CouchbaseQueryDocumentStore` to perform vector similarity searches using Hyperscale or Composite indexes.
 
-```text
-                                   +-----------------------------+
-                                   |       Couchbase Database    |
-                                   +-----------------------------+
-                                   |                             |
-                                   |      +----------------+     |
-                                   |      |  Data service  |     |
-                write_documents    |      +----------------+     |
-          +------------------------+----->|   properties   |     |
-          |                        |      |                |     |
-+---------+--------------------+   |      |   embedding    |     |
-|                              |   |      +--------+-------+     |
-| CouchbaseSearchDocumentStore |   |               |             |
-|                              |   |               |index        |
-+---------+--------------------+   |               |             |
-          |                        |      +--------+--------+    |
-          |                        |      |  Search service |    |
-          |                        |      +-----------------+    |
-          +----------------------->|      |       FTS       |    |
-               query_embeddings    |      |   Vector Index  |    |
-                                   |      | (for embedding) |    |
-                                   |      +-----------------+    |
-                                   |                             |
-                                   +-----------------------------+
-```
+The `couchbase-haystack` library uses the [Couchbase Python SDK](https://docs.couchbase.com/python-sdk/current/hello-world/start-using-sdk.html).
 
-In the above diagram:
+Both document stores store Documents as JSON documents in Couchbase. Embeddings are stored as part of the document, with indexing and querying managed by different Couchbase services depending on the document store type.
 
-- **Data service**: Supports the storing, setting, and retrieving of documents, specified by key. Basically where the documents are stored in key value.
-- **Properties**: Document [attributes](https://docs.haystack.deepset.ai/docs/data-classes#document) stored as part of the Document.
-- **Embedding**: Property of the Document (just shown separately in the diagram for clarity) which is a vector of type `LIST[FLOAT]`.
-- **Search service**: Where indexes specially purposed for Full Text Search and Vector search are created. The Search Service allows for efficient querying and retrieval based on both text content and vector embeddings.
+## Choosing the Right Document Store
 
-`CouchbaseSearchDocumentStore` requires the vector index to be created manually either by SDK or UI. Before writing documents, you should make sure Documents are embedded by one of the provided [embedders](https://docs.haystack.deepset.ai/docs/embedders). For example, [SentenceTransformersDocumentEmbedder](https://docs.haystack.deepset.ai/docs/sentencetransformersdocumentembedder) can be used in the indexing pipeline to calculate document embeddings before writing those to Couchbase.
+Couchbase supports three types of vector indexes. This library currently supports two of them:
+
+| Feature | CouchbaseSearchDocumentStore (FTS) | CouchbaseQueryDocumentStore (Hyperscale) | CouchbaseQueryDocumentStore (Composite) |
+|---------|-----------------------------------|-------------------------------------------|----------------------------------------------|
+| **Index Type** | Search Vector Index | Hyperscale Vector Index | Composite Vector Index |
+| **First Available** | Couchbase 7.6 | Couchbase 8.0 | Couchbase 8.0 |
+| **Dataset Size** | Up to ~100 million docs | Tens of millions to billions | Tens of millions to billions |
+| **Best For** | Hybrid searches (vector + text + geo) | Pure vector searches at scale | Filtered vector searches |
+| **Strengths** | - Full-text search integration<br>- Geospatial search<br>- Familiar FTS indexes | - High performance for pure vector searches<br>- Low memory footprint<br>- Best for huge datasets<br>- Concurrent updates & searches | - Scalar filters before vector search<br>- Efficient for selective queries<br>- Compliance use cases |
+| **Use Cases** | - E-commerce product search<br>- Travel recommendations<br>- Real estate searches | - Chatbot context (RAG)<br>- Reverse image search<br>- Anomaly detection | - Content recommendations with filters<br>- Job searches<br>- Supply chain management |
+| **Search Type** | Vector + FTS + Geospatial | ANN (Approximate Nearest Neighbor) or KNN | ANN or KNN|
+| **Filtering** | Search query filters | SQL++ WHERE clause | SQL++ WHERE clause|
+
+### When to Use Each
+
+- **Use `CouchbaseSearchDocumentStore`** when:
+  - You need to combine vector searches with full-text or geospatial searches
+  - Your dataset is limited to approximately 100 million documents
+  - You want hybrid search capabilities in a single query
+
+- **Use `CouchbaseQueryDocumentStore` with Hyperscale Index** when:
+  - You need pure vector similarity searches at massive scale
+  - You want the lowest memory footprint and best performance
+  - Your application needs concurrent updates and searches
+  - You're building chatbots, recommendation systems, or anomaly detection
+
+- **Use `CouchbaseQueryDocumentStore` with Composite Index** when:
+  - You need to apply strict scalar filters before vector search
+  - Your queries are highly selective (return small results from large datasets)
+  - You have compliance requirements that must exclude certain vectors
+  - You're building filtered recommendation or search systems
 
 ## Installation
 
@@ -113,9 +138,42 @@ In this example, the container is started using Couchbase Server version `7.6.2`
 > **Note:**  
 > Assuming you have a Docker container running, navigate to <http://localhost:8091> to open the Couchbase Web Console and explore your data.
 
-### Document Store
+### CouchbaseSearchDocumentStore (FTS-based)
 
-Once you have the package installed and the database running, you can start using `CouchbaseSearchDocumentStore` as any other document stores that support embeddings.
+```text
+                                   +-----------------------------+
+                                   |       Couchbase Database    |
+                                   +-----------------------------+
+                                   |                             |
+                                   |      +----------------+     |
+                                   |      |  Data service  |     |
+                write_documents    |      +----------------+     |
+          +------------------------+----->|   properties   |     |
+          |                        |      |                |     |
++---------+--------------------+   |      |   embedding    |     |
+|                              |   |      +--------+-------+     |
+| CouchbaseSearchDocumentStore |   |               |             |
+|                              |   |               |index        |
++---------+--------------------+   |               |             |
+          |                        |      +--------+--------+    |
+          |                        |      |  Search service |    |
+          |                        |      +-----------------+    |
+          +----------------------->|      |       FTS       |    |
+               query_embeddings    |      |   Vector Index  |    |
+                                   |      | (for embedding) |    |
+                                   |      +-----------------+    |
+                                   |                             |
+                                   +-----------------------------+
+```
+
+The `CouchbaseSearchDocumentStore` document store supports both scope-level and global-level vector search indexes:
+
+- **Scope-level indexes** (default): Created at the scope level, searches only within that scope
+- **Global-level indexes**: Created at the bucket level, can search across all scopes and collections
+
+#### Basic Usage
+
+Once you have the package installed and the database running, you can start using `CouchbaseSearchDocumentStore`:
 
 ```python
 from couchbase_haystack import CouchbaseSearchDocumentStore, CouchbasePasswordAuthenticator
@@ -130,11 +188,12 @@ document_store = CouchbaseSearchDocumentStore(
     bucket = "haystack_bucket_name",
     scope="haystack_scope_name",
     collection="haystack_collection_name",
-    vector_search_index = "vector_search_index"
+    vector_search_index = "vector_search_index",
+    is_global_level_index=False  # Enables scope-level vector search index by default
 )
 ```
 
-Assuming there is a list of documents available and a running Couchbase database, you can write/index those in Couchbase, e.g.:
+Assuming there is a list of documents available and a running couchbase database you can write/index those in Couchbase, e.g.:
 
 ```python
 from haystack import Document
@@ -144,7 +203,7 @@ documents = [Document(content="Alice has been living in New York City for the pa
 document_store.write_documents(documents)
 ```
 
-If you intend to obtain embeddings before writing documents, use the following code:
+If you intend to obtain embeddings before writing documents use the following code:
 
 ```python
 from haystack import Document
@@ -161,12 +220,12 @@ documents_with_embeddings = document_embedder.run(documents)
 document_store.write_documents(documents_with_embeddings.get("documents"))
 ```
 
-Make sure the embedding model produces vectors of the same size as it has been set on `Couchbase Vector Index`, e.g., setting `embedding_dim=384` would comply with the "sentence-transformers/all-MiniLM-L6-v2" model.
+Make sure embedding model produces vectors of same size as it has been set on `Couchbase Vector Index`, e.g. setting `embedding_dim=384` would comply with the "sentence-transformers/all-MiniLM-L6-v2" model.
 
 > **Note**
-> Most of the time you will be using [Haystack Pipelines](https://docs.haystack.deepset.ai/docs/pipelines) to build both indexing and querying RAG scenarios.
+> Most of the time you will be using [Haystack Pipelines](https://docs.haystack.deepset.ai/v2.0/docs/pipelines) to build both indexing and querying RAG scenarios.
 
-It is important to understand how Haystack Documents are stored in Couchbase after you call `write_documents`.
+It is important to understand how haystack Documents are stored in Couchbase after you call `write_documents`.
 
 ```python
 from random import random
@@ -193,7 +252,7 @@ The above code converts a Document to a dictionary and will render the following
 }
 ```
 
-The data from the dictionary will be used to create a document in Couchbase after you write the document with `document_store.write_documents([document])`. You could query it with Cypher, e.g., `MATCH (doc:Document) RETURN doc`. Below is a JSON document Couchbase:
+The data from the dictionary will be used to create a document in Couchbase after you write the document with `document_store.write_documents([document])`. You could query it with Cypher, e.g. `MATCH (doc:Document) RETURN doc`. Below is a json document Couchbase:
 
 ```js
 {
@@ -206,11 +265,12 @@ The data from the dictionary will be used to create a document in Couchbase afte
 }
 ```
 
-The full list of parameters accepted by `CouchbaseSearchDocumentStore` can be found in [API documentation](https://couchbase-ecosystem.github.io/couchbase-haystack/reference/couchbase_document_store).
+The full list of parameters accepted by `CouchbaseSearchDocumentStore` can be found in
+[API documentation](https://couchbase-ecosystem.github.io/couchbase-haystack/reference/couchbase_document_store).
 
-### Indexing Documents
+#### Indexing Documents with CouchbaseSearchDocumentStore
 
-With Haystack you can use [DocumentWriter](https://docs.haystack.deepset.ai/docs/documentwriter) component to write Documents into a Document Store. In the example below we construct pipeline to write documents to Couchbase using `CouchbaseDocumentStore`:
+With Haystack you can use [DocumentWriter](https://docs.haystack.deepset.ai/v2.0/docs/documentwriter) component to write Documents into a Document Store. In the example below we construct pipeline to write documents to Couchbase using `CouchbaseSearchDocumentStore`:
 
 ```python
 from haystack import Document
@@ -218,6 +278,7 @@ from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.writers import DocumentWriter
 from haystack.pipeline import Pipeline
 from haystack.utils.auth import Secret
+
 from couchbase_haystack import CouchbaseSearchDocumentStore, CouchbasePasswordAuthenticator
 
 documents = [Document(content="This is document 1"), Document(content="This is document 2")]
@@ -249,16 +310,16 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 `{'writer': {'documents_written': 2}}`
 ```
 
-### Retrieving Documents
+#### Retrieving Documents with CouchbaseSearchEmbeddingRetriever
 
-`CouchbaseSearchEmbeddingRetriever` component can be used to retrieve documents from Couchbase by querying vector index using an embedded query. Below is a pipeline which finds documents using query embedding:
+`CouchbaseSearchEmbeddingRetriever` component can be used to retrieve documents from Couchbase by querying the FTS vector index using an embedded query. Below is a pipeline which finds documents using query embedding:
 
 ```python
 from typing import List
-
+from haystack.utils.auth import Secret
 from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
-from haystack.utils.auth import Secret
+
 from couchbase_haystack.document_store import CouchbaseSearchDocumentStore, CouchbasePasswordAuthenticator
 from couchbase_haystack.component.retriever import CouchbaseSearchEmbeddingRetriever
 
@@ -312,12 +373,244 @@ documents: List[Document] = result["retriever"]["documents"]
 [Document(id=3e35fa03aff6e3c45e6560f58adc4fde3c436c111a8809c30133b5cb492e8694, content: 'Alice has been living in New York City for the past 5 years.', meta: {'num_of_years': 5, 'city': 'New York'}, score: 0.36796408891677856, embedding: "embedding": vector of size 384), Document(id=ca4d7d7d7ff6c13b950a88580ab134b2dc15b48a47b8f571a46b354b5344e5fa, content: 'John moved to Los Angeles 2 years ago and loves the sunny weather.', meta: {'num_of_years': 2, 'city': 'Los Angeles'}, score: 0.3126790523529053, embedding: vector of size 384)]
 ```
 
+---
+
+### CouchbaseQueryDocumentStore (GSI-based)
+
+The `CouchbaseQueryDocumentStore` supports both **Hyperscale Vector Index** and **Composite Vector Index** types, depending on the underlying indexes you have set up in Couchbase.
+
+```text
+                                   +-----------------------------+
+                                   |       Couchbase Database    |
+                                   +-----------------------------+
+                                   |                             |
+                                   |      +----------------+     |
+                                   |      |  Data service  |     |
+                write_documents    |      +----------------+     |
+          +------------------------+----->|   properties   |     |
+          |                        |      |                |     |
++---------+--------------------+   |      |   embedding    |     |
+|                              |   |      +--------+-------+     |
+| CouchbaseQueryDocumentStore  |   |               |             |
+|                              |   |               |index        |
++---------+--------------------+   |               |             |
+          |                        |      +--------+--------+    |
+          |                        |      |  Index service  |    |
+          |                        |      +-----------------+    |
+          +----------------------->|      |   Hyperscale    |    |
+               query_embeddings    |      |  /Composite     |    |
+                                   |      | (for embedding) |    |
+                                   |      +-----------------+    |
+                                   |                             |
+                                   +-----------------------------+
+```
+
+#### Key Features
+
+- **Two Index Types Supported:**
+  - **Hyperscale Vector Index**: Optimized for pure vector searches, scales to billions of documents
+  - **Composite Vector Index**: Combines scalar and vector indexing for filtered searches
+
+- **Search Types:**
+  - **ANN (Approximate Nearest Neighbor)**: Fast approximate search using `APPROX_VECTOR_DISTANCE()`
+  - **KNN (K-Nearest Neighbors)**: Exact search using `VECTOR_DISTANCE()`
+
+- **Similarity Metrics:**
+  - `COSINE` - Cosine similarity
+  - `DOT` - Dot product similarity  
+  - `L2` / `EUCLIDEAN` - Euclidean distance
+  - `L2_SQUARED` / `EUCLIDEAN_SQUARED` - Squared Euclidean distance
+
+#### Basic Usage
+
+```python
+from couchbase_haystack import CouchbaseQueryDocumentStore, CouchbasePasswordAuthenticator, QueryVectorSearchType, CouchbaseQueryOptions
+from haystack.utils.auth import Secret
+from couchbase.n1ql import QueryScanConsistency
+from datetime import timedelta
+
+document_store_hyperscale = CouchbaseQueryDocumentStore(
+    cluster_connection_string=Secret.from_env_var("CB_CONNECTION_STRING"),
+    authenticator=CouchbasePasswordAuthenticator(
+        username=Secret.from_env_var("CB_USERNAME"),
+        password=Secret.from_env_var("CB_PASSWORD")
+    ),
+    bucket="haystack_bucket_name",
+    scope="haystack_scope_name",
+    collection="haystack_collection_name",
+    search_type=QueryVectorSearchType.ANN,  # or QueryVectorSearchType.KNN
+    similarity=QueryVectorSearchSimilarity.COSINE,  # or "DOT", "L2", "EUCLIDEAN", "L2_SQUARED", "EUCLIDEAN_SQUARED"
+    nprobes=10,  # Number of probes for ANN search (optional)
+    query_options=CouchbaseQueryOptions(
+        timeout=timedelta(seconds=60),
+        scan_consistency=QueryScanConsistency.NOT_BOUNDED
+    )
+)
+```
+
+> **Note:** You need to create the appropriate GSI index manually in Couchbase before performing vector search. See the [Couchbase documentation](https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/createindex.html) for index creation details.
+
+#### Indexing Documents with CouchbaseQueryDocumentStore
+
+```python
+from haystack import Document
+from haystack.components.embedders import SentenceTransformersDocumentEmbedder
+from haystack.components.writers import DocumentWriter
+from haystack.pipeline import Pipeline
+from haystack.utils.auth import Secret
+
+from couchbase_haystack import CouchbaseQueryDocumentStore, CouchbasePasswordAuthenticator, QueryVectorSearchType
+
+documents = [
+    Document(content="Machine learning is transforming healthcare.", meta={"category": "technology"}),
+    Document(content="Deep learning models require large datasets.", meta={"category": "AI"})
+]
+
+document_store = CouchbaseQueryDocumentStore(
+    cluster_connection_string=Secret.from_env_var("CB_CONNECTION_STRING"),
+    authenticator=CouchbasePasswordAuthenticator(
+        username=Secret.from_env_var("CB_USERNAME"),
+        password=Secret.from_env_var("CB_PASSWORD")
+    ),
+    bucket="haystack_bucket_name",
+    scope="haystack_scope_name",
+    collection="haystack_collection_name",
+    search_type=QueryVectorSearchType.ANN,
+    similarity=QueryVectorSearchSimilarity.COSINE
+)
+
+embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
+document_writer = DocumentWriter(document_store=document_store)
+
+indexing_pipeline = Pipeline()
+indexing_pipeline.add_component(instance=embedder, name="embedder")
+indexing_pipeline.add_component(instance=document_writer, name="writer")
+
+indexing_pipeline.connect("embedder", "writer")
+result = indexing_pipeline.run({"embedder": {"documents": documents}})
+print(result)  # {'writer': {'documents_written': 2}}
+```
+
+#### Retrieving Documents with CouchbaseQueryEmbeddingRetriever
+
+The `CouchbaseQueryEmbeddingRetriever` uses SQL++ queries with vector functions to retrieve similar documents efficiently:
+
+```python
+from typing import List
+from haystack import Document, Pipeline
+from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
+from haystack.utils.auth import Secret
+
+from couchbase_haystack import CouchbaseQueryDocumentStore, CouchbaseQueryEmbeddingRetriever, CouchbasePasswordAuthenticator, QueryVectorSearchType
+
+# Initialize document store
+document_store = CouchbaseQueryDocumentStore(
+    cluster_connection_string=Secret.from_env_var("CB_CONNECTION_STRING"),
+    authenticator=CouchbasePasswordAuthenticator(
+        username=Secret.from_env_var("CB_USERNAME"),
+        password=Secret.from_env_var("CB_PASSWORD")
+    ),
+    bucket="haystack_bucket_name",
+    scope="haystack_scope_name",
+    collection="haystack_collection_name",
+    search_type=QueryVectorSearchType.ANN,
+    similarity=QueryVectorSearchSimilarity.COSINE,
+    nprobes=10
+)
+
+# Create and embed documents
+documents = [
+    Document(content="Python is a popular programming language.", meta={"category": "programming", "year": 2024}),
+    Document(content="JavaScript is widely used for web development.", meta={"category": "programming", "year": 2024}),
+    Document(content="Machine learning is a subset of AI.", meta={"category": "AI", "year": 2023}),
+]
+
+model_name = "sentence-transformers/all-MiniLM-L6-v2"
+document_embedder = SentenceTransformersDocumentEmbedder(model=model_name)
+document_embedder.warm_up()
+documents_with_embeddings = document_embedder.run(documents)
+
+document_store.write_documents(documents_with_embeddings.get("documents"))
+
+# Create retrieval pipeline
+pipeline = Pipeline()
+pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder(model=model_name))
+pipeline.add_component("retriever", CouchbaseQueryEmbeddingRetriever(document_store=document_store, top_k=5))
+pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
+
+# Example 1: Basic retrieval without filters
+result = pipeline.run(
+    data={
+        "text_embedder": {"text": "What is Python used for?"},
+        "retriever": {"top_k": 3}
+    }
+)
+
+documents: List[Document] = result["retriever"]["documents"]
+print(f"Found {len(documents)} documents")
+for doc in documents:
+    print(f"  - {doc.content} (score: {doc.score})")
+
+# Example 2: Retrieval with filters (applies WHERE clause before vector search)
+result_filtered = pipeline.run(
+    data={
+        "text_embedder": {"text": "Tell me about programming languages"},
+        "retriever": {
+            "top_k": 3,
+            "filters": {"field": "meta.category", "operator": "==", "value": "programming"}
+        }
+    }
+)
+
+print(f"\nFiltered results: {len(result_filtered['retriever']['documents'])} documents")
+
+# Example 3: Custom nprobes for this query
+result_custom = pipeline.run(
+    data={
+        "text_embedder": {"text": "artificial intelligence"},
+        "retriever": {
+            "top_k": 2,
+            "nprobes": 20  # Override the document store's nprobes setting
+        }
+    }
+)
+```
+
+#### Understanding Search Types and Parameters
+
+**ANN (Approximate Nearest Neighbor) vs KNN:**
+
+- **ANN**: Uses `APPROX_VECTOR_DISTANCE()` - faster, suitable for large datasets, may have slight accuracy trade-off
+- **KNN**: Uses `VECTOR_DISTANCE()` - exact search, slower on very large datasets, guaranteed accuracy
+
+**nprobes Parameter:**
+
+- Only applies to ANN searches
+- Higher values = more accurate but slower
+- Lower values = faster but potentially less accurate
+- Can be set at document store level or per query
+- Typical range: 1-50 (default depends on index configuration)
+
+**Similarity Metrics:**
+
+- `COSINE`: Range [-1, 1], normalized, good for text embeddings
+- `DOT`: Unnormalized, good for normalized vectors
+- `L2` / `EUCLIDEAN`: Euclidean distance, lower is better
+- `L2_SQUARED` / `EUCLIDEAN_SQUARED`: Squared Euclidean distance, lower is better
+
 ### More Examples
 
-You can find more examples in the implementation [repository](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples):
+You can find more examples in the [examples](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples) directory:
 
-- [indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/indexing_pipeline.py) - Indexing text files (documents) from a remote HTTP location.
-- [rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/rag_pipeline.py) - Generative question answering RAG pipeline using `CouchbaseSearchEmbeddingRetriever` to fetch documents from Couchbase document store and answer questions using [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/docs/huggingfacetgigenerator).
+#### Search-based (FTS) Examples
+
+- [examples/search/indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/indexing_pipeline.py) - Indexing documents using `CouchbaseSearchDocumentStore`
+- [examples/search/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/rag_pipeline.py) - RAG pipeline using `CouchbaseSearchEmbeddingRetriever` with [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator)
+
+#### GSI-based Examples
+
+- [examples/gsi/indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/gsi/indexing_pipeline.py) - Indexing documents using `CouchbaseQueryDocumentStore` with Hyperscale or Composite indexes
+- [examples/gsi/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/gsi/rag_pipeline.py) - RAG pipeline using `CouchbaseQueryEmbeddingRetriever` for high-performance vector retrieval
 
 ## License
 
