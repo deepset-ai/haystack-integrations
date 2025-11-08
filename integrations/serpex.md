@@ -25,6 +25,8 @@ toc: true
 
 [Serpex](https://serpex.dev) is a unified web search API that provides access to multiple search engines through a single interface. This Haystack integration allows you to seamlessly incorporate web search results into your Haystack RAG (Retrieval-Augmented Generation) pipelines and AI applications.
 
+**Website**: [serpex.dev](https://serpex.dev)
+
 ### Key Features
 
 - 🔍 **Multi-Engine Support**: Switch between Google, Bing, DuckDuckGo, Brave, Yahoo, and Yandex
