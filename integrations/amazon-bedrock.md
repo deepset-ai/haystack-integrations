@@ -38,10 +38,12 @@ pip install amazon-bedrock-haystack
 
 Once installed, you will have access to [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockchatgenerator) and [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockgenerator) components that support generative language models on Amazon Bedrock. 
 You will also have access to the [AmazonBedrockTextEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrocktextembedder) and [AmazonBedrockDocumentEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentembedder), which can be used to compute embeddings.
+The integration also includes [S3Downloader](https://docs.haystack.deepset.ai/docs/s3downloader) that allows downloading files from AWS S3 buckets to the local filesystem. 
 
 To use this integration, set the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/docs/secret-management) arguments. 
 
 > Note: Make sure the region you set supports Amazon Bedrock.
+For using `S3Downloader`, you also need to set `FILE_ROOT_PATH` (path where files will be downloaded).
 
 ### AmazonBedrockChatGenerator
 
@@ -173,4 +175,56 @@ query.add_component("retriever", InMemoryEmbeddingRetriever(document_store=docum
 query.connect("text_embedder.embedding", "retriever.query_embedding")
 
 res = query.run({"text_embedder": {"text": "man's best friend"}})
+```
+
+### S3Downloader
+
+Before using this component, you need to set `S3_DOWNLOADER_BUCKET` environment variable that specifies which S3 bucket to download files from. 
+
+Here is an example of how to use the downloader in a pipeline.
+
+```python
+from haystack import Pipeline
+from haystack.components.converters import PDFMinerToDocument
+from haystack.components.routers import DocumentTypeRouter
+from haystack.dataclasses import Document
+
+from haystack_integrations.components.downloaders.s3 import S3Downloader
+
+# Create a pipeline
+pipe = Pipeline()
+
+# Add S3Downloader to download files from S3
+pipe.add_component(
+    "downloader", 
+    S3Downloader(
+        file_root_path="/tmp/s3_downloads",
+        file_extensions=[".pdf", ".txt"]
+    )
+)
+
+# Route documents by file type
+pipe.add_component(
+    "router", 
+    DocumentTypeRouter(
+        file_path_meta_field="file_path",
+        mime_types=["application/pdf", "text/plain"]
+    )
+)
+
+# Convert PDFs to documents
+pipe.add_component("pdf_converter", PDFMinerToDocument())
+
+# Connect components
+pipe.connect("downloader.documents", "router.documents")
+pipe.connect("router.application/pdf", "pdf_converter.documents")
+
+# Create documents with S3 file names
+documents = [
+    Document(meta={"file_name": "report.pdf"}),
+    Document(meta={"file_name": "summary.txt"}),
+]
+
+# Run the pipeline
+result = pipe.run({"downloader": {"documents": documents}})
 ```
