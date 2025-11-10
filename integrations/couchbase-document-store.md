@@ -17,7 +17,6 @@ toc: true
 
 # Table of Contents
 
-- [Breaking Changes in Version 2.0.0](#breaking-changes-in-version-200)
 - [Overview](#overview)
 - [Choosing the Right Document Store](#choosing-the-right-document-store)
 - [Installation](#installation)
