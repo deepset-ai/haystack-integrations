@@ -58,7 +58,7 @@ from couchbase_haystack import CouchbaseSearchDocumentStore, CouchbaseQueryDocum
 
 ### Retrievers
 
-In addition to the document stores, the library includes the following [retriever components](https://docs.haystack.deepset.ai/v2.0/docs/retrievers):
+In addition to the document stores, the library includes the following [retriever components](https://docs.haystack.deepset.ai/docs/retrievers):
 
 - **`CouchbaseSearchEmbeddingRetriever`** - Works with `CouchbaseSearchDocumentStore` to perform hybrid searches combining vector similarity with full-text and geospatial queries.
 
