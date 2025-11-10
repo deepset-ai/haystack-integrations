@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Serpex
-description: Multi-engine web search integration for Haystack — access Google, Bing, DuckDuckGo, Brave, Yahoo, and Yandex via Serpex API
+description: Multi-engine web search for Haystack — access Google, Bing, DuckDuckGo, Brave, Yahoo, and Yandex via Serpex API
 authors:
     - name: Divyesh Radadiya
       socials:
@@ -9,7 +9,7 @@ authors:
 pypi: https://pypi.org/project/serpex-haystack/
 repo: https://github.com/divyeshradadiya/serpex-haystack
 report_issue: https://github.com/divyeshradadiya/serpex-haystack/issues
-type: Custom Component
+type: Search & Extraction
 logo: /logos/serpex.png
 version: Haystack 2.0
 toc: true
@@ -66,51 +66,35 @@ for doc in results["documents"]:
     print(f"Snippet: {doc.content}\n")
 ```
 
-### RAG Pipeline Example
+### Agent Example
 
-Build a complete RAG pipeline with web search:
+Use Serpex in a Haystack agent for dynamic web search:
 
 ```python
-from haystack import Pipeline
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+import os
+from haystack.components.agents import Agent
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack.tools import ComponentTool
 from haystack.utils import Secret
 from haystack_integrations.components.websearch.serpex import SerpexWebSearch
 
-# Define prompt template
-prompt_template = """
-Based on the following search results, answer the question comprehensively.
+os.environ["OPENAI_API_KEY"] = "<YOUR OPENAI API KEY>"
 
-Search Results:
-{% for doc in documents %}
-{{ loop.index }}. {{ doc.meta.title }}
-   {{ doc.content }}
-   Source: {{ doc.meta.url }}
+# Create a web search tool
+search_tool = ComponentTool(component=SerpexWebSearch(api_key=Secret.from_env_var("SERPEX_API_KEY")))
 
-{% endfor %}
+# Create an agent with web search capability
+basic_agent = Agent(
+    chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
+    system_prompt="You are a helpful web agent.",
+    tools=[search_tool],
+)
 
-Question: {{ query }}
+# Ask the agent a question that requires web search
+result = basic_agent.run(messages=[ChatMessage.from_user("What are the latest developments in AI agents?")])
 
-Answer:
-"""
-
-# Build the pipeline
-pipe = Pipeline()
-pipe.add_component("search", SerpexWebSearch(api_key=Secret.from_env_var("SERPEX_API_KEY")))
-pipe.add_component("prompt", PromptBuilder(template=prompt_template))
-pipe.add_component("llm", OpenAIGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY")))
-
-# Connect components
-pipe.connect("search.documents", "prompt.documents")
-pipe.connect("prompt", "llm")
-
-# Run the pipeline
-result = pipe.run({
-    "search": {"query": "Latest developments in AI agents"},
-    "prompt": {"query": "Latest developments in AI agents"}
-})
-
-print(result["llm"]["replies"][0])
+print(result['last_message'].text)
 ```
 
 ### Advanced Features
