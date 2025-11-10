@@ -40,7 +40,7 @@ toc: true
 
 ## Overview
 
-An integration of [Couchbase](https://www.couchbase.com) NoSQL database with [Haystack v2.0](https://docs.haystack.deepset.ai/v2.0/docs/intro)
+An integration of [Couchbase](https://www.couchbase.com) NoSQL database with [Haystack](https://docs.haystack.deepset.ai/docs/intro)
 by [deepset](https://www.deepset.ai). Couchbase supports three types of [vector indexes](https://docs.couchbase.com/server/current/vector-search/vector-search.html) for AI applications, and this library provides document stores for two of them:
 
 ### Document Stores
