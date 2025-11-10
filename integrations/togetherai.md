@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-Once installed you will have access to [TogetherAIGenerator] and [TogetherAIChatGenerator] that allow
+Once installed you will have access to [TogetherAIGenerator](https://docs.haystack.deepset.ai/docs/togetheraigenerator) and [TogetherAIChatGenerator](https://docs.haystack.deepset.ai/docs/togetheraichatgenerator) that allow
 you to call any LLMs available on [TogetherAI](https://www.together.ai/), including:
 
 - OpenAI variants such as `oopenai/gpt-oss-120B`
