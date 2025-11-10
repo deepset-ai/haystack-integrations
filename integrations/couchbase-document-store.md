@@ -18,7 +18,6 @@ toc: true
 # Table of Contents
 
 - [Overview](#overview)
-- [Choosing the Right Document Store](#choosing-the-right-document-store)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Running Couchbase](#running-couchbase)
