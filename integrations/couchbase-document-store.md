@@ -28,7 +28,7 @@ toc: true
   - [More Examples](#more-examples)
 - [License](#license)
 
-## Breaking Changes in Version 2.0.0
+### Breaking Changes in Version 2.0.0
 
 > **Important Note:**  
 > In version 2.0.0, the following component names have been changed:
