@@ -40,7 +40,8 @@ pip install mistral-haystack
 
 ## Usage
 ### Components
-This instegration introduces 3 components:
+This integration introduces 4 components:
+- The `MistralOCRDocumentConverter`: Extracts text from documents using Mistral's OCR API, with optional structured annotations for image regions and full documents.
 - The [`MistralDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/mistraldocumentembedder): Creates embeddings for Haystack Documents using Mistral embedding models (currently only `mistral-embed`).
 - The [`MistralTextEmbedder`](https://docs.haystack.deepset.ai/docs/mistraltextembedder): Creates embeddings for texts (such as queries) using Mistral embedding models (currently only `mistral-embed`)
 - The [`MistralChatGenerator`](https://docs.haystack.deepset.ai/docs/mistralchatgenerator): Uses Mistral chat completion models such as `mistral-tiny` (default).
@@ -87,6 +88,97 @@ response = client.run(
 )
 print(response)
 ```
+
+### Use Mistral OCR for Document Conversion
+
+The `MistralOCRDocumentConverter` extracts text from documents (PDFs, images) using Mistral's OCR API. It supports multiple source types and can optionally enrich the output with structured annotations.
+
+#### OCR with Embeddings Pipeline
+
+Extract text from documents using OCR, split by pages, create embeddings, and store them in a document store:
+
+```python
+import os
+from haystack import Pipeline
+from haystack.components.preprocessors import DocumentSplitter
+from haystack.components.writers import DocumentWriter
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.converters.mistral import MistralOCRDocumentConverter
+from haystack_integrations.components.embedders.mistral import MistralDocumentEmbedder
+from mistralai.models import DocumentURLChunk
+
+os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
+
+# Initialize document store
+document_store = InMemoryDocumentStore()
+
+# Create indexing pipeline
+indexing_pipeline = Pipeline()
+indexing_pipeline.add_component("converter", MistralOCRDocumentConverter())
+indexing_pipeline.add_component(
+    "splitter",
+    DocumentSplitter(split_by="page", split_length=2, split_overlap=1)
+)
+indexing_pipeline.add_component("embedder", MistralDocumentEmbedder())
+indexing_pipeline.add_component("writer", DocumentWriter(document_store=document_store))
+
+# Connect components
+indexing_pipeline.connect("converter.documents", "splitter.documents")
+indexing_pipeline.connect("splitter.documents", "embedder.documents")
+indexing_pipeline.connect("embedder.documents", "writer.documents")
+
+# Process documents
+sources = [
+    DocumentURLChunk(document_url="https://arxiv.org/pdf/1706.03762"),
+    "./invoice.pdf",  # Local PDF file
+]
+
+result = indexing_pipeline.run({"converter": {"sources": sources}})
+
+print(f"Indexed {len(document_store.filter_documents())} documents")
+```
+
+#### OCR with Structured Annotations
+
+Define Pydantic schemas to extract structured information from images and documents:
+
+```python
+import os
+from typing import List
+from haystack_integrations.components.converters.mistral import MistralOCRDocumentConverter
+from mistralai.models import DocumentURLChunk
+from pydantic import BaseModel, Field
+
+os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
+
+# Define schema for image annotations (applied to each image/bbox)
+class ImageAnnotation(BaseModel):
+    image_type: str = Field(..., description="Type of image (diagram, chart, photo, etc.)")
+    description: str = Field(..., description="Brief description of the image content")
+
+# Define schema for document-level annotations
+class DocumentAnnotation(BaseModel):
+    topics: List[str] = Field(..., description="Main topics covered")
+    urls: List[str] = Field(..., description="URLs found in the document")
+
+converter = MistralOCRDocumentConverter()
+
+sources = ["./financial_report.pdf"]
+
+result = converter.run(
+    sources=sources,
+    bbox_annotation_schema=ImageAnnotation,
+    document_annotation_schema=DocumentAnnotation,
+)
+
+# Documents now include enriched content and metadata
+doc = result["documents"][0]
+print(doc.content)  # Markdown with image annotations inline
+print(doc.meta["source_topics"])    # e.g., ["finance", "quarterly report", "revenue", "expenses", "performance"]
+print(doc.meta["source_urls"])      # e.g., ["https://example.com", ...]
+```
+
+For a complete example with structured annotations in a pipeline, see the [OCR indexing pipeline example](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/mistral/examples/indexing_ocr_pipeline.py).
 
 ### Use a Mistral Embedding Model
 

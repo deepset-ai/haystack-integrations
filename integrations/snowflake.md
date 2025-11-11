@@ -100,6 +100,10 @@ The `SnowflakeTableRetriever` supports three authentication methods:
 
 Ensure you have `select` access to the tables before querying the database. More details [here](https://docs.snowflake.com/en/user-guide/security-access-control-privileges):
 ```python
+# Warm up the component so it connects to the database
+executor.warm_up()
+
+# Run the retriever
 response = executor.run(query="""select * from database_name.schema_name.table_name""")
 ```
 During component initialization, you could provide the schema and database name to avoid needing to provide them in the SQL query:
@@ -109,6 +113,7 @@ executor = SnowflakeTableRetriever(
     schema_name="<SCHEMA-NAME>",
     database ="<DB-NAME>"
 )
+executor.warm_up()
 
 response = executor.run(query="""select * from table_name""")
 ```
