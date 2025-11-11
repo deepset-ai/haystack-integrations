@@ -49,7 +49,7 @@ pip install cometapi-haystack
 ```
 
 ## Usage
-You can use [CometAPIChatGenerator](https://docs.haystack.deepset.ai/docs/cometapichatgenerator) as standalone, within a [pipeline](https://docs.haystack.deepset.ai/docs/pipelines) or with the [Agent component](https://docs.haystack.deepset.ai/docs/agent).
+You can use `CometAPIChatGenerator` as standalone, within a [pipeline](https://docs.haystack.deepset.ai/docs/pipelines) or with the [Agent component](https://docs.haystack.deepset.ai/docs/agent).
 
 Here's an example of using it as a standalone component:
 
