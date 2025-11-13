@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/osm-integration-haystack/
 repo: https://github.com/grexrr/osm-integration-haystack
 report_issue: https://github.com/grexrr/osm-integration-haystack/issues
 type: Data Integration
-toc: true (optional)
+toc: true
 logo: /logos/osm_logo.png
 version: Haystack 2.0
 ---
