@@ -258,7 +258,7 @@ for i, doc in enumerate(coffee_related[:5]):
     print(f"   Distance: {doc.meta.get('distance_m', 0):.1f}m")
 ```
 
-## API Rate Limitations
+### API Rate Limitations
 
 The Overpass API has rate limitations to prevent abuse. If you encounter rate limiting:
 
