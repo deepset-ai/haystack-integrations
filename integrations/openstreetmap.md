@@ -186,7 +186,7 @@ print(f"Filtered from {len(all_documents)} to {len(filtered_documents)} document
 - **Flexible Input**: Works with any list of Haystack Documents containing lat/lon metadata
 
 
-## Configuration Parameters
+### Configuration Parameters
 
 The `OSMFetcher` component accepts several parameters to customize its behavior:
 
