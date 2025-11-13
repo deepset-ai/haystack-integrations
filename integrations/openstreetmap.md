@@ -21,10 +21,10 @@ version: Haystack 2.0
 
 - [Installation](#Installation)
 - [Overview](#Overview)
-- [Basic Usage](#Basic_Usage)
-- [Configuration Parameters](#Configuration_Parameters)
-- [Examples](#Examples)
-- [API Rate Limitations](#API_Rate_Limitations)
+- [Usage](#usage)
+    - [Configuration Parameters](#Configuration_Parameters)
+    - [Examples](#Examples)
+    - [API Rate Limitations](#API_Rate_Limitations)
 - [License](#License)
 
 ## Installation
