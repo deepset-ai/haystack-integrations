@@ -39,7 +39,7 @@ This repository implements a Haystack component that integrates with [OpenStreet
 
 When you give `OSMFetcher` a location and radius, it returns a list of nearby points of interest (POIs) as Haystack Documents. It uses the Overpass API to query OpenStreetMap data and converts the results into structured documents with geographic metadata.
 
-## Basic Usage
+## Usage
 
 Here's a simple example of how to use the `OSMFetcher` component:
 
