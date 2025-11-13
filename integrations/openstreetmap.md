@@ -35,7 +35,7 @@ pip install osm-integration-haystack
 
 ## Overview
 
-This repository implements a Haystack component that integrates with OpenStreetMap data through the Overpass API. It allows you to fetch geographic information and convert it into Haystack Documents for use in RAG (Retrieval-Augmented Generation) pipelines.
+This repository implements a Haystack component that integrates with [OpenStreetMap](https://www.openstreetmap.org/) data through the Overpass API. It allows you to fetch geographic information and convert it into Haystack Documents for use in RAG (Retrieval-Augmented Generation) pipelines.
 
 When you give `OSMFetcher` a location and radius, it returns a list of nearby points of interest (POIs) as Haystack Documents. It uses the Overpass API to query OpenStreetMap data and converts the results into structured documents with geographic metadata.
 
