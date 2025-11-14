@@ -8,6 +8,11 @@ authors:
         github: aimlapi
         twitter: aimlapi
         linkedin: https://www.linkedin.com/company/aimlapi/
+    - name: deepset 
+      socials:
+        github: deepset-ai
+        twitter: deepset_ai
+        linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/aimlapi-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/aimlapi
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
