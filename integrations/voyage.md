@@ -25,10 +25,15 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
 - [Example](#example)
+- [Contextualized Embeddings Example](#contextualized-embeddings-example)
 
-[Voyage AI](https://voyageai.com/)’s embedding and ranking models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
+[Voyage AI](https://voyageai.com/)'s embedding and ranking models are state-of-the-art in retrieval accuracy. The integration supports the following models:
+- **`voyage-3.5`** and **`voyage-3.5-lite`** - Latest general-purpose embedding models with superior performance
+- **`voyage-3-large`** and **`voyage-3`** - High-performance general-purpose embedding models
+- **`voyage-context-3`** - Contextualized chunk embedding model that preserves document context for improved retrieval accuracy
+- **`voyage-2`** and **`voyage-large-2`** - Proven models that outperform `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb)
 
-The available models can be found on the [Embeddings Documentation](https://docs.voyageai.com/embeddings/).
+For the complete list of available models, see the [Embeddings Documentation](https://docs.voyageai.com/embeddings/) and [Contextualized Chunk Embeddings](https://docs.voyageai.com/docs/contextualized-chunk-embeddings).
 
 ## Installation
 
@@ -38,15 +43,30 @@ pip install voyage-embedders-haystack
 
 ## Usage
 
-You can use Voyage models with three components: [VoyageTextEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_text_embedder.py), [VoyageDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_document_embedder.py) and [VoyageRanker](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/rankers/voyage/ranker.py)
+You can use Voyage models with four components:
+- [VoyageTextEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_text_embedder.py) - For embedding query text
+- [VoyageDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_document_embedder.py) - For embedding documents
+- [VoyageContextualizedDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/voyage_context-3_model/src/haystack_integrations/components/embedders/voyage_embedders/voyage_contextualized_document_embedder.py) - For contextualized chunk embeddings with `voyage-context-3`
+- [VoyageRanker](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/rankers/voyage/ranker.py) - For reranking documents
 
-To create semantic embeddings for documents, use `VoyageDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `VoyageTextEmbedder`. For reranking, use `VoyageRanker` with [Voyage Rerankers](https://docs.voyageai.com/docs/reranker)
+### Standard Embeddings
 
-Once you've selected the suitable component for your specific use case, initialize the component with the model name and VoyageAI API key. You can also set the environment variable `VOYAGE_API_KEY` instead of passing the API key as an argument.
+To create semantic embeddings for documents, use `VoyageDocumentEmbedder` in your indexing pipeline. For generating embeddings for queries, use `VoyageTextEmbedder`. For reranking, use `VoyageRanker` with [Voyage Rerankers](https://docs.voyageai.com/docs/reranker).
 
-Information about the supported models, can be found on the [Embeddings Documentation](https://docs.voyageai.com/embeddings/).
+### Contextualized Embeddings
 
-To get an API key, please see the [Voyage AI website.](https://www.voyageai.com/)
+For improved retrieval quality, use `VoyageContextualizedDocumentEmbedder` with the `voyage-context-3` model. This component preserves context between related document chunks by grouping them together during embedding, reducing context loss that occurs when chunks are embedded independently
+
+**Important:** You must explicitly specify the `model` parameter when initializing any component. Choose from the available models listed in the [Embeddings Documentation](https://docs.voyageai.com/embeddings/). Recommended choices include:
+- `voyage-3.5` - Latest general-purpose model for best performance
+- `voyage-3.5-lite` - Efficient model with lower latency
+- `voyage-3-large` - High-capacity model for complex tasks
+- `voyage-context-3` - Contextualized embeddings for improved retrieval (use with `VoyageContextualizedDocumentEmbedder`)
+- `voyage-2` - Proven general-purpose model
+
+You can set the environment variable `VOYAGE_API_KEY` instead of passing the API key as an argument. To get an API key, please see the [Voyage AI website.](https://www.voyageai.com/)
+
+> **Note (v1.7.0+):** The `model` parameter is required and must be explicitly specified. Earlier versions defaulted to `voyage-3` for embedders and `rerank-2` for the ranker.
 
 ## Example
 
@@ -89,10 +109,10 @@ retriever = InMemoryEmbeddingRetriever(document_store=doc_store)
 doc_writer = DocumentWriter(document_store=doc_store)
 
 doc_embedder = VoyageDocumentEmbedder(
-    model="voyage-law-2",
+    model="voyage-3.5",
     input_type="document",
 )
-text_embedder = VoyageTextEmbedder(model="voyage-law-2", input_type="query")
+text_embedder = VoyageTextEmbedder(model="voyage-3.5", input_type="query")
 
 # Indexing Pipeline
 indexing_pipeline = Pipeline()
@@ -110,7 +130,7 @@ print(f"Embedding of first Document: {doc_store.filter_documents()[0].embedding}
 Query the Semantic Search Pipeline using the `InMemoryEmbeddingRetriever` and `VoyageTextEmbedder`:
 
 ```python
-text_embedder = VoyageTextEmbedder(model="voyage-law-2", input_type="query")
+text_embedder = VoyageTextEmbedder(model="voyage-3.5", input_type="query")
 
 # Query Pipeline
 query_pipeline = Pipeline()
@@ -126,6 +146,47 @@ top_result = results["Retriever"]["documents"][0].content
 print("The top search result is:")
 print(top_result)
 ```
+
+## Contextualized Embeddings Example
+
+The `voyage-context-3` model enables contextualized chunk embeddings, which preserve relationships between document chunks for better retrieval accuracy. Documents with the same `source_id` are embedded together in context:
+
+```python
+from haystack import Document
+from haystack_integrations.components.embedders.voyage_embedders import VoyageContextualizedDocumentEmbedder
+
+# Create documents with source_id to group related chunks
+docs = [
+    # Chunks from the same document (source_id: "doc1")
+    Document(
+        content="Apple Inc. released their Q1 earnings report.",
+        meta={"source_id": "doc1", "title": "Apple News"}
+    ),
+    Document(
+        content="Revenue increased by 12% year over year.",
+        meta={"source_id": "doc1", "title": "Apple News"}
+    ),
+    # Chunks from another document (source_id: "doc2")
+    Document(
+        content="Tesla announced new vehicle production targets.",
+        meta={"source_id": "doc2", "title": "Tesla Update"}
+    ),
+]
+
+# Use VoyageContextualizedDocumentEmbedder for voyage-context-3
+embedder = VoyageContextualizedDocumentEmbedder(
+    model="voyage-context-3",
+    input_type="document",
+)
+
+result = embedder.run(documents=docs)
+
+# Chunks with the same source_id are embedded together, preserving context
+# This improves retrieval - e.g., searching "Apple revenue growth" will better match
+# the second chunk because it maintains its connection to "Apple Inc."
+```
+
+For more examples, see the [contextualized embedder example](https://github.com/awinml/voyage-embedders-haystack/blob/voyage_context-3_model/examples/contextualized_embedder_example.py).
 
 ## License
 
