@@ -77,62 +77,92 @@ You can also integrate `OSMFetcher` into a complete Haystack pipeline:
 
 ```python
 from haystack import Pipeline
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
 from haystack.utils import Secret
-from osm_integration_haystack import OSMFetcher
 
 # Create pipeline components
 osm_fetcher = OSMFetcher(
-    preset_center=(51.898403, -8.473978),
-    preset_radius_m=200,
-    target_osm_types=["node"],
-    target_osm_tags=["amenity"],
-    maximum_query_mb=2,
+    preset_center=(51.898403, -8.473978),  
+    preset_radius_m=500,  
+    target_osm_types=["node"],  
+    target_osm_tags=["amenity"],  
+    maximum_query_mb=2,  
     overpass_timeout=20
 )
 
-prompt_builder = PromptBuilder(template="""
-You are a geographic information assistant. Based on the provided OpenStreetMap data, help me find the nearest coffee shops.
+prompt_template = [
+    ChatMessage.from_system(
+        "You are a geographic information assistant. "
+        "Based on the provided OpenStreetMap data, help the user find nearby places that match the user's query."
+    ),
+    ChatMessage.from_user(
+        """
+        User location: {{ user_location }}
+        Search radius: {{ radius }}m
+        User query: {{ query }}
 
-User location: {{ user_location }}
-Search radius: {{ radius }}m
+        Available location data:
+        {% for document in documents %}
+        - {{ document.content }}
+          Location: ({{ document.meta.lat }}, {{ document.meta.lon }})
+          Distance: {{ document.meta.distance_m }}m
+          Type: {{ document.meta.category }}
+        {% endfor %}
 
-Available location data:
-{% for document in documents[:10] %}
-- {{ document.content }}
-  Location: ({{ document.meta.lat }}, {{ document.meta.lon }})
-  Distance: {{ document.meta.distance_m }}m
-  Type: {{ document.meta.category }}
-{% endfor %}
+        Please:
+        1. Find all locations that are relevant to the user's query
+        2. Sort them by distance
+        3. Recommend the nearest 3 locations
+        4. Provide a short description for each
 
-Please help me find coffee shop related locations and recommend the nearest 3.
-""")
+        Please respond in English.
+        """
+    ),
+]
 
-llm_generator = OpenAIGenerator(
+prompt_builder = ChatPromptBuilder(
+    template=prompt_template,
+    required_variables=["user_location", "radius", "query", "documents"], # optional, depends on what your pipeline requires
+)
+
+llm = OpenAIChatGenerator(
     api_key=Secret.from_env_var("OPENAI_API_KEY"),
-    model="gpt-4-turbo"
+    model="gpt-4o-mini",
 )
 
 # Create and connect pipeline
-pipeline = Pipeline()
-pipeline.add_component("osm_fetcher", osm_fetcher)
-pipeline.add_component("prompt_builder", prompt_builder)
-pipeline.add_component("llm_generator", llm_generator)
+coffee_pipeline = Pipeline()
+coffee_pipeline.add_component("osm_fetcher", osm_fetcher)
+coffee_pipeline.add_component("prompt_builder", prompt_builder)
+coffee_pipeline.add_component("llm", llm)
 
-pipeline.connect("osm_fetcher.documents", "prompt_builder.documents")
-pipeline.connect("prompt_builder.prompt", "llm_generator.prompt")
+# documents to prompt_builder
+coffee_pipeline.connect("osm_fetcher.documents", "prompt_builder.documents")
+# ChatPromptBuilder output toward prompt(List[ChatMessage]) as llm.messages
+coffee_pipeline.connect("prompt_builder.prompt", "llm.messages")
 
-# Run the pipeline
-result = pipeline.run({
-    "osm_fetcher": {},
-    "prompt_builder": {
-        "user_location": "Cork, Ireland (51.898403, -8.473978)",
-        "radius": 200
+# run the pipeline
+user_location = "Cork, Ireland"
+radius = 1000
+
+result = coffee_pipeline.run(
+    {
+        "osm_fetcher": {},
+        "prompt_builder": {
+            "user_location": user_location,
+            "radius": radius,
+            "query": "find me the nearest coffee shop for work, needs wifi"
+        },
     }
-})
+)
 
-print(result["llm_generator"]["replies"][0])
+reply = result["llm"]["replies"][0]
+print("Role:", reply.role)
+print("\nAssistant reply:\n")
+print(reply.text)
+
 ```
 
 ### GeoRadiusFilter
@@ -229,11 +259,12 @@ The script will prompt you to choose between:
 ```python
 # Search for coffee shops
 coffee_fetcher = OSMFetcher(
-    preset_center=(51.898403, -8.473978),
-    preset_radius_m=500,
-    target_osm_types=["node"],
-    target_osm_tags=["amenity"],
-    maximum_query_mb=2
+    preset_center=CENTER,  # Cork, Ireland
+    preset_radius_m=RADIUS_M,  # 1000m radius
+    target_osm_types=["node"],  # Only search nodes
+    target_osm_tags=["amenity"],  # Search amenity types
+    maximum_query_mb=2,  # Limit query size
+    overpass_timeout=20
 )
 
 results = coffee_fetcher.run()
