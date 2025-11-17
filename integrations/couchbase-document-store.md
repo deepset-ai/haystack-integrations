@@ -66,7 +66,7 @@ The `couchbase-haystack` library uses the [Couchbase Python SDK](https://docs.co
 
 Both document stores store Documents as JSON documents in Couchbase. Embeddings are stored as part of the document, with indexing and querying managed by different Couchbase services depending on the document store type.
 
-## Choosing the Right Document Store
+### Choosing the Right Document Store
 
 Couchbase supports three types of vector indexes. This library currently supports two of them:
 
