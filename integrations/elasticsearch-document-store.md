@@ -106,7 +106,7 @@ query_pipeline.add_component("text_embedder", text_embedder)
 query_pipeline.add_component("retriever", retriever)
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 
-result = query_pipeline.run({"text_embedder": {"text": "historical places in Instanbul"}})
+result = query_pipeline.run({"text_embedder": {"text": "historical places in Istanbul"}})
 
 print(result)
 ```
