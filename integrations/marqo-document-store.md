@@ -84,6 +84,7 @@ document_store = MarqoDocumentStore(
 To write documents to `MarqoDocumentStore`, create an indexing pipeline.
 
 ```python
+from haystack import Pipeline
 from haystack.components.converters import TextFileToDocument
 from haystack.components.writers import DocumentWriter
 
