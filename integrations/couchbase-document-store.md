@@ -21,8 +21,8 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
   - [Running Couchbase](#running-couchbase)
-  - [CouchbaseSearchDocumentStore (FTS-based)](#couchbasesearchdocumentstore-fts-based)
-  - [CouchbaseQueryDocumentStore (GSI-based)](#couchbasequerydocumentstore-gsi-based)
+  - [CouchbaseSearchDocumentStore (Search-based)](#couchbasesearchdocumentstore-search-based)
+  - [CouchbaseQueryDocumentStore (Query-based)](#couchbasequerydocumentstore-query-based)
   - [More Examples](#more-examples)
 - [License](#license)
 
@@ -45,7 +45,7 @@ by [deepset](https://www.deepset.ai). Couchbase supports three types of [vector 
 
 The library provides two document store implementations:
 
-- **`CouchbaseSearchDocumentStore`** - Uses Couchbase Search Vector Index (FTS-based)
+- **`CouchbaseSearchDocumentStore`** - Uses Couchbase Search Vector Index (Search-based)
 - **`CouchbaseQueryDocumentStore`** - Uses Hyperscale Vector Index or  Composite Vector Index
 
 You can start working with these implementations by importing from the `couchbase_haystack` package:
@@ -70,15 +70,15 @@ Both document stores store Documents as JSON documents in Couchbase. Embeddings 
 
 Couchbase supports three types of vector indexes. This library currently supports two of them:
 
-| Feature | CouchbaseSearchDocumentStore (FTS) | CouchbaseQueryDocumentStore (Hyperscale) | CouchbaseQueryDocumentStore (Composite) |
+| Feature | CouchbaseSearchDocumentStore (Search) | CouchbaseQueryDocumentStore (Hyperscale) | CouchbaseQueryDocumentStore (Composite) |
 |---------|-----------------------------------|-------------------------------------------|----------------------------------------------|
 | **Index Type** | Search Vector Index | Hyperscale Vector Index | Composite Vector Index |
 | **First Available** | Couchbase 7.6 | Couchbase 8.0 | Couchbase 8.0 |
 | **Dataset Size** | Up to ~100 million docs | Tens of millions to billions | Tens of millions to billions |
 | **Best For** | Hybrid searches (vector + text + geo) | Pure vector searches at scale | Filtered vector searches |
-| **Strengths** | - Full-text search integration<br>- Geospatial search<br>- Familiar FTS indexes | - High performance for pure vector searches<br>- Low memory footprint<br>- Best for huge datasets<br>- Concurrent updates & searches | - Scalar filters before vector search<br>- Efficient for selective queries<br>- Compliance use cases |
+| **Strengths** | - Full-text search integration<br>- Geospatial search<br>- Familiar Search indexes | - High performance for pure vector searches<br>- Low memory footprint<br>- Best for huge datasets<br>- Concurrent updates & searches | - Scalar filters before vector search<br>- Efficient for selective queries<br>- Compliance use cases |
 | **Use Cases** | - E-commerce product search<br>- Travel recommendations<br>- Real estate searches | - Chatbot context (RAG)<br>- Reverse image search<br>- Anomaly detection | - Content recommendations with filters<br>- Job searches<br>- Supply chain management |
-| **Search Type** | Vector + FTS + Geospatial | ANN (Approximate Nearest Neighbor) or KNN | ANN or KNN|
+| **Search Type** | Vector + Full-Text + Geospatial | ANN (Approximate Nearest Neighbor) or KNN | ANN or KNN|
 | **Filtering** | Search query filters | SQL++ WHERE clause | SQL++ WHERE clause|
 
 ### When to Use Each
@@ -136,7 +136,7 @@ In this example, the container is started using Couchbase Server version `7.6.2`
 > **Note:**  
 > Assuming you have a Docker container running, navigate to <http://localhost:8091> to open the Couchbase Web Console and explore your data.
 
-### CouchbaseSearchDocumentStore (FTS-based)
+### CouchbaseSearchDocumentStore (Search-based)
 
 ```text
                                    +-----------------------------+
@@ -156,7 +156,7 @@ In this example, the container is started using Couchbase Server version `7.6.2`
           |                        |      +--------+--------+    |
           |                        |      |  Search service |    |
           |                        |      +-----------------+    |
-          +----------------------->|      |       FTS       |    |
+          +----------------------->|      |      Search     |    |
                query_embeddings    |      |   Vector Index  |    |
                                    |      | (for embedding) |    |
                                    |      +-----------------+    |
@@ -310,7 +310,7 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 #### Retrieving Documents with CouchbaseSearchEmbeddingRetriever
 
-`CouchbaseSearchEmbeddingRetriever` component can be used to retrieve documents from Couchbase by querying the FTS vector index using an embedded query. Below is a pipeline which finds documents using query embedding:
+`CouchbaseSearchEmbeddingRetriever` component can be used to retrieve documents from Couchbase by querying the Search vector index using an embedded query. Below is a pipeline which finds documents using query embedding:
 
 ```python
 from typing import List
@@ -373,7 +373,7 @@ documents: List[Document] = result["retriever"]["documents"]
 
 ---
 
-### CouchbaseQueryDocumentStore (GSI-based)
+### CouchbaseQueryDocumentStore (Query-based)
 
 The `CouchbaseQueryDocumentStore` supports both **Hyperscale Vector Index** and **Composite Vector Index** types, depending on the underlying indexes you have set up in Couchbase.
 
@@ -446,7 +446,7 @@ document_store_hyperscale = CouchbaseQueryDocumentStore(
 )
 ```
 
-> **Note:** You need to create the appropriate GSI index manually in Couchbase before performing vector search. See the [Couchbase documentation](https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/createindex.html) for index creation details.
+> **Note:** You need to create the appropriate Hyperscale Vector Index or Composite Vector Index manually in Couchbase before performing vector search. See the [Couchbase documentation](https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/createindex.html) for index creation details.
 
 #### Indexing Documents with CouchbaseQueryDocumentStore
 
@@ -598,17 +598,17 @@ result_custom = pipeline.run(
 
 ### More Examples
 
-You can find more examples in the [examples](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples) directory:
+You can find more examples in the [examples](examples) directory:
 
-#### Search-based (FTS) Examples
+#### Search-based Examples
 
 - [examples/search/indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/indexing_pipeline.py) - Indexing documents using `CouchbaseSearchDocumentStore`
-- [examples/search/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/rag_pipeline.py) - RAG pipeline using `CouchbaseSearchEmbeddingRetriever` with [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/v2.0/docs/huggingfacetgigenerator)
+- [examples/search/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/rag_pipeline.py) - RAG pipeline using `CouchbaseSearchEmbeddingRetriever` with [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/v2.20/docs/huggingfacetgigenerator)
 
-#### GSI-based Examples
+#### Query-based Examples
 
-- [examples/gsi/indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/gsi/indexing_pipeline.py) - Indexing documents using `CouchbaseQueryDocumentStore` with Hyperscale or Composite indexes
-- [examples/gsi/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/gsi/rag_pipeline.py) - RAG pipeline using `CouchbaseQueryEmbeddingRetriever` for high-performance vector retrieval
+- [examples/query/indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/query/indexing_pipeline.py) - Indexing documents using `CouchbaseQueryDocumentStore` with Hyperscale or Composite indexes
+- [examples/query/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/query/rag_pipeline.py) - RAG pipeline using `CouchbaseQueryEmbeddingRetriever` for high-performance vector retrieval
 
 ## License
 
