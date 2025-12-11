@@ -94,7 +94,7 @@ pipeline.connect("converter", "cleaner")
 pipeline.connect("cleaner", "splitter")
 pipeline.connect("splitter", "writer")
 
-file_paths = ["invoice.pdf", "receipt.jpg", "contract.pdf"]
+file_paths = ["invoice.pdf", "receipt.pdf", "contract.pdf"]
 pipeline.run({"converter": {"sources": file_paths}})
 ```
 
