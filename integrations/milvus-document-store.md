@@ -177,9 +177,8 @@ rag_pipeline = Pipeline()
 rag_pipeline.add_component("text_embedder", OpenAITextEmbedder())
 rag_pipeline.add_component("retriever", MilvusEmbeddingRetriever(document_store=document_store, top_k=3))
 rag_pipeline.add_component("prompt_builder", ChatPromptBuilder(template=[ChatMessage.from_user(prompt_template)]))
-
 rag_pipeline.add_component("llm", llm)
-rag_pipeline.connect("prompt_builder.prompt", "llm.messages")
+
 rag_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 rag_pipeline.connect("retriever", "prompt_builder")
 rag_pipeline.connect("prompt_builder.prompt", "llm.messages")
