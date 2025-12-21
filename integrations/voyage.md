@@ -24,11 +24,43 @@ toc: true
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Supported Models](#supported-models)
 - [Example](#example)
+- [Multimodal Embeddings](#multimodal-embeddings)
 
-[Voyage AI](https://voyageai.com/)’s embedding and ranking models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
+[Voyage AI](https://voyageai.com/)'s embedding and ranking models, such as `voyage-2` and `voyage-large-2`, are state-of-the-art in retrieval accuracy. These models outperform top performing embedding models like `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb). `voyage-2` is current ranked second on the [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
 
 The available models can be found on the [Embeddings Documentation](https://docs.voyageai.com/embeddings/).
+
+## Supported Models
+
+### Text Embedding Models
+
+| Model | Description | Dimensions |
+|-------|-------------|------------|
+| `voyage-3.5` | Latest general-purpose embedding model | 1024 |
+| `voyage-3.5-lite` | Efficient model with lower latency | 1024 |
+| `voyage-3-large` | High-capacity embedding model | 1024 |
+| `voyage-3` | High-performance general-purpose model | 1024 |
+| `voyage-code-3` | Optimized for code retrieval | 1024 |
+| `voyage-finance-2` | Optimized for financial documents | 1024 |
+| `voyage-law-2` | Optimized for legal documents | 1024 |
+| `voyage-2` | Proven general-purpose model | 1024 |
+| `voyage-large-2` | Larger proven model | 1536 |
+
+### Multimodal Embedding Models
+
+| Model | Description | Dimensions | Modalities |
+|-------|-------------|------------|------------|
+| `voyage-multimodal-3` | Multimodal embedding model | 1024 | Text, Images |
+| `voyage-multimodal-3.5` | Multimodal embedding model (preview) | 256, 512, 1024, 2048 | Text, Images, Video |
+
+### Reranker Models
+
+| Model | Description |
+|-------|-------------|
+| `rerank-2` | High-accuracy reranker model |
+| `rerank-2-lite` | Efficient reranker with lower latency |
 
 ## Installation
 
@@ -126,6 +158,98 @@ top_result = results["Retriever"]["documents"][0].content
 print("The top search result is:")
 print(top_result)
 ```
+
+## Multimodal Embeddings
+
+Voyage AI's `voyage-multimodal-3.5` model transforms unstructured data from multiple modalities (text, images, video) into a shared vector space. This enables mixed-media document retrieval and cross-modal semantic search.
+
+### Features
+
+- **Multiple modalities**: Supports text, images, and video in a single input
+- **Variable dimensions**: Output dimensions of 256, 512, 1024 (default), or 2048
+- **Interleaved content**: Mix text, images, and video in single inputs
+- **No preprocessing required**: Process documents with embedded images directly
+
+### Limits
+
+- Images: Max 20MB, 16 million pixels
+- Video: Max 20MB
+- Context: 32,000 tokens
+- Token counting: 560 image pixels = 1 token, 1120 video pixels = 1 token
+
+### Multimodal API Example
+
+The multimodal model uses a different API endpoint (`/v1/multimodalembeddings`):
+
+```python
+import os
+import voyageai
+from PIL import Image
+
+# Initialize client (uses VOYAGE_API_KEY environment variable)
+client = voyageai.Client(api_key=os.environ.get("VOYAGE_API_KEY"))
+
+# Text-only embedding
+result = client.multimodal_embed(
+    inputs=[["Your text here"]],
+    model="voyage-multimodal-3.5"
+)
+
+# Text + Image embedding
+image = Image.open("document.jpg")
+result = client.multimodal_embed(
+    inputs=[["Caption or context", image]],
+    model="voyage-multimodal-3.5",
+    output_dimension=1024  # Optional: 256, 512, 1024, or 2048
+)
+
+print(f"Dimensions: {len(result.embeddings[0])}")
+print(f"Tokens used: {result.total_tokens}")
+```
+
+### Video Embedding Example
+
+Video inputs require the `voyageai.video_utils` module. Use `optimize_video` to fit videos within the 32K token context:
+
+```python
+import os
+import voyageai
+from voyageai.video_utils import optimize_video
+
+client = voyageai.Client(api_key=os.environ.get("VOYAGE_API_KEY"))
+
+# Load and optimize video (videos can be large in tokens)
+with open("video.mp4", "rb") as f:
+    video_bytes = f.read()
+
+# Optimize to fit within token budget
+optimized_video = optimize_video(
+    video_bytes,
+    model="voyage-multimodal-3.5",
+    max_video_tokens=5000  # Limit tokens used by video
+)
+print(f"Optimized: {optimized_video.num_frames} frames, ~{optimized_video.estimated_num_tokens} tokens")
+
+# Embed video (optionally with text context)
+result = client.multimodal_embed(
+    inputs=[[optimized_video]],
+    model="voyage-multimodal-3.5"
+)
+
+print(f"Dimensions: {len(result.embeddings[0])}")
+print(f"Tokens used: {result.total_tokens}")
+```
+
+### Use Cases
+
+- Mixed-media document retrieval (PDFs, slides with images)
+- Image-text similarity search
+- Video content retrieval and search
+- Cross-modal semantic search
+
+For more information, see the [Multimodal Embeddings Documentation](https://docs.voyageai.com/docs/multimodal-embeddings).
+
+> **Note:** The `voyage-multimodal-3.5` model is currently in preview. Video input requires `voyageai` SDK version 0.3.6 or later.
 
 ## License
 
