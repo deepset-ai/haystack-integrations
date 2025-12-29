@@ -15,7 +15,7 @@ version: Haystack 2.0
 toc: true
 ---
 
-# Table of Contents
+**Table of Contents**
 
 - [Overview](#overview)
 - [Installation](#installation)
@@ -26,7 +26,7 @@ toc: true
   - [More Examples](#more-examples)
 - [License](#license)
 
-### Breaking Changes in Version 2.0.0
+### Breaking Changes in Version Couchbase 2.0.0
 
 > **Important Note:**  
 > In version 2.0.0, the following component names have been changed:
@@ -221,7 +221,7 @@ document_store.write_documents(documents_with_embeddings.get("documents"))
 Make sure embedding model produces vectors of same size as it has been set on `Couchbase Vector Index`, e.g. setting `embedding_dim=384` would comply with the "sentence-transformers/all-MiniLM-L6-v2" model.
 
 > **Note**
-> Most of the time you will be using [Haystack Pipelines](https://docs.haystack.deepset.ai/v2.0/docs/pipelines) to build both indexing and querying RAG scenarios.
+> Most of the time you will be using [Haystack Pipelines](https://docs.haystack.deepset.ai/docs/pipelines) to build both indexing and querying RAG scenarios.
 
 It is important to understand how haystack Documents are stored in Couchbase after you call `write_documents`.
 
