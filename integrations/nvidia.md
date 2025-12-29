@@ -52,6 +52,9 @@ This integration introduces the following components:
 
 - `NvidiaGenerator`:     A component for generating text using generative models provided by NVIDIA AI Foundation Endpoints and NVIDIA Inference Microservices.
 
+- `NvidiaChatGenerator`: 
+A component for chat completion using NVIDIA-hosted models (takes ChatMessage list, returns ChatMessage replies).
+
 - `NvidiaRanker`: A component for ranking documents, using [NVIDIA NIMs](https://ai.nvidia.com).
 
 ## Use the components on their own:
@@ -112,6 +115,23 @@ print(result["meta"])
 # ['The Golden Gate Bridge was built in 1937 and was completed and opened to the public on May 29, 1937....'[{'role': 'assistant', 'finish_reason': 'stop'}]
 ```
 
+### `NvidiaChatGenerator` :
+
+```python
+from haystack.dataclasses import ChatMessage
+from haystack.utils import Secret
+from haystack_integrations.components.generators.nvidia import NvidiaChatGenerator
+
+generator = NvidiaChatGenerator(
+    model="meta/llama-3.1-8b-instruct",
+    api_key=Secret.from_env_var("NVIDIA_API_KEY"),
+)
+
+messages = [ChatMessage.from_user("What's Natural Language Processing? Be brief.")]
+result = generator.run(messages)
+print(result["replies"])
+print(result["meta"])
+```
 
 ### `NvidiaRanker`:
 
