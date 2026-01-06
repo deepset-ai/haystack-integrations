@@ -73,36 +73,35 @@ Extract structured data from 45+ supported websites. This component uses Bright 
 - **Other**: GitHub, Yahoo Finance, Reuters
 
 ```python
-from haystack_brightdata import BrightDataUnlocker
+from haystack_brightdata import BrightDataWebScraper
 import os
 
 # Set your API key
-os.environ["BRIGHT_DATA_API_KEY"] = "api-key"
+os.environ["BRIGHT_DATA_API_KEY"] = "your-api-key"
 
-# Initialize Web Unlocker
-unlocker = BrightDataUnlocker(default_output_format="markdown", zone="unblocker")
+# Initialize the scraper
+scraper = BrightDataWebScraper()
 
-# Access a website and get content as markdown
-result = unlocker.run(
-    url="https://example.com/restricted-content",
-    output_format="markdown"
+# Extract Amazon product data
+result = scraper.run(
+    dataset="amazon_product",
+    url="https://www.amazon.com/dp/B08N5WRWNW"
 )
-print(result["content"])
+print(result["data"])
 
-# Access from a specific country
-result = unlocker.run(
-    url="https://example.com/",
-    country="gb",
-    output_format="html"
+# Extract LinkedIn profile data
+result = scraper.run(
+    dataset="linkedin_person_profile",
+    url="https://www.linkedin.com/in/example-profile/"
 )
-print(result)
+print(result["data"])
 
-# Get a screenshot
-result = unlocker.run(
-    url="https://example.com",
-    output_format="screenshot"
+# Extract Instagram profile data
+result = scraper.run(
+    dataset="instagram_profiles",
+    url="https://www.instagram.com/username/"
 )
-# result contains base64-encoded screenshot
+print(result["data"])
 ```
 
 **List all supported datasets:**
@@ -201,11 +200,12 @@ Build a Retrieval-Augmented Generation (RAG) pipeline using Bright Data to extra
 ```python
 import os
 from haystack import Pipeline, Document
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.embedders import OpenAIDocumentEmbedder, OpenAITextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.dataclasses import ChatMessage
 from haystack_brightdata import BrightDataWebScraper
 import json
 
@@ -219,7 +219,7 @@ document_store = InMemoryDocumentStore()
 docs_embedder = OpenAIDocumentEmbedder()
 text_embedder = OpenAITextEmbedder()
 retriever = InMemoryEmbeddingRetriever(document_store)
-generator = OpenAIGenerator(model="gpt-4")
+generator = OpenAIChatGenerator()
 
 # Scrape product data from multiple Amazon products
 product_urls = [
@@ -298,20 +298,20 @@ print("Indexing documents...")
 embeddings = docs_embedder.run(documents)
 document_store.write_documents(embeddings["documents"])
 
-# Create RAG pipeline
-template = """
-Given the following product information, answer the question.
-
+# Create RAG pipeline with ChatPromptBuilder
+messages = [
+    ChatMessage.from_system("You are a helpful shopping assistant. Answer questions about products based on the provided context."),
+    ChatMessage.from_user("""
 Context:
 {% for document in documents %}
     {{ document.content }}
 {% endfor %}
 
 Question: {{question}}
-Answer:
-"""
+""")
+]
 
-prompt_builder = PromptBuilder(template=template, required_variables=["documents", "question"])
+prompt_builder = ChatPromptBuilder(template=messages)
 
 # Build pipeline
 pipe = Pipeline()
@@ -334,7 +334,7 @@ response = pipe.run({
     "prompt_builder": {"question": question}
 })
 
-print(f"Answer: {response['llm']['replies'][0]}")
+print(f"Answer: {response['llm']['replies'][0].text}")
 
 # Ask more questions
 questions = [
@@ -349,7 +349,7 @@ for question in questions:
         "prompt_builder": {"question": question}
     })
     print(f"\nQuestion: {question}")
-    print(f"Answer: {response['llm']['replies'][0]}")
+    print(f"Answer: {response['llm']['replies'][0].text}")
 ```
 
 **SERP + RAG Pipeline Example:**
@@ -359,11 +359,12 @@ Use SERP API to find relevant web pages, then use Web Unlocker to extract conten
 ```python
 import os
 from haystack import Pipeline, Document
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.embedders import OpenAIDocumentEmbedder, OpenAITextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.dataclasses import ChatMessage
 from haystack_brightdata import BrightDataSERP, BrightDataUnlocker
 import json
 
@@ -378,7 +379,7 @@ document_store = InMemoryDocumentStore()
 docs_embedder = OpenAIDocumentEmbedder()
 text_embedder = OpenAITextEmbedder()
 retriever = InMemoryEmbeddingRetriever(document_store)
-generator = OpenAIGenerator()
+generator = OpenAIChatGenerator(model="gpt-4")
 
 # Search for information
 search_query = "best practices for machine learning in production"
@@ -425,21 +426,21 @@ print(f"Indexing {len(documents)} documents...")
 embeddings = docs_embedder.run(documents)
 document_store.write_documents(embeddings["documents"])
 
-# Create RAG pipeline
-template = """
-Given the following information from web sources, answer the question.
-
-Context:
+# Create RAG pipeline with ChatPromptBuilder
+messages = [
+    ChatMessage.from_system("You are a knowledgeable AI assistant. Answer questions based on the provided web sources."),
+    ChatMessage.from_user("""
+Context from web sources:
 {% for document in documents %}
     Source: {{ document.meta.url }}
     {{ document.content }}
 {% endfor %}
 
 Question: {{question}}
-Answer:
-"""
+""")
+]
 
-prompt_builder = PromptBuilder(template=template)
+prompt_builder = ChatPromptBuilder(template=messages)
 
 # Build pipeline
 pipe = Pipeline()
@@ -462,7 +463,7 @@ response = pipe.run({
     "prompt_builder": {"question": question}
 })
 
-print(f"Answer: {response['llm']['replies'][0]}")
+print(f"Answer: {response['llm']['replies'][0].text}")
 ```
 
 ## Supported Datasets
