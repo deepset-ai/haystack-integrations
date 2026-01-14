@@ -182,7 +182,6 @@ from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 documents = [Document(content="My name is Morgan and I live in Paris.")]
 
 document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
-document_embedder.warm_up()  # will download the model during the first run
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))
@@ -323,8 +322,8 @@ The full-text index is required for keyword-based retrieval using `SingleStoreBM
 
 #### Hybrid retrieval
 
-Both vector and full-text indexes can be enabled at the same time to support **hybrid retrieval** scenarios, where
-dense (semantic) and sparse (keyword-based) search techniques are combined within the same Haystack pipeline.
+Both vector and full-text indexes can be enabled at the same time to support **hybrid retrieval** scenarios, where dense (semantic) and sparse (keyword-based) search techniques are combined within the same Haystack pipeline.
+Find the example in [hybrid_retrieval.py](https://github.com/singlestore-labs/singlestore-haystack/tree/main/examples/hybrid_retrieval.py)
 
 ### Retrieving documents
 
@@ -356,7 +355,6 @@ documents = [
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
 
 document_embedder = SentenceTransformersDocumentEmbedder(model=model_name)
-document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))
