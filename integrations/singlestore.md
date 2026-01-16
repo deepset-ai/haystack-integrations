@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: SingleStore
-description: 
+description: Use SingleStore with Haystack
 authors:
     - name: SingleStore
       socials:
