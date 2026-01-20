@@ -50,15 +50,15 @@ pip install nvidia-haystack
 
 This integration introduces the following components:
 
-- **NvidiaTextEmbedder**: A component for embedding strings using NVIDIA embedding models. For models that differentiate between query and document inputs, this component embeds the input string as a query.
+- [**NvidiaTextEmbedder**](https://docs.haystack.deepset.ai/docs/nvidiatextembedder): A component for embedding text using NVIDIA embedding models. For models that differentiate between query and document inputs, this component embeds the input query.
   
-- **NvidiaDocumentEmbedder**: A component for embedding documents using NVIDIA embedding models.
+- [**NvidiaDocumentEmbedder**](https://docs.haystack.deepset.ai/docs/nvidiadocumentembedder): A component for embedding documents using NVIDIA embedding models.
 
-- **NvidiaGenerator**: A component for generating text using generative models.
+- [**NvidiaGenerator**](https://docs.haystack.deepset.ai/docs/nvidiagenerator): A component for generating text using generative models.
 
-- **NvidiaChatGenerator**: A component for chat completion using NVIDIA-hosted models. Takes a list of `ChatMessage` and returns `ChatMessage` replies.
+- [**NvidiaChatGenerator**](https://docs.haystack.deepset.ai/docs/nvidiachatgenerator): A component for chat completion using NVIDIA-hosted models. Takes a list of `ChatMessage` and returns `ChatMessage` replies.
 
-- **NvidiaRanker**: A component for ranking documents using NVIDIA reranking models.
+- [**NvidiaRanker**](https://docs.haystack.deepset.ai/docs/nvidiaranker): A component for ranking documents using NVIDIA reranking models.
 
 ## Usage
 
