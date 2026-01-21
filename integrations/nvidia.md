@@ -16,6 +16,22 @@ logo: /logos/nvidia.png
 version: Haystack 2.0
 toc: true
 ---
+### **Table of Contents**
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Components](#components)
+- [Usage](#usage)
+  - [NvidiaTextEmbedder](#nvidiatextembedder)
+  - [NvidiaDocumentEmbedder](#nvidiadocumentembedder)
+  - [NvidiaGenerator](#nvidiagenerator)
+  - [NvidiaChatGenerator](#nvidiachatgenerator)
+  - [NvidiaRanker](#nvidiaranker)
+- [Self-host with NVIDIA NIM](#self-host-with-nvidia-nim)
+- [Use NVIDIA components in Haystack pipelines](#use-nvidia-components-in-haystack-pipelines)
+  - [Indexing pipeline](#indexing-pipeline)
+  - [RAG query pipeline](#rag-query-pipeline)
+- [License](#license)
 
 ## Overview
 
