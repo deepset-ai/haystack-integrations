@@ -31,7 +31,7 @@ toc: true
 
 ## Overview
 
-[`AIMLAPIChatGenerator`](https://docs.haystack.deepset.ai/docs/aimlapichatgenerator) lets you call any of the models that AIMLAPI serves behind an OpenAI-compatible `/chat/completions` endpoint. AIMLAPI routes the request to the requested provider while maintaining the familiar OpenAI payload schema, so you can reuse existing Haystack pipelines or agents with minimal changes.
+[`AIMLAPIChatGenerator`](https://docs.haystack.deepset.ai/docs/aimllapichatgenerator) lets you call any of the models that AIMLAPI serves behind an OpenAI-compatible `/chat/completions` endpoint. AIMLAPI routes the request to the requested provider while maintaining the familiar OpenAI payload schema, so you can reuse existing Haystack pipelines or agents with minimal changes.
 
 AIMLAPI extends the base OpenAI integration with:
 
