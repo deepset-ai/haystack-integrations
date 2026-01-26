@@ -27,7 +27,7 @@ toc: true
 
 The `ElasticsearchDocumentStore` is maintained in [haystack-core-integrations](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/elasticsearch) repo. It allows you to use [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html) as data storage for your Haystack pipelines.
 
-For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/v1.25/reference/document-store-api#elasticsearchdocumentstore-1)
+For a details on available methods, visit the [API Reference](https://docs.haystack.deepset.ai/reference/integrations-elasticsearch#elasticsearchdocumentstore)
 
 ## Installation
 
