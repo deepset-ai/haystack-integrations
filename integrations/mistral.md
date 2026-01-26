@@ -26,7 +26,7 @@ toc: true
 [Mistral AI](https://mistral.ai/) currently provides two types of access to Large Language Models:
 
 - An API providing pay-as-you-go access to the latest Mistral models like `mistral-embed` and `mistral-small`.
-- Open-source models available under the Apache 2.0 License, available on [Hugging Face](https://huggingface.co/mistralai) which you can use with the `HuggingFaceTGIGenerator`.
+- Open-source models available under the Apache 2.0 License, available on [Hugging Face](https://huggingface.co/mistralai) which you can use with the `HuggingFaceAPIChatGenerator`.
 
 For more information on models available via the Mistral API, see [the Mistal docs](https://docs.mistral.ai/).
 
