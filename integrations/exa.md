@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Exa
-description: Search the web with Exa's neural and keyword search, get content, answers, and conduct deep research
+description: Search the web with Exa's AI-powered search, get content, answers, and conduct deep research
 authors:
   - name: Exa
     socials:
@@ -28,7 +28,7 @@ pip install exa-haystack
 
 ## Components
 
-- **ExaWebSearch**: Neural and keyword web search
+- **ExaWebSearch**: AI-powered web search (auto, fast, deep modes)
 - **ExaFindSimilar**: Find pages similar to a URL
 - **ExaContents**: Fetch full content for URLs
 - **ExaAnswer**: Get AI-powered answers with citations
