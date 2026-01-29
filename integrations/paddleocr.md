@@ -48,7 +48,7 @@ pip install paddleocr-haystack
 
 ### How to use the `PaddleOCRVLDocumentConverter`
 
-To start, visit the [PaddleOCR official website](https://aistudio.baidu.com/paddleocr/task), click the **API** button in the upper-left corner, choose the example code for **Large Model document parsing(PaddleOCR-VL)**, and copy the `API_URL`.
+To start, visit the [PaddleOCR official website](https://aistudio.baidu.com/paddleocr), click the **API** button, choose the example code for PaddleOCR-VL, and copy the `API_URL`.
 
 Basic usage with a local file:
 
