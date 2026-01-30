@@ -315,8 +315,6 @@ print(f"Total tokens: {result['meta']['total_tokens']}")
 
 For more information, see the [Multimodal Embeddings Documentation](https://docs.voyageai.com/docs/multimodal-embeddings).
 
-> **Note:** The `voyage-multimodal-3.5` model is currently in preview. Video input requires `voyageai` SDK version 0.3.6 or later and `pillow` for image processing.
-
 ## License
 
 `voyage-embedders-haystack` is distributed under the terms of the [Apache-2.0 license](https://github.com/awinml/voyage-embedders-haystack/blob/main/LICENSE).
