@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-[Valkey](https://valkey.io/) is a high-performance, in-memory data structure store that you can use in Haystack pipelines with the [ValkeyDocumentStore](https://docs.haystack.deepset.ai/docs/valkey-document-store). Valkey operates in-memory by default for maximum performance, but can be configured with persistence options for data durability.
+[Valkey](https://valkey.io/) is a high-performance, in-memory data structure store that you can use in Haystack pipelines with the ValkeyDocumentStore. Valkey operates in-memory by default for maximum performance, but can be configured with persistence options for data durability.
 
 For a detailed overview of all the available methods and settings for the `ValkeyDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/integrations-valkey#valkeydocumentstore).
 
@@ -53,7 +53,7 @@ document_store = ValkeyDocumentStore(
 ### Writing Documents to ValkeyDocumentStore
 
 To write documents to your `ValkeyDocumentStore`, create an indexing pipeline, or use the `write_documents()` function.
-For this step, you may make use of the available [Converters](https://docs.haystack.deepset.ai/docs/converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessors), as well as other [Integrations](/integrations) that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Valkey database.
+For this step, you may make use of the available [Converters](https://docs.haystack.deepset.ai/docs/converters) and [PreProcessors](https://docs.haystack.deepset.ai/docs/preprocessors), as well as other integrations that might help you fetch data from other resources. Below is an example indexing pipeline that indexes your Markdown files into a Valkey database.
 
 ### Indexing Pipeline
 
@@ -148,13 +148,10 @@ docker run -d -p 6379:6379 valkey/valkey-bundle:latest
 ```bash
 git clone https://github.com/deepset-ai/haystack-core-integrations
 cd integrations/valkey
-uv sync
 ```
 
 3. **Run tests**:
 ```bash
-uv sync --group test
-
 # Run unit tests only
 hatch run test:unit
 
@@ -170,10 +167,10 @@ hatch run test:all
 uv sync --group examples
 
 # Basic usage example
-hatch run python examples/basic_usage.py
+uv run examples/basic_usage.py
 
 # Pipeline example
-hatch run python examples/example.py
+uv run examples/example.py
 ```
 
 ## Performance Benefits
@@ -186,7 +183,7 @@ hatch run python examples/example.py
 ## Requirements
 
 - Valkey server with search module running and accessible
-- Python 3.9+
+- Python 3.10+
 - Haystack 2.11+
 
 ## License
