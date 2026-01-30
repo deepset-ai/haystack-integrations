@@ -24,16 +24,49 @@ toc: true
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Supported Models](#supported-models)
 - [Example](#example)
 - [Contextualized Embeddings Example](#contextualized-embeddings-example)
+- [Multimodal Embeddings](#multimodal-embeddings)
 
 [Voyage AI](https://voyageai.com/)'s embedding and ranking models are state-of-the-art in retrieval accuracy. The integration supports the following models:
 - **`voyage-3.5`** and **`voyage-3.5-lite`** - Latest general-purpose embedding models with superior performance
 - **`voyage-3-large`** and **`voyage-3`** - High-performance general-purpose embedding models
 - **`voyage-context-3`** - Contextualized chunk embedding model that preserves document context for improved retrieval accuracy
+- **`voyage-multimodal-3.5`** - Multimodal model supporting text, images, and video (preview)
 - **`voyage-2`** and **`voyage-large-2`** - Proven models that outperform `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb)
 
 For the complete list of available models, see the [Embeddings Documentation](https://docs.voyageai.com/embeddings/) and [Contextualized Chunk Embeddings](https://docs.voyageai.com/docs/contextualized-chunk-embeddings).
+
+## Supported Models
+
+### Text Embedding Models
+
+| Model | Description | Dimensions |
+|-------|-------------|------------|
+| `voyage-3.5` | Latest general-purpose embedding model | 1024 |
+| `voyage-3.5-lite` | Efficient model with lower latency | 1024 |
+| `voyage-3-large` | High-capacity embedding model | 1024 |
+| `voyage-3` | High-performance general-purpose model | 1024 |
+| `voyage-code-3` | Optimized for code retrieval | 1024 |
+| `voyage-finance-2` | Optimized for financial documents | 1024 |
+| `voyage-law-2` | Optimized for legal documents | 1024 |
+| `voyage-2` | Proven general-purpose model | 1024 |
+| `voyage-large-2` | Larger proven model | 1536 |
+
+### Multimodal Embedding Models
+
+| Model | Description | Dimensions | Modalities |
+|-------|-------------|------------|------------|
+| `voyage-multimodal-3` | Multimodal embedding model | 1024 | Text, Images |
+| `voyage-multimodal-3.5` | Multimodal embedding model (preview) | 256, 512, 1024, 2048 | Text, Images, Video |
+
+### Reranker Models
+
+| Model | Description |
+|-------|-------------|
+| `rerank-2` | High-accuracy reranker model |
+| `rerank-2-lite` | Efficient reranker with lower latency |
 
 ## Installation
 
@@ -43,10 +76,11 @@ pip install voyage-embedders-haystack
 
 ## Usage
 
-You can use Voyage models with four components:
+You can use Voyage models with five components:
 - [VoyageTextEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_text_embedder.py) - For embedding query text
 - [VoyageDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_document_embedder.py) - For embedding documents
-- [VoyageContextualizedDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/voyage_context-3_model/src/haystack_integrations/components/embedders/voyage_embedders/voyage_contextualized_document_embedder.py) - For contextualized chunk embeddings with `voyage-context-3`
+- [VoyageContextualizedDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_contextualized_document_embedder.py) - For contextualized chunk embeddings with `voyage-context-3`
+- [VoyageMultimodalEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_multimodal_embedder.py) - For multimodal embeddings with `voyage-multimodal-3.5`
 - [VoyageRanker](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/rankers/voyage/ranker.py) - For reranking documents
 
 ### Standard Embeddings
@@ -187,6 +221,99 @@ result = embedder.run(documents=docs)
 ```
 
 For more examples, see the [contextualized embedder example](https://github.com/awinml/voyage-embedders-haystack/blob/voyage_context-3_model/examples/contextualized_embedder_example.py).
+
+## Multimodal Embeddings
+
+Voyage AI's `voyage-multimodal-3.5` model transforms unstructured data from multiple modalities (text, images, video) into a shared vector space. This enables mixed-media document retrieval and cross-modal semantic search.
+
+### Features
+
+- **Multiple modalities**: Supports text, images, and video in a single input
+- **Variable dimensions**: Output dimensions of 256, 512, 1024 (default), or 2048
+- **Interleaved content**: Mix text, images, and video in single inputs
+- **No preprocessing required**: Process documents with embedded images directly
+
+### Limits
+
+- Images: Max 20MB, 16 million pixels
+- Video: Max 20MB
+- Context: 32,000 tokens
+- Token counting: 560 image pixels = 1 token, 1120 video pixels = 1 token
+
+### Basic Multimodal Example
+
+Use the `VoyageMultimodalEmbedder` component for multimodal embeddings. Each input is a list of content items (text, images, or videos):
+
+```python
+from haystack.dataclasses import ByteStream
+from haystack_integrations.components.embedders.voyage_embedders import VoyageMultimodalEmbedder
+
+# Text-only embedding
+embedder = VoyageMultimodalEmbedder(model="voyage-multimodal-3.5")
+result = embedder.run(inputs=[["What is in this image?"]])
+print(f"Embedding dimensions: {len(result['embeddings'][0])}")
+
+# Mixed text and image embedding
+image_bytes = ByteStream.from_file_path("image.jpg")
+result = embedder.run(inputs=[["Describe this image:", image_bytes]])
+print(f"Tokens used: {result['meta']['total_tokens']}")
+```
+
+### Multimodal Example with Custom Dimensions
+
+```python
+from haystack.dataclasses import ByteStream
+from haystack_integrations.components.embedders.voyage_embedders import VoyageMultimodalEmbedder
+
+# Configure output dimensions (256, 512, 1024, or 2048)
+embedder = VoyageMultimodalEmbedder(
+    model="voyage-multimodal-3.5",
+    output_dimension=2048,  # Higher dimensions for better accuracy
+    input_type="document",  # Optimize for document retrieval
+)
+
+# Embed multiple inputs at once
+image1 = ByteStream.from_file_path("doc1.jpg")
+image2 = ByteStream.from_file_path("doc2.jpg")
+
+result = embedder.run(inputs=[
+    ["Document about machine learning", image1],
+    ["Technical diagram", image2],
+])
+
+print(f"Number of embeddings: {len(result['embeddings'])}")
+print(f"Image pixels processed: {result['meta']['image_pixels']}")
+```
+
+### Video Embedding Example
+
+Video inputs require the `voyageai.video_utils` module:
+
+```python
+from voyageai.video_utils import Video
+from haystack_integrations.components.embedders.voyage_embedders import VoyageMultimodalEmbedder
+
+embedder = VoyageMultimodalEmbedder(model="voyage-multimodal-3.5")
+
+# Load video using VoyageAI's Video utility
+video = Video.from_path("video.mp4", model="voyage-multimodal-3.5")
+
+# Embed video with optional text context
+result = embedder.run(inputs=[["Describe this video:", video]])
+
+print(f"Embedding dimensions: {len(result['embeddings'][0])}")
+print(f"Video pixels processed: {result['meta']['video_pixels']}")
+print(f"Total tokens: {result['meta']['total_tokens']}")
+```
+
+### Use Cases
+
+- Mixed-media document retrieval (PDFs, slides with images)
+- Image-text similarity search
+- Video content retrieval and search
+- Cross-modal semantic search
+
+For more information, see the [Multimodal Embeddings Documentation](https://docs.voyageai.com/docs/multimodal-embeddings).
 
 ## License
 
