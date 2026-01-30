@@ -603,7 +603,7 @@ You can find more examples in the [examples](examples) directory:
 #### Search-based Examples
 
 - [examples/search/indexing_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/indexing_pipeline.py) - Indexing documents using `CouchbaseSearchDocumentStore`
-- [examples/search/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/rag_pipeline.py) - RAG pipeline using `CouchbaseSearchEmbeddingRetriever` with [HuggingFaceAPIGenerator](https://docs.haystack.deepset.ai/v2.20/docs/huggingfacetgigenerator)
+- [examples/search/rag_pipeline.py](https://github.com/Couchbase-Ecosystem/couchbase-haystack/tree/main/examples/search/rag_pipeline.py) - RAG pipeline using `CouchbaseSearchEmbeddingRetriever` with [HuggingFaceAPIChatGenerator](https://docs.haystack.deepset.ai/docs/huggingfaceapichatgenerator)
 
 #### Query-based Examples
 
