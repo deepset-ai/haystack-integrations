@@ -76,10 +76,11 @@ pip install voyage-embedders-haystack
 
 ## Usage
 
-You can use Voyage models with four components:
+You can use Voyage models with five components:
 - [VoyageTextEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_text_embedder.py) - For embedding query text
 - [VoyageDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_document_embedder.py) - For embedding documents
-- [VoyageContextualizedDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/voyage_context-3_model/src/haystack_integrations/components/embedders/voyage_embedders/voyage_contextualized_document_embedder.py) - For contextualized chunk embeddings with `voyage-context-3`
+- [VoyageContextualizedDocumentEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_contextualized_document_embedder.py) - For contextualized chunk embeddings with `voyage-context-3`
+- [VoyageMultimodalEmbedder](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/embedders/voyage_embedders/voyage_multimodal_embedder.py) - For multimodal embeddings with `voyage-multimodal-3.5`
 - [VoyageRanker](https://github.com/awinml/voyage-embedders-haystack/blob/main/src/haystack_integrations/components/rankers/voyage/ranker.py) - For reranking documents
 
 ### Standard Embeddings
@@ -239,67 +240,70 @@ Voyage AI's `voyage-multimodal-3.5` model transforms unstructured data from mult
 - Context: 32,000 tokens
 - Token counting: 560 image pixels = 1 token, 1120 video pixels = 1 token
 
-### Multimodal API Example
+### Basic Multimodal Example
 
-The multimodal model uses a different API endpoint (`/v1/multimodalembeddings`):
+Use the `VoyageMultimodalEmbedder` component for multimodal embeddings. Each input is a list of content items (text, images, or videos):
 
 ```python
-import os
-import voyageai
-from PIL import Image
-
-# Initialize client (uses VOYAGE_API_KEY environment variable)
-client = voyageai.Client(api_key=os.environ.get("VOYAGE_API_KEY"))
+from haystack.dataclasses import ByteStream
+from haystack_integrations.components.embedders.voyage_embedders import VoyageMultimodalEmbedder
 
 # Text-only embedding
-result = client.multimodal_embed(
-    inputs=[["Your text here"]],
-    model="voyage-multimodal-3.5"
-)
+embedder = VoyageMultimodalEmbedder(model="voyage-multimodal-3.5")
+result = embedder.run(inputs=[["What is in this image?"]])
+print(f"Embedding dimensions: {len(result['embeddings'][0])}")
 
-# Text + Image embedding
-image = Image.open("document.jpg")
-result = client.multimodal_embed(
-    inputs=[["Caption or context", image]],
+# Mixed text and image embedding
+image_bytes = ByteStream.from_file_path("image.jpg")
+result = embedder.run(inputs=[["Describe this image:", image_bytes]])
+print(f"Tokens used: {result['meta']['total_tokens']}")
+```
+
+### Multimodal Example with Custom Dimensions
+
+```python
+from haystack.dataclasses import ByteStream
+from haystack_integrations.components.embedders.voyage_embedders import VoyageMultimodalEmbedder
+
+# Configure output dimensions (256, 512, 1024, or 2048)
+embedder = VoyageMultimodalEmbedder(
     model="voyage-multimodal-3.5",
-    output_dimension=1024  # Optional: 256, 512, 1024, or 2048
+    output_dimension=2048,  # Higher dimensions for better accuracy
+    input_type="document",  # Optimize for document retrieval
 )
 
-print(f"Dimensions: {len(result.embeddings[0])}")
-print(f"Tokens used: {result.total_tokens}")
+# Embed multiple inputs at once
+image1 = ByteStream.from_file_path("doc1.jpg")
+image2 = ByteStream.from_file_path("doc2.jpg")
+
+result = embedder.run(inputs=[
+    ["Document about machine learning", image1],
+    ["Technical diagram", image2],
+])
+
+print(f"Number of embeddings: {len(result['embeddings'])}")
+print(f"Image pixels processed: {result['meta']['image_pixels']}")
 ```
 
 ### Video Embedding Example
 
-Video inputs require the `voyageai.video_utils` module. Use `optimize_video` to fit videos within the 32K token context:
+Video inputs require the `voyageai.video_utils` module:
 
 ```python
-import os
-import voyageai
-from voyageai.video_utils import optimize_video
+from voyageai.video_utils import Video
+from haystack_integrations.components.embedders.voyage_embedders import VoyageMultimodalEmbedder
 
-client = voyageai.Client(api_key=os.environ.get("VOYAGE_API_KEY"))
+embedder = VoyageMultimodalEmbedder(model="voyage-multimodal-3.5")
 
-# Load and optimize video (videos can be large in tokens)
-with open("video.mp4", "rb") as f:
-    video_bytes = f.read()
+# Load video using VoyageAI's Video utility
+video = Video.from_path("video.mp4", model="voyage-multimodal-3.5")
 
-# Optimize to fit within token budget
-optimized_video = optimize_video(
-    video_bytes,
-    model="voyage-multimodal-3.5",
-    max_video_tokens=5000  # Limit tokens used by video
-)
-print(f"Optimized: {optimized_video.num_frames} frames, ~{optimized_video.estimated_num_tokens} tokens")
+# Embed video with optional text context
+result = embedder.run(inputs=[["Describe this video:", video]])
 
-# Embed video (optionally with text context)
-result = client.multimodal_embed(
-    inputs=[[optimized_video]],
-    model="voyage-multimodal-3.5"
-)
-
-print(f"Dimensions: {len(result.embeddings[0])}")
-print(f"Tokens used: {result.total_tokens}")
+print(f"Embedding dimensions: {len(result['embeddings'][0])}")
+print(f"Video pixels processed: {result['meta']['video_pixels']}")
+print(f"Total tokens: {result['meta']['total_tokens']}")
 ```
 
 ### Use Cases
@@ -311,7 +315,7 @@ print(f"Tokens used: {result.total_tokens}")
 
 For more information, see the [Multimodal Embeddings Documentation](https://docs.voyageai.com/docs/multimodal-embeddings).
 
-> **Note:** The `voyage-multimodal-3.5` model is currently in preview. Video input requires `voyageai` SDK version 0.3.6 or later.
+> **Note:** The `voyage-multimodal-3.5` model is currently in preview. Video input requires `voyageai` SDK version 0.3.6 or later and `pillow` for image processing.
 
 ## License
 
