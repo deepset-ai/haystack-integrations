@@ -24,7 +24,7 @@ toc: true
 
 ## Overview
 
-`AzureDocumentIntelligenceConverter` provides an integration of [Azure Document Intelligence](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/) (formerly Form Recognizer) with [Haystack](https://haystack.deepset.ai/) by [deepset](https://www.deepset.ai).
+[`AzureDocumentIntelligenceConverter`](https://docs.haystack.deepset.ai/docs/azureocrdocumentconverter) provides an integration of [Azure Document Intelligence](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/) (formerly Form Recognizer) with [Haystack](https://haystack.deepset.ai/) by [deepset](https://www.deepset.ai).
 
 This component uses Azure's Document Intelligence service to convert various file formats into Haystack Documents with markdown content. It supports advanced document analysis including layout detection, table extraction, and structured content recognition.
 
