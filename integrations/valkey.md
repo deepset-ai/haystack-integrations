@@ -37,7 +37,7 @@ pip install valkey-haystack
 
 ## Usage
 
-To use Valkey as your data storage for your Haystack LLM pipelines, you must have a Valkey server with search module running. Once you have that, you can initialize a `ValkeyDocumentStore` for Haystack:
+To use Valkey as your data storage for your Haystack LLM pipelines, you must have a Valkey server with search module running. Learn how to spin up a Valkey server in the [Running Valkey-Haystack Locally](#running-valkey-haystack-locally) section. Once you have that, you can initialize a `ValkeyDocumentStore` for Haystack:
 
 ```python
 from haystack_integrations.document_stores.valkey import ValkeyDocumentStore
