@@ -180,7 +180,7 @@ uv run examples/example.py
 - **Low Latency**: Minimal response times for document operations
 - **Scalability**: Supports clustering for horizontal scaling
 
-## Requirements
+### Requirements
 
 - Valkey server with search module running and accessible
 - Python 3.10+
