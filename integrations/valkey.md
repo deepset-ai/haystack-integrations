@@ -173,7 +173,7 @@ uv run examples/basic_usage.py
 uv run examples/example.py
 ```
 
-## Performance Benefits
+### Performance Benefits
 
 - **In-Memory Storage**: Lightning-fast read/write operations
 - **High Throughput**: Handles thousands of operations per second
