@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-[Valkey](https://valkey.io/) is a high-performance, in-memory data structure store that you can use in Haystack pipelines with the ValkeyDocumentStore. Valkey operates in-memory by default for maximum performance, but can be configured with persistence options for data durability.
+[Valkey](https://valkey.io/) is a high-performance, in-memory data structure store that you can use in Haystack pipelines with the `ValkeyDocumentStore`. Valkey operates in-memory by default for maximum performance, but can be configured with persistence options for data durability.
 
 For a detailed overview of all the available methods and settings for the `ValkeyDocumentStore`, visit the Haystack [API Reference](https://docs.haystack.deepset.ai/reference/integrations-valkey#valkeydocumentstore).
 
