@@ -26,7 +26,7 @@ The Exa integration for Haystack provides components to search the web, fetch co
 pip install exa-haystack
 ```
 
-## Components
+### Components
 
 - **ExaWebSearch**: AI-powered web search (auto, fast, deep modes)
 - **ExaFindSimilar**: Find pages similar to a URL
@@ -50,7 +50,7 @@ result = answer.run(query="What is retrieval augmented generation?")
 print(result["answer"])
 ```
 
-## Authentication
+### Authentication
 
 Set your Exa API key as an environment variable:
 
