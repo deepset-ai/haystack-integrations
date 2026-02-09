@@ -37,17 +37,61 @@ pip install exa-haystack
 
 ## Usage
 
-```python
-from haystack_integrations.components.websearch.exa import ExaWebSearch, ExaAnswer
+### Web Search
 
-# Search the web
+```python
+from haystack_integrations.components.websearch.exa import ExaWebSearch
+
 search = ExaWebSearch(num_results=5)
 results = search.run(query="latest AI developments")
+```
 
-# Get answers with citations
+### Find Similar Pages
+
+```python
+from haystack_integrations.components.websearch.exa import ExaFindSimilar
+
+similar = ExaFindSimilar(num_results=5)
+results = similar.run(url="https://example.com/article")
+```
+
+### Fetch Content from URLs
+
+```python
+from haystack_integrations.components.websearch.exa import ExaContents
+
+contents = ExaContents()
+results = contents.run(urls=["https://example.com/page1", "https://example.com/page2"])
+```
+
+### AI-Powered Answers
+
+```python
+from haystack_integrations.components.websearch.exa import ExaAnswer
+
 answer = ExaAnswer()
 result = answer.run(query="What is retrieval augmented generation?")
 print(result["answer"])
+```
+
+### Streaming Answers
+
+```python
+from haystack_integrations.components.websearch.exa import ExaStreamAnswer
+
+stream = ExaStreamAnswer()
+for chunk in stream.run(query="Explain quantum computing"):
+    print(chunk, end="", flush=True)
+```
+
+### Deep Research
+
+```python
+from haystack_integrations.components.websearch.exa import ExaResearch
+
+research = ExaResearch()
+result = research.run(query="Impact of AI on healthcare")
+print(result["report"])
 ```
 
 ### Authentication
