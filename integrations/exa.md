@@ -10,7 +10,7 @@ authors:
 pypi: https://pypi.org/project/exa-haystack/
 repo: https://github.com/exa-labs/exa-haystack
 report_issue: https://github.com/exa-labs/exa-haystack/issues
-type: Custom Component
+type: Search & Extraction
 toc: true
 logo: /logos/exa.png
 version: Haystack 2.0
