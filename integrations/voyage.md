@@ -250,12 +250,12 @@ from haystack_integrations.components.embedders.voyage_embedders import VoyageMu
 
 # Text-only embedding
 embedder = VoyageMultimodalEmbedder(model="voyage-multimodal-3.5")
-result = embedder.run(inputs=[["What is in this image?"]])
+result = embedder.run(inputs=[["A sunset over the ocean"]])
 print(f"Embedding dimensions: {len(result['embeddings'][0])}")
 
 # Mixed text and image embedding
 image_bytes = ByteStream.from_file_path("image.jpg")
-result = embedder.run(inputs=[["Describe this image:", image_bytes]])
+result = embedder.run(inputs=[["Product photo for online store", image_bytes]])
 print(f"Tokens used: {result['meta']['total_tokens']}")
 ```
 
@@ -299,7 +299,7 @@ embedder = VoyageMultimodalEmbedder(model="voyage-multimodal-3.5")
 video = Video.from_path("video.mp4", model="voyage-multimodal-3.5")
 
 # Embed video with optional text context
-result = embedder.run(inputs=[["Describe this video:", video]])
+result = embedder.run(inputs=[["Machine learning tutorial", video]])
 
 print(f"Embedding dimensions: {len(result['embeddings'][0])}")
 print(f"Video pixels processed: {result['meta']['video_pixels']}")
