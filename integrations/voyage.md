@@ -30,11 +30,11 @@ toc: true
 - [Multimodal Embeddings](#multimodal-embeddings)
 
 [Voyage AI](https://voyageai.com/)'s embedding and ranking models are state-of-the-art in retrieval accuracy. The integration supports the following models:
-- **`voyage-3.5`** and **`voyage-3.5-lite`** - Latest general-purpose embedding models with superior performance
-- **`voyage-3-large`** and **`voyage-3`** - High-performance general-purpose embedding models
+- **`voyage-4-large`**, **`voyage-4`**, and **`voyage-4-lite`** - Latest general-purpose embedding models with shared embedding space and MoE architecture
+- **`voyage-3.5`** and **`voyage-3.5-lite`** - General-purpose embedding models with superior performance
+- **`voyage-code-3`** - Optimized for code retrieval
 - **`voyage-context-3`** - Contextualized chunk embedding model that preserves document context for improved retrieval accuracy
 - **`voyage-multimodal-3.5`** - Multimodal model supporting text, images, and video (preview)
-- **`voyage-2`** and **`voyage-large-2`** - Proven models that outperform `intfloat/e5-mistral-7b-instruct` and `OpenAI/text-embedding-3-large` on the [MTEB Benchmark](https://github.com/embeddings-benchmark/mteb)
 
 For the complete list of available models, see the [Embeddings Documentation](https://docs.voyageai.com/embeddings/) and [Contextualized Chunk Embeddings](https://docs.voyageai.com/docs/contextualized-chunk-embeddings).
 
@@ -44,15 +44,12 @@ For the complete list of available models, see the [Embeddings Documentation](ht
 
 | Model | Description | Dimensions |
 |-------|-------------|------------|
-| `voyage-3.5` | Latest general-purpose embedding model | 1024 |
+| `voyage-4-large` | The best general-purpose and multilingual retrieval quality | 1024 (default), 256, 512, 2048 |
+| `voyage-4` | Optimized for general-purpose and multilingual retrieval quality | 1024 (default), 256, 512, 2048 |
+| `voyage-4-lite` | Optimized for latency and cost | 1024 (default), 256, 512, 2048 |
+| `voyage-3.5` | General-purpose embedding model | 1024 |
 | `voyage-3.5-lite` | Efficient model with lower latency | 1024 |
-| `voyage-3-large` | High-capacity embedding model | 1024 |
-| `voyage-3` | High-performance general-purpose model | 1024 |
 | `voyage-code-3` | Optimized for code retrieval | 1024 |
-| `voyage-finance-2` | Optimized for financial documents | 1024 |
-| `voyage-law-2` | Optimized for legal documents | 1024 |
-| `voyage-2` | Proven general-purpose model | 1024 |
-| `voyage-large-2` | Larger proven model | 1536 |
 
 ### Multimodal Embedding Models
 
@@ -92,11 +89,10 @@ To create semantic embeddings for documents, use `VoyageDocumentEmbedder` in you
 For improved retrieval quality, use `VoyageContextualizedDocumentEmbedder` with the `voyage-context-3` model. This component preserves context between related document chunks by grouping them together during embedding, reducing context loss that occurs when chunks are embedded independently
 
 **Important:** You must explicitly specify the `model` parameter when initializing any component. Choose from the available models listed in the [Embeddings Documentation](https://docs.voyageai.com/embeddings/). Recommended choices include:
-- `voyage-3.5` - Latest general-purpose model for best performance
-- `voyage-3.5-lite` - Efficient model with lower latency
-- `voyage-3-large` - High-capacity model for complex tasks
+- `voyage-4-large` - Best general-purpose and multilingual retrieval quality
+- `voyage-4` - Balanced general-purpose and multilingual retrieval quality
+- `voyage-4-lite` - Optimized for latency and cost
 - `voyage-context-3` - Contextualized embeddings for improved retrieval (use with `VoyageContextualizedDocumentEmbedder`)
-- `voyage-2` - Proven general-purpose model
 
 You can set the environment variable `VOYAGE_API_KEY` instead of passing the API key as an argument. To get an API key, please see the [Voyage AI website.](https://www.voyageai.com/)
 
