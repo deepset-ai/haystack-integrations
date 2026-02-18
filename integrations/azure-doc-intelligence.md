@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/azure-doc-intelligence-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/azure_doc_intelligence
-type: Converter
+type: Data Ingestion
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/azure-ai.png
 version: Haystack 2.0
