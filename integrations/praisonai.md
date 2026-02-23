@@ -11,6 +11,7 @@ pypi: https://pypi.org/project/haystack-praisonai
 repo: https://github.com/MervinPraison/haystack-praisonai
 type: Custom Component
 report_issue: https://github.com/MervinPraison/haystack-praisonai/issues
+logo: /logos/praisonai.png
 version: Haystack 2.0
 toc: true
 ---
@@ -23,7 +24,7 @@ toc: true
 
 ## Overview
 
-This integration provides a Haystack component for PraisonAI, enabling you to run multi-agent AI workflows within your Haystack pipelines. PraisonAI orchestrates multiple AI agents to collaboratively solve complex tasks.
+This integration provides a Haystack component for [PraisonAI](https://docs.praison.ai/docs/index), enabling you to run multi-agent AI workflows within your Haystack pipelines. PraisonAI orchestrates multiple AI agents to collaboratively solve complex tasks.
 
 ## Installation
 
@@ -85,4 +86,4 @@ praisonai serve agents.yaml --port 8080
 
 ## License
 
-MIT License
+`haystack-praisonai` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
