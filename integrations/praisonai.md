@@ -23,7 +23,7 @@ toc: true
 
 ## Overview
 
-This integration provides a Haystack 2.0 component for PraisonAI, enabling you to run multi-agent AI workflows within your Haystack pipelines. PraisonAI orchestrates multiple AI agents to collaboratively solve complex tasks.
+This integration provides a Haystack component for PraisonAI, enabling you to run multi-agent AI workflows within your Haystack pipelines. PraisonAI orchestrates multiple AI agents to collaboratively solve complex tasks.
 
 ## Installation
 
