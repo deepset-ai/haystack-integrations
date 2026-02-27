@@ -54,7 +54,7 @@ This integration introduces one component:
 The ranker accepts the following parameters:
 
 - `top_k`: Number of documents to return. If `None`, all documents are returned in diversified order.
-- `strategy`: Diversification strategy (`Strategy.MMR` or `Strategy.DPP`). Defaults to `Strategy.DPP`.
+- `strategy`: Diversification strategy — `MMR`, `MSD`, `DPP`, `COVER`, or `SSD`. Defaults to `Strategy.DPP`. See [supported strategies](https://github.com/Pringled/pyversity#supported-strategies) for details.
 - `diversity`: Trade-off between relevance and diversity in `[0, 1]`. `0.0` keeps only the most relevant documents; `1.0` maximises diversity. Defaults to `0.5`.
 
 ### Standalone
