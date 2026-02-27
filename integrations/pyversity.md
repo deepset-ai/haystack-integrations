@@ -17,6 +17,7 @@ pypi: https://pypi.org/project/pyversity-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/pyversity
 type: Ranker
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/pyversity.png
 version: Haystack 2.0
 toc: true
 ---
@@ -54,7 +55,7 @@ This integration introduces one component:
 The ranker accepts the following parameters:
 
 - `top_k`: Number of documents to return. If `None`, all documents are returned in diversified order.
-- `strategy`: Diversification strategy (`Strategy.MMR` or `Strategy.DPP`). Defaults to `Strategy.DPP`.
+- `strategy`: Diversification strategy — `MMR`, `MSD`, `DPP`, `COVER`, or `SSD`. Defaults to `Strategy.DPP`. See [supported strategies](https://github.com/Pringled/pyversity#supported-strategies) for details.
 - `diversity`: Trade-off between relevance and diversity in `[0, 1]`. `0.0` keeps only the most relevant documents; `1.0` maximises diversity. Defaults to `0.5`.
 
 ### Standalone
