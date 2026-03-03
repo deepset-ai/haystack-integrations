@@ -98,7 +98,6 @@ docs = [
 
 # Embed the documents and add them to the document store
 doc_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
-doc_embedder.warm_up()
 docs = doc_embedder.run(docs)
 
 # Write the documents to the OpenSearch document store

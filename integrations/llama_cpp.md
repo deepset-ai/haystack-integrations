@@ -105,7 +105,6 @@ generator = LlamaCppGenerator(
     model_kwargs={"n_gpu_layers": -1},
 		generation_kwargs={"max_tokens": 128, "temperature": 0.1},
 )
-generator.warm_up()
 prompt = f"Who is the best American actor?"
 result = generator.run(prompt)
 ```
@@ -129,7 +128,6 @@ generator = LlamaCppGenerator(
     n_batch=128,
     model_kwargs={"n_gpu_layers": -1}
 )
-generator.warm_up()
 prompt = f"Who is the best American actor?"
 result = generator.run(prompt, generation_kwargs={"max_tokens": 128})
 generated_text = result["replies"][0]
@@ -153,7 +151,6 @@ generator = LlamaCppGenerator(
     n_batch=128,
     generation_kwargs={"max_tokens": 128, "temperature": 0.1},
 )
-generator.warm_up()
 prompt = f"Who is the best American actor?"
 result = generator.run(prompt)
 ```
@@ -168,7 +165,6 @@ generator = LlamaCppGenerator(
     n_ctx=512,
     n_batch=128,
 )
-generator.warm_up()
 prompt = f"Who is the best American actor?"
 result = generator.run(
     prompt,

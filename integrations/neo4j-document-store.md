@@ -153,7 +153,6 @@ documents = [
     Document(content="My name is Morgan and I live in Paris.", meta={"release_date": "2018-12-09"})]
 
 document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")  
-document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))
