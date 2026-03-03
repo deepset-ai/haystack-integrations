@@ -69,9 +69,6 @@ splitter = ChineseDocumentSplitter(
     respect_sentence_boundary=True
 )
 
-# Warm up the component (loads the necessary models)
-splitter.warm_up()
-
 result = splitter.run(documents=[doc])
 print(result["documents"])
 ```
@@ -126,7 +123,6 @@ splitter = ChineseDocumentSplitter(
     split_overlap=3,
     respect_sentence_boundary=True
 )
-splitter.warm_up()
 result = splitter.run(documents=[doc])
 ```
 
@@ -147,7 +143,6 @@ splitter = ChineseDocumentSplitter(
     split_by="function",
     splitting_function=custom_chinese_split
 )
-splitter.warm_up()
 result = splitter.run(documents=[doc])
 ```
 

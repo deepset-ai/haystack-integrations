@@ -94,7 +94,6 @@ documents = [Document(content="There are over 7,000 languages spoken around the 
 						Document(content="In certain parts of the world, like the Maldives, Puerto Rico, and San Diego, you can witness the phenomenon of bioluminescent waves.")]
 
 document_embedder = SentenceTransformersDocumentEmbedder(model=model)  
-document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))

@@ -116,7 +116,6 @@ def get_pipeline(document_store: InMemoryDocumentStore):
 document_store = InMemoryDocumentStore()
 dataset = load_dataset("bilgeyucel/seven-wonders", split="train")
 embedder = SentenceTransformersDocumentEmbedder("sentence-transformers/all-MiniLM-L6-v2")
-embedder.warm_up()
 docs_with_embeddings = embedder.run([Document(**ds) for ds in dataset]).get("documents") or []  # type: ignore
 document_store.write_documents(docs_with_embeddings)
 

@@ -86,7 +86,6 @@ from haystack_integrations.components.embedders.nvidia import NvidiaTextEmbedder
 text_to_embed = "I love pizza!"
 
 text_embedder = NvidiaTextEmbedder(model="nvidia/llama-3.2-nv-embedqa-1b-v2")
-text_embedder.warm_up()
 
 print(text_embedder.run(text_to_embed))
 # {'embedding': [-0.02264290489256382, -0.03457780182361603, ...}
@@ -105,7 +104,6 @@ documents = [
 ]
 
 document_embedder = NvidiaDocumentEmbedder(model="nvidia/llama-3.2-nv-embedqa-1b-v2")
-document_embedder.warm_up()
 document_embedder.run(documents=documents)
 # {'documents': [Document(id=..., content: 'Pizza is made with dough and cheese', embedding: vector of size 2048), ...], 'meta': {'usage': {'prompt_tokens': 36, 'total_tokens': 36}}}
 ```
@@ -123,7 +121,6 @@ generator = NvidiaGenerator(
         "max_tokens": 1024,
     },
 )
-generator.warm_up()
 
 result = generator.run(prompt="When was the Golden Gate Bridge built?")
 print(result["replies"])
@@ -160,7 +157,6 @@ from haystack_integrations.components.rankers.nvidia import NvidiaRanker
 ranker = NvidiaRanker(
     api_key=Secret.from_env_var("NVIDIA_API_KEY"),
 )
-ranker.warm_up()
 
 query = "What is the capital of Germany?"
 documents = [
@@ -248,7 +244,6 @@ text_embedder = NvidiaTextEmbedder(model="nvidia/llama-3.2-nv-embedqa-1b-v2")
 retriever = InMemoryEmbeddingRetriever(document_store=document_store)
 prompt_builder = PromptBuilder(template=prompt)
 generator = NvidiaGenerator(model="meta/llama-3.1-70b-instruct")
-generator.warm_up()
 
 rag_pipeline = Pipeline()
 

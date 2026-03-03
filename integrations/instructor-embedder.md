@@ -89,7 +89,6 @@ text_embedder = InstructorTextEmbedder(
     model="hkunlp/instructor-base", instruction=instruction,
     device=ComponentDevice.from_str("cpu"),
 )
-text_embedder.warm_up()
 result = text_embedder.run(text)
 print(f"Embedding: {result['embedding']}")
 print(f"Embedding Dimension: {len(result['embedding'])}")
@@ -111,8 +110,6 @@ doc_embedder = InstructorDocumentEmbedder(
     batch_size=32,
     device=ComponentDevice.from_str("cpu"),
 )
-
-doc_embedder.warm_up()
 
 # Text taken from PubMed QA Dataset (https://huggingface.co/datasets/pubmed_qa)
 document_list = [
@@ -174,8 +171,6 @@ doc_embedder = InstructorDocumentEmbedder(
     batch_size=32,
     device=ComponentDevice.from_str("cpu"),
 )
-# Warm up the embedder (loading the pre-trained model)
-doc_embedder.warm_up()
 
 # Create an indexing pipeline
 indexing_pipeline = Pipeline()
@@ -218,8 +213,6 @@ text_embedder = InstructorTextEmbedder(
     instruction=query_embedding_instruction,
     device=ComponentDevice.from_str("cpu"),
 )
-# Load the text embedding model
-text_embedder.warm_up()
 
 # Create a query pipeline
 query_pipeline = Pipeline()

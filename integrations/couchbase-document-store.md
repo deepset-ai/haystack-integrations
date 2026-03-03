@@ -212,7 +212,6 @@ from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 documents = [Document(content="Alice has been living in New York City for the past 5 years.")]
 
 document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
-document_embedder.warm_up() # will download the model during first run
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))
@@ -342,7 +341,6 @@ documents = [
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
 
 document_embedder = SentenceTransformersDocumentEmbedder(model=model_name)
-document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))
@@ -525,7 +523,6 @@ documents = [
 
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
 document_embedder = SentenceTransformersDocumentEmbedder(model=model_name)
-document_embedder.warm_up()
 documents_with_embeddings = document_embedder.run(documents)
 
 document_store.write_documents(documents_with_embeddings.get("documents"))
