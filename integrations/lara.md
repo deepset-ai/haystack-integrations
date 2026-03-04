@@ -56,7 +56,7 @@ pip install lara-haystack
 
 This integration provides one component:
 
-- The `LaraDocumentTranslator`: translates the text content of Haystack `Document` objects using the Lara API.
+- The [`LaraDocumentTranslator`](https://docs.haystack.deepset.ai/docs/laradocumenttranslator): translates the text content of Haystack `Document` objects using the Lara API.
 
 ### API Keys
 
