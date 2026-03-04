@@ -28,7 +28,7 @@ toc: true
 
 [Firecrawl](https://firecrawl.dev) turns websites into LLM-ready data. It handles JavaScript rendering, anti-bot bypassing, and outputs clean Markdown. 
 
-This integration provides a `FirecrawlCrawler` component that crawls one or more URLs and returns the content as Haystack `Document` objects. Crawling starts from each given URL and follows links to discover subpages, up to a configurable limit.
+This integration provides a [`FirecrawlCrawler`](https://docs.haystack.deepset.ai/docs/firecrawlcrawler) component that crawls one or more URLs and returns the content as Haystack `Document` objects. Crawling starts from each given URL and follows links to discover subpages, up to a configurable limit.
 
 You need a Firecrawl API key to use this integration. You can get one at [firecrawl.dev](https://firecrawl.dev).
 
@@ -52,7 +52,6 @@ This integration provides the following component:
 from haystack_integrations.components.fetchers.firecrawl import FirecrawlCrawler
 
 crawler = FirecrawlCrawler(params={"limit": 5})
-crawler.warm_up()
 
 result = crawler.run(urls=["https://docs.haystack.deepset.ai/docs/intro"])
 documents = result["documents"]
@@ -85,7 +84,7 @@ from haystack_integrations.components.fetchers.firecrawl import FirecrawlCrawler
 
 async def main():
     crawler = FirecrawlCrawler(params={"limit": 5})
-    crawler.warm_up()
+    
     result = await crawler.run_async(urls=["https://docs.haystack.deepset.ai/docs/intro"])
     print(f"Crawled {len(result['documents'])} documents")
 
