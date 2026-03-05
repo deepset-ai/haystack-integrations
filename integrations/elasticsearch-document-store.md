@@ -9,7 +9,7 @@ authors:
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/elasticsearch-haystack
-repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/opensearch
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/elasticsearch
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/elastic.png
