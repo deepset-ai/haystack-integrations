@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-An integration of [ArcadeDB](https://arcadedb.com) with [Haystack 2.x](https://docs.haystack.deepset.ai/docs/intro) by [ArcadeData](https://arcadedata.com).
+An integration of [ArcadeDB](https://arcadedb.com) with [Haystack](https://docs.haystack.deepset.ai/docs/intro) by [ArcadeData](https://arcadedata.com).
 
 Most RAG setups need separate backends for documents, vectors, and metadata search. ArcadeDB replaces all three in a single multi-model database:
 
