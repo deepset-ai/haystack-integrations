@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Chainlit
-description: Embed a chat UI in your Hayhooks server for zero-configuration interaction with deployed Haystack pipelines
+description: Use Chainlit UI for your Haystack apps through Hayhooks
 authors:
   - name: deepset
     socials:
@@ -10,7 +10,7 @@ authors:
       linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/hayhooks/
 repo: https://github.com/deepset-ai/hayhooks
-type: Chat UI
+type: UI
 report_issue: https://github.com/deepset-ai/hayhooks/issues
 logo: /logos/chainlit.png
 version: Haystack 2.0
