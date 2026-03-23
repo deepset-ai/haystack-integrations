@@ -3,11 +3,11 @@ layout: integration
 name: Respan
 description: Trace and monitor your Haystack pipelines with Respan
 authors:
-  - name: Respan
-    socials:
-      github: respanai
-      twitter: respanai
-      linkedin: https://www.linkedin.com/company/respanai/
+    - name: Respan
+      socials:
+        github: respanai
+        twitter: respanai
+        linkedin: https://www.linkedin.com/company/respanai/
 pypi: https://pypi.org/project/respan-exporter-haystack/
 repo: https://github.com/respanai/respan
 type: Monitoring Tool
@@ -27,7 +27,7 @@ toc: true
 
 ## Overview
 
-[Respan](https://respan.ai/) is an observability platform for monitoring and tracing LLM applications. The `respan-exporter-haystack` package provides a `RespanConnector` component that integrates directly into Haystack pipelines to automatically capture traces, including API calls, latency, token usage, cost, and tool invocations.
+[Respan](https://respan.ai/) is an observability platform for monitoring and tracing LLM applications. The `respan-exporter-haystack` package provides components that integrate into Haystack pipelines to automatically capture traces, including API calls, latency, token usage, cost, and tool invocations.
 
 For a detailed integration guide, see the [Respan Haystack Tracing Guide](https://respan.ai/docs/integrations/tracing/haystack).
 
@@ -39,26 +39,26 @@ pip install respan-exporter-haystack haystack-ai
 
 ## Usage
 
-### Components
-
 This integration provides the following components:
 
-- **`RespanConnector`**: Connects Haystack pipelines to Respan for tracing. Add it to your pipeline and it will automatically trace all operations and data flow. It does not need to be connected to other components.
-
+- **`RespanConnector`**: A pass-through component that connects to your pipeline's generator to trace operations and data flow. It forwards the prompt to the connected component while sending trace data to Respan.
+- **`RespanTracer`**: An alternative tracing integration for Haystack pipeline execution.
 - **`RespanGenerator`**: Routes LLM calls through the Respan gateway, providing observability without needing a separate provider API key.
-
 - **`RespanChatGenerator`**: Chat-specific gateway component for routing chat completions through Respan.
 
-### Set up environment variables
+### Set up your API key
 
 Sign up at [platform.respan.ai](https://platform.respan.ai), generate an API key from the [API keys page](https://platform.respan.ai/platform/api/api-keys), and set it as an environment variable:
 
 ```bash
 export RESPAN_API_KEY="YOUR_RESPAN_API_KEY"
-export OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 ```
 
 ### Trace a pipeline with `RespanConnector`
+
+Add `RespanConnector` to your pipeline and connect it to the generator component. The connector accepts the prompt, forwards it to the generator, and sends trace data to Respan.
+
+> This example uses `OpenAIGenerator` and requires an `OPENAI_API_KEY` environment variable. When using `RespanGenerator` or `RespanChatGenerator` instead, only `RESPAN_API_KEY` is needed.
 
 ```python
 from haystack import Pipeline
@@ -76,54 +76,9 @@ print(result)
 
 Once you run this, open the [Traces page](https://platform.respan.ai/platform/traces) to see your pipeline trace.
 
-### Use `RespanConnector` in a RAG pipeline
-
-```python
-from haystack import Document, Pipeline
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
-from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-from respan_exporter_haystack import RespanConnector
-
-document_store = InMemoryDocumentStore()
-document_store.write_documents([
-    Document(content="My name is Jean and I live in Paris."),
-    Document(content="My name is Mark and I live in Berlin."),
-    Document(content="My name is Giorgio and I live in Rome."),
-])
-
-prompt_template = """
-Given these documents, answer the question.
-Documents:
-{% for doc in documents %}
-    {{ doc.content }}
-{% endfor %}
-Question: {{question}}
-Answer:
-"""
-
-pipeline = Pipeline()
-pipeline.add_component("tracer", RespanConnector(api_key="your-api-key"))
-pipeline.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
-pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-pipeline.add_component("llm", OpenAIGenerator())
-
-pipeline.connect("retriever", "prompt_builder.documents")
-pipeline.connect("prompt_builder", "llm")
-
-question = "Who lives in Paris?"
-result = pipeline.run({
-    "retriever": {"query": question},
-    "prompt_builder": {"question": question},
-})
-
-print(result["llm"]["replies"][0])
-```
-
 ### Use `RespanGenerator` as a gateway
 
-Instead of tracing with a connector, you can route LLM calls directly through Respan as a gateway:
+Instead of tracing with a connector, you can route LLM calls directly through Respan as a gateway. This means you only need your Respan API key — no separate provider key required.
 
 ```python
 from haystack import Pipeline
@@ -140,14 +95,33 @@ result = pipeline.run({"prompt_builder": {"topic": "Haystack pipelines"}})
 print(result["llm"]["replies"][0])
 ```
 
+### Use Respan-managed prompts
+
+You can use prompts managed in the Respan platform by passing a `prompt_id` and `prompt_version` to `RespanGenerator`:
+
+```python
+from respan_exporter_haystack import RespanGenerator
+
+generator = RespanGenerator(
+    api_key="your-api-key",
+    model="gpt-4o-mini",
+    prompt_id="your-prompt-id",
+    prompt_version=1,
+)
+```
+
 ## Configuration
 
-### Connector options
+### `RespanConnector`
 
-| Parameter  | Type             | Default                  | Description          |
-| ---------- | ---------------- | ------------------------ | -------------------- |
-| `api_key`  | str \| None      | `RESPAN_API_KEY` env var | Your Respan API key  |
-| `base_url` | str \| None      | `https://api.respan.ai`  | API endpoint         |
+- `api_key` (optional) — Your Respan API key. Falls back to the `RESPAN_API_KEY` environment variable.
+- `base_url` (optional) — API base URL. Falls back to the `RESPAN_BASE_URL` environment variable.
+
+### `RespanGenerator` / `RespanChatGenerator`
+
+- `api_key` (optional) — Your Respan API key. Falls back to `RESPAN_API_KEY`.
+- `model` (required) — Model to use (e.g., `"gpt-4o-mini"`).
+- `base_url` (optional) — Gateway base URL. Defaults to `https://api.respan.ai/api`.
 
 ### Custom attributes
 
@@ -163,10 +137,10 @@ result = pipeline.run({
 })
 ```
 
-| Attribute             | Description                             |
-| --------------------- | --------------------------------------- |
-| `customer_identifier` | User or customer ID for filtering       |
-| `metadata`            | Custom key-value pairs for trace data   |
+- `customer_identifier` — User or customer ID for filtering traces in the dashboard.
+- `metadata` — Custom key-value pairs attached to trace data.
+
+See the [Haystack Exporter SDK Reference](https://respan.ai/docs/sdks/python/exporters/haystack) for the full API.
 
 ## Resources
 
