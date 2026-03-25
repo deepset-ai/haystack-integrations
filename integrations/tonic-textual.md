@@ -28,7 +28,7 @@ toc: true
 
 ## Overview
 
-[Tonic Textual](https://textual.tonic.ai) is a PII detection and transformation platform powered by transformer-based NER models that identify 46+ entity types across 50+ languages.
+[Tonic Textual](https://docs.tonic.ai/textual) is a PII detection and transformation platform powered by transformer-based NER models that identify 46+ entity types across 50+ languages.
 
 `textual-haystack` provides two Haystack components:
 
