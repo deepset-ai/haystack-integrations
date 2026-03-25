@@ -21,13 +21,16 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Writing documents](#writing-documents)
+  - [Retrieving documents](#retrieving-documents)
+  - [More examples](#more-examples)
 - [License](#license)
 
 ## Overview
 
 An integration of [ArcadeDB](https://arcadedb.com) with [Haystack](https://docs.haystack.deepset.ai/docs/intro) by [ArcadeData](https://arcadedata.com).
 
-Most RAG setups need separate backends for documents, vectors, and metadata search. ArcadeDB replaces all three in a single multi-model database:
+ArcadeDB is a multi-model database that combines document storage, HNSW vector search, and SQL-based metadata filtering:
 
 - **Document storage** — vertex-based records with flexible MAP metadata
 - **HNSW vector search** — native approximate nearest neighbor index via `vectorNeighbors()` (cosine, euclidean, dot product)
