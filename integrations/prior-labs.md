@@ -28,13 +28,21 @@ mcp: true
 
 ## Overview
 
-[Prior Labs](https://priorlabs.ai) is a foundation model platform specialized in tabular data science. It exposes its capabilities as tools via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), enabling Haystack agents to perform tasks like:
+[Prior Labs](https://priorlabs.ai) is the team behind [TabPFN](https://github.com/PriorLabs/TabPFN), a foundation model for tabular data. They expose TabPFN as a cloud service via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), enabling Haystack agents to run tabular machine learning without writing any ML code.
 
-- **Missing value prediction** - fill in incomplete columns using patterns from known rows
-- **Classification** - predict categorical outcomes from tabular features
-- **Regression** - predict continuous values from tabular features
+The MCP server exposes five tools (as of March 2026):
 
-This integration does not require a separate Prior Labs Python package. Instead, it uses the existing `mcp-haystack` package to connect to the Prior Labs MCP server and discover its tools automatically. The agent then decides which tools to call based on the user's request.
+| Tool | Description |
+|------|-------------|
+| `upload_dataset` | Upload a CSV file (train or test) and receive a `dataset_id` for use in subsequent calls |
+| `fit_and_predict_from_dataset` | Train a TabPFN model on an uploaded training file and predict on an uploaded test file |
+| `predict_from_dataset` | Run prediction with a previously trained model on an uploaded test file |
+| `fit_and_predict_inline` | Train and predict on small arrays already present in the conversation |
+| `predict_inline` | Predict with a previously trained model on inline arrays |
+
+Both classification and regression tasks are supported. For small datasets shared directly in the conversation the agent uses the inline tools, while for larger file-based datasets it calls `upload_dataset` first.
+
+This integration does not require a separate Prior Labs Python package. Instead, it uses the existing `mcp-haystack` package to connect to the Prior Labs MCP server and discover its tools automatically.
 
 ## Prerequisites
 
@@ -128,7 +136,7 @@ output = agent.run(messages=[
 print(output["last_message"].text)
 ```
 
-The agent connects to Prior Labs, determines which tool to call (e.g. a classification tool), and returns the predicted `purchased` values for the incomplete rows.
+Because the dataset is small and provided inline, the agent calls `fit_and_predict_inline` with the known rows as training data and the incomplete rows as test data, using `task_type="classification"`. The result is the predicted `purchased` values (0 or 1) for each incomplete row.
 
 ## License
 
