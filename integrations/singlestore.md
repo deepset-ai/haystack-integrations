@@ -43,10 +43,10 @@ for traditional text-based retrieval.
 The `singlestore-haystack` library enables SingleStore as
 a [DocumentStore](https://docs.haystack.deepset.ai/docs/document-store) by implementing the
 Haystack [DocumentStore protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol) methods.
-Import the `SingleStoreDocumentStore` implementation from the `singlestore_haystack` package:
+Import the `SingleStoreDocumentStore` implementation from the `haystack_integrations.document_stores.singlestore_haystack` package:
 
 ```python
-from singlestore_haystack import SingleStoreDocumentStore
+from haystack_integrations.document_stores.singlestore_haystack import SingleStoreDocumentStore
 ```
 
 In addition to `SingleStoreDocumentStore`, the library includes the following haystack components which can be used in a
@@ -151,7 +151,7 @@ export S2_CONN_STR="singlestoredb://USER:PASSWORD@HOST:PORT"
 ```
 
 ```python
-from singlestore_haystack import SingleStoreDocumentStore
+from haystack_integrations.document_stores.singlestore_haystack import SingleStoreDocumentStore
 
 document_store = SingleStoreDocumentStore(
     database_name="haystack_db",  # The name of the database in SingleStore
@@ -252,7 +252,7 @@ from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.writers import DocumentWriter
 
-from singlestore_haystack import SingleStoreDocumentStore
+from haystack_integrations.document_stores.singlestore_haystack import SingleStoreDocumentStore
 
 documents = [Document(content="This is document 1"), Document(content="This is document 2")]
 
@@ -337,7 +337,8 @@ from typing import List
 from haystack import Document, Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 
-from singlestore_haystack import SingleStoreDocumentStore, SingleStoreEmbeddingRetriever
+from haystack_integrations.document_stores.singlestore_haystack import SingleStoreDocumentStore
+from haystack_integrations.components.retrievers.singlestore_haystack import SingleStoreEmbeddingRetriever
 
 document_store = SingleStoreDocumentStore(
     database_name="haystack_db",  # The name of the database in SingleStore
