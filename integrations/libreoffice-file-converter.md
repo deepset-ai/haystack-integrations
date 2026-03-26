@@ -25,7 +25,7 @@ toc: true
   - [Standalone](#standalone)
   - [In a Haystack Pipeline](#in-a-haystack-pipeline)
   - [Async Usage](#async-usage)
-- [Supported Conversions](#supported-conversions)
+- [License](#license)
 
 ## Overview
 
@@ -117,22 +117,6 @@ asyncio.run(main())
 
 > **Note:** LibreOffice only supports one running `soffice` instance at a time. Conversions within a single `run_async` call are executed sequentially.
 
-## Supported Conversions
+## License
 
-The table below lists the supported input formats and their valid conversion targets. LibreOffice may support additional formats beyond those listed here — see the [LibreOffice filter documentation](https://help.libreoffice.org/latest/en-GB/text/shared/guide/convertfilters.html) for the full list.
-
-| Category | Input format | Supported output formats |
-|---|---|---|
-| Documents | `doc` | `pdf`, `docx`, `odt`, `rtf`, `txt`, `html`, `epub` |
-| | `docx` | `pdf`, `doc`, `odt`, `rtf`, `txt`, `html`, `epub` |
-| | `odt` | `pdf`, `docx`, `doc`, `rtf`, `txt`, `html`, `epub` |
-| | `rtf` | `pdf`, `docx`, `doc`, `odt`, `txt`, `html` |
-| | `txt` | `pdf`, `docx`, `doc`, `odt`, `rtf`, `html` |
-| | `html` | `pdf`, `docx`, `doc`, `odt`, `rtf`, `txt` |
-| Spreadsheets | `xlsx` | `pdf`, `xls`, `ods`, `csv`, `html` |
-| | `xls` | `pdf`, `xlsx`, `ods`, `csv`, `html` |
-| | `ods` | `pdf`, `xlsx`, `xls`, `csv`, `html` |
-| | `csv` | `pdf`, `xlsx`, `xls`, `ods` |
-| Presentations | `pptx` | `pdf`, `ppt`, `odp`, `html`, `png`, `jpg` |
-| | `ppt` | `pdf`, `pptx`, `odp`, `html`, `png`, `jpg` |
-| | `odp` | `pdf`, `pptx`, `ppt`, `html`, `png`, `jpg` |
+`libreoffice-haystack` is distributed under the [Apache-2.0 License](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/libreoffice/LICENSE.txt).
