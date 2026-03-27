@@ -208,7 +208,7 @@ prompt_template = [
 ]
 
 prompt_builder = ChatPromptBuilder(template=prompt_template, required_variables={"query", "documents"})
-llm = OpenAIChatGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY"), model="gpt-3.5-turbo")
+llm = OpenAIChatGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY"), model="gpt-4o-mini")
 
 # Build pipeline
 pipe = Pipeline()
