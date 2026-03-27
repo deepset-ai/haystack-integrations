@@ -8,7 +8,7 @@ authors:
       github: valyu-network
 pypi: https://pypi.org/project/valyu-search-haystack
 repo: https://github.com/valyu-network/valyu-search-haystack
-type: Search & Content Extraction
+type: Search & Extraction
 report_issue: https://github.com/valyu-network/valyu-search-haystack/issues
 version: Haystack 2.0
 toc: true
