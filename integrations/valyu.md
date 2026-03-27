@@ -32,7 +32,7 @@ toc: true
 [![PyPI - Version](https://img.shields.io/pypi/v/valyu-search-haystack.svg)](https://pypi.org/project/valyu-search-haystack)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/valyu-search-haystack.svg)](https://pypi.org/project/valyu-search-haystack)
 
-Haystack components for integrating Valyu's powerful search and content extraction APIs into your Haystack pipelines.
+Haystack components for integrating [Valyu](https://docs.valyu.ai/overview)'s powerful search and content extraction APIs into your Haystack pipelines.
 
 This package provides two main components:
 
