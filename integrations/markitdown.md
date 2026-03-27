@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/markitdown-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/markitdown
 type: Data Ingestion
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/microsoft.png
 version: Haystack 2.0
 toc: true
 ---
