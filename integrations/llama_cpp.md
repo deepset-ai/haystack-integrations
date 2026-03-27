@@ -30,7 +30,7 @@ logo: /logos/llama_cpp.png
 
 ## Introduction
 
-[Llama.cpp](https://github.com/ggerganov/llama.cpp) is a library written in C/C++ for efficient inference of Large Language models. It uses the efficient quantized GGUF format, dramatically reducing memory requirements and accelerating inference. This means it is possible to run LLMs efficiently on standard machines (even without GPUs).
+[Llama.cpp](https://github.com/ggml-org/llama.cpp) is a library written in C/C++ for efficient inference of Large Language models. It uses the efficient quantized GGUF format, dramatically reducing memory requirements and accelerating inference. This means it is possible to run LLMs efficiently on standard machines (even without GPUs).
 
 ## Installation
 
