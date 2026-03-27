@@ -6,10 +6,13 @@ authors:
   - name: Valyu
     socials:
       github: valyu-network
+      twitter: valyuofficial
+      linkedin: https://www.linkedin.com/company/valyu-ai/
 pypi: https://pypi.org/project/valyu-search-haystack
 repo: https://github.com/valyuAI/valyu-search-haystack
 type: Search & Extraction
-report_issue: https://github.com/valyu-network/valyu-search-haystack/issues
+logo: /logos/valyu.png
+report_issue: https://github.com/valyuAI/valyu-search-haystack/issues
 version: Haystack 2.0
 toc: true
 ---
@@ -19,13 +22,7 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [ValyuSearch](#valyusearch)
-  - [ValyuContentFetcher](#valyucontentfetcher)
-  - [Pipeline Examples](#pipeline-examples)
-  - [Advanced Configuration](#advanced-configuration)
-- [API Integration Details](#api-integration-details)
-  - [Authentication](#authentication)
-  - [License](#license)
+- [License](#license)
 
 ## Overview
 
