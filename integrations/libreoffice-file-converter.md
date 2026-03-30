@@ -3,6 +3,9 @@ layout: integration
 name: LibreOffice File Converter
 description: Convert office documents, spreadsheets, and presentations between formats using LibreOffice in Haystack pipelines.
 authors:
+    - name: Max Swain
+      socials:
+        github: maxdswain
     - name: deepset
       socials:
         github: deepset-ai
