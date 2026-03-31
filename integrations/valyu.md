@@ -6,10 +6,13 @@ authors:
   - name: Valyu
     socials:
       github: valyu-network
+      twitter: valyuofficial
+      linkedin: https://www.linkedin.com/company/valyu-ai/
 pypi: https://pypi.org/project/valyu-search-haystack
-repo: https://github.com/valyu-network/valyu-search-haystack
+repo: https://github.com/valyuAI/valyu-search-haystack
 type: Search & Extraction
-report_issue: https://github.com/valyu-network/valyu-search-haystack/issues
+logo: /logos/valyu.png
+report_issue: https://github.com/valyuAI/valyu-search-haystack/issues
 version: Haystack 2.0
 toc: true
 ---
@@ -19,18 +22,9 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [ValyuSearch](#valyusearch)
-  - [ValyuContentFetcher](#valyucontentfetcher)
-  - [Pipeline Examples](#pipeline-examples)
-  - [Advanced Configuration](#advanced-configuration)
-- [API Integration Details](#api-integration-details)
-  - [Authentication](#authentication)
-  - [License](#license)
+- [License](#license)
 
 ## Overview
-
-[![PyPI - Version](https://img.shields.io/pypi/v/valyu-search-haystack.svg)](https://pypi.org/project/valyu-search-haystack)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/valyu-search-haystack.svg)](https://pypi.org/project/valyu-search-haystack)
 
 Haystack components for integrating [Valyu](https://docs.valyu.ai/overview)'s powerful search and content extraction APIs into your Haystack pipelines.
 
@@ -44,8 +38,6 @@ This package provides two main components:
 - Search across web and proprietary sources
 - Full content included in search results
 - AI-powered content extraction and summarization
-
----
 
 ## Installation
 
@@ -276,15 +268,15 @@ result = fetcher.run(urls=["https://example.com/article"])
 # Extracted structured data will be in document metadata
 ```
 
-## API Integration Details
+### API Integration Details
 
-### Authentication
+**Authentication**
 
 Both components use Haystack's `Secret` class for secure API key management:
 
 - Header: `x-api-key: your-api-key`
 - Environment variable: `VALYU_API_KEY`
 
-### License
+## License
 
 `valyu-search-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
