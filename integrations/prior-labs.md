@@ -46,7 +46,7 @@ This integration does not require a separate Prior Labs Python package. Instead,
 
 ## Prerequisites
 
-1. Sign up for a Prior Labs account at [priorlabs.ai](https://priorlabs.ai) and obtain an API token.
+1. Sign up for a Prior Labs account at [ux.priorlabs.ai](https://ux.priorlabs.ai) and obtain an API token.
 2. Set the required environment variable:
 
 ```bash
