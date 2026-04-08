@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Asqav
-description: Governance and audit trails for Haystack pipelines - policy enforcement, compliance logging, and signed execution records
+description: Signed audit trails for Haystack pipelines - tamper-evident governance records for every pipeline run
 authors:
   - name: Jag Marques
     socials:
@@ -20,86 +20,75 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+- [License](#license)
 
 ## Overview
 
-Asqav is an AI governance library that provides audit trails, policy enforcement, and compliance logging for AI pipelines. It records signed execution logs for every pipeline run, making it possible to answer who ran what, when, and with what inputs and outputs.
+Asqav is an AI governance SDK that provides cryptographically signed audit trails for AI agent actions. The Haystack integration adds an `AsqavComponent` that you drop into any pipeline to sign data flowing through it with ML-DSA-65 post-quantum signatures.
 
 Key features:
-- Tamper-evident audit logs for every pipeline run
-- Policy rules that can block or flag non-compliant outputs before they are returned
-- Structured compliance reports exportable to JSON or CSV
-- No external service required - works fully offline or with your own storage backend
+- Tamper-evident, cryptographically signed records for every pipeline run
+- Fail-open design - signing failures are logged but never break your pipeline
+- Works as a native Haystack component with typed inputs and outputs
 
 ## Installation
 
 ```bash
-pip install asqav
+pip install asqav[haystack]
 ```
 
 ## Usage
 
-### Wrapping a Pipeline
+### Adding AsqavComponent to a Pipeline
 
-Wrap any Haystack `Pipeline` with `AsqavPipeline` to automatically log every run. The wrapper is a drop-in replacement - it accepts the same `.run()` call and returns the same output.
+`AsqavComponent` is a standard Haystack component. Add it to your pipeline like any other component. It accepts a `data` string and optional `metadata` dict, signs the action through asqav, and passes everything through with a `signature_id` attached.
 
 ```python
+import asqav
+from asqav.extras.haystack import AsqavComponent
 from haystack import Pipeline
 from haystack.components.generators import OpenAIGenerator
 from haystack.components.builders import PromptBuilder
-import asqav
+
+# Initialize asqav with your API key
+asqav.init("sk_live_...")
 
 # Build a standard Haystack pipeline
 prompt_template = "Answer the following question: {{question}}"
-pipeline = Pipeline()
-pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-pipeline.add_component("llm", OpenAIGenerator())
-pipeline.connect("prompt_builder", "llm")
-
-# Wrap it with Asqav governance
-governed = asqav.wrap(pipeline, pipeline_id="my-rag-pipeline")
-
-# Run as normal - execution is automatically logged
-result = governed.run({"prompt_builder": {"question": "What is Haystack?"}})
-print(result["llm"]["replies"])
+pipe = Pipeline()
+pipe.add_component("prompt_builder", PromptBuilder(template=prompt_template))
+pipe.add_component("llm", OpenAIGenerator())
+pipe.add_component("asqav", AsqavComponent(agent_name="my-rag-pipeline"))
+pipe.connect("prompt_builder", "llm")
 ```
 
-### Viewing Audit Logs
+### Running and Inspecting Signatures
 
-Asqav writes structured audit records for each run. You can retrieve them programmatically or export them for compliance review.
-
-```python
-import asqav
-
-# List recent runs for a pipeline
-logs = asqav.get_logs(pipeline_id="my-rag-pipeline", limit=10)
-for entry in logs:
-    print(entry["run_id"], entry["timestamp"], entry["status"])
-
-# Export to JSON
-asqav.export_logs(pipeline_id="my-rag-pipeline", format="json", path="audit.json")
-```
-
-### Enforcing Policies
-
-Define policies as Python callables. Asqav evaluates them after each run and can raise an error or emit a warning depending on the enforcement mode.
+Each call to the `AsqavComponent` returns the original data, metadata, and a `signature_id` that links to the signed audit record.
 
 ```python
-import asqav
-
-def no_pii_in_output(inputs, outputs):
-    # Return True to allow, False to flag/block
-    for reply in outputs.get("llm", {}).get("replies", []):
-        if "@" in reply:
-            return False
-    return True
-
-governed = asqav.wrap(
-    pipeline,
-    pipeline_id="my-rag-pipeline",
-    policies=[no_pii_in_output],
-    enforcement="block",  # or "warn"
+result = pipe.run(
+    {
+        "prompt_builder": {"question": "What is Haystack?"},
+        "asqav": {"data": "What is Haystack?", "metadata": {"source": "user"}},
+    }
 )
+
+# The asqav component output includes the signature reference
+print(result["asqav"]["signature_id"])  # e.g. "sig_a1b2c3"
+print(result["asqav"]["data"])          # original data passed through
+print(result["asqav"]["metadata"])      # original metadata passed through
 ```
 
-For full documentation and configuration options, see [asqav.com/docs](https://asqav.com/docs).
+### Using an Existing Agent
+
+If you already have an agent registered in asqav, pass its ID instead of creating a new one:
+
+```python
+governance = AsqavComponent(agent_id="agt_x7y8z9")
+pipe.add_component("asqav", governance)
+```
+
+### License
+
+`asqav` is licensed under MIT. See the [GitHub repository](https://github.com/jagmarques/asqav-sdk) for details.
