@@ -167,7 +167,7 @@ result = query_pipeline.run({"text_embedder": {"text": query}, "ranker": { "quer
 
 `FastembedColbertRanker` uses ColBERT late-interaction scoring: the query and documents are encoded independently into token-level embeddings, and a MaxSim score is computed for each document. This offers stronger ranking quality than cross-encoders on many tasks while remaining efficient.
 
-> **Note:** ColBERT scores are unnormalized sums (typically ~3–30). They are meaningful for ranking within a single query but should not be compared across queries.
+> **Note:** ColBERT scores are unnormalized sums. They are meaningful for ranking within a single query but should not be compared across queries.
 
 ```python
 from haystack import Document, Pipeline
