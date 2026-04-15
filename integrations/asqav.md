@@ -24,12 +24,17 @@ toc: true
 
 ## Overview
 
-Asqav is an AI governance SDK that provides cryptographically signed audit trails for AI agent actions. The Haystack integration adds an `AsqavComponent` that you drop into any pipeline to sign data flowing through it with ML-DSA-65 post-quantum signatures.
+AI agents running in production need more than observability. When a pipeline makes a decision, calls a tool, or generates output, you need tamper-evident proof of what happened, not just a log entry someone could edit later. This matters for regulatory compliance (EU AI Act Article 12 requires automatic, verifiable event recording for high-risk systems), incident investigation (reconstructing exactly what an agent did and why), and accountability across teams that share pipelines.
 
-Key features:
-- Tamper-evident, cryptographically signed records for every pipeline run
-- Fail-open design - signing failures are logged but never break your pipeline
-- Works as a native Haystack component with typed inputs and outputs
+Asqav provides cryptographic governance for AI agent actions. Every action gets signed server-side with ML-DSA-65 (NIST FIPS 204), hash-chained to the previous action, and stored as a verifiable receipt the agent can't forge. The signing key never touches the agent's runtime.
+
+The Haystack integration adds `AsqavComponent`, a native Haystack component that signs data flowing through your pipeline. Drop it in, and every run produces a signed, tamper-evident audit record.
+
+- Tamper-evident records for every pipeline run, signed with quantum-safe cryptography
+- Fail-open design: signing failures are logged but never break your pipeline
+- Native Haystack component with typed inputs and outputs
+- Compliance bundle export for EU AI Act, DORA, and SOC 2 audits
+- Public verification endpoint: anyone can verify a signature without an API key
 
 ## Installation
 
@@ -47,8 +52,8 @@ pip install asqav[haystack]
 import asqav
 from asqav.extras.haystack import AsqavComponent
 from haystack import Pipeline
-from haystack.components.generators import OpenAIGenerator
-from haystack.components.builders import PromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.components.builders import ChatPromptBuilder
 
 # Initialize asqav with your API key
 asqav.init("sk_live_...")
@@ -56,8 +61,8 @@ asqav.init("sk_live_...")
 # Build a standard Haystack pipeline
 prompt_template = "Answer the following question: {{question}}"
 pipe = Pipeline()
-pipe.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-pipe.add_component("llm", OpenAIGenerator())
+pipe.add_component("prompt_builder", ChatPromptBuilder(template=prompt_template))
+pipe.add_component("llm", OpenAIChatGenerator())
 pipe.add_component("asqav", AsqavComponent(agent_name="my-rag-pipeline"))
 pipe.connect("prompt_builder", "llm")
 ```
