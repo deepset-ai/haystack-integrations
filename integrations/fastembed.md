@@ -51,7 +51,7 @@ The `fastembed-haystack` integrations provides the following components:
 	- `FastembedSparseDocumentEmbedder`: enriches documents with sparse embeddings (used in indexing pipelines).
 - Rankers:
 	- `FastembedRanker`: ranks documents based on a query using cross-encoder models (used in query/RAG pipelines after the retrieval).
-	- `FastembedColbertRanker`: ranks documents using ColBERT late-interaction (MaxSim) scoring (used in query/RAG pipelines after the retrieval).
+	- `FastembedLateInteractionRanker`: ranks documents using ColBERT late-interaction (MaxSim) scoring (used in query/RAG pipelines after the retrieval).
   
 ### Example with dense embeddings
 
@@ -163,9 +163,9 @@ query_pipeline.connect("retriever.documents", "ranker.documents")
 result = query_pipeline.run({"text_embedder": {"text": query}, "ranker": { "query" : query }})
 ```
 
-### Example with ColBERT ranker
+### Example with Late Interaction ranker
 
-`FastembedColbertRanker` uses ColBERT late-interaction scoring: the query and documents are encoded independently into token-level embeddings, and a MaxSim score is computed for each document. This offers stronger ranking quality than cross-encoders on many tasks while remaining efficient.
+`FastembedLateInteractionRanker` uses ColBERT late-interaction scoring: the query and documents are encoded independently into token-level embeddings, and a MaxSim score is computed for each document. This offers stronger ranking quality than cross-encoders on many tasks while remaining efficient.
 
 > **Note:** ColBERT scores are unnormalized sums. They are meaningful for ranking within a single query but should not be compared across queries.
 
@@ -174,7 +174,7 @@ from haystack import Document, Pipeline
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_integrations.components.embedders.fastembed import FastembedDocumentEmbedder, FastembedTextEmbedder
-from haystack_integrations.components.rankers.fastembed import FastembedColbertRanker
+from haystack_integrations.components.rankers.fastembed import FastembedLateInteractionRanker
 
 document_store = InMemoryDocumentStore(embedding_similarity_function="cosine")
 
@@ -194,7 +194,7 @@ document_store.write_documents(documents_with_embeddings)
 query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", FastembedTextEmbedder())
 query_pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store, top_k=4))
-query_pipeline.add_component("ranker", FastembedColbertRanker(model_name="colbert-ir/colbertv2.0", top_k=2))
+query_pipeline.add_component("ranker", FastembedLateInteractionRanker(model_name="colbert-ir/colbertv2.0", top_k=2))
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 query_pipeline.connect("retriever.documents", "ranker.documents")
 
