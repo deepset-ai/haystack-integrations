@@ -3,7 +3,7 @@ layout: integration
 name: Asqav
 description: Signed audit trails for Haystack pipelines - tamper-evident governance records for every pipeline run
 authors:
-  - name: Jag Marques
+  - name: João Marques
     socials:
       github: jagmarques
       linkedin: https://www.linkedin.com/in/jagmarques
