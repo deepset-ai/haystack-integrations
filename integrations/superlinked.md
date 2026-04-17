@@ -49,7 +49,7 @@ docker run -p 8080:8080 ghcr.io/superlinked/sie-server:latest
 pip install sie-haystack
 ```
 
-This installs `sie-sdk` and `haystack-ai` as dependencies. Every component accepts `base_url` and `api_key` (optional for local Docker), plus a `model` identifier from the [Superlinked model catalog](https://superlinked.com/docs/reference/models/). Swapping models is a parameter change, not a new deployment.
+This installs `sie-sdk` and `haystack-ai` as dependencies. Every component accepts `base_url` and a `model` identifier from the [Superlinked model catalog](https://superlinked.com/models). Swapping models is a parameter change, not a new deployment.
 
 ## Usage
 
@@ -197,7 +197,7 @@ for relation in result["relations"]:
     print(f"{relation.head} ({relation.relation}) {relation.tail}")
 ```
 
-Classification and object detection follow the same pattern; see `result["classifications"]` and `result["objects"]` in the [full integration guide](https://superlinked.com/docs/integrations/haystack/#extraction).
+Classification and object detection follow the same pattern; see `result["classifications"]` and `result["objects"]` in the [full integration guide](https://superlinked.com/docs/integrations/haystack#extraction).
 
 ### End-to-End RAG Pipeline
 
@@ -234,14 +234,14 @@ for doc in result["ranker"]["documents"]:
     print(doc.score, doc.content)
 ```
 
-One SIE server backs the full pipeline. Swapping retrieval or reranking models is a configuration change, not a new deployment.
+One SIE server backs the full pipeline through the shared `base_url`. Swapping retrieval or reranking models is a configuration change, not a new deployment.
 
 ## Resources
 
 - [`sie-haystack` source](https://github.com/superlinked/sie/tree/main/integrations/sie_haystack)
 - [`sie-haystack` on PyPI](https://pypi.org/project/sie-haystack/)
-- [Superlinked Haystack integration guide](https://superlinked.com/docs/integrations/haystack/)
-- [Superlinked model catalog](https://superlinked.com/docs/reference/models/)
+- [Superlinked Haystack integration guide](https://superlinked.com/docs/integrations/haystack)
+- [Superlinked model catalog](https://superlinked.com/models)
 
 ## License
 
