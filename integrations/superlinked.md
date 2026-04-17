@@ -40,7 +40,9 @@ All components live under the standard Haystack integrations namespace: `haystac
 Start a local SIE server with Docker before running any of the examples below:
 
 ```bash
-docker run -p 8080:8080 ghcr.io/superlinked/sie-server:latest
+docker run -p 8080:8080 ghcr.io/superlinked/sie-server:default
+# Or with an NVIDIA GPU:
+# docker run --gpus all -p 8080:8080 ghcr.io/superlinked/sie-server:default
 ```
 
 ## Installation
@@ -142,7 +144,7 @@ embeddings = result["embeddings"]  # list[list[float]]
 
 ### Reranking
 
-Rerank retrieved documents with a cross-encoder or late-interaction reranker:
+Rerank retrieved documents with a cross-encoder or late-interaction reranker. `SIERanker` stores the reranker score in `doc.meta["score"]`:
 
 ```python
 from haystack import Document
@@ -150,7 +152,7 @@ from haystack_integrations.components.rankers.sie import SIERanker
 
 ranker = SIERanker(
     base_url="http://localhost:8080",
-    model="BAAI/bge-reranker-v2-m3",
+    model="jinaai/jina-reranker-v2-base-multilingual",
     top_k=3,
 )
 result = ranker.run(
@@ -162,7 +164,8 @@ result = ranker.run(
     ],
 )
 for doc in result["documents"]:
-    print(doc.score, doc.content)
+    score = doc.meta.get("score", 0)
+    print(f"{score:.3f}: {doc.content}")
 ```
 
 ### Extraction
@@ -190,14 +193,27 @@ Relation extraction:
 extractor = SIEExtractor(
     base_url="http://localhost:8080",
     model="jackboyla/glirel-large-v0",
-    labels=["works_at", "located_in"],
+    labels=["works_for", "ceo_of", "founded"],
 )
-result = extractor.run(text="Tim Cook works at Apple in Cupertino.")
+result = extractor.run(text="Tim Cook is the CEO of Apple Inc.")
 for relation in result["relations"]:
-    print(f"{relation.head} ({relation.relation}) {relation.tail}")
+    print(f"{relation.head} --{relation.relation}--> {relation.tail}")
 ```
 
-Classification and object detection follow the same pattern; see `result["classifications"]` and `result["objects"]` in the [full integration guide](https://superlinked.com/docs/integrations/haystack#extraction).
+Text classification (GLiClass):
+
+```python
+extractor = SIEExtractor(
+    base_url="http://localhost:8080",
+    model="knowledgator/gliclass-base-v1.0",
+    labels=["positive", "negative", "neutral"],
+)
+result = extractor.run(text="I absolutely loved this movie! The acting was superb.")
+for classification in result["classifications"]:
+    print(f"{classification.label}: {classification.score:.2f}")
+```
+
+Object detection (GroundingDINO, OWL-v2) fills `result["objects"]` with `label`, `score`, and `bbox` on each detection. See the [full integration guide](https://superlinked.com/docs/integrations/haystack#extraction) for the complete extractor reference.
 
 ### End-to-End RAG Pipeline
 
@@ -221,7 +237,11 @@ query_pipeline.add_component(
 )
 query_pipeline.add_component(
     "ranker",
-    SIERanker(base_url="http://localhost:8080", model="BAAI/bge-reranker-v2-m3", top_k=3),
+    SIERanker(
+        base_url="http://localhost:8080",
+        model="jinaai/jina-reranker-v2-base-multilingual",
+        top_k=3,
+    ),
 )
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 query_pipeline.connect("retriever.documents", "ranker.documents")
@@ -231,7 +251,8 @@ result = query_pipeline.run({
     "ranker": {"query": "What is Python?"},
 })
 for doc in result["ranker"]["documents"]:
-    print(doc.score, doc.content)
+    score = doc.meta.get("score", 0)
+    print(f"{score:.3f}: {doc.content}")
 ```
 
 One SIE server backs the full pipeline through the shared `base_url`. Swapping retrieval or reranking models is a configuration change, not a new deployment.
