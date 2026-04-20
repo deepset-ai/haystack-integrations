@@ -147,6 +147,8 @@ mlflow server --host 127.0.0.1 --port 5000
 
 **2. Create a gateway endpoint** in the MLflow UI at `http://localhost:5000`. Navigate to **AI Gateway → Create Endpoint**, select a provider and model, and enter your provider API key. See the [MLflow AI Gateway documentation](https://mlflow.org/docs/latest/genai/governance/ai-gateway/endpoints/) for details.
 
+![MLflow AI Gateway — Create Endpoint](../images/mlflow-gateway-create-endpoint.png)
+
 **3. Use the endpoint in a Haystack pipeline:**
 
 ```python
