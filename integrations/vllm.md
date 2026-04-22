@@ -16,7 +16,7 @@ logo: /logos/vllm.png
 version: Haystack 2.0
 toc: true
 ---
-### **Table of Contents**
+### Table of Contents
 - [Overview](#overview)
 - [Installation](#installation)
 - [Components](#components)
