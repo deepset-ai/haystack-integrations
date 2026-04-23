@@ -74,7 +74,7 @@ You can obtain an API key by signing up at [app.mem0.ai](https://app.mem0.ai).
 
 This integration introduces one component:
 
-- **`Mem0MemoryStore`**: A memory store that uses Mem0 as the backend for storing and retrieving user-specific memories. It can be used standalone or plugged into a Haystack Agent.
+- [`Mem0MemoryStore`](https://docs.haystack.deepset.ai/reference/experimental-mem0-memory-store-api#mem0memorystore): A memory store that uses Mem0 as the backend for storing and retrieving user-specific memories. It can be used standalone or plugged into a Haystack Agent.
 
 ### Standalone Memory Operations
 
