@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: SearchApi
-description: Uses SearchApi.io API for web searches
+description: Uses SearchApi for web searches
 authors:
     - name: deepset
       socials:
