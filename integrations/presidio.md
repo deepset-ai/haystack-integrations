@@ -8,6 +8,9 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
+    - name: Shahmeer Ali
+      socials:
+        github: SyedShahmeerAli12
 pypi: https://pypi.org/project/presidio-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/presidio
 type: Custom Component
@@ -47,6 +50,21 @@ All components run locally — no external API required. Presidio uses spaCy NLP
 pip install presidio-haystack
 python -m spacy download en_core_web_lg
 ```
+
+`en_core_web_lg` is the recommended English model for best accuracy. For a lighter footprint, `en_core_web_sm` works too — see the [full list of spaCy models](https://spacy.io/models/en) for options.
+
+Each component accepts a `language` parameter (default `"en"`). To use a non-English language, download the corresponding spaCy model and pass the language code:
+
+```bash
+# Example: Spanish
+python -m spacy download es_core_news_md
+```
+
+```python
+cleaner = PresidioDocumentCleaner(language="es")
+```
+
+Note: each `language` value maps to one spaCy model at a time. You cannot select between `sm` and `lg` per component — whichever model is registered for that language in your environment will be used.
 
 ## Usage
 
