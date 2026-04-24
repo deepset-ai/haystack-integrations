@@ -48,23 +48,12 @@ All components run locally — no external API required. Presidio uses spaCy NLP
 
 ```bash
 pip install presidio-haystack
-python -m spacy download en_core_web_lg
 ```
 
 `en_core_web_lg` is the recommended English model for best accuracy. For a lighter footprint, `en_core_web_sm` works too — see the [full list of spaCy models](https://spacy.io/models/en) for options.
 
-Each component accepts a `language` parameter (default `"en"`). To use a non-English language, download the corresponding spaCy model and pass the language code:
+Each component accepts a `language` parameter (default `"en"`). To use a non-English language, specify the language code, and provide a model mapping, unless you want to use the large one.
 
-```bash
-# Example: Spanish
-python -m spacy download es_core_news_md
-```
-
-```python
-cleaner = PresidioDocumentCleaner(language="es")
-```
-
-Note: each `language` value maps to one spaCy model at a time. You cannot select between `sm` and `lg` per component — whichever model is registered for that language in your environment will be used.
 
 ## Usage
 
