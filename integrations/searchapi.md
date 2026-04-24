@@ -51,7 +51,7 @@ export SEARCHAPI_API_KEY="your-api-key"
 
 This integration provides the following component:
 
-- `SearchApiWebSearch`: A component that queries the SearchApi service to find web pages relevant to a given query.
+- [`SearchApiWebSearch`](https://docs.haystack.deepset.ai/docs/searchapiwebsearch): A component that queries the SearchApi service to find web pages relevant to a given query.
 
 ### Standalone Usage
 
