@@ -90,13 +90,15 @@ You can integrate `SerperDevWebSearch` directly into a Generative QA pipeline to
 import os
 from haystack import Pipeline
 from haystack.components.websearch import SerperDevWebSearch
-from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
 
 os.environ["SERPERDEV_API_KEY"] = "your-serperdev-api-key"
 os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
 
-template = """
+template = [
+    ChatMessage.from_user("""
 Given the following web search results, answer the user's question.
 
 Search Results:
@@ -106,23 +108,24 @@ Search Results:
 
 Question: {{ query }}
 Answer:
-"""
+""")
+]
 
 pipe = Pipeline()
 pipe.add_component("websearch", SerperDevWebSearch())
-pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OpenAIGenerator())
+pipe.add_component("prompt_builder", ChatPromptBuilder(template=template))
+pipe.add_component("llm", OpenAIChatGenerator())
 
 pipe.connect("websearch.documents", "prompt_builder.documents")
-pipe.connect("prompt_builder", "llm")
+pipe.connect("prompt_builder.prompt", "llm.messages")
 
 query = "What are the latest features in Haystack 2.0?"
 response = pipe.run({
     "websearch": {"query": query},
-    "prompt_builder": {"query": query}
+    "prompt_builder": {"template_variables": {"query": query}}
 })
 
-print(response["llm"]["replies"][0])
+print(response["llm"]["replies"][0].content)
 ```
 
 ## License
