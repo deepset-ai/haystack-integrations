@@ -82,48 +82,6 @@ for doc in documents:
     print("-" * 50)
 ```
 
-### Usage within a Pipeline
-
-You can integrate `SearchApiWebSearch` directly into a Generative QA pipeline to answer questions using the live web context:
-
-```python
-import os
-from haystack import Pipeline
-from haystack.components.websearch import SearchApiWebSearch
-from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
-
-os.environ["SEARCHAPI_API_KEY"] = "your-searchapi-api-key"
-os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
-
-template = """
-Given the following web search results, answer the user's question.
-
-Search Results:
-{% for document in documents %}
-    {{ document.content }}
-{% endfor %}
-
-Question: {{ query }}
-Answer:
-"""
-
-pipe = Pipeline()
-pipe.add_component("websearch", SearchApiWebSearch())
-pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OpenAIGenerator())
-
-pipe.connect("websearch.documents", "prompt_builder.documents")
-pipe.connect("prompt_builder", "llm")
-
-query = "What are the latest features in Haystack 2.0?"
-response = pipe.run({
-    "websearch": {"query": query},
-    "prompt_builder": {"query": query}
-})
-
-print(response["llm"]["replies"][0])
-```
 
 ## License
 
