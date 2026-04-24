@@ -51,7 +51,7 @@ export SERPERDEV_API_KEY="your-api-key"
 
 This integration provides the following component:
 
-- `SerperDevWebSearch`: A component that queries the Serper.dev API to find web pages relevant to a given query.
+- [`SerperDevWebSearch`](https://docs.haystack.deepset.ai/docs/serperdevwebsearch): A component that queries the Serper.dev API to find web pages relevant to a given query.
 
 ### Standalone Usage
 
