@@ -39,7 +39,7 @@ Since the SearchApi web search component is built into the core Haystack framewo
 pip install haystack-ai
 ```
 
-You will also need to get an API key from [SearchApi.io](https://www.searchapi.io/) and set it as an environment variable:
+You will also need to get an API key from [SearchApi](https://www.searchapi.io/) and set it as an environment variable:
 
 ```bash
 export SEARCHAPI_API_KEY="your-api-key"
