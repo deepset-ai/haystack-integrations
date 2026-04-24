@@ -87,7 +87,7 @@ Detect PII and attach it as structured metadata without modifying the document t
 
 ```python
 from haystack import Document
-from haystack_integrations.components.preprocessors.presidio import PresidioEntityExtractor
+from haystack_integrations.components.extractors.presidio import PresidioEntityExtractor
 
 extractor = PresidioEntityExtractor()
 result = extractor.run(documents=[
