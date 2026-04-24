@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-The `SearchApiWebSearch` component allows you to perform web searches using the [SearchApi.io](https://www.searchapi.io/) service. It retrieves relevant snippets and URLs that can be used directly in your Haystack applications, such as Retrieval-Augmented Generation (RAG) pipelines or with Haystack Agents.
+The `SearchApiWebSearch` component allows you to perform web searches using the [SearchApi](https://www.searchapi.io/) service. It retrieves relevant snippets and URLs that can be used directly in your Haystack applications, such as Retrieval-Augmented Generation (RAG) pipelines or with Haystack Agents.
 
 This component is part of the core `haystack-ai` package, meaning you do not need to install an external integration package to use it.
 
