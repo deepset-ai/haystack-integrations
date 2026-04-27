@@ -58,8 +58,12 @@ Split documents into fixed-size token chunks:
 from haystack import Document
 from haystack_integrations.components.preprocessors.chonkie import ChonkieTokenDocumentSplitter
 
-chunker = ChonkieTokenDocumentSplitter(tokenizer="gpt2", chunk_size=512, chunk_overlap=50)
-result = chunker.run(documents=[Document(content="Haystack is an open-source LLM framework.")])
+chunker = ChonkieTokenDocumentSplitter(tokenizer="gpt2", chunk_size=10, chunk_overlap=2)
+result = chunker.run(documents=[Document(content=(
+    "Haystack is an open-source framework for building LLM applications. "
+    "It supports retrieval-augmented generation and custom components. "
+    "Developers can connect models, databases, and tools in a pipeline."
+))])
 print(result["documents"])
 ```
 
@@ -71,8 +75,12 @@ Split documents while keeping sentence boundaries intact:
 from haystack import Document
 from haystack_integrations.components.preprocessors.chonkie import ChonkieSentenceDocumentSplitter
 
-chunker = ChonkieSentenceDocumentSplitter(tokenizer="gpt2", chunk_size=512)
-result = chunker.run(documents=[Document(content="First sentence. Second sentence. Third sentence.")])
+chunker = ChonkieSentenceDocumentSplitter(tokenizer="gpt2", chunk_size=10)
+result = chunker.run(documents=[Document(content=(
+    "Haystack is an open-source framework for building LLM applications. "
+    "It supports retrieval-augmented generation and custom components. "
+    "Developers can connect models, databases, and tools in a pipeline."
+))])
 print(result["documents"])
 ```
 
@@ -84,8 +92,15 @@ Apply a hierarchy of splitting rules — useful for structured text like Markdow
 from haystack import Document
 from haystack_integrations.components.preprocessors.chonkie import ChonkieRecursiveDocumentSplitter
 
-chunker = ChonkieRecursiveDocumentSplitter(chunk_size=256)
-result = chunker.run(documents=[Document(content="# Intro\n\nSome text.\n\n## Details\n\nMore text.")])
+chunker = ChonkieRecursiveDocumentSplitter(chunk_size=30)
+result = chunker.run(documents=[Document(content=(
+    "# Introduction\n\n"
+    "Haystack is an open-source framework for building LLM applications.\n\n"
+    "## Features\n\n"
+    "It supports retrieval-augmented generation, custom components, and production pipelines.\n\n"
+    "## Installation\n\n"
+    "Install Haystack with pip and start building your first pipeline today."
+))])
 print(result["documents"])
 ```
 
@@ -99,8 +114,12 @@ from haystack_integrations.components.preprocessors.chonkie import ChonkieSemant
 
 chunker = ChonkieSemanticDocumentSplitter(chunk_size=512, threshold=0.5)
 result = chunker.run(documents=[
-    Document(content="Haystack powers RAG pipelines. "
-                     "The Eiffel Tower is in Paris.")
+    Document(content=(
+        "Haystack is an open-source framework for building LLM applications. "
+        "It supports retrieval-augmented generation and custom components. "
+        "The Eiffel Tower is a wrought-iron landmark on the Champ de Mars in Paris. "
+        "It was constructed between 1887 and 1889 as the centrepiece of the World's Fair."
+    ))
 ])
 print(result["documents"])
 ```
