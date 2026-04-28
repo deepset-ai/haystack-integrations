@@ -42,6 +42,10 @@ toc: true
 
 All components accept a `list[Document]` and return a `list[Document]`. Each output document carries `source_id`, `page_number`, `split_id`, `split_idx_start`, `split_idx_end`, and `token_count` in its metadata.
 
+**Tokenizers** (`ChonkieTokenDocumentSplitter`, `ChonkieSentenceDocumentSplitter`, `ChonkieRecursiveDocumentSplitter`): pass any tokenizer name accepted by Chonkie. Common options are `"character"` (default, no extra dependencies), `"gpt2"`, and `"cl100k_base"`. See the [Chonkie tokenizer docs](https://docs.chonkie.ai/) for the full list.
+
+**Embedding models** (`ChonkieSemanticDocumentSplitter`): the default is [`minishlab/potion-base-32M`](https://huggingface.co/minishlab/potion-base-32M), a static [model2vec](https://github.com/MinishLab/model2vec) model that runs on CPU with no GPU required. Chonkie also supports SentenceTransformers, OpenAI, Cohere, Google Gemini, JinaAI, VoyageAI, and Azure OpenAI embeddings — see the [Chonkie embeddings overview](https://docs.chonkie.ai/oss/embeddings/overview#embeddings-overview) for the full list and installation instructions.
+
 ## Installation
 
 ```bash
