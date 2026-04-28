@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/chonkie-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/chonkie
-type: Custom Component
+type: Data Ingestion
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/chonkie.png
 version: Haystack 2.0
