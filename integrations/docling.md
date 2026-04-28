@@ -92,4 +92,4 @@ illustrating usage in a complete example with indexing and RAG pipelines.
 
 ### License
 
-MIT License.
+`docling-haystack` is distributed under the terms of the Apache-2.0 license.
