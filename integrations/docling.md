@@ -3,13 +3,13 @@ layout: integration
 name: Docling
 description: Use Docling to locally parse and chunk PDF, DOCX, and other document types in Haystack
 authors:
-    - name: DS4SD
+    - name: deepset
       socials:
-        github: DS4SD
+        github: deepset-ai
 pypi: https://pypi.org/project/docling-haystack
-repo: https://github.com/DS4SD/docling-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/docling
 type: Data Ingestion
-report_issue: https://github.com/DS4SD/docling/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/docling.png
 version: Haystack 2.0
 toc: true
@@ -63,8 +63,9 @@ arguments, most of which refer to the initialization and usage of the underlying
   default is used.
 - `export_type`: The export mode to use: `ExportType.DOC_CHUNKS` (default) chunks each
   input document (see `chunker`) and captures each individual chunk as a separate
-  Haystack `Document`, while `ExportType.MARKDOWN` captures each input document as a
-  separate Haystack `Document` (in which case splitting is likely required downstream).
+  Haystack `Document`; `ExportType.MARKDOWN` captures each input document as a single
+  Haystack `Document` in Markdown format (in which case splitting is likely required
+  downstream); `ExportType.JSON` serializes the full Docling document to a JSON string.
 - `md_export_kwargs`: Any parameters to pass to Markdown export (in case of
   `ExportType.MARKDOWN`).
 - `chunker`: The Docling chunker instance to use; if not set, a system default is used
@@ -75,10 +76,10 @@ arguments, most of which refer to the initialization and usage of the underlying
 #### Standalone
 
 ```python
-from docling_haystack.converter import DoclingConverter
+from haystack_integrations.components.converters.docling import DoclingConverter
 
 converter = DoclingConverter()
-documents = converter.run(paths=["https://arxiv.org/pdf/2408.09869"])["documents"]
+documents = converter.run(sources=["https://arxiv.org/pdf/2408.09869"])["documents"]
 
 print(repr(documents[2].content))
 # -> Abstract\nThis technical report introduces Docling [...]
@@ -91,4 +92,4 @@ illustrating usage in a complete example with indexing and RAG pipelines.
 
 ### License
 
-MIT License.
+`docling-haystack` is distributed under the terms of the Apache-2.0 license.
