@@ -37,7 +37,7 @@ For a detailed overview of all available methods and settings, visit the Haystac
 pip install oracle-haystack
 ```
 
-The only runtime dependency beyond Haystack itself is [python-oracledb](https://python-oracledb.readthedocs.io/) (thin mode — no Oracle Client libraries required).
+No separate Oracle Client install is required — the underlying [python-oracledb](https://python-oracledb.readthedocs.io/) driver runs in thin mode by default.
 
 ## Usage
 
@@ -99,11 +99,13 @@ indexing_pipeline.connect("embedder", "writer")
 indexing_pipeline.run({"converter": {"sources": ["filename.txt"]}})
 ```
 
-For faster approximate nearest-neighbor search on large collections, create an HNSW index after writing documents:
+For faster approximate nearest-neighbor search on large collections, create an HNSW index once after the first batch of writes — Oracle maintains it incrementally as new documents are added, so you don't need to rebuild it after each ingestion:
 
 ```python
 document_store.create_hnsw_index()
 ```
+
+The call is idempotent (`CREATE VECTOR INDEX IF NOT EXISTS`), so re-running it is safe. You can also pass `create_index=True` to `OracleDocumentStore(...)` to have the index created automatically on initialization.
 
 ### Using Oracle in a RAG Pipeline
 
