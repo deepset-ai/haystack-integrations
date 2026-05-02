@@ -22,9 +22,9 @@ toc: true
 
 ## Overview
 
-`whichmodel-haystack` adds a `WhichModelRouter` pipeline component that calls the [WhichModel](https://whichmodel.dev) recommendation engine before routing to a generator. It picks the most cost-effective model for your task — balancing quality, latency, and price — without requiring an API key.
+`whichmodel-haystack` adds a `WhichModelRouter` pipeline component that calls the [WhichModel](https://whichmodel.app) recommendation engine before routing to a generator. It picks the most cost-effective model for your task — balancing quality, latency, and price — without requiring an API key.
 
-No API key required. The component calls the public WhichModel MCP server at `https://whichmodel.dev/mcp`.
+No API key required. The component calls the public WhichModel MCP server at `https://mcp.whichmodel.app/mcp`.
 
 ## Installation
 
@@ -73,7 +73,7 @@ print(f"Estimated cost: ${result['recommendation']['cost_estimate_usd']:.6f}")
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `mcp_endpoint` | `str` | `https://whichmodel.dev/mcp` | WhichModel MCP server URL |
+| `mcp_endpoint` | `str` | `https://mcp.whichmodel.app/mcp` | WhichModel MCP server URL |
 | `timeout` | `float` | `30.0` | HTTP request timeout in seconds |
 | `default_task_type` | `str` | `None` | Default task type for `run()` |
 | `default_complexity` | `str` | `"medium"` | Default complexity level |
