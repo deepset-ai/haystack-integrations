@@ -95,30 +95,29 @@ The component returns `written_count`, `failed_count`, `skipped_count`, and `fir
 
 ### Full Pipeline Example
 
-A complete retrieval-augmented pipeline that loads Synap context before the LLM and records turns afterward:
+A retrieval pipeline that surfaces relevant Synap memories as Haystack `Document` objects, ready to inject into any downstream component:
 
 ```python
 import os
 
 from haystack import Pipeline
-from haystack.components.generators.chat import OpenAIChatGenerator
 from maximem_synap import MaximemSynapSDK
-from synap_haystack import SynapMemoryWriter, SynapRetriever
+from synap_haystack import SynapRetriever
 
 sdk = MaximemSynapSDK(api_key=os.environ["SYNAP_API_KEY"])
 
-retriever = SynapRetriever(sdk=sdk, user_id="user_123", customer_id="acme_corp")
-writer = SynapMemoryWriter(
-    sdk=sdk, conversation_id="session_1", user_id="user_123", customer_id="acme_corp"
+pipeline = Pipeline()
+pipeline.add_component(
+    "memory",
+    SynapRetriever(sdk=sdk, user_id="user_123", customer_id="acme_corp"),
 )
 
-pipeline = Pipeline()
-pipeline.add_component("memory", retriever)
-pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o"))
-pipeline.add_component("memory_writer", writer)
-
 result = pipeline.run({"memory": {"query": "What are my dietary restrictions?"}})
+for doc in result["memory"]["documents"]:
+    print(doc.content)
 ```
+
+To record conversation turns, add `SynapMemoryWriter` as a separate pipeline step and supply it with `Document` objects whose `meta["role"]` is `"user"` or `"assistant"`. Wire components together with `pipeline.connect()` to match your application's prompt-building and LLM architecture.
 
 ## More Resources
 
