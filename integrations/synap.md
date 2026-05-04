@@ -8,7 +8,7 @@ authors:
         github: maximem-ai
         linkedin: https://www.linkedin.com/company/maximem/
 pypi: https://pypi.org/project/maximem-synap-haystack/
-repo: https://github.com/maximem-ai/maximem_synap
+repo: https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations
 type: Memory Store
 report_issue: https://github.com/maximem-ai/maximem_synap/issues
 version: Haystack 2.0
@@ -124,3 +124,4 @@ result = pipeline.run({"memory": {"query": "What are my dietary restrictions?"}}
 - [Haystack Integration Guide](https://docs.maximem.ai/integrations/haystack)
 - [Dashboard](https://synap.maximem.ai)
 - [PyPI: maximem-synap-haystack](https://pypi.org/project/maximem-synap-haystack/)
+- [Open source integration package](https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations)
