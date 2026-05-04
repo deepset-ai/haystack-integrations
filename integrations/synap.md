@@ -48,11 +48,13 @@ Get an API key at [synap.maximem.ai](https://synap.maximem.ai).
 `SynapRetriever` is a standard Haystack component that takes a `query` string and returns a list of `Document` objects populated from the user's Synap memory. Plug it into any pipeline that needs long-term context before calling an LLM.
 
 ```python
+import os
+
 from haystack import Pipeline
 from maximem_synap import MaximemSynapSDK
 from synap_haystack import SynapRetriever
 
-sdk = MaximemSynapSDK(api_key="sk-...")
+sdk = MaximemSynapSDK(api_key=os.environ["SYNAP_API_KEY"])
 
 retriever = SynapRetriever(
     sdk=sdk,
