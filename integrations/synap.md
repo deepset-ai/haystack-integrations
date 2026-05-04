@@ -98,13 +98,14 @@ The component returns `written_count`, `failed_count`, `skipped_count`, and `fir
 A complete retrieval-augmented pipeline that loads Synap context before the LLM and records turns afterward:
 
 ```python
-from haystack import Document, Pipeline
-from haystack.components.builders import ChatPromptBuilder
+import os
+
+from haystack import Pipeline
 from haystack.components.generators.chat import OpenAIChatGenerator
 from maximem_synap import MaximemSynapSDK
 from synap_haystack import SynapMemoryWriter, SynapRetriever
 
-sdk = MaximemSynapSDK(api_key="sk-...")
+sdk = MaximemSynapSDK(api_key=os.environ["SYNAP_API_KEY"])
 
 retriever = SynapRetriever(sdk=sdk, user_id="user_123", customer_id="acme_corp")
 writer = SynapMemoryWriter(
@@ -114,6 +115,7 @@ writer = SynapMemoryWriter(
 pipeline = Pipeline()
 pipeline.add_component("memory", retriever)
 pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o"))
+pipeline.add_component("memory_writer", writer)
 
 result = pipeline.run({"memory": {"query": "What are my dietary restrictions?"}})
 ```
