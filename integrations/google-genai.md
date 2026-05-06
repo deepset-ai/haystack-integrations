@@ -32,7 +32,7 @@ toc: true
   - [Streaming Chat Generation](#streaming-chat-generation)
   - [Function calling](#function-calling)
   - [Embeddings](#embeddings)
-  - [Multimodal Embeddings with `gemini-embedding-2-preview`](#multimodal-embeddings-with-gemini-embedding-2-preview)
+  - [Multimodal Embeddings with `gemini-embedding-2`](#multimodal-embeddings-with-gemini-embedding-2)
 - [License](#license)
 
 ## Overview
@@ -44,7 +44,7 @@ Haystack supports the latest [Gemini models](https://ai.google.dev/models/gemini
 
 **Generative models:** `gemini-3.1-flash-lite-preview`, `gemini-3.1-pro-preview`, `gemini-3-flash-preview`, `gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-2.5-flash-lite`, and the Gemini 2.0 series (e.g. `gemini-2.0-flash`).
 
-**Embedding models:** `gemini-embedding-2-preview` (multimodal, multilingual) and `gemini-embedding-001` (multilingual).
+**Embedding models:** `gemini-embedding-2` (multimodal, multilingual) and `gemini-embedding-001` (multilingual).
 
 > 🖼️ Learn how to build multimodal search systems using Gemini Embedding 2 to embed text, images, video, audio, and PDFs in [Multimodal Search with Gemini Embedding 2 in Haystack](https://haystack.deepset.ai/blog/multimodal-embeddings-gemini-haystack). 
 
@@ -63,7 +63,7 @@ Once installed, you will have access to the Haystack Chat components:
 - [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as **gemini-3.1-flash-lite-preview** or **gemini-2.5-pro** for chat completion and function calling.
 - [`GoogleGenAIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaidocumentembedder): Use this component with [Google GenAI embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-001** for generating embeddings for documents.
 - [`GoogleGenAITextEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaitextembedder): Use this component with [Google GenAI embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-001** for generating embeddings for text.
-- [`GoogleGenAIMultimodalDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaimultimodaldocumentembedder): Use this component with [Google GenAI multimodal embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-2-preview** for generating embeddings for text, image, PDF, video and audio.
+- [`GoogleGenAIMultimodalDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaimultimodaldocumentembedder): Use this component with [Google GenAI multimodal embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-2** for generating embeddings for text, image, PDF, video and audio.
 
 To use this component with the Gemini Developer API and get an API key, visit [Google AI Studio](https://aistudio.google.com/).
 To use this component with the Vertex AI API, visit [Google Cloud > Vertex AI](https://cloud.google.com/vertex-ai).
@@ -211,9 +211,9 @@ This integration provides three embedder components:
 
 - **`GoogleGenAIDocumentEmbedder`** — Embeds Haystack `Document` objects (text content). Use it when indexing documents into a vector store or when you need to embed multiple documents in one call. The resulting embeddings are stored on the documents and can be used for document retrieval.
 - **`GoogleGenAITextEmbedder`** — Embeds a single string. Use it when you need to embed a search query or any standalone text to compare against document embeddings (e.g. in a RAG pipeline for the query side).
-- **`GoogleGenAIMultimodalDocumentEmbedder`** — Embeds documents that can contain **images**, **videos**, or **PDFs** (via `meta["file_path"]`). Use the `gemini-embedding-2-preview` model for multimodal retrieval, e.g. searching over mixed media with text or image queries.
+- **`GoogleGenAIMultimodalDocumentEmbedder`** — Embeds documents that can contain **images**, **videos**, or **PDFs** (via `meta["file_path"]`). Use the `gemini-embedding-2` model for multimodal retrieval, e.g. searching over mixed media with text or image queries.
 
-For text-only pipelines, use the same model (e.g. `gemini-embedding-001`) for documents and queries so that their embeddings live in the same vector space. For multimodal content, use `gemini-embedding-2-preview` with the appropriate `task_type` in the config.
+For text-only pipelines, use the same model (e.g. `gemini-embedding-001`) for documents and queries so that their embeddings live in the same vector space. For multimodal content, use `gemini-embedding-2`.
 
 #### Document Embedding
 
@@ -229,7 +229,7 @@ os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 # Initialize the embedder (uses gemini-embedding-001 by default)
 embedder = GoogleGenAIDocumentEmbedder(model="gemini-embedding-001")
 
-# Generate a response
+# Generate an embedding
 doc = Document(content="some text")
 docs_w_embeddings = embedder.run(documents=[doc])["documents"]
 ```
@@ -261,11 +261,9 @@ Output:
 
 The returned embedding is a list of floats (e.g. 3072 dimensions for `gemini-embedding-001`). In a typical RAG pipeline you would pass this query embedding to a retriever to find the most similar document embeddings from your index.
 
-#### Multimodal Embeddings with `gemini-embedding-2-preview`
+#### Multimodal Embeddings with `gemini-embedding-2`
 
-`GoogleGenAIMultimodalDocumentEmbedder` embeds documents that reference **text**, **images**, **audios**, **videos**, or **PDFs** via `meta["file_path"]`. It uses the `gemini-embedding-2-preview` model, which produces a unified embedding space for text, images, and other modalities—so you can index mixed media and retrieve with text or image queries.
-
-Set `config={"task_type": "RETRIEVAL_DOCUMENT"}` when embedding documents for indexing, and use `RETRIEVAL_QUERY` when embedding queries. Use the same model and task type pairing so document and query embeddings are comparable.
+`GoogleGenAIMultimodalDocumentEmbedder` embeds documents that reference **text**, **images**, **audios**, **videos**, or **PDFs** via `meta["file_path"]`. It uses the `gemini-embedding-2` model, which produces a unified embedding space for text, images, and other modalities—so you can index mixed media and retrieve with text or image queries.
 
 Example: embedding multiple files (text, audio, video, images, PDF) and writing them to a document store:
 
@@ -287,8 +285,7 @@ docs = [
 ]
 
 doc_multimodal_embedder = GoogleGenAIMultimodalDocumentEmbedder(
-    model="gemini-embedding-2-preview",
-    config={"task_type": "RETRIEVAL_DOCUMENT"},
+    model="gemini-embedding-2",
 )
 docs_with_embeddings = doc_multimodal_embedder.run(documents=docs)
 document_store.write_documents(docs_with_embeddings["documents"])
