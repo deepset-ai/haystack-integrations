@@ -23,11 +23,8 @@ toc: true
 ## Overview
 
 [Docling Serve](https://github.com/docling-project/docling-serve) hosts [Docling](https://github.com/DS4SD/docling)
-as a scalable HTTP server, supporting PDFs, Office documents, HTML, and many other formats.
-
-This integration introduces `DoclingServeConverter`, a Haystack component that sends documents to a running
-Docling Serve instance and returns Haystack `Document` objects. Unlike the local `DoclingConverter`, this
-component has no heavy ML dependencies — all document parsing happens on the remote server.
+as a scalable HTTP server, supporting PDFs, Office documents, HTML, and many other formats. All document
+parsing happens on the remote server, with no local ML dependencies.
 
 ## Installation
 
@@ -45,10 +42,7 @@ docker run -p 5001:5001 ghcr.io/docling-project/docling-serve-cpu:latest
 
 ### Components
 
-This integration introduces `DoclingServeConverter`, a component which converts documents by sending them
-to a Docling Serve HTTP server and returns Haystack `Document` objects.
-
-Local files and `ByteStream` objects are uploaded via the `/v1/convert/file` endpoint. URL strings are
+`DoclingServeConverter` converts documents by sending them to a Docling Serve HTTP server. Local files and `ByteStream` objects are uploaded via the `/v1/convert/file` endpoint. URL strings are
 sent to `/v1/convert/source`.
 
 The component supports three export modes via the `export_type` parameter:
