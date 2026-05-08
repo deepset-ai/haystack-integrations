@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Docling Serve
-description: Use DoclingServe to convert PDF, DOCX, HTML, and other document types to Haystack Documents via a remote HTTP server, with no local ML dependencies
+description: Use Docling Serve to convert PDF, DOCX, HTML, and other document types to Haystack Documents via a remote HTTP server, with no local ML dependencies
 authors:
     - name: deepset
       socials:
@@ -22,11 +22,11 @@ toc: true
 
 ## Overview
 
-[DoclingServe](https://github.com/docling-project/docling-serve) hosts [Docling](https://github.com/DS4SD/docling)
+[Docling Serve](https://github.com/docling-project/docling-serve) hosts [Docling](https://github.com/DS4SD/docling)
 as a scalable HTTP server, supporting PDFs, Office documents, HTML, and many other formats.
 
 This integration introduces `DoclingServeConverter`, a Haystack component that sends documents to a running
-DoclingServe instance and returns Haystack `Document` objects. Unlike the local `DoclingConverter`, this
+Docling Serve instance and returns Haystack `Document` objects. Unlike the local `DoclingConverter`, this
 component has no heavy ML dependencies — all document parsing happens on the remote server.
 
 ## Installation
@@ -35,7 +35,7 @@ component has no heavy ML dependencies — all document parsing happens on the r
 pip install docling-serve-haystack
 ```
 
-Start a DoclingServe instance locally (requires Docker):
+Start a Docling Serve instance locally (requires Docker):
 
 ```bash
 docker run -p 5001:5001 ghcr.io/docling-project/docling-serve-cpu:latest
@@ -46,7 +46,7 @@ docker run -p 5001:5001 ghcr.io/docling-project/docling-serve-cpu:latest
 ### Components
 
 This integration introduces `DoclingServeConverter`, a component which converts documents by sending them
-to a DoclingServe HTTP server and returns Haystack `Document` objects.
+to a Docling Serve HTTP server and returns Haystack `Document` objects.
 
 Local files and `ByteStream` objects are uploaded via the `/v1/convert/file` endpoint. URL strings are
 sent to `/v1/convert/source`.
