@@ -60,7 +60,7 @@ from haystack_integrations.components.converters.docling_serve import (
 
 # Default: Markdown output
 converter = DoclingServeConverter(base_url="http://localhost:5001")
-result = converter.run(sources=["https://arxiv.org/pdf/2206.01062"])
+result = converter.run(sources=["https://arxiv.org/pdf/2602.17316"])
 documents = result["documents"]
 print(documents[0].content[:200])
 ```
@@ -88,7 +88,7 @@ pipeline.add_component("writer", DocumentWriter(document_store=document_store))
 pipeline.connect("converter", "splitter")
 pipeline.connect("splitter", "writer")
 
-pipeline.run({"converter": {"sources": ["report.pdf", "manual.docx"]}})
+pipeline.run({"converter": {"sources": ["https://arxiv.org/pdf/2602.17316"]}})
 ```
 
 ### License
