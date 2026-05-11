@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/haystack-ai/
 repo: https://github.com/deepset-ai/haystack
-type: Data Ingestion
+type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack/issues
 logo: /logos/serperdev.png
 version: Haystack 2.0
