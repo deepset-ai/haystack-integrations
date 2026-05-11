@@ -27,7 +27,7 @@ toc: true
 
 ## Overview
 
-[Brave Search](https://brave.com/search/api/) is an independent search engine with its own web index. Unlike most search APIs, it does not rely on Google or Bing, making it a great choice for privacy-conscious RAG pipelines.
+[Brave Search](https://brave.com/search/api/) is an independent search engine with its own web index. Unlike most search APIs, it does not rely on Google or Bing, making it a great choice for privacy-conscious applications.
 
 This integration provides:
 - [`BraveWebSearch`](https://docs.haystack.deepset.ai/docs/bravewebsearch): Searches the web using the Brave Search API and returns results as Haystack `Document` objects along with source URLs.
@@ -56,20 +56,6 @@ web_search = BraveWebSearch(top_k=5)
 result = web_search.run(query="What is Haystack by deepset?")
 documents = result["documents"]
 links = result["links"]
-```
-
-By default, the component reads the API key from the `BRAVE_API_KEY` environment variable. You can also pass it explicitly:
-
-```python
-from haystack.utils import Secret
-from haystack_integrations.components.websearch.brave import BraveWebSearch
-
-web_search = BraveWebSearch(
-    api_key=Secret.from_token("your-api-key"),
-    top_k=5,
-    country="US",
-    search_lang="en",
-)
 ```
 
 #### In a Pipeline
