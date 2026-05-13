@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Perplexity
-description: Use the Perplexity API for chat completions, embeddings, and grounded web search.
+description: Use the Perplexity Agent API, Embeddings API, and grounded Search API in Haystack pipelines.
 authors:
     - name: deepset
       socials:
@@ -25,11 +25,11 @@ toc: true
 
 ## Overview
 
-The `perplexity-haystack` package lets you use Perplexity models and grounded search capabilities in Haystack pipelines through three components:
+The `perplexity-haystack` package lets you use Perplexity's Agent API, Embeddings API, and grounded Search API in Haystack pipelines through four components:
 
-- `PerplexityChatGenerator` uses chat completions powered by the Perplexity Agent API and defaults to `sonar-pro`.
-- `PerplexityTextEmbedder` and `PerplexityDocumentEmbedder` create embeddings through the Perplexity Embeddings API.
-- `PerplexityWebSearch` retrieves grounded web search results through the Perplexity Search API.
+- `PerplexityChatGenerator` — chat completions through the Perplexity Agent API (OpenAI-compatible Responses API). Defaults to `openai/gpt-5.4`; other supported models include `openai/gpt-5.5`, `openai/gpt-4o`, `anthropic/claude-sonnet-4-6`, `xai/grok-4-1`, and `google/gemini-3-flash-preview`.
+- `PerplexityTextEmbedder` and `PerplexityDocumentEmbedder` — embeddings through the Perplexity Embeddings API. Defaults to `pplx-embed-v1-0.6b`; `pplx-embed-v1-4b` is also available.
+- `PerplexityWebSearch` — grounded web search results through the Perplexity Search API.
 
 For more information about the Perplexity API, see [the Perplexity docs](https://docs.perplexity.ai).
 
@@ -45,9 +45,9 @@ pip install perplexity-haystack
 
 You can use the Perplexity components as standalone components or in Haystack pipelines.
 
-### Use Perplexity Chat Completions
+### Use Perplexity Chat Completions (Agent API)
 
-`PerplexityChatGenerator` is powered by the Perplexity Agent API and uses `sonar-pro` by default.
+`PerplexityChatGenerator` is powered by the Perplexity Agent API and defaults to `openai/gpt-5.4`.
 
 ```python
 import os
@@ -57,12 +57,18 @@ from haystack_integrations.components.generators.perplexity import PerplexityCha
 
 os.environ["PERPLEXITY_API_KEY"] = "YOUR_PERPLEXITY_API_KEY"
 
-client = PerplexityChatGenerator(model="sonar-pro")
+client = PerplexityChatGenerator()
 response = client.run(
     messages=[ChatMessage.from_user("What are Agentic Pipelines? Be brief.")]
 )
 
 print(response["replies"])
+```
+
+You can pick any of the supported Agent API models via the `model` parameter, for example:
+
+```python
+client = PerplexityChatGenerator(model="anthropic/claude-sonnet-4-6")
 ```
 
 ### Use Perplexity Embeddings
@@ -80,7 +86,19 @@ response = embedder.run(text="What is Haystack by deepset?")
 print(response["embedding"])
 ```
 
-### Use Perplexity Web Search
+For embedding a list of documents, use `PerplexityDocumentEmbedder`:
+
+```python
+from haystack import Document
+from haystack_integrations.components.embedders.perplexity import PerplexityDocumentEmbedder
+
+docs = [Document(content="What is Haystack by deepset?")]
+result = PerplexityDocumentEmbedder().run(documents=docs)
+
+print(result["documents"][0].embedding)
+```
+
+### Use Perplexity Web Search (Search API)
 
 ```python
 import os
