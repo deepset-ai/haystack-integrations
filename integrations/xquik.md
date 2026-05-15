@@ -38,6 +38,8 @@ Both components return `documents`, `links`, `has_more`, and `next_cursor`, maki
 pip install xquik-haystack==0.1.0
 ```
 
+Create an API key from the [Xquik dashboard](https://xquik.com), or follow the [Xquik quickstart](https://docs.xquik.com/quickstart) for account and API-key setup.
+
 Set your Xquik API key:
 
 ```bash
