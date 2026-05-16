@@ -8,7 +8,7 @@ authors:
         github: maximem-ai
         linkedin: https://www.linkedin.com/company/maximem/
 pypi: https://pypi.org/project/maximem-synap-haystack/
-repo: https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations
+repo: https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations/synap-haystack
 type: Memory Store
 report_issue: https://github.com/maximem-ai/maximem_synap/issues
 version: Haystack 2.0
@@ -23,6 +23,7 @@ toc: true
   - [SynapRetriever](#synapretriever)
   - [SynapMemoryWriter](#synapmemorywriter)
   - [Full Pipeline Example](#full-pipeline-example)
+- [License](#license)
 
 ## Overview
 
@@ -125,4 +126,8 @@ To record conversation turns, add `SynapMemoryWriter` as a separate pipeline ste
 - [Haystack Integration Guide](https://docs.maximem.ai/integrations/haystack)
 - [Dashboard](https://synap.maximem.ai)
 - [PyPI: maximem-synap-haystack](https://pypi.org/project/maximem-synap-haystack/)
-- [Open source integration package](https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations)
+- [Open source integration package](https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations/synap-haystack)
+
+## License
+
+`maximem-synap-haystack` is released under the [Apache License 2.0](https://github.com/maximem-ai/maximem_synap_sdk/blob/main/LICENSE).
