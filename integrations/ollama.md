@@ -173,21 +173,20 @@ For reliable tool-call emission with Llama 3.1 8B, set `temperature=0.0` and use
 
 ```python
 from haystack.dataclasses import ChatMessage
-from haystack.tools import create_tool_from_function
+from haystack.tools import tool
 from haystack_integrations.components.generators.ollama import OllamaChatGenerator
 
 
+@tool
 def get_weather(city: str) -> str:
     """Get current weather for a city."""
     return f"Sunny, 22°C in {city}"
 
 
-weather_tool = create_tool_from_function(get_weather)
-
 generator = OllamaChatGenerator(
     model="llama3.1:8b",
     generation_kwargs={"temperature": 0.0},
-    tools=[weather_tool],
+    tools=[get_weather],
 )
 
 response = generator.run(
