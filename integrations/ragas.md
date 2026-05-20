@@ -60,17 +60,16 @@ if "OPENAI_API_KEY" not in os.environ:
     os.environ["OPENAI_API_KEY"] = getpass("Enter OpenAI API key:")
 
 from haystack import Document, Pipeline
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.components.embedders import OpenAITextEmbedder, OpenAIDocumentEmbedder
-from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
-from haystack.components.builders import ChatPromptBuilder
-from haystack.dataclasses import ChatMessage
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.builders import AnswerBuilder, ChatPromptBuilder
+from haystack.components.embedders import OpenAIDocumentEmbedder, OpenAITextEmbedder
 from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.components.builders import AnswerBuilder
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack.dataclasses import ChatMessage
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_integrations.components.evaluators.ragas import RagasEvaluator
-
-from ragas.llms import HaystackLLMWrapper
+from openai import AsyncOpenAI
+from ragas.embeddings import embedding_factory
+from ragas.llms import llm_factory
 from ragas.metrics import AnswerRelevancy, ContextPrecision, Faithfulness
 ```
 
@@ -143,12 +142,12 @@ For example:
 Make sure to include all relevant data for each metric to ensure accurate evaluation.
 
 ```py
-llm = OpenAIGenerator(model="gpt-4o-mini")
-evaluator_llm = HaystackLLMWrapper(llm)
+client = AsyncOpenAI()
+llm = llm_factory("gpt-4o-mini", client=client)
+embeddings = embedding_factory("openai", model="text-embedding-3-small", client=client)
 
 ragas_evaluator = RagasEvaluator(
-    ragas_metrics=[AnswerRelevancy(), ContextPrecision(), Faithfulness()],
-    evaluator_llm=evaluator_llm,
+    ragas_metrics=[AnswerRelevancy(llm=llm, embeddings=embeddings), ContextPrecision(llm=llm), Faithfulness(llm=llm)],
 )
 ```
 
@@ -324,13 +323,14 @@ from ragas.dataset_schema import EvaluationDataset
 
 evaluation_dataset = EvaluationDataset.from_list(evals_list)
 
-llm = OpenAIGenerator(model="gpt-4o-mini")
-evaluator_llm = HaystackLLMWrapper(llm)
+client = AsyncOpenAI()
+llm = llm_factory("gpt-4o-mini", client=client)
+embeddings = embedding_factory("openai", model="text-embedding-3-small", client=client)
 
 result = evaluate(
     dataset=evaluation_dataset,
-    metrics=[AnswerRelevancy(), ContextPrecision(), Faithfulness()],
-    llm=evaluator_llm,
+    metrics=[AnswerRelevancy(llm=llm, embeddings=embeddings), ContextPrecision(llm=llm), Faithfulness(llm=llm)],
+    llm=llm,
 )
 
 print(result)
