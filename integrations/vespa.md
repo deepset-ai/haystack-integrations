@@ -34,6 +34,11 @@ to be running and reachable (locally via Docker, on Vespa Cloud, or self-hosted)
 schema, including the fields and ranking profiles used by the retrievers, must be defined on
 the Vespa application before you start indexing or querying.
 
+When connecting to [Vespa Cloud](https://cloud.vespa.ai/), `VespaDocumentStore` supports either
+token-based authentication via `vespa_cloud_secret_token` (or the `VESPA_CLOUD_SECRET_TOKEN`
+environment variable) or mTLS authentication via the `cert` and `key` parameters pointing to
+your data plane certificate and key files.
+
 ## Installation
 
 ```bash
@@ -48,13 +53,14 @@ The integration requires Python 3.10+, `haystack-ai>=2.28.0` and `pyvespa>=0.58.
 
 This integration introduces the following components:
 
-- `VespaDocumentStore`: a `DocumentStore` backed by a Vespa application. It connects to the
-  Vespa endpoint (`VESPA_URL` by default) and reads/writes documents into the configured
-  schema and namespace.
-- `VespaEmbeddingRetriever`: retrieves documents from a `VespaDocumentStore` using vector
-  similarity (nearest-neighbor search on the configured embedding field).
-- `VespaKeywordRetriever`: retrieves documents from a `VespaDocumentStore` using Vespa's
-  lexical search (e.g. BM25 ranking).
+- [`VespaDocumentStore`](https://docs.haystack.deepset.ai/reference/integrations-vespa#vespadocumentstore):
+  a `DocumentStore` backed by a Vespa application. It connects to the Vespa endpoint
+  (`VESPA_URL` by default) and reads/writes documents into the configured schema and namespace.
+- [`VespaEmbeddingRetriever`](https://docs.haystack.deepset.ai/reference/integrations-vespa#vespaembeddingretriever):
+  retrieves documents from a `VespaDocumentStore` using vector similarity (nearest-neighbor
+  search on the configured embedding field).
+- [`VespaKeywordRetriever`](https://docs.haystack.deepset.ai/reference/integrations-vespa#vespakeywordretriever):
+  retrieves documents from a `VespaDocumentStore` using Vespa's lexical search (e.g. BM25 ranking).
 
 ### Indexing and embedding retrieval
 
