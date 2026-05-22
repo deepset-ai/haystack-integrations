@@ -24,7 +24,7 @@ toc: true
 
 ## Overview
 
-[`AmazonTextractConverter`](https://docs.haystack.deepset.ai/docs/amazontextractconverter) provides an integration of [Amazon Textract](https://aws.amazon.com/textract/) with [Haystack](https://haystack.deepset.ai/).
+[`AmazonTextractConverter`](https://docs.haystack.deepset.ai/docs/amazontextractconverter) provides an integration of [Amazon Textract](https://aws.amazon.com/textract/) with Haystack.
 
 This component uses Amazon Textract's synchronous API to convert images and single-page PDFs into Haystack `Document` objects using OCR. It supports plain text extraction, structural analysis for tables and forms, and natural-language queries on documents.
 
@@ -48,9 +48,11 @@ pip install amazon-textract-haystack
 
 The component uses the standard boto3 credential chain. You can set AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) as environment variables, configure them via `~/.aws/credentials` and `~/.aws/config`, rely on an IAM role when running on AWS infrastructure, or pass them explicitly as [Secret](https://docs.haystack.deepset.ai/docs/secret-management) arguments.
 
+The Textract API is selected automatically based on how you configure the component: `DetectDocumentText` is used by default for plain text extraction, while `AnalyzeDocument` is used whenever you set `feature_types` or pass `queries` at runtime.
+
 ### Basic text extraction
 
-Extract plain text from a document using `DetectDocumentText`:
+Extract plain text from a document with the default configuration, which calls `DetectDocumentText`:
 
 ```python
 from haystack_integrations.components.converters.amazon_textract import AmazonTextractConverter
@@ -105,21 +107,6 @@ results = converter.run(
 )
 ```
 
-### In a Haystack pipeline
-
-```python
-from haystack import Pipeline
-from haystack.components.preprocessors import DocumentCleaner
-from haystack_integrations.components.converters.amazon_textract import AmazonTextractConverter
-
-pipeline = Pipeline()
-pipeline.add_component("converter", AmazonTextractConverter())
-pipeline.add_component("cleaner", DocumentCleaner())
-pipeline.connect("converter.documents", "cleaner.documents")
-
-result = pipeline.run({"converter": {"sources": ["scan.png"]}})
-```
-
 ### Explicit credentials
 
 ```python
@@ -134,3 +121,7 @@ converter = AmazonTextractConverter(
 ```
 
 For more details on Amazon Textract capabilities and setup, refer to the [Amazon Textract documentation](https://docs.aws.amazon.com/textract/latest/dg/what-is.html).
+
+### License
+
+`amazon-textract-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
