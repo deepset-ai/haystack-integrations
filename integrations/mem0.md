@@ -13,54 +13,51 @@ authors:
         github: mem0ai
         twitter: mem0ai
         linkedin: https://www.linkedin.com/company/mem0ai/
-pypi: https://pypi.org/project/haystack-experimental/
-repo: https://github.com/deepset-ai/haystack-experimental
+pypi: https://pypi.org/project/mem0-haystack/
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/mem0
 type: Memory Store
-report_issue: https://github.com/deepset-ai/haystack-experimental/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/mem0.png
 version: Haystack 2.0
 toc: true
 ---
 
-### Table of Contents
+### **Table of Contents**
 
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Standalone Memory Operations](#standalone-memory-operations)
-  - [Using Mem0 with a Haystack Agent](#using-mem0-with-a-haystack-agent)
+  - [Available Classes](#available-classes)
+  - [Use with a Haystack Agent](#use-with-a-haystack-agent)
+  - [Use in a Pipeline](#use-in-a-pipeline)
 - [License](#license)
 
 ## Overview
 
-[Mem0](https://mem0.ai) (pronounced "mem-zero") provides a universal memory layer for AI agents and assistants. It enables your Haystack applications to remember user preferences, adapt to individual needs, and continuously learn from past interactions — making AI conversations truly personalized.
+[Mem0](https://mem0.ai) provides a memory layer for AI agents and assistants. It helps Haystack applications store user-specific facts, preferences, and project context, then retrieve relevant memories in later conversations.
 
-This integration is part of the [`haystack-experimental`](https://github.com/deepset-ai/haystack-experimental) package and provides the `Mem0MemoryStore`, which acts as a persistent memory backend for [Haystack Agents](https://docs.haystack.deepset.ai/docs/agent). Instead of relying solely on conversation history or static document stores, agents can use Mem0 to store and retrieve user-specific memories across sessions.
+The `mem0-haystack` package is part of [Haystack Core Integrations](https://github.com/deepset-ai/haystack-core-integrations) and provides:
 
-### Key Features
+- `Mem0MemoryStore`: A persistent memory store backed by the Mem0 Cloud API.
+- `Mem0MemoryRetriever` and `Mem0MemoryWriter`: Pipeline components for retrieving and writing `ChatMessage` memories.
+- `Mem0MemoryRetrieverTool` and `Mem0MemoryWriterTool`: Ready-made tools for memory-augmented Haystack Agents.
 
-- **Persistent Memory**: Store and retrieve user-specific memories that persist across sessions
-- **Multi-Level Scoping**: Organize memories by User, Session, or Agent scope
-- **Intelligent Extraction**: Automatically extracts relevant facts from conversations — no need to store entire transcripts
-- **Seamless Agent Integration**: Works natively with Haystack's Agent component for context-aware responses
-- **Flexible Deployment**: Use the managed [Mem0 Platform](https://app.mem0.ai) or self-host with your own infrastructure
+More information:
 
-More info about Mem0:
-
-- [Mem0 Website](https://mem0.ai)
-- [Mem0 Documentation](https://docs.mem0.ai)
-- [Mem0 Platform (Managed)](https://app.mem0.ai)
-- [Mem0 GitHub](https://github.com/mem0ai/mem0)
+- [Mem0 website](https://mem0.ai)
+- [Mem0 documentation](https://docs.mem0.ai)
+- [Mem0 platform](https://app.mem0.ai)
+- [Mem0 GitHub repository](https://github.com/mem0ai/mem0)
 
 ## Installation
 
+Install the integration:
+
 ```bash
-pip install haystack-ai haystack-experimental mem0ai
+pip install mem0-haystack
 ```
 
-### Environment Variables
-
-Set the following environment variable to use the Mem0 Platform:
+Set your Mem0 API key:
 
 ```bash
 export MEM0_API_KEY="your-mem0-api-key"
@@ -70,83 +67,119 @@ You can obtain an API key by signing up at [app.mem0.ai](https://app.mem0.ai).
 
 ## Usage
 
-### Components
+### Available Classes
 
-This integration introduces one component:
+- [`Mem0MemoryRetrieverTool`](https://docs.haystack.deepset.ai/docs/mem0memorytools) and [`Mem0MemoryWriterTool`](https://docs.haystack.deepset.ai/docs/mem0memorytools): Ready-made Agent tools for long-term memory.
+- [`Mem0MemoryRetriever`](https://docs.haystack.deepset.ai/docs/mem0memoryretriever): Retrieves memories from Mem0 as system `ChatMessage` objects.
+- [`Mem0MemoryWriter`](https://docs.haystack.deepset.ai/docs/mem0memorywriter): Writes `ChatMessage` objects to Mem0.
+- `Mem0MemoryStore`: Lower-level store used by the tools and components.
 
-- [`Mem0MemoryStore`](https://docs.haystack.deepset.ai/reference/experimental-mem0-memory-store-api#mem0memorystore): A memory store that uses Mem0 as the backend for storing and retrieving user-specific memories. It can be used standalone or plugged into a Haystack Agent.
+### Use with a Haystack Agent
 
-### Standalone Memory Operations
-
-You can use `Mem0MemoryStore` directly to add and search memories:
-
-```python
-import os
-from haystack.dataclasses import ChatMessage
-from haystack_experimental.memory_stores.mem0 import Mem0MemoryStore
-
-os.environ["MEM0_API_KEY"] = "your-mem0-api-key"
-
-# Initialize the memory store
-memory = Mem0MemoryStore()
-
-# Add memories from a conversation
-messages = [
-    ChatMessage.from_user("I'm a vegetarian and I love Italian food."),
-]
-memory.add_memories(messages=messages, user_id="alice")
-
-# Later, retrieve relevant memories
-query = "What kind of food do I like?"
-memories = memory.search_memories(query=query, user_id="alice")
-
-print(memories)
-# Returns memories related to Alice's food preferences
-```
-
-### Using Mem0 with a Haystack Agent
-
-The primary use case for `Mem0MemoryStore` is to provide personalized context to a Haystack Agent. The agent automatically retrieves relevant memories before generating a response, enabling context-aware conversations:
+Use the ready-made tools when you want an Agent to decide when to retrieve and store memories:
 
 ```python
-import os
+from haystack.components.agents import Agent
 from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.components.generators.utils import print_streaming_chunk
 from haystack.dataclasses import ChatMessage
-from haystack_experimental.components.agents import Agent
-from haystack_experimental.memory_stores.mem0 import Mem0MemoryStore
 
-os.environ["MEM0_API_KEY"] = "your-mem0-api-key"
-os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
+from haystack_integrations.memory_stores.mem0 import Mem0MemoryStore
+from haystack_integrations.tools.mem0 import (
+    Mem0MemoryRetrieverTool,
+    Mem0MemoryWriterTool,
+)
 
-# Initialize components
-memory_store = Mem0MemoryStore()
-generator = OpenAIChatGenerator(model="gpt-4o")
+store = Mem0MemoryStore()
 
-# Create an agent with memory
+retrieve_memories = Mem0MemoryRetrieverTool(memory_store=store, top_k=10)
+store_memory = Mem0MemoryWriterTool(memory_store=store)
+
 agent = Agent(
-    generator=generator,
-    memory_store=memory_store,
-    system_prompt="You are a helpful assistant that remembers user preferences.",
+    chat_generator=OpenAIChatGenerator(model="gpt-5.4"),
+    tools=[retrieve_memories, store_memory],
+    system_prompt="""You are a helpful assistant with long-term memory.
+
+At the beginning of each turn, call retrieve_memories without a query to inspect known memories.
+Use store_memory only for new durable user-specific facts, preferences, or project context.
+Before storing, compare the proposed memory with retrieved memories and avoid duplicates.
+""",
+    streaming_callback=print_streaming_chunk,
+    state_schema={"user_id": {"type": str}},
 )
 
-# First interaction — the agent learns about the user
-response = agent.run(
-    query="I prefer dark mode and use vim keybindings.",
-    memory_store_kwargs={"user_id": "user_123"},
+agent.run(
+    messages=[
+        ChatMessage.from_user(
+            "My name is Alice. Please remember that I prefer concise Python examples.",
+        ),
+    ],
+    user_id="alice",
 )
-print(response["replies"][0].content)
-
-# Later interaction — the agent recalls the user's preferences
-response = agent.run(
-    query="Can you recommend an IDE setup for me?",
-    memory_store_kwargs={"user_id": "user_123"},
-)
-print(response["replies"][0].content)
-# The agent will reference the user's preference for dark mode and vim keybindings
 ```
 
-> **Note:** The `Mem0MemoryStore` is currently part of the `haystack-experimental` package and is labeled as **experimental**. The API may change in future releases. Always refer to the [haystack-experimental repository](https://github.com/deepset-ai/haystack-experimental) for the latest updates.
+### Use in a Pipeline
 
-### License
+Use the components when you want explicit pipeline control over memory retrieval and writing:
 
-`haystack-experimental` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+```python
+from haystack import Pipeline
+from haystack.components.agents import Agent
+from haystack.components.converters import OutputAdapter
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.components.generators.utils import print_streaming_chunk
+from haystack.dataclasses import ChatMessage
+
+from haystack_integrations.components.retrievers.mem0 import Mem0MemoryRetriever
+from haystack_integrations.components.writers.mem0 import Mem0MemoryWriter
+from haystack_integrations.memory_stores.mem0 import Mem0MemoryStore
+
+store = Mem0MemoryStore()
+
+pipeline = Pipeline()
+pipeline.add_component("retriever", Mem0MemoryRetriever(memory_store=store, top_k=5))
+pipeline.add_component(
+    "memory_context",
+    OutputAdapter(
+        template="{{ memories + user_messages }}",
+        output_type=list[ChatMessage],
+        unsafe=True,
+    ),
+)
+pipeline.add_component(
+    "agent",
+    Agent(
+        chat_generator=OpenAIChatGenerator(model="gpt-5.4"),
+        system_prompt="Use system messages at the start of the conversation as long-term memory.",
+        streaming_callback=print_streaming_chunk,
+    ),
+)
+pipeline.add_component("writer", Mem0MemoryWriter(memory_store=store, infer=True))
+
+pipeline.connect("retriever.memories", "memory_context.memories")
+pipeline.connect("memory_context.output", "agent.messages")
+pipeline.connect("agent.messages", "writer.messages")
+
+query = "Give me a short implementation tip."
+
+pipeline.run(
+    {
+        "retriever": {
+            "query": query,
+            "user_id": "alice",
+        },
+        "memory_context": {
+            "user_messages": [ChatMessage.from_user(query)],
+        },
+        "writer": {
+            "user_id": "alice",
+        },
+    }
+)
+```
+
+For more examples, see the [Mem0 integration source](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/mem0).
+
+## License
+
+`mem0-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
