@@ -32,6 +32,7 @@ toc: true
   - [Examples](#examples)
     - [Text Generation](#text-generation)
     - [Chat Generation](#chat-generation)
+    - [Tool Calling](#tool-calling)
     - [Document and Text Embedders](#embedders)
 
 ## Introduction
@@ -163,6 +164,42 @@ Natural Language Processing (NLP) is a complex field with many different tools a
 4. Practice: The best way to learn NLP is by practicing. Start with simple tasks like sentiment analysis or tokenization and work your way up to more complex ones like machine translation
 
 ```
+
+#### Tool Calling
+
+`OllamaChatGenerator` supports tool calling natively. Pass `Tool` instances via the `tools` parameter; the generator returns `ToolCall` entries on `replies[0].tool_calls` when the model decides to invoke a tool.
+
+For reliable tool-call emission with Llama 3.1 8B, set `temperature=0.0` and use a directive prompt that names the tool.
+
+```python
+from haystack.dataclasses import ChatMessage
+from haystack.tools import tool
+from haystack_integrations.components.generators.ollama import OllamaChatGenerator
+
+
+@tool
+def get_weather(city: str) -> str:
+    """Get current weather for a city."""
+    return f"Sunny, 22°C in {city}"
+
+
+generator = OllamaChatGenerator(
+    model="llama3.1:8b",
+    generation_kwargs={"temperature": 0.0},
+    tools=[get_weather],
+)
+
+response = generator.run(
+    messages=[ChatMessage.from_user(
+        "What's the weather in Berlin? Use the get_weather tool."
+    )]
+)
+print(response["replies"][0].tool_calls)
+# -> [ToolCall(tool_name='get_weather', arguments={'city': 'Berlin'}, ...)]
+```
+
+Tool execution and multi-turn tool-result handling are covered in the [`OllamaChatGenerator` component reference](https://docs.haystack.deepset.ai/docs/ollamachatgenerator).
+
 #### Embedders
 
 - `OllamaDocumentEmbedder` helps compute embeddings for a list of Documents and updates each Document's embedding field with its embedding vector.
