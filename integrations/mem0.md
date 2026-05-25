@@ -72,7 +72,7 @@ You can obtain an API key by signing up at [app.mem0.ai](https://app.mem0.ai).
 - [`Mem0MemoryRetrieverTool`](https://docs.haystack.deepset.ai/docs/mem0memorytools) and [`Mem0MemoryWriterTool`](https://docs.haystack.deepset.ai/docs/mem0memorytools): Ready-made Agent tools for long-term memory.
 - [`Mem0MemoryRetriever`](https://docs.haystack.deepset.ai/docs/mem0memoryretriever): Retrieves memories from Mem0 as system `ChatMessage` objects.
 - [`Mem0MemoryWriter`](https://docs.haystack.deepset.ai/docs/mem0memorywriter): Writes `ChatMessage` objects to Mem0.
-- `Mem0MemoryStore`: Lower-level store used by the tools and components.
+- [`Mem0MemoryStore`](https://docs.haystack.deepset.ai/reference/integrations-mem0#mem0memorystore): Lower-level store used by the tools and components.
 
 ### Use with a Haystack Agent
 
