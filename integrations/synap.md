@@ -23,6 +23,7 @@ toc: true
   - [SynapRetriever](#synapretriever)
   - [SynapMemoryWriter](#synapmemorywriter)
   - [Full Pipeline Example](#full-pipeline-example)
+- [More Resources](#more-resources)
 - [License](#license)
 
 ## Overview
