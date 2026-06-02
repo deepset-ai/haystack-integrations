@@ -35,7 +35,6 @@ jobs:
               name: $name,
               project: $project,
               gitSource: {type: "github", repoId: $repoId, ref: $ref},
-              target: "preview",
               env: {INTEGRATIONS_REPO: $integrations_repo, INTEGRATIONS_BRANCH: $integrations_branch}
             }')
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
