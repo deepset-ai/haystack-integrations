@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: OpenAI
-description: Use OpenAI Models with Haystack
+description: Use OpenAI models with Haystack
 authors:
     - name: deepset
       socials:
