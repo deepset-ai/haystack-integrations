@@ -13,42 +13,41 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
+
     steps:
-      - name: Trigger Vercel preview build
-        id: deploy
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78
+        with:
+          hugo-version: '0.155.2'
+          extended: true
+
+      - name: Build preview
+        id: build
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
-          HAYSTACK_HOME_REPO_ID: ${{ secrets.HAYSTACK_HOME_REPO_ID }}
           INTEGRATIONS_REPO: ${{ github.event.pull_request.head.repo.clone_url }}
           INTEGRATIONS_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: |
-          payload=$(jq -n \
-            --arg name "haystack-home" \
-            --arg project "$VERCEL_PROJECT_ID" \
-            --argjson repoId "$HAYSTACK_HOME_REPO_ID" \
-            --arg ref "main" \
-            --arg integrations_repo "$INTEGRATIONS_REPO" \
-            --arg integrations_branch "$INTEGRATIONS_BRANCH" \
-            '{
-              name: $name,
-              project: $project,
-              gitSource: {type: "github", repoId: $repoId, ref: $ref},
-              env: {INTEGRATIONS_REPO: $integrations_repo, INTEGRATIONS_BRANCH: $integrations_branch}
-            }')
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
-            "https://api.vercel.com/v13/deployments?teamId=$VERCEL_TEAM_ID" \
-            -H "Authorization: Bearer $VERCEL_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "$payload")
-          http_code=$(echo "$RESPONSE" | tail -1)
-          body=$(echo "$RESPONSE" | head -n -1)
-          if [ "$http_code" -ge 400 ]; then
-            echo "Vercel API error $http_code: $body"
-            exit 1
-          fi
-          url=$(echo "$body" | jq -er '.url')
+          git clone --depth=1 https://github.com/deepset-ai/haystack-home.git _site
+          cd _site
+          mkdir -p content/tutorials content/cookbook content/advent-of-haystack \
+                   content/spring-into-haystack static/downloads static/logos
+          git clone --depth=1 --branch "$INTEGRATIONS_BRANCH" "$INTEGRATIONS_REPO" _integrations
+          cp _integrations/integrations/*.md content/integrations/
+          cp -R _integrations/logos/* static/logos/ 2>/dev/null || true
+          npm install
+          hugo
+
+      - name: Deploy to Vercel
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+        run: |
+          cd _site
+          url=$(npx vercel deploy public/ \
+            --token "$VERCEL_TOKEN" \
+            --scope "$VERCEL_TEAM_ID" \
+            --yes 2>&1 | tail -1)
           echo "url=$url" >> "$GITHUB_OUTPUT"
 
       - name: Comment preview URL on PR
@@ -61,7 +60,7 @@ jobs:
               '### Preview deployment',
               '',
               'Vercel is building the preview. Once ready:',
-              `**[View integrations on preview site](https://${url}/integrations/)**`,
+              `**[View integrations on preview site](${url}/integrations/)**`,
               '',
               `*Built from \`${branch}\` @ ${{ github.event.pull_request.head.repo.full_name }}*`,
             ].join('\n');
