@@ -36,10 +36,7 @@ jobs:
               project: $project,
               gitSource: {type: "github", repoId: $repoId, ref: $ref},
               target: "preview",
-              env: [
-                {key: "INTEGRATIONS_REPO", value: $integrations_repo, type: "plain"},
-                {key: "INTEGRATIONS_BRANCH", value: $integrations_branch, type: "plain"}
-              ]
+              env: {INTEGRATIONS_REPO: $integrations_repo, INTEGRATIONS_BRANCH: $integrations_branch}
             }')
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
             "https://api.vercel.com/v13/deployments?teamId=$VERCEL_TEAM_ID" \
