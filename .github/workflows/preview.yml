@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: Preview
     permissions:
+      issues: write
       pull-requests: write
-
     steps:
       - name: Trigger Vercel preview build
         id: deploy
@@ -24,25 +24,30 @@ jobs:
           INTEGRATIONS_REPO: ${{ github.event.pull_request.head.repo.clone_url }}
           INTEGRATIONS_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: |
+          payload=$(jq -n \
+            --arg name "haystack-home" \
+            --arg project "$VERCEL_PROJECT_ID" \
+            --arg repoId "$HAYSTACK_HOME_REPO_ID" \
+            --arg ref "main" \
+            --arg integrations_repo "$INTEGRATIONS_REPO" \
+            --arg integrations_branch "$INTEGRATIONS_BRANCH" \
+            '{
+              name: $name,
+              project: $project,
+              gitSource: {type: "github", repoId: $repoId, ref: $ref},
+              target: "preview",
+              env: [
+                {key: "INTEGRATIONS_REPO", value: $integrations_repo, type: "plain"},
+                {key: "INTEGRATIONS_BRANCH", value: $integrations_branch, type: "plain"}
+              ]
+            }')
           RESPONSE=$(curl -sf -X POST \
             "https://api.vercel.com/v13/deployments?teamId=$VERCEL_TEAM_ID" \
             -H "Authorization: Bearer $VERCEL_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "{
-              \"name\": \"haystack-home\",
-              \"project\": \"$VERCEL_PROJECT_ID\",
-              \"gitSource\": {
-                \"type\": \"github\",
-                \"repoId\": \"$HAYSTACK_HOME_REPO_ID\",
-                \"ref\": \"main\"
-              },
-              \"target\": \"preview\",
-              \"env\": [
-                {\"key\": \"INTEGRATIONS_REPO\", \"value\": \"$INTEGRATIONS_REPO\", \"type\": \"plain\"},
-                {\"key\": \"INTEGRATIONS_BRANCH\", \"value\": \"$INTEGRATIONS_BRANCH\", \"type\": \"plain\"}
-              ]
-            }")
-          echo "url=$(echo $RESPONSE | jq -r '.url')" >> $GITHUB_OUTPUT
+            -d "$payload")
+          url=$(echo "$RESPONSE" | jq -er '.url')
+          echo "url=$url" >> "$GITHUB_OUTPUT"
 
       - name: Comment preview URL on PR
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
