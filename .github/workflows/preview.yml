@@ -27,7 +27,7 @@ jobs:
           payload=$(jq -n \
             --arg name "haystack-home" \
             --arg project "$VERCEL_PROJECT_ID" \
-            --arg repoId "$HAYSTACK_HOME_REPO_ID" \
+            --argjson repoId "$HAYSTACK_HOME_REPO_ID" \
             --arg ref "main" \
             --arg integrations_repo "$INTEGRATIONS_REPO" \
             --arg integrations_branch "$INTEGRATIONS_BRANCH" \
@@ -41,12 +41,18 @@ jobs:
                 {key: "INTEGRATIONS_BRANCH", value: $integrations_branch, type: "plain"}
               ]
             }')
-          RESPONSE=$(curl -sf -X POST \
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
             "https://api.vercel.com/v13/deployments?teamId=$VERCEL_TEAM_ID" \
             -H "Authorization: Bearer $VERCEL_TOKEN" \
             -H "Content-Type: application/json" \
             -d "$payload")
-          url=$(echo "$RESPONSE" | jq -er '.url')
+          http_code=$(echo "$RESPONSE" | tail -1)
+          body=$(echo "$RESPONSE" | head -n -1)
+          if [ "$http_code" -ge 400 ]; then
+            echo "Vercel API error $http_code: $body"
+            exit 1
+          fi
+          url=$(echo "$body" | jq -er '.url')
           echo "url=$url" >> "$GITHUB_OUTPUT"
 
       - name: Comment preview URL on PR
