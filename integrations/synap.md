@@ -20,20 +20,29 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [SynapRetriever](#synapretriever)
-  - [SynapMemoryWriter](#synapmemorywriter)
-  - [Full Pipeline Example](#full-pipeline-example)
+  - [Available Classes](#available-classes)
+  - [Standalone Memory Operations](#standalone-memory-operations)
+  - [Use in a Pipeline](#use-in-a-pipeline)
 - [More Resources](#more-resources)
 - [License](#license)
 
 ## Overview
 
-[Synap](https://maximem.ai) is a managed memory layer for AI agents. The Haystack integration provides two native Haystack `@component` classes:
+[Synap](https://maximem.ai) is a managed long-term memory layer for AI agents. It runs a full extraction pipeline on every conversation turn — automatically identifying facts, preferences, episodes, emotions, and temporal events — and retrieves only what is semantically relevant to the current query.
 
-- **`SynapRetriever`** — retrieves facts, preferences, episodes, and past context relevant to a query from the user's Synap memory and returns them as Haystack `Document` objects
-- **`SynapMemoryWriter`** — records conversation turns to Synap so they are available for retrieval in future sessions
+The `maximem-synap-haystack` package provides a Haystack-native memory store that follows the same shape as `mem0-haystack`:
+
+- **`SynapMemoryStore`**: A persistent memory store backed by the Synap API. Owns all SDK interaction (`add_memories` / `search_memories` / `search_memories_as_single_message`).
+- **`SynapMemoryRetriever`** and **`SynapMemoryWriter`**: Pipeline `@component` classes for retrieving memories as `ChatMessage` objects and writing conversation turns to the store.
+- **`SynapRetriever`**: An additional `@component` that returns memories as `Document` objects for classic RAG-style pipelines.
 
 Memory is scoped to the `user_id` and `customer_id` you provide, ensuring strict isolation in multi-tenant applications.
+
+More information:
+
+- [Synap website](https://maximem.ai)
+- [Synap documentation](https://docs.maximem.ai)
+- [Synap GitHub repository](https://github.com/maximem-ai/maximem_synap_sdk)
 
 ## Installation
 
@@ -41,85 +50,79 @@ Memory is scoped to the `user_id` and `customer_id` you provide, ensuring strict
 pip install maximem-synap-haystack
 ```
 
-Get an API key at [synap.maximem.ai](https://synap.maximem.ai).
+Set your Synap API key:
+
+```bash
+export SYNAP_API_KEY="your-synap-api-key"
+```
+
+You can obtain an API key at [synap.maximem.ai](https://synap.maximem.ai).
 
 ## Usage
 
-### SynapRetriever
+### Available Classes
 
-`SynapRetriever` is a standard Haystack component that takes a `query` string and returns a list of `Document` objects populated from the user's Synap memory. Plug it into any pipeline that needs long-term context before calling an LLM.
+- **`SynapMemoryStore`**: The memory store — a plain object (not a `@component`) that owns all Synap SDK interaction. Use it directly for standalone read/write, or pass it to the components below.
+- **`SynapMemoryRetriever`**: Retrieves memories from Synap as system `ChatMessage` objects. Mem0-shaped chat read path.
+- **`SynapMemoryWriter`**: Writes user / assistant `ChatMessage` objects to Synap. Returns per-message status so callers can branch on partial failures.
+- **`SynapRetriever`**: Alternate retriever that returns Haystack `Document` objects (RAG-style read path).
+
+### Standalone Memory Operations
+
+You can use `SynapMemoryStore` directly to add and search memories:
 
 ```python
 import os
 
-from haystack import Pipeline
+from haystack.dataclasses import ChatMessage
 from maximem_synap import MaximemSynapSDK
-from synap_haystack import SynapRetriever
+from synap_haystack import SynapMemoryStore
 
 sdk = MaximemSynapSDK(api_key=os.environ["SYNAP_API_KEY"])
+store = SynapMemoryStore(sdk, user_id="alice", customer_id="acme_corp")
 
-retriever = SynapRetriever(
-    sdk=sdk,
-    user_id="user_123",
-    customer_id="acme_corp",
-)
-
-pipeline = Pipeline()
-pipeline.add_component("memory", retriever)
-```
-
-Each returned `Document` has a `content` field with the memory text and a `meta` dict that includes:
-
-| Key | Description |
-|---|---|
-| `type` | `"fact"`, `"preference"`, `"episode"`, `"emotion"`, `"temporal_event"` |
-| `id` | Synap memory item ID |
-| `confidence` / `strength` / `significance` | Relevance signal, type-dependent |
-
-### SynapMemoryWriter
-
-`SynapMemoryWriter` accepts a list of `Document` objects where `content` is the message text and `meta["role"]` is `"user"` or `"assistant"`. It records each turn to Synap so future retrieval requests can surface them.
-
-```python
-from synap_haystack import SynapMemoryWriter
-
-writer = SynapMemoryWriter(
-    sdk=sdk,
+# Write — extracted server-side into long-term memory
+store.add_memories(
+    messages=[ChatMessage.from_user("I prefer window seats and aisle on red-eyes.")],
     conversation_id="conv_abc",
-    user_id="user_123",
-    customer_id="acme_corp",
 )
 
-pipeline.add_component("memory_writer", writer)
+# Read — semantic, query-driven
+memories = store.search_memories(query="seat preference")
+for msg in memories:
+    print(msg.text)
+
+# Single-message variant — useful for prompt injection
+context = store.search_memories_as_single_message(query="seat preference")
 ```
 
-The component returns `written_count`, `failed_count`, `skipped_count`, and `first_error` outputs so downstream components can branch on partial failures. If every document fails, it raises `SynapIntegrationError` — a 100% failure rate indicates a broken pipeline and should not be silenced.
+### Use in a Pipeline
 
-### Full Pipeline Example
-
-A retrieval pipeline that surfaces relevant Synap memories as Haystack `Document` objects, ready to inject into any downstream component:
+`SynapMemoryRetriever` and `SynapMemoryWriter` are thin `@component` wrappers around the store. Construct the store once and share it across both:
 
 ```python
 import os
 
 from haystack import Pipeline
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
 from maximem_synap import MaximemSynapSDK
-from synap_haystack import SynapRetriever
+from synap_haystack import SynapMemoryRetriever, SynapMemoryStore, SynapMemoryWriter
 
 sdk = MaximemSynapSDK(api_key=os.environ["SYNAP_API_KEY"])
+store = SynapMemoryStore(sdk, user_id="alice", customer_id="acme_corp")
 
 pipeline = Pipeline()
-pipeline.add_component(
-    "memory",
-    SynapRetriever(sdk=sdk, user_id="user_123", customer_id="acme_corp"),
-)
+pipeline.add_component("memory_retriever", SynapMemoryRetriever(store=store))
+pipeline.add_component("prompt_builder", ChatPromptBuilder())
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o"))
+pipeline.add_component("memory_writer", SynapMemoryWriter(store=store))
 
-result = pipeline.run({"memory": {"query": "What are my dietary restrictions?"}})
-for doc in result["memory"]["documents"]:
-    print(doc.content)
+pipeline.connect("memory_retriever.messages", "prompt_builder.template")
+pipeline.connect("prompt_builder.prompt", "llm.messages")
 ```
 
-To record conversation turns, add `SynapMemoryWriter` as a separate pipeline step and supply it with `Document` objects whose `meta["role"]` is `"user"` or `"assistant"`. Wire components together with `pipeline.connect()` to match your application's prompt-building and LLM architecture.
+For classic RAG pipelines that want `Document` objects rather than `ChatMessage` objects, use `SynapRetriever` instead of `SynapMemoryRetriever` — same store, different output shape.
 
 ## More Resources
 
