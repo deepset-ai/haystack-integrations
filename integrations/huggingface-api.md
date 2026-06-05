@@ -66,8 +66,7 @@ generator = HuggingFaceAPIChatGenerator(
     api_params={"model": "Qwen/Qwen2.5-7B-Instruct", "provider": "together"},
 )
 
-messages = [ChatMessage.from_user("What's Natural Language Processing? Be brief.")]
-result = generator.run(messages)
+result = generator.run("What's Natural Language Processing? Be brief.")
 print(result)
 ```
 
