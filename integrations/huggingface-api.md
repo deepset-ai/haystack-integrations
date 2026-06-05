@@ -51,8 +51,7 @@ This integration provides several components to interact with Hugging Face APIs:
 - [`HuggingFaceAPIChatGenerator`](https://docs.haystack.deepset.ai/docs/huggingfaceapichatgenerator): chat generation with LLMs.
 - [`HuggingFaceAPITextEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapitextembedder): creates an embedding for text (used in query/RAG pipelines).
 - [`HuggingFaceAPIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapidocumentembedder): enriches documents with embeddings (used in indexing pipelines).
-
-In addition, [`HuggingFaceTEIRanker`](https://docs.haystack.deepset.ai/docs/huggingfaceteiranker), included in `haystack-ai`, ranks documents based on their similarity to the query, using a TEI endpoint.
+- [`HuggingFaceTEIRanker`](https://docs.haystack.deepset.ai/docs/huggingfaceteiranker): ranks documents based on their similarity to the query, using a TEI endpoint.
 
 ### Chat Generation
 
@@ -112,7 +111,7 @@ Use [`HuggingFaceTEIRanker`](https://docs.haystack.deepset.ai/docs/huggingfacete
 
 ```python
 from haystack import Document
-from haystack.components.rankers import HuggingFaceTEIRanker
+from haystack_integrations.components.rankers.huggingface_api import HuggingFaceTEIRanker
 
 ranker = HuggingFaceTEIRanker(url="http://localhost:8080", top_k=2)
 
