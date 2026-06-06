@@ -10,6 +10,7 @@ pypi: https://pypi.org/project/xquik-haystack/
 repo: https://github.com/Xquik-dev/xquik-haystack
 type: Search & Extraction
 report_issue: https://github.com/Xquik-dev/xquik-haystack/issues
+logo: /logos/xquik.svg
 version: Haystack 2.0
 toc: true
 ---
