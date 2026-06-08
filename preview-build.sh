@@ -2,8 +2,8 @@
 set -euo pipefail
 
 HUGO_VERSION="0.155.2"
-wget -q "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
-tar -xzf "hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" hugo
+curl -fsSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -o hugo.tar.gz
+tar -xzf hugo.tar.gz hugo
 export PATH="$PWD:$PATH"
 
 git clone --depth=1 https://github.com/deepset-ai/haystack-home.git _site
