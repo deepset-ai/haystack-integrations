@@ -6,6 +6,7 @@ curl -fsSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/
 tar -xzf hugo.tar.gz hugo
 export PATH="$PWD:$PATH"
 
+rm -rf _site
 git clone --depth=1 https://github.com/deepset-ai/haystack-home.git _site
 cd _site
 
