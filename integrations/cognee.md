@@ -46,12 +46,6 @@ Cognee supports two memory tiers:
 - **Permanent knowledge graph** — rich semantic storage backed by an LLM extraction step; supports graph-completion queries and cross-session recall.
 - **Session cache** — fast, LLM-free writes scoped to a single session; can be promoted to the permanent graph later via `CogneeMemoryStore.improve()`.
 
-More information:
-
-- [Cognee website](https://www.cognee.ai)
-- [Cognee documentation](https://docs.cognee.ai)
-- [Cognee GitHub repository](https://github.com/topoteretes/cognee)
-
 ## Installation
 
 Install the integration:
