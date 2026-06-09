@@ -6,7 +6,7 @@ authors:
   - name: Ambreen Zaver, Callisto Tech
     socials:
       github: zavera
-      linkedin: https://www.linkedin.com/in/ambreen-zaver
+      linkedin: https://www.linkedin.com/in/ambreenzaver/
 pypi: https://pypi.org/project/azure-di-financial-haystack
 repo: https://github.com/zavera/haystack-financial-doc-extractor
 type: Data Ingestion
