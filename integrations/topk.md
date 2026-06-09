@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: TopK
-description: Use the TopK database with Haystack and ship performant RAG that scales to billions in under 20 lines of code.
+description: Use the TopK database with Haystack
 authors:
     - name: TopK
       socials:
