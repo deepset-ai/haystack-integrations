@@ -1,23 +1,33 @@
 ---
-
 layout: integration
 name: TopK
 description: Use the TopK database with Haystack and ship performant RAG that scales to billions in under 20 lines of code.
 authors:
-
-- name: TopK
-socials:
-github: topk-io
-twitter: topk_io
-pypi: [https://pypi.org/project/topk-haystack/](https://pypi.org/project/topk-haystack/)
-repo: [https://github.com/topk-io/topk-haystack](https://github.com/topk-io/topk-haystack)
+    - name: TopK
+      socials:
+        github: topk-io
+        twitter: topk_io
+        linkedin: https://www.linkedin.com/company/topkio/
+pypi: https://pypi.org/project/topk-haystack/
+repo: https://github.com/topk-io/topk-haystack
 type: Document Store
-report_issue: [https://github.com/topk-io/topk-haystack/issues](https://github.com/topk-io/topk-haystack/issues)
+report_issue: https://github.com/topk-io/topk-haystack/issues
 logo: /logos/topk.svg
 version: Haystack 2.0
 toc: true
-
 ---
+
+### **Table of Contents**
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Prerequisites](#prerequisites)
+- [Quick start](#quick-start)
+- [RAG pipeline](#rag-pipeline)
+- [Retrievers](#retrievers)
+- [Multi-tenant workloads](#multi-tenant-workloads)
+- [Resources](#resources)
+- [License](#license)
 
 ## Overview
 
@@ -151,6 +161,7 @@ result = pipeline.run({"retriever": {"query": "garbage collector memory"}})
 from haystack import Pipeline
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 from haystack.components.writers import DocumentWriter
+from haystack.utils import Secret
 
 from haystack_integrations.components.topk import TopKEmbeddingRetriever
 from haystack_integrations.document_stores.topk import TopKDocumentStore
@@ -184,7 +195,11 @@ result = query_pipeline.run({"embedder": {"text": "type safe programming"}})
 Combines dense vector similarity and BM25 keyword scoring in a single query, ranked by the sum of both scores.
 
 ```python
+from haystack import Pipeline
+from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack_integrations.components.topk import TopKHybridRetriever
+
+MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 retriever = TopKHybridRetriever(document_store=store, top_k=5)
 query_pipeline = Pipeline()
