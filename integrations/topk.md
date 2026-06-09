@@ -31,8 +31,6 @@ toc: true
 
 ## Overview
 
-Build a RAG pipeline on Haystack in under 20 lines of code with TopK’s semantic index. Scale to billions of documents and get fast, high-accuracy retrieval with TopK’s server-side embedding — no embedder component required.
-
 [TopK](https://topk.io) is a hosted database powering fast vector search, keyword search (BM25), hybrid search and multi-vector search.
 
 This integration ships with TopK Document Store and five retrievers you can use to best fit your use case:
