@@ -24,7 +24,7 @@ toc: true
 - [Usage](#usage)
   - [Available Tools](#available-tools)
   - [Use with a Haystack Agent](#use-with-a-haystack-agent)
-  - [Automatic Memory with a Toolset](#automatic-memory-with-a-toolset)
+  - [Automatic Memory](#automatic-memory)
 - [License](#license)
 
 ## Overview
@@ -105,16 +105,16 @@ agent = Agent(
 )
 
 result = agent.run(messages=[ChatMessage.from_user("Remember that I prefer dark mode and concise answers.")])
-print(result["messages"][-1].text)
+print(result["last_message"].text)
 ```
 
-### Automatic Memory with a Toolset
+### Automatic Memory
 
-Use `HindsightToolset` when you want memory to work automatically — injecting relevant context before each turn and storing the exchange after — without relying on the model to call tools:
+Use `HindsightMemoryWrapper` when you want memory to work automatically — injecting relevant context before each turn and storing the exchange after — without relying on the model to call tools:
 
 ```python
 from hindsight_client import Hindsight
-from hindsight_haystack import HindsightToolset
+from hindsight_haystack import HindsightMemoryWrapper
 
 from haystack.components.agents import Agent
 from haystack.components.generators.chat import OpenAIChatGenerator
@@ -122,7 +122,7 @@ from haystack.dataclasses import ChatMessage
 
 client = Hindsight(base_url="https://api.hindsight.vectorize.io")
 
-toolset = HindsightToolset(
+memory = HindsightMemoryWrapper(
     client=client,
     bank_id="user-123",
     mission="Track user preferences and project context",
@@ -132,13 +132,13 @@ toolset = HindsightToolset(
 
 agent = Agent(
     chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
-    tools=toolset,
+    tools=memory,
     system_prompt="You are a helpful assistant with long-term memory.",
 )
 
-# toolset.run() drives the agent with automatic recall + retain
-result = toolset.run(agent, messages=[ChatMessage.from_user("I prefer dark mode.")])
-print(result["messages"][-1].text)
+# memory.run() drives the agent with automatic recall + retain
+result = memory.run(agent, messages=[ChatMessage.from_user("I prefer dark mode.")])
+print(result["last_message"].text)
 ```
 
 For configuration options (budget, tags, recall/reflect tuning, self-hosting), see the [package README](https://github.com/vectorize-io/hindsight/tree/main/hindsight-integrations/haystack).
