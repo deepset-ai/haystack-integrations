@@ -66,17 +66,15 @@ These components use Supabase Postgres with the `pgvector` extension for embeddi
 - `SupabasePgvectorEmbeddingRetriever`: dense Retriever that compares a query embedding against stored embeddings using the configured `vector_function` (`cosine_similarity`, `inner_product`, or `l2_distance`).
 - `SupabasePgvectorKeywordRetriever`: keyword Retriever that scores documents with PostgreSQL's `ts_rank_cd`, considering term frequency, proximity, and section weight.
 
+#### Indexing
+
 ```python
 from haystack import Document, Pipeline
-from haystack.components.embedders import (
-    SentenceTransformersDocumentEmbedder,
-    SentenceTransformersTextEmbedder,
-)
+from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.components.writers import DocumentWriter
 from haystack.document_stores.types import DuplicatePolicy
 
 from haystack_integrations.document_stores.supabase import SupabasePgvectorDocumentStore
-from haystack_integrations.components.retrievers.supabase import SupabasePgvectorEmbeddingRetriever
 
 document_store = SupabasePgvectorDocumentStore(
     table_name="haystack_documents",
@@ -99,6 +97,15 @@ indexing.add_component("writer", DocumentWriter(
     document_store=document_store, policy=DuplicatePolicy.OVERWRITE))
 indexing.connect("embedder", "writer")
 indexing.run({"embedder": {"documents": documents}})
+```
+
+#### Retrieval
+
+```python
+from haystack import Pipeline
+from haystack.components.embedders import SentenceTransformersTextEmbedder
+
+from haystack_integrations.components.retrievers.supabase import SupabasePgvectorEmbeddingRetriever
 
 querying = Pipeline()
 querying.add_component("text_embedder", SentenceTransformersTextEmbedder(
@@ -127,14 +134,14 @@ CREATE EXTENSION IF NOT EXISTS pgroonga;
 - `SupabaseGroongaDocumentStore`: stores `Document` objects in a Postgres table with a PGroonga index on the content column. Supports both sync and async operations. Authenticates via `SUPABASE_SERVICE_KEY` and a project URL rather than a raw connection string.
 - `SupabaseGroongaBM25Retriever`: full-text Retriever backed by `SupabaseGroongaDocumentStore`. Accepts a plain text `query` and returns ranked documents using PGroonga BM25 scoring. Supports both `run()` (sync) and `run_async()` (async).
 
+#### Indexing
+
 ```python
-from haystack import Document, Pipeline
-from haystack.components.writers import DocumentWriter
+from haystack import Document
 from haystack.document_stores.types import DuplicatePolicy
 from haystack.utils import Secret
 
 from haystack_integrations.document_stores.supabase import SupabaseGroongaDocumentStore
-from haystack_integrations.components.retrievers.supabase import SupabaseGroongaBM25Retriever
 
 document_store = SupabaseGroongaDocumentStore(
     supabase_url="https://<project-ref>.supabase.co",
@@ -150,6 +157,12 @@ documents = [
     Document(content="Bioluminescent waves can be seen in the Maldives and Puerto Rico."),
 ]
 document_store.write_documents(documents, policy=DuplicatePolicy.OVERWRITE)
+```
+
+#### Retrieval
+
+```python
+from haystack_integrations.components.retrievers.supabase import SupabaseGroongaBM25Retriever
 
 retriever = SupabaseGroongaBM25Retriever(document_store=document_store, top_k=3)
 result = retriever.run(query="languages spoken around the world")
