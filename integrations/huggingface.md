@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/haystack-ai
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/transformers-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/transformers
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/transformers.png
 version: Haystack 2.0
 toc: true
@@ -35,29 +35,29 @@ Haystack supports Hugging Face models in other ways too:
 ## Installation
 
 ```bash
-pip install haystack-ai "transformers[torch,sentencepiece]"
+pip install transformers-haystack
 ```
 
 ## Usage
 
 ### Components
 
-Haystack provides several components that run Transformers models locally:
-- [`HuggingFaceLocalChatGenerator`](https://docs.haystack.deepset.ai/docs/huggingfacelocalchatgenerator): chat generation with local LLMs.
-- [`ExtractiveReader`](https://docs.haystack.deepset.ai/docs/extractivereader): extracts answers from documents using question answering models.
+This integration provides several components that run Transformers models locally:
+- [`TransformersChatGenerator`](https://docs.haystack.deepset.ai/docs/transformerschatgenerator): chat generation with local LLMs.
+- [`TransformersExtractiveReader`](https://docs.haystack.deepset.ai/docs/transformersextractivereader): extracts answers from documents using question answering models.
 - [`TransformersTextRouter`](https://docs.haystack.deepset.ai/docs/transformerstextrouter) and [`TransformersZeroShotTextRouter`](https://docs.haystack.deepset.ai/docs/transformerszeroshottextrouter): route text to different pipeline branches based on classification.
 - [`TransformersZeroShotDocumentClassifier`](https://docs.haystack.deepset.ai/docs/transformerszeroshotdocumentclassifier): classifies documents with zero-shot classification models.
-- [`NamedEntityExtractor`](https://docs.haystack.deepset.ai/docs/namedentityextractor): annotates named entities in documents (with the `hugging_face` backend).
+- [`TransformersNamedEntityExtractor`](https://docs.haystack.deepset.ai/docs/transformersnamedentityextractor): annotates named entities in documents.
 
 ### Chat Generation
 
-Use [`HuggingFaceLocalChatGenerator`](https://docs.haystack.deepset.ai/docs/huggingfacelocalchatgenerator) to run a chat model locally:
+Use [`TransformersChatGenerator`](https://docs.haystack.deepset.ai/docs/transformerschatgenerator) to run a chat model locally:
 
 ```python
-from haystack.components.generators.chat import HuggingFaceLocalChatGenerator
+from haystack_integrations.components.generators.transformers import TransformersChatGenerator
 from haystack.dataclasses import ChatMessage
 
-generator = HuggingFaceLocalChatGenerator(model="Qwen/Qwen3-0.6B")
+generator = TransformersChatGenerator(model="Qwen/Qwen3-0.6B")
 
 messages = [ChatMessage.from_user("What's Natural Language Processing? Be brief.")]
 print(generator.run(messages))
@@ -65,13 +65,13 @@ print(generator.run(messages))
 
 ### Extractive Question Answering
 
-Use [`ExtractiveReader`](https://docs.haystack.deepset.ai/docs/extractivereader) to extract answers from the relevant context:
+Use [`TransformersExtractiveReader`](https://docs.haystack.deepset.ai/docs/transformersextractivereader) to extract answers from the relevant context:
 
 ```python
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
-from haystack.components.readers import ExtractiveReader
+from haystack_integrations.components.readers.transformers import TransformersExtractiveReader
 
 docs = [Document(content="Paris is the capital of France."),
         Document(content="Berlin is the capital of Germany."),
@@ -81,7 +81,7 @@ document_store = InMemoryDocumentStore()
 document_store.write_documents(docs)
 
 retriever = InMemoryBM25Retriever(document_store=document_store)
-reader = ExtractiveReader(model="deepset/roberta-base-squad2-distilled")
+reader = TransformersExtractiveReader(model="deepset/roberta-base-squad2-distilled")
 
 extractive_qa_pipeline = Pipeline()
 extractive_qa_pipeline.add_component(instance=retriever, name="retriever")
@@ -99,7 +99,7 @@ Use [`TransformersZeroShotDocumentClassifier`](https://docs.haystack.deepset.ai/
 
 ```python
 from haystack import Document
-from haystack.components.classifiers import TransformersZeroShotDocumentClassifier
+from haystack_integrations.components.classifiers.transformers import TransformersZeroShotDocumentClassifier
 
 documents = [Document(content="Today was a nice day!"),
              Document(content="Yesterday was a bad day!")]
@@ -116,19 +116,19 @@ print([doc.meta["classification"]["label"] for doc in result["documents"]])
 
 ### Named Entity Recognition
 
-Use [`NamedEntityExtractor`](https://docs.haystack.deepset.ai/docs/namedentityextractor) to annotate named entities in documents:
+Use [`TransformersNamedEntityExtractor`](https://docs.haystack.deepset.ai/docs/transformersnamedentityextractor) to annotate named entities in documents:
 
 ```python
 from haystack import Document
-from haystack.components.extractors.named_entity_extractor import NamedEntityExtractor
+from haystack_integrations.components.extractors.transformers import TransformersNamedEntityExtractor
 
 documents = [
     Document(content="I'm Merlin, the happy pig!"),
     Document(content="My name is Clara and I live in Berkeley, California."),
 ]
-extractor = NamedEntityExtractor(backend="hugging_face", model="dslim/bert-base-NER")
+extractor = TransformersNamedEntityExtractor(model="dslim/bert-base-NER")
 
 results = extractor.run(documents=documents)["documents"]
-annotations = [NamedEntityExtractor.get_stored_annotations(doc) for doc in results]
+annotations = [TransformersNamedEntityExtractor.get_stored_annotations(doc) for doc in results]
 print(annotations)
 ```
