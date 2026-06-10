@@ -54,7 +54,7 @@ Install the integration:
 pip install cognee-haystack
 ```
 
-Set your LLM API key (used by Cognee for knowledge graph extraction and queries):
+Set your LLM API key (used by Cognee for knowledge graph extraction and queries, default is OpenAI):
 
 ```bash
 export LLM_API_KEY="your-llm-api-key"
@@ -66,7 +66,7 @@ Optionally, set a separate embedding API key (defaults to `LLM_API_KEY` when uns
 export EMBEDDING_API_KEY="your-embedding-api-key"
 ```
 
-Cognee reads LLM provider, database, and vector-store settings from environment variables. See the [Cognee documentation](https://docs.cognee.ai) for the full list of configuration options.
+Cognee reads LLM provider, database, and vector-store settings from environment variables. See the [Cognee documentation](https://docs.cognee.ai/setup-configuration/overview#environment-variable-quick-reference) for the full list of configuration options.
 
 ## Usage
 
