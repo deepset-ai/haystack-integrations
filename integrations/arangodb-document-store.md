@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/arangodb-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/arangodb
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/arangodb.svg
+logo: /logos/arangodb.png
 version: Haystack 2.0
 toc: true
 ---
