@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/spacy-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/spacy
 type: Custom Component
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/spacy.svg
 version: Haystack 2.0
 toc: true
 ---
