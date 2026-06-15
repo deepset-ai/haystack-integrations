@@ -1,7 +1,8 @@
 ---
 layout: integration
 name: Datadog
-description: Send Haystack traces to Datadog for monitoring and visualization
+description: Monitor and trace your Haystack pipelines with Datadog.
+
 authors:
     - name: deepset
       socials:
