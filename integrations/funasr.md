@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/funasr-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/funasr
-type: Model Provider
+type: Data Ingestion
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 version: Haystack 2.0
 toc: true
