@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/haystack-ai
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/sentence-transformers-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/sentence_transformers
 type: Model Provider
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/sentence-transformers.png
 version: Haystack 2.0
 toc: true
@@ -35,7 +35,7 @@ Haystack supports Hugging Face models in other ways too:
 ## Installation
 
 ```bash
-pip install haystack-ai "sentence-transformers>=5.0.0"
+pip install sentence-transformers-haystack
 ```
 
 ## Usage
@@ -61,7 +61,7 @@ Below is an example of a document retrieval pipeline, after the documents have b
 
 ```python
 from haystack import Document, Pipeline
-from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
+from haystack_integrations.components.embedders.sentence_transformers import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 
@@ -88,7 +88,7 @@ result = query_pipeline.run({"text_embedder": {"text": "Who lives in Berlin?"}})
 Sparse embedding models like SPLADE produce interpretable embeddings and can perform better than dense models in out-of-domain settings. Currently, sparse embedding retrieval is supported by the [Qdrant Document Store](https://haystack.deepset.ai/integrations/qdrant-document-store).
 
 ```python
-from haystack.components.embedders import SentenceTransformersSparseTextEmbedder
+from haystack_integrations.components.embedders.sentence_transformers import SentenceTransformersSparseTextEmbedder
 
 text_embedder = SentenceTransformersSparseTextEmbedder()
 
@@ -102,7 +102,7 @@ To rank documents based on their relevance to the query, use `SentenceTransforme
 
 ```python
 from haystack import Document
-from haystack.components.rankers import SentenceTransformersSimilarityRanker
+from haystack_integrations.components.rankers.sentence_transformers import SentenceTransformersSimilarityRanker
 
 ranker = SentenceTransformersSimilarityRanker(model="cross-encoder/ms-marco-MiniLM-L-6-v2")
 
