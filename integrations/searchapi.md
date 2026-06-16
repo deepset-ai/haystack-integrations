@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/haystack-ai/
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/searchapi-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations
 type: Data Ingestion
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/searchapi.png
 version: Haystack 2.0
 toc: true
@@ -27,16 +27,16 @@ toc: true
 
 The `SearchApiWebSearch` component allows you to perform web searches using the [SearchApi](https://www.searchapi.io/) service. It retrieves relevant snippets and URLs that can be used directly in your Haystack applications, such as Retrieval-Augmented Generation (RAG) pipelines or with Haystack Agents.
 
-This component is part of the core `haystack-ai` package, meaning you do not need to install an external integration package to use it.
+This component is part of the `searchapi-haystack` integration package, maintained in [haystack-core-integrations](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/searchapi).
 
 When you pass a query to `SearchApiWebSearch`, it returns a list of URLs and text snippets that are most relevant to your search.
 
 ## Installation
 
-Since the SearchApi web search component is built into the core Haystack framework, you just need to install `haystack-ai`:
+Install the `searchapi-haystack` package:
 
 ```bash
-pip install haystack-ai
+pip install searchapi-haystack
 ```
 
 You will also need to get an API key from [SearchApi](https://www.searchapi.io/) and set it as an environment variable:
@@ -58,7 +58,7 @@ This integration provides the following component:
 Here is how you can use `SearchApiWebSearch` directly:
 
 ```python
-from haystack.components.websearch import SearchApiWebSearch
+from haystack_integrations.components.websearch.searchapi import SearchApiWebSearch
 from haystack.utils import Secret
 import os
 
@@ -85,4 +85,4 @@ for doc in documents:
 
 ## License
 
-`haystack-ai` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+`searchapi-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
