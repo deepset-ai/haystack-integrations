@@ -122,17 +122,17 @@ print(res)
 
 To use Whisper models from OpenAI, initialize a `LocalWhisperTranscriber` or `RemoteWhisperTranscriber` based on hosting options. To use Whisper locally, install it following the instructions on the Whisper [GitHub repo](https://github.com/openai/whisper). To use the OpenAI API, provide an API key. You can then use the suitable component to transcribe audio files.
 
-Below is the example of indexing pipeline with `LocalWhisperTranscriber`. If you'd like to run the Whisper model locally, you need to install two additional packages:
+The Whisper transcribers live in the [`whisper-haystack`](https://haystack.deepset.ai/integrations/whisper) integration package. Below is the example of an indexing pipeline with `LocalWhisperTranscriber`. If you'd like to run the Whisper model locally, you need to install two additional packages:
 
 ```bash
-pip install transformers[torch]
+pip install whisper-haystack
 pip install -U openai-whisper
 ```
 
 ```python
 from pathlib import Path
 from haystack import Pipeline
-from haystack.components.audio import LocalWhisperTranscriber
+from haystack_integrations.components.audio.whisper import LocalWhisperTranscriber
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
 from haystack.components.writers import DocumentWriter
 from haystack.document_stores.in_memory import InMemoryDocumentStore
