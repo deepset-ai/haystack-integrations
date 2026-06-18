@@ -10,7 +10,7 @@ authors:
 pypi: https://pypi.org/project/maximem-synap-haystack/
 repo: https://github.com/maximem-ai/maximem_synap_sdk/tree/main/packages/integrations/synap-haystack
 type: Memory Store
-report_issue: https://github.com/maximem-ai/maximem_synap/issues
+report_issue: https://github.com/maximem-ai/maximem_synap_sdk/issues
 version: Haystack 2.0
 toc: true
 ---
