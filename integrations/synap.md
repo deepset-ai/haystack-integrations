@@ -92,7 +92,7 @@ memories = store.search_memories(query="seat preference")
 for msg in memories:
     print(msg.text)
 
-# Single-message variant — useful for prompt injection
+# Single-message variant — useful for prompt creation
 context = store.search_memories_as_single_message(query="seat preference")
 ```
 
