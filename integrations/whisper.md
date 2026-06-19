@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/whisper-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations
 type: Custom Component
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/openai.png
 version: Haystack 2.0
 toc: true
 ---
