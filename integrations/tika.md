@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/tika-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/tika
 type: Data Ingestion
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/tika.png
 version: Haystack 2.0
 toc: true
 ---
@@ -24,7 +25,7 @@ toc: true
 
 ## Overview
 
-The `tika-haystack` integration provides `TikaDocumentConverter`, a component that converts files of different types (PDF, DOCX, HTML, RTF, and many others) into Haystack `Document` objects using [Apache Tika](https://tika.apache.org/).
+The `tika-haystack` integration provides [`TikaDocumentConverter`](https://docs.haystack.deepset.ai/docs/tikadocumentconverter), a component that converts files of different types (PDF, DOCX, HTML, RTF, and many others) into Haystack `Document` objects using [Apache Tika](https://tika.apache.org/).
 
 Apache Tika is a content analysis toolkit that detects and extracts metadata and text from many file formats. The component requires a running Tika server to parse documents.
 
