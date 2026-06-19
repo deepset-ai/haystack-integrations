@@ -118,8 +118,12 @@ pipeline.add_component("prompt_builder", ChatPromptBuilder())
 pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o"))
 pipeline.add_component("memory_writer", SynapMemoryWriter(store=store))
 
+# Retriever returns system ChatMessages with relevant memory; the prompt
+# builder combines them with the current user query, the LLM generates a
+# reply, and the writer records the turn back to Synap.
 pipeline.connect("memory_retriever.messages", "prompt_builder.template")
 pipeline.connect("prompt_builder.prompt", "llm.messages")
+pipeline.connect("llm.replies", "memory_writer.messages")
 ```
 
 For classic RAG pipelines that want `Document` objects rather than `ChatMessage` objects, use `SynapRetriever` instead of `SynapMemoryRetriever` — same store, different output shape.
