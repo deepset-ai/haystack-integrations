@@ -25,7 +25,7 @@ toc: true
 
 ## Overview
 
-You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [Generators](https://docs.haystack.deepset.ai/docs/generators), [Embedders](https://docs.haystack.deepset.ai/docs/embedders), [LocalWhisperTranscriber](https://docs.haystack.deepset.ai/docs/localwhispertranscriber) and [RemoteWhisperTranscriber](https://docs.haystack.deepset.ai/docs/remotewhispertranscriber).
+You can use [OpenAI Models](https://openai.com/) in your Haystack pipelines with the [Generators](https://docs.haystack.deepset.ai/docs/generators) and [Embedders](https://docs.haystack.deepset.ai/docs/embedders). Check out the [Whisper Integration](https://haystack.deepset.ai/integrations/whisper) for [LocalWhisperTranscriber](https://docs.haystack.deepset.ai/docs/localwhispertranscriber) and [RemoteWhisperTranscriber](https://docs.haystack.deepset.ai/docs/remotewhispertranscriber).
 
 ## Installation
 
@@ -120,33 +120,4 @@ print(res)
 
 ### Transcriber Models
 
-To use Whisper models from OpenAI, initialize a `LocalWhisperTranscriber` or `RemoteWhisperTranscriber` based on hosting options. To use Whisper locally, install it following the instructions on the Whisper [GitHub repo](https://github.com/openai/whisper). To use the OpenAI API, provide an API key. You can then use the suitable component to transcribe audio files.
-
-The Whisper transcribers live in the [`whisper-haystack`](https://haystack.deepset.ai/integrations/whisper) integration package. Below is the example of an indexing pipeline with `LocalWhisperTranscriber`. If you'd like to run the Whisper model locally, you need to install two additional packages:
-
-```bash
-pip install whisper-haystack
-pip install -U openai-whisper
-```
-
-```python
-from pathlib import Path
-from haystack import Pipeline
-from haystack_integrations.components.audio.whisper import LocalWhisperTranscriber
-from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
-from haystack.components.writers import DocumentWriter
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-
-document_store = InMemoryDocumentStore()
-pipeline = Pipeline()
-pipeline.add_component(instance=LocalWhisperTranscriber(model="small"), name="transcriber")
-pipeline.add_component(instance=DocumentCleaner(), name="cleaner")
-pipeline.add_component(instance=DocumentSplitter(), name="splitter")
-pipeline.add_component(instance=DocumentWriter(document_store=document_store), name="writer")
-
-pipeline.connect("transcriber.documents", "cleaner.documents")
-pipeline.connect("cleaner.documents", "splitter.documents")
-pipeline.connect("splitter.documents", "writer.documents")
-
-pipeline.run({"transcriber": {"audio_files": list(Path("path/to/audio/folder").iterdir())}})
-```
+To use Whisper models from OpenAI for audio transcription, see the [Whisper Integration](https://haystack.deepset.ai/integrations/whisper). It provides `LocalWhisperTranscriber` (runs Whisper on your machine) and `RemoteWhisperTranscriber` (uses the OpenAI Whisper API).

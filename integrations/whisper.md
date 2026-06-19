@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/whisper-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations
-type: Custom Component
+type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/openai.png
 version: Haystack 2.0
@@ -102,6 +102,30 @@ result = pipe.run(
     }
 )
 print(result["transcriber"]["documents"][0].content)
+```
+
+Alternatively, the pipeline below indexes audio files from a local folder using `LocalWhisperTranscriber`, `DocumentCleaner`, `DocumentSplitter`, and `DocumentWriter`:
+
+```python
+from pathlib import Path
+from haystack import Pipeline
+from haystack_integrations.components.audio.whisper import LocalWhisperTranscriber
+from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
+from haystack.components.writers import DocumentWriter
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+
+document_store = InMemoryDocumentStore()
+pipeline = Pipeline()
+pipeline.add_component(instance=LocalWhisperTranscriber(model="small"), name="transcriber")
+pipeline.add_component(instance=DocumentCleaner(), name="cleaner")
+pipeline.add_component(instance=DocumentSplitter(), name="splitter")
+pipeline.add_component(instance=DocumentWriter(document_store=document_store), name="writer")
+
+pipeline.connect("transcriber.documents", "cleaner.documents")
+pipeline.connect("cleaner.documents", "splitter.documents")
+pipeline.connect("splitter.documents", "writer.documents")
+
+pipeline.run({"transcriber": {"audio_files": list(Path("path/to/audio/folder").iterdir())}})
 ```
 
 ## License
