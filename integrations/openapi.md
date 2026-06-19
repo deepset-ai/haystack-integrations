@@ -30,11 +30,7 @@ toc: true
 
 ## Overview
 
-[OpenAPI](https://www.openapis.org/) (formerly Swagger) is a widely used standard for describing REST APIs. The `openapi-haystack` integration lets your Haystack pipelines and LLMs call any OpenAPI-compliant service: you can invoke endpoints directly from a specification, or turn a spec into tool/function definitions that an LLM can call.
-
-> **💡 Consider using MCP instead**
->
-> The OpenAPI components are a legacy way to connect Haystack to external APIs. For most use cases, we recommend using the [`MCPTool`](https://docs.haystack.deepset.ai/docs/mcptool) instead: it is the modern, standardized way to give your pipelines and agents access to external tools and services. Reach for the OpenAPI components only when you specifically need to work from an OpenAPI specification.
+[OpenAPI](https://www.openapis.org/) is a widely used standard for describing REST APIs. The `openapi-haystack` integration lets your Haystack pipelines and LLMs call any OpenAPI-compliant service: you can invoke endpoints directly from a specification, or turn a spec into tool/function definitions that an LLM can call.
 
 ## Consider using MCP instead
 
