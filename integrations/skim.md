@@ -97,13 +97,13 @@ result = pipe.run({"reader": {"urls": "https://en.wikipedia.org/wiki/HTTP_402"}}
 print(result["llm"]["replies"][0])
 ```
 
-The wallet pays per read, and your pipeline gets clean Markdown instead of raw HTML.
+The `OpenAIGenerator` step needs an `OPENAI_API_KEY` set (or swap in any other Haystack generator). The wallet pays per read, and your pipeline gets clean Markdown instead of raw HTML.
 
 ### Parameters
 
 `SkimReader` takes the following parameters (all optional except the wallet key):
 
-- **`private_key`**: A Haystack `Secret` holding the Base wallet's hex private key. Defaults to `Secret.from_env_var("SKIM_WALLET_PRIVATE_KEY")`. Pass `Secret.from_token("0x...")` for an explicit key. Use a dedicated wallet, never your personal one.
+- **`private_key`**: A Haystack `Secret` holding the Base wallet's hex private key. Defaults to `Secret.from_env_var("SKIM_WALLET_PRIVATE_KEY", strict=False)`. Pass `Secret.from_token("0x...")` for an explicit key. Use a dedicated wallet, never your personal one.
 - **`base_url`**: Skim API base URL. Defaults to `https://skim402.com`.
 - **`max_price_usd`**: Hard per-call price cap in USD. The wallet refuses to sign for anything above this. Defaults to `0.01` (Skim is `$0.002`).
 - **`include_metadata`**: When `True` (default), populate each `Document`'s `meta` with page metadata (title, byline, published date, language, excerpt).
