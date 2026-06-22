@@ -52,26 +52,6 @@ result = generator.run([ChatMessage.from_user("What are the main components of a
 print(result["replies"][0].text)
 ```
 
-### Using `Generator`
-
-EmpirioLabs also works with the plain `OpenAIGenerator` for prompt-in, text-out generation:
-
-```python
-import os
-from haystack.components.generators import OpenAIGenerator
-from haystack.utils import Secret
-
-os.environ["EMPIRIOLABS_API_KEY"] = "YOUR_EMPIRIOLABS_API_KEY"
-
-generator = OpenAIGenerator(
-    api_key=Secret.from_env_var("EMPIRIOLABS_API_KEY"),
-    api_base_url="https://api.empiriolabs.ai/v1",
-    model="qwen3-7-plus",
-)
-result = generator.run("Explain retrieval augmented generation in one paragraph.")
-print(result["replies"][0])
-```
-
 ### Using `TextEmbedder`
 
 EmpirioLabs serves OpenAI-compatible embedding models too, so the OpenAI Embedders work the same way:
