@@ -56,8 +56,10 @@ query before it enters your pipeline. Queries whose risk score exceeds your thre
 `RuntimeError` so the pipeline halts cleanly.
 
 ```python
+from haystack import Pipeline
 from haystack_vaultak import VaultakSecurityChecker
 
+pipeline = Pipeline()
 checker = VaultakSecurityChecker(
     api_key="YOUR_VAULTAK_API_KEY",
     threshold=7.0,
@@ -90,9 +92,10 @@ gates every incoming query; `VaultakPIIMasker` cleans every outgoing reply.
 ```python
 import os
 from haystack import Pipeline, Document
-from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
+from haystack.dataclasses import ChatMessage
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack_vaultak import VaultakSecurityChecker, VaultakPIIMasker
 
@@ -106,28 +109,25 @@ document_store.write_documents([
     Document(content="Support contact: support@acme.com, phone 555-867-5309."),
 ])
 
-prompt_template = """
-Answer the question using the provided documents only.
-Documents:
-{% for doc in documents %}
-    {{ doc.content }}
-{% endfor %}
-Question: {{ query }}
-Answer:
-"""
+messages = [
+    ChatMessage.from_system("Answer the question using the provided documents only."),
+    ChatMessage.from_user(
+        "Documents:\n{% for doc in documents %}\n    {{ doc.content }}\n{% endfor %}\nQuestion: {{ query }}"
+    ),
+]
 
 # --- Assemble the pipeline with Vaultak components ---
 pipeline = Pipeline()
 pipeline.add_component("security_checker", VaultakSecurityChecker(api_key=VAULTAK_API_KEY))
 pipeline.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
-pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-pipeline.add_component("llm", OpenAIGenerator())
+pipeline.add_component("prompt_builder", ChatPromptBuilder(template=messages, required_variables=["query", "documents"]))
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 pipeline.add_component("pii_masker", VaultakPIIMasker(api_key=VAULTAK_API_KEY))
 
 pipeline.connect("security_checker.query", "retriever.query")
 pipeline.connect("security_checker.query", "prompt_builder.query")
 pipeline.connect("retriever.documents", "prompt_builder.documents")
-pipeline.connect("prompt_builder.prompt", "llm.prompt")
+pipeline.connect("prompt_builder.prompt", "llm.messages")
 pipeline.connect("llm.replies", "pii_masker.replies")
 
 # --- Run ---
