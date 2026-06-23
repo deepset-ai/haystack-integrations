@@ -100,7 +100,8 @@ response = connector.run(
 print(response["response"]["daily"]["temperature_2m_max"])
 ```
 
-For services that require authentication, pass the credentials wrapped in a `Secret`:
+For services that require authentication, pass the credentials wrapped in a `Secret`.
+The credentials will be passed in the `Authorization` header.
 
 ```python
 from haystack.utils import Secret
