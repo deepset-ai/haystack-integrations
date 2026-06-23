@@ -1,6 +1,6 @@
 ---
 layout: integration
-name: EmpirioLabs
+name: EmpirioLabs AI
 description: Use open and proprietary models served by EmpirioLabs
 authors:
     - name: EmpirioLabs Team
