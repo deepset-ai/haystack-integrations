@@ -63,37 +63,6 @@ documents = result["documents"]
 links = result["links"]
 ```
 
-#### In a Pipeline
-
-```python
-from haystack import Pipeline
-from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
-from haystack_integrations.components.websearch.scavio import ScavioWebSearch
-
-template = """
-Given the following web search results, answer the question.
-
-Results:
-{% for doc in documents %}{{ doc.content }}
-{% endfor %}
-
-Question: {{ query }}
-Answer:
-"""
-
-pipe = Pipeline()
-pipe.add_component("search", ScavioWebSearch(top_k=5))
-pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OpenAIGenerator())
-pipe.connect("search.documents", "prompt_builder.documents")
-pipe.connect("prompt_builder", "llm")
-
-query = "What is Haystack by deepset?"
-result = pipe.run(data={"search": {"query": query}, "prompt_builder": {"query": query}})
-print(result["llm"]["replies"][0])
-```
-
 #### Async Support
 
 The component supports asynchronous execution via `run_async`:
