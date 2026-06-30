@@ -2,7 +2,6 @@
 layout: integration
 name: Microsoft SharePoint
 description: Search and fetch content from Microsoft SharePoint and OneDrive via the Microsoft Graph API.
-
 authors:
     - name: deepset
       socials:
