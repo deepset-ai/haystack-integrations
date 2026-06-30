@@ -2,7 +2,6 @@
 layout: integration
 name: Google Drive
 description: Search and fetch files from Google Drive via the Drive API.
-
 authors:
     - name: deepset
       socials:
