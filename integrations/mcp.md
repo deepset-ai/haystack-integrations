@@ -160,6 +160,29 @@ In a nutshell, this example creates a pipeline that:
 
 This demonstrates how MCPTool can be seamlessly integrated into Haystack's agentic architecture, allowing LLMs to use external tools via the Model Context Protocol.
 
+### Example 4: Loading a local stdio memory server with MCPToolset
+
+The examples above run a stateless tool over stdio. The same `StdioServerInfo` path works with a stateful local server. This example loads all of the tools a memory server exposes at once using `MCPToolset`, and runs them through `ToolInvoker`. The server here is `vestige-mcp-server`, a local-first memory server published on npm, so no separate process or API key is needed and `npx` fetches it on first use.
+
+```python
+from haystack.components.tools import ToolInvoker
+
+from haystack_integrations.tools.mcp import MCPToolset, StdioServerInfo
+
+# Local-first MCP memory server, no API key, runs from npx
+toolset = MCPToolset(
+    server_info=StdioServerInfo(
+        command="npx",
+        args=["-y", "vestige-mcp-server"],
+    )
+)
+
+invoker = ToolInvoker(tools=list(toolset))
+# The toolset exposes the server's tools, for example search, memory, and codebase
+```
+
+`MCPToolset` discovers every tool the server advertises, so a single `StdioServerInfo` is enough to make all of them available to a pipeline or agent. This is useful for servers whose tools are meant to be used together rather than one at a time.
+
 ## License
 
 `mcp-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
