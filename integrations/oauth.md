@@ -2,7 +2,6 @@
 layout: integration
 name: OAuth
 description: Resolve OAuth 2.0 access tokens at pipeline runtime to authenticate downstream Haystack components.
-
 authors:
     - name: deepset
       socials:
