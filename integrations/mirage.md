@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/mirage-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/mirage
 type: Tool Integration
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/mirage.svg
+logo: /logos/mirage.png
 version: Haystack 2.0
 toc: true
 ---
