@@ -15,8 +15,7 @@ version: Haystack 2.0
 toc: true
 ---
 
-### Table of Contents
-
+### **Table of Contents**
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -31,7 +30,7 @@ agents. This integration provides two components:
 
 - `KeenableWebSearch`: searches the web and returns results as Haystack
   `Document` objects plus their URLs (`links`), the same output shape as the
-  built-in `SerperDevWebSearch` / `SearchApiWebSearch`, so it drops into existing
+  `SerperDevWebSearch` / `SearchApiWebSearch` integrations, so it drops into existing
   web-search pipelines.
 - `KeenableFetcher`: fetches one or more URLs and returns their main content as
   Haystack `Document` objects (extracted to clean markdown server-side, so you
