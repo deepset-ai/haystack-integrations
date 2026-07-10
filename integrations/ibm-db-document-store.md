@@ -26,7 +26,6 @@ toc: true
 - IBM Db2 Document Store for Haystack
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Examples](#examples)
   - [License](#license)
 
 ## Installation
@@ -35,35 +34,31 @@ IBM Db2 (version 12.1.2 and later) provides a native `VECTOR` data type that add
 For more information on Db2 vector capabilities, visit the [IBM Db2 product page](https://www.ibm.com/products/db2).
 
 Use `pip` to install `ibm-db-haystack`:
+
 ```bash
 pip install ibm-db-haystack
 ```
 
-On Linux, build tools are needed to compile the underlying `ibm-db` driver:
-```bash
-sudo apt-get install -y build-essential libxml2-dev
-```
-
-On macOS, install the driver without cache to avoid stale driver issues:
-```bash
-pip install --no-cache-dir ibm-db
-```
-
 ## Usage
-
-Define the connection string to your IBM Db2 database in the `DB2_CONN_STR` environment variable. For example:
-```bash
-export DB2_CONN_STR="DATABASE=BLUDB;HOSTNAME=your-db2-host;PORT=50001;PROTOCOL=TCPIP;UID=db2user;PWD=your_password;SECURITY=SSL;"
-```
-
-Once installed, initialize Db2DocumentStore. The table is created automatically if it does not exist:
+Set your IBM Db2 credentials as environment variables:
 
 ```python
-import os
-from haystack_integrations.document_stores.ibm_db import Db2DocumentStore
+export DB2_USERNAME="db2inst1"
+export DB2_PASSWORD="your_password"
+```
 
-document_store = Db2DocumentStore(
-    connection_string=os.environ["DB2_CONN_STR"],
+Once installed, initialize IBMDb2DocumentStore.
+
+```python
+from haystack.utils import Secret
+from haystack_integrations.document_stores.ibm_db import IBMDb2DocumentStore
+
+document_store = IBMDb2DocumentStore(
+    database="BLUDB",
+    hostname="your-db2-host",
+    port=50000,
+    username=Secret.from_env_var("DB2_USERNAME"),
+    password=Secret.from_env_var("DB2_PASSWORD"),
     table_name="haystack_docs",
     embedding_dim=768,
     distance_metric="COSINE",
@@ -72,8 +67,8 @@ document_store = Db2DocumentStore(
 
 Supported distance metrics are `COSINE`, `EUCLIDEAN`, and `MANHATTAN`.
 
-### Writing Documents to Db2DocumentStore
-To write documents to `Db2DocumentStore`, create an indexing pipeline.
+### Writing Documents to IBMDb2DocumentStore
+To write documents to `IBMDb2DocumentStore`, create an indexing pipeline.
 
 ```python
 from haystack import Pipeline
@@ -90,18 +85,18 @@ indexing.connect("embedder", "writer")
 indexing.run({"converter": {"sources": file_paths}})
 ```
 
-### Retrieval from Db2DocumentStore
-You can retrieve semantically similar documents to a given query using a simple pipeline that includes the `Db2EmbeddingRetriever`.
+### Retrieval from IBMDb2DocumentStore
+You can retrieve semantically similar documents to a given query using a simple pipeline that includes the `IBMDb2EmbeddingRetriever`.
 
 ```python
-from haystack.components.embedders import SentenceTransformersTextEmbedder
-from haystack_integrations.components.retrievers.ibm_db import Db2EmbeddingRetriever
 from haystack import Pipeline
+from haystack.components.embedders import SentenceTransformersTextEmbedder
+from haystack_integrations.components.retrievers.ibm_db import IBMDb2EmbeddingRetriever
 
 querying = Pipeline()
 querying.add_component("embedder", SentenceTransformersTextEmbedder())
-querying.add_component("retriever", Db2EmbeddingRetriever(document_store=document_store, top_k=3))
-querying.connect("embedder", "retriever")
+querying.add_component("retriever", IBMDb2EmbeddingRetriever(document_store=document_store, top_k=3))
+querying.connect("embedder.embedding", "retriever.query_embedding")
 
 results = querying.run({"embedder": {"text": "my query"}})
 ```
@@ -109,6 +104,10 @@ results = querying.run({"embedder": {"text": "my query"}})
 You can also combine vector similarity search with metadata filtering, including compound AND/OR conditions, executed in the same query as the vector search.
 
 ```python
+from haystack_integrations.components.retrievers.ibm_db import IBMDb2EmbeddingRetriever
+
+retriever = IBMDb2EmbeddingRetriever(document_store=document_store, top_k=3)
+
 results = retriever.run(
     query_embedding=query_embedding,
     filters={
@@ -121,9 +120,5 @@ results = retriever.run(
 )
 ```
 
-## Examples
-You can find a code example showing how to use the Document Store and the Retriever under the `examples/` folder of [this repo](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/ibm_db).
-
 ## License
-
 `ibm-db-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
