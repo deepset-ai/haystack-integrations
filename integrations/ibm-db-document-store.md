@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: IBM Db2
-description: A Document Store for storing and retrieval from IBM Db2
+description: A Document Store for storing and retrieving documents from IBM Db2
 authors:
     - name: Geetika Chugh
       socials:
