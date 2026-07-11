@@ -45,6 +45,8 @@ pip install perseus-vault-haystack
 ## Usage
 
 ```python
+from pathlib import Path
+
 from haystack import Pipeline, Document
 from perseus_vault_haystack import (
     PerseusVaultMemoryStore,
@@ -52,7 +54,9 @@ from perseus_vault_haystack import (
     PerseusVaultMemoryRetriever,
 )
 
-store = PerseusVaultMemoryStore(db_path="~/.mimir/haystack.db")
+db_path = Path("~/.mimir/haystack.db").expanduser()
+db_path.parent.mkdir(parents=True, exist_ok=True)
+store = PerseusVaultMemoryStore(db_path=str(db_path))
 
 write_pipe = Pipeline()
 write_pipe.add_component("writer", PerseusVaultMemoryWriter(memory_store=store))
