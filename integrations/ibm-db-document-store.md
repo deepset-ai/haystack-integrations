@@ -42,7 +42,7 @@ pip install ibm-db-haystack
 ## Usage
 Set your IBM Db2 credentials as environment variables:
 
-```python
+```bash
 export DB2_USERNAME="db2inst1"
 export DB2_PASSWORD="your_password"
 ```
