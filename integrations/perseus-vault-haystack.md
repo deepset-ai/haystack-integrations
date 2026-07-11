@@ -38,11 +38,23 @@ through three components:
 
 ## Installation
 
+Install the Python components from PyPI:
+
 ```bash
 pip install perseus-vault-haystack
 ```
 
+The components talk to a local `perseus-vault` executable over stdio, so the binary is a
+separate, language-agnostic dependency. Download a pre-built binary from the
+[Perseus Vault releases page](https://github.com/Perseus-Computing-LLC/perseus-vault/releases)
+(or build from source) and either put it on your `$PATH` (so `perseus-vault` resolves) or pass
+its absolute path via `perseus_vault_binary=`.
+
 ## Usage
+
+The example below writes a document into persistent memory and retrieves it back in a
+separate pipeline. Because Perseus Vault persists to an encrypted SQLite file, documents
+written in one run are available in any future run pointed at the same `db_path`.
 
 ```python
 from pathlib import Path
@@ -54,17 +66,22 @@ from perseus_vault_haystack import (
     PerseusVaultMemoryRetriever,
 )
 
-db_path = Path("~/.mimir/haystack.db").expanduser()
+db_path = Path("~/.perseus-vault/haystack.db").expanduser()
 db_path.parent.mkdir(parents=True, exist_ok=True)
 store = PerseusVaultMemoryStore(db_path=str(db_path))
 
 write_pipe = Pipeline()
 write_pipe.add_component("writer", PerseusVaultMemoryWriter(memory_store=store))
-write_pipe.run({"writer": {"documents": [Document(content="Sample text.")]}})
+write_pipe.run(
+    {"writer": {"documents": [
+        Document(content="Perseus Vault stores encrypted memory for Haystack agents."),
+    ]}}
+)
 
 read_pipe = Pipeline()
 read_pipe.add_component("retriever", PerseusVaultMemoryRetriever(memory_store=store))
-result = read_pipe.run({"retriever": {"query": "What is stored?"}})
+result = read_pipe.run({"retriever": {"query": "encrypted memory"}})
+print(result["retriever"]["documents"])
 ```
 
 ## License
