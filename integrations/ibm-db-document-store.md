@@ -10,6 +10,7 @@ authors:
 pypi: https://pypi.org/project/ibm-db-haystack/
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/ibm_db
 type: Document Store
+logo: /logos/ibm-db2.png
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 version: Haystack 2.0
 toc: true

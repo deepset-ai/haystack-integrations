@@ -11,7 +11,8 @@ git clone --depth=1 https://github.com/deepset-ai/haystack-home.git _site
 cd _site
 
 cp ../integrations/*.md content/integrations/
-cp -R ../logos/* static/logos/ 2>/dev/null || true
+mkdir -p static/logos
+cp -R ../logos/* static/logos/
 
 npm install
 
