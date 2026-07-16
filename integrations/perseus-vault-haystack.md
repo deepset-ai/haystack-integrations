@@ -7,9 +7,9 @@ authors:
       socials:
         github: Perseus-Computing-LLC
 pypi: https://pypi.org/project/perseus-vault-haystack/
-repo: https://github.com/Perseus-Computing-LLC/mimir-haystack
+repo: https://github.com/Perseus-Computing-LLC/perseus-vault-haystack
 type: Memory Store
-report_issue: https://github.com/Perseus-Computing-LLC/mimir-haystack/issues
+report_issue: https://github.com/Perseus-Computing-LLC/perseus-vault-haystack/issues
 logo: /logos/perseus-vault.svg
 version: Haystack 2.0
 toc: true
@@ -50,7 +50,7 @@ both pipeline components and ready-made Agent tools:
 More information:
 
 - [Perseus Vault GitHub repository](https://github.com/Perseus-Computing-LLC/perseus-vault)
-- [perseus-vault-haystack package](https://github.com/Perseus-Computing-LLC/mimir-haystack)
+- [perseus-vault-haystack package](https://github.com/Perseus-Computing-LLC/perseus-vault-haystack)
 
 ## Installation
 
@@ -70,7 +70,7 @@ pass its absolute path via `perseus_vault_binary=`. No API key or account is req
 
 ### Available Classes
 
-- [`PerseusVaultMemoryStore`](https://github.com/Perseus-Computing-LLC/mimir-haystack):
+- [`PerseusVaultMemoryStore`](https://github.com/Perseus-Computing-LLC/perseus-vault-haystack):
   the encrypted store. `add_memories` / `search_memories` / `delete_all_memories` for
   `Document`s, plus `write_messages` / `recall_messages` for `ChatMessage`s.
 - `create_perseus_vault_tools(memory_store, ...)`: returns `retain_memory`,
