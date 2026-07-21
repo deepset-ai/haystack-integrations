@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/linkup-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations
 type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/linkup.svg
 version: Haystack 2.0
 toc: true
 ---
