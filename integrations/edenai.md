@@ -41,9 +41,9 @@ pip install edenai-haystack
 
 This integration introduces 3 components:
 
-- The `EdenAIChatGenerator`: Generates chat responses using any Eden AI chat model through its OpenAI-compatible endpoint.
-- The `EdenAITextEmbedder`: Creates embeddings for texts (such as queries) using Eden AI embedding models.
-- The `EdenAIDocumentEmbedder`: Creates embeddings for Haystack Documents using Eden AI embedding models.
+- The [`EdenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/edenaichatgenerator): Generates chat responses using any Eden AI chat model through its OpenAI-compatible endpoint.
+- The [`EdenAITextEmbedder`](https://docs.haystack.deepset.ai/docs/edenaitextembedder): Creates embeddings for texts (such as queries) using Eden AI embedding models.
+- The [`EdenAIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/edenaidocumentembedder): Creates embeddings for Haystack Documents using Eden AI embedding models.
 
 ### Use Eden AI Chat Models
 
