@@ -9,7 +9,7 @@ authors:
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/linkup-haystack
-repo: https://github.com/deepset-ai/haystack-core-integrations
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/linkup
 type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/linkup.svg
