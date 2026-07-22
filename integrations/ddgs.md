@@ -9,10 +9,9 @@ authors:
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/ddgs-haystack
-repo: https://github.com/deepset-ai/haystack-core-integrations
+repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/ddgs
 type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/ddgs.png
 version: Haystack 2.0
 toc: true
 ---
