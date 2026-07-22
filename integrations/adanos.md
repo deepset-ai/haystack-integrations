@@ -46,11 +46,7 @@ Install the component directly from its public repository:
 pip install "adanos-haystack @ git+https://github.com/adanos-software/adanos-haystack.git"
 ```
 
-Set the API key in your environment:
-
-```bash
-export ADANOS_API_KEY="sk_live_your_key_here"
-```
+Provide the API key through the `ADANOS_API_KEY` environment variable.
 
 ## Usage
 
