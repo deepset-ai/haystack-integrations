@@ -13,7 +13,7 @@ repo: https://github.com/awinml/voyage-embedders-haystack/tree/main
 type: Model Provider
 report_issue: https://github.com/awinml/voyage-embedders-haystack/issues
 logo: /logos/voyage_ai.jpg
-version: Haystack 2.0
+version: Haystack 3.0
 toc: true
 ---
 
@@ -26,6 +26,8 @@ toc: true
 - [Usage](#usage)
 - [Supported Models](#supported-models)
 - [Example](#example)
+- [Retrieve and Rerank](#retrieve-and-rerank)
+- [Use Voyage Search as an Agent Tool](#use-voyage-search-as-an-agent-tool)
 - [Contextualized Embeddings Example](#contextualized-embeddings-example)
 - [Multimodal Embeddings](#multimodal-embeddings)
 
@@ -62,6 +64,7 @@ For the complete list of available models, see the [Embeddings Documentation](ht
 
 | Model | Description |
 |-------|-------------|
+| `rerank-2.5` | Latest reranker model with the best accuracy |
 | `rerank-2` | High-accuracy reranker model |
 | `rerank-2-lite` | Efficient reranker with lower latency |
 
@@ -139,10 +142,10 @@ retriever = InMemoryEmbeddingRetriever(document_store=doc_store)
 doc_writer = DocumentWriter(document_store=doc_store)
 
 doc_embedder = VoyageDocumentEmbedder(
-    model="voyage-3.5",
+    model="voyage-4",
     input_type="document",
 )
-text_embedder = VoyageTextEmbedder(model="voyage-3.5", input_type="query")
+text_embedder = VoyageTextEmbedder(model="voyage-4", input_type="query")
 
 # Indexing Pipeline
 indexing_pipeline = Pipeline()
@@ -160,7 +163,7 @@ print(f"Embedding of first Document: {doc_store.filter_documents()[0].embedding}
 Query the Semantic Search Pipeline using the `InMemoryEmbeddingRetriever` and `VoyageTextEmbedder`:
 
 ```python
-text_embedder = VoyageTextEmbedder(model="voyage-3.5", input_type="query")
+text_embedder = VoyageTextEmbedder(model="voyage-4", input_type="query")
 
 # Query Pipeline
 query_pipeline = Pipeline()
@@ -175,6 +178,87 @@ results = query_pipeline.run({"TextEmbedder": {"text": "Which year did the Joker
 top_result = results["Retriever"]["documents"][0].content
 print("The top search result is:")
 print(top_result)
+```
+
+## Retrieve and Rerank
+
+Embedding retrieval is fast and cheap, but a reranker can meaningfully improve the order of the top results. The `VoyageRanker` re-scores the candidate documents returned by the retriever using Voyage AI's `rerank-2.5` model. Building on the `doc_store` and indexed corpus from the [Example](#example) above, add a `VoyageRanker` to the query pipeline:
+
+```python
+from haystack_integrations.components.rankers.voyage.ranker import VoyageRanker
+
+# Query pipeline: embed -> retrieve -> rerank
+rerank_pipeline = Pipeline()
+rerank_pipeline.add_component(instance=VoyageTextEmbedder(model="voyage-4", input_type="query"), name="TextEmbedder")
+rerank_pipeline.add_component(instance=InMemoryEmbeddingRetriever(document_store=doc_store, top_k=5), name="Retriever")
+rerank_pipeline.add_component(instance=VoyageRanker(model="rerank-2.5", top_k=3), name="Ranker")
+
+# Connect embedding -> retriever -> ranker
+rerank_pipeline.connect("TextEmbedder.embedding", "Retriever.query_embedding")
+rerank_pipeline.connect("Retriever.documents", "Ranker.documents")
+
+# VoyageTextEmbedder does not output `text`, so pass the query to both
+# the embedder and the ranker explicitly.
+query = "Which year did the Joker movie release?"
+results = rerank_pipeline.run({
+    "TextEmbedder": {"text": query},
+    "Ranker": {"query": query},
+})
+
+# Print the top 3 reranked results
+for i, doc in enumerate(results["Ranker"]["documents"]):
+    print(f"{i + 1}. score={doc.score:.4f} | {doc.content[:120]}")
+```
+
+## Use Voyage Search as an Agent Tool
+
+You can wrap the retrieve-and-rerank pipeline as a [Tool](https://docs.haystack.deepset.ai/docs/tools) and hand it to a Haystack [Agent](https://docs.haystack.deepset.ai/docs/agents). The Agent decides when to search the corpus and uses the retrieved passages to ground its answer.
+
+```python
+from haystack.components.agents import Agent
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack.tools import Tool
+
+# Wrap the retrieve-and-rerank pipeline as a tool the Agent can call.
+def voyage_search(query: str) -> str:
+    res = rerank_pipeline.run({
+        "TextEmbedder": {"text": query},
+        "Ranker": {"query": query},
+    })
+    docs = res["Ranker"]["documents"]
+    return "\n\n".join(f"[{i + 1}] {doc.content}" for i, doc in enumerate(docs))
+
+search_tool = Tool(
+    name="voyage_search",
+    description="Search the indexed Wikipedia corpus for passages relevant to a query.",
+    parameters={
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "The search query to find relevant passages.",
+            },
+        },
+        "required": ["query"],
+    },
+    function=voyage_search,
+)
+
+agent = Agent(
+    chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
+    tools=[search_tool],
+    system_prompt=(
+        "You are a helpful assistant. Use the voyage_search tool to find relevant passages "
+        "from Wikipedia, then answer the user's question based only on those passages. "
+        "If the search results don't contain the answer, say you couldn't find it."
+    ),
+)
+
+result = agent.run(
+    messages=[ChatMessage.from_user("Which year did the Joker movie release?")]
+)
+print(result["messages"][-1].text)
 ```
 
 ## Contextualized Embeddings Example
@@ -216,7 +300,7 @@ result = embedder.run(documents=docs)
 # the second chunk because it maintains its connection to "Apple Inc."
 ```
 
-For more examples, see the [contextualized embedder example](https://github.com/awinml/voyage-embedders-haystack/blob/voyage_context-3_model/examples/contextualized_embedder_example.py).
+For more examples, see the [contextualized embedder example](https://github.com/awinml/voyage-embedders-haystack/blob/main/examples/contextualized_embedder_example.py).
 
 ## Multimodal Embeddings
 
