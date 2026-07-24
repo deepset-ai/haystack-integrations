@@ -212,37 +212,86 @@ for i, doc in enumerate(results["Ranker"]["documents"]):
 
 ## Use Voyage Search as an Agent Tool
 
-You can wrap the retrieve-and-rerank pipeline as a [Tool](https://docs.haystack.deepset.ai/docs/tools) and hand it to a Haystack [Agent](https://docs.haystack.deepset.ai/docs/agents). The Agent decides when to search the corpus and uses the retrieved passages to ground its answer.
+You can expose a Voyage-powered search pipeline as a tool for a Haystack `Agent`, which decides when to search the corpus and grounds its answer in the retrieved passages. The two examples below show this with a retrieve-and-rerank pipeline and with a lighter retrieve-only pipeline.
+
+### Retrieve and Rerank with `ComponentTool`
+
+Wrap the retrieve-and-rerank pipeline from above in a `SuperComponent`, then turn it into a tool with `ComponentTool`. The Agent calls the tool with a `query`, and the reranked passages are formatted back into text for the model:
 
 ```python
+from haystack import SuperComponent
 from haystack.components.agents import Agent
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
-from haystack.tools import Tool
+from haystack.tools import ComponentTool
 
-# Wrap the retrieve-and-rerank pipeline as a tool the Agent can call.
-def voyage_search(query: str) -> str:
-    res = rerank_pipeline.run({
-        "TextEmbedder": {"text": query},
-        "Ranker": {"query": query},
-    })
-    docs = res["Ranker"]["documents"]
-    return "\n\n".join(f"[{i + 1}] {doc.content}" for i, doc in enumerate(docs))
+# Expose the retrieve-and-rerank pipeline as a single searchable component.
+# input_mapping sends the query to both the embedder and the ranker;
+# output_mapping surfaces the reranked documents.
+search_component = SuperComponent(
+    pipeline=rerank_pipeline,
+    input_mapping={"query": ["TextEmbedder.text", "Ranker.query"]},
+    output_mapping={"Ranker.documents": "documents"},
+)
 
-search_tool = Tool(
+# Format the retrieved documents into the text the Agent's LLM will read.
+def format_documents(documents):
+    return "\n\n".join(f"[{i + 1}] {doc.content}" for i, doc in enumerate(documents))
+
+# ComponentTool auto-generates the tool's JSON schema from the component inputs.
+search_tool = ComponentTool(
+    component=search_component,
     name="voyage_search",
     description="Search the indexed Wikipedia corpus for passages relevant to a query.",
-    parameters={
-        "type": "object",
-        "properties": {
-            "query": {
-                "type": "string",
-                "description": "The search query to find relevant passages.",
-            },
-        },
-        "required": ["query"],
-    },
-    function=voyage_search,
+    outputs_to_string={"source": "documents", "handler": format_documents},
+)
+
+agent = Agent(
+    chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
+    tools=[search_tool],
+    system_prompt=(
+        "You are a helpful assistant. Use the voyage_search tool to find relevant passages "
+        "from Wikipedia, then answer the user's question based only on those passages. "
+        "If the search results don't contain the answer, say you couldn't find it."
+    ),
+)
+
+result = agent.run(
+    messages=[ChatMessage.from_user("Which year did the Joker movie release?")]
+)
+print(result["messages"][-1].text)
+```
+
+### Retrieve-only with `PipelineTool`
+
+If you don't need reranking, a plain embed-and-retrieve pipeline makes a lighter search tool. Here `PipelineTool` wraps the `Pipeline` directly. Building on the `doc_store` indexed in the [Example](#example) above:
+
+```python
+from haystack import Pipeline
+from haystack.components.agents import Agent
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack.dataclasses import ChatMessage
+from haystack.tools import PipelineTool
+
+# Query pipeline: embed -> retrieve (no reranker)
+search_pipeline = Pipeline()
+search_pipeline.add_component(instance=VoyageTextEmbedder(model="voyage-4", input_type="query"), name="TextEmbedder")
+search_pipeline.add_component(instance=InMemoryEmbeddingRetriever(document_store=doc_store, top_k=3), name="Retriever")
+search_pipeline.connect("TextEmbedder.embedding", "Retriever.query_embedding")
+
+# Format the retrieved documents into the text the Agent's LLM will read.
+def format_documents(documents):
+    return "\n\n".join(f"[{i + 1}] {doc.content}" for i, doc in enumerate(documents))
+
+# PipelineTool wraps the Pipeline directly - no SuperComponent needed.
+search_tool = PipelineTool(
+    pipeline=search_pipeline,
+    input_mapping={"query": ["TextEmbedder.text"]},
+    output_mapping={"Retriever.documents": "documents"},
+    name="voyage_search",
+    description="Search the indexed Wikipedia corpus for passages relevant to a query.",
+    outputs_to_string={"source": "documents", "handler": format_documents},
 )
 
 agent = Agent(
