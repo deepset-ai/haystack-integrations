@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Pixeltable
-description: Document Store and Retriever backed by Pixeltable — persistent, versioned, multimodal data infrastructure for AI applications.
+description: Document Store and Retriever backed by Pixeltable multimodal data infrastructure.
 authors:
     - name: Pixeltable
       socials:
@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/haystack-pixeltable/
 repo: https://github.com/pixeltable/haystack-pixeltable
 type: Document Store
 report_issue: https://github.com/pixeltable/haystack-pixeltable/issues
+logo: /logos/pixeltable.svg
 version: Haystack 2.0
 toc: true
 ---
@@ -36,25 +37,16 @@ toc: true
 
 ## Overview
 
-[Pixeltable](https://pixeltable.com/) is open-source Python data infrastructure for multimodal AI. It provides persistent, versioned tables that store text, images, video, audio, and documents alongside embeddings and metadata — with automatic incremental computation via computed columns.
+[Pixeltable](https://pixeltable.com/) is open-source Python data infrastructure for multimodal AI. It provides persistent, versioned tables that store text, images, video, audio, and documents alongside embeddings and metadata, with incremental computation via computed columns.
 
 This integration provides two components:
 
 - **`PixeltableDocumentStore`** — a Haystack `DocumentStore` backed by a Pixeltable table with a built-in embedding index.
 - **`PixeltableRetriever`** — a Haystack `Retriever` component that performs vector similarity search.
 
-### Why Pixeltable as a Document Store?
+The `.table` property exposes the underlying Pixeltable table when you need computed columns, version history, or multimodal operations beyond the Haystack Document Store interface.
 
-| Feature | Pixeltable | Typical vector DBs |
-|---------|-----------|-------------------|
-| Persistent storage | Built-in (embedded PostgreSQL) | Varies |
-| Computed columns | Native — auto-run transforms on insert | No |
-| Version history | Built-in — time-travel queries | No |
-| Multimodal types | Image, Video, Audio, Document | Text only |
-| Metadata filtering | JSON + SQL predicates | Limited |
-| Embedding auto-compute | Via computed columns | Manual |
-
-The `.table` escape hatch lets you break out of the Haystack interface to use the full Pixeltable API — add computed columns, run LLM inference on insert, query version history, and work with multimodal data.
+Requires Pixeltable >= 0.6.8.
 
 ## Installation
 
@@ -177,17 +169,18 @@ store = PixeltableDocumentStore(
 )
 t = store.table
 
-# Add a computed column that auto-summarizes every document on insert
+# Add a computed column that summarizes every document on insert
 import pixeltable.functions.openai as openai
 
 t.add_computed_column(
     summary=openai.chat_completions(
         messages=[{"role": "user", "content": t.content}],
         model="gpt-4o-mini",
-    )
+    ).choices[0].message.content,
+    if_exists="ignore",
 )
 
-# Query with Pixeltable's full API
+# Query with Pixeltable's API
 results = t.select(t.content, t.summary).collect()
 ```
 
