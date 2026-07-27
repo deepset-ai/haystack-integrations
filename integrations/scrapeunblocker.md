@@ -27,7 +27,7 @@ toc: true
 
 ## Overview
 
-[ScrapeUnblocker](https://www.scrapeunblocker.com) renders web pages in a real
+[ScrapeUnblocker](https://www.scrapeunblocker.com?utm_source=haystack&utm_medium=integration&utm_campaign=haystack-integration) renders web pages in a real
 browser behind anti-bot protections such as Cloudflare, DataDome, PerimeterX and
 Akamai. Use it when an ordinary HTTP request returns a block page, a captcha, or
 an empty JavaScript shell instead of the content you need.
@@ -40,7 +40,7 @@ The integration provides two components:
   return the organic results as Documents
 
 You need a ScrapeUnblocker API key to use both. Get one at
-[scrapeunblocker.com](https://www.scrapeunblocker.com) and expose it as
+[scrapeunblocker.com](https://www.scrapeunblocker.com?utm_source=haystack&utm_medium=integration&utm_campaign=haystack-integration) and expose it as
 `SCRAPEUNBLOCKER_API_KEY`, which both components read by default.
 
 ## Installation
