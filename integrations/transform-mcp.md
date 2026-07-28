@@ -45,6 +45,9 @@ Transform MCP supports two ways to authenticate: interactive browser-based OAuth
 ```python
 from haystack_integrations.tools.mcp import MCPToolset, StreamableHttpServerInfo
 from haystack.utils import Secret
+import os
+
+os.environ["UNSTRUCTURED_API_KEY"] = "YOUR_UNSTRUCTURED_API_KEY"
 
 server_info = StreamableHttpServerInfo(
     url="https://mcp.transform.unstructured.io",
@@ -73,6 +76,9 @@ from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.anthropic import AnthropicChatGenerator
 from haystack_integrations.tools.mcp import MCPToolset, StreamableHttpServerInfo
 from haystack.utils import Secret
+import os
+
+os.environ["UNSTRUCTURED_API_KEY"] = "YOUR_UNSTRUCTURED_API_KEY"
 
 server_info = StreamableHttpServerInfo(
     url="https://mcp.transform.unstructured.io",
