@@ -25,9 +25,9 @@ toc: true
 
 **[Unstructured Transform](https://docs.unstructured.io/transform/overview)** turns any file into agent-ready data, called directly from your agent with no separate pipeline to wire up. It is Unstructured's document-processing pipeline, exposed as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://mcp.transform.unstructured.io`. Drop in a PDF, spreadsheet, scan, or email and get back partitioned, enriched, chunked, and embedded output ready for RAG, vector stores, or agent memory, with tables and layout intact. It exposes four tools:
 
-- `transform_files`: submits one or more files (by URL or a previously returned reference) for processing and returns a `job_id` right away; the job runs asynchronously through configurable stages (`partition` -> `enrich` -> `chunk` -> `embed`)
-- `check_transform_status`: polls a job's status until it reaches `COMPLETED`
-- `get_transform_results`: fetches a completed job's rendered output as markdown, JSON, HTML, or plain text
+- `start_transform_job`: submits one or more files (by URL or a previously returned reference) for processing and returns a `job_id` right away; the job runs asynchronously through configurable stages (`partition` -> `enrich` -> `chunk` -> `embed`)
+- `check_job_status`: polls a job's status until it reaches `COMPLETED`
+- `get_job_results`: fetches a completed job's rendered output as markdown, JSON, HTML, or plain text
 - `request_file_upload_url`: returns a presigned upload URL and a durable reference for a local file that isn't already reachable over HTTPS
 
 This integration doesn't ship its own package. Instead, it uses `mcp-haystack`'s `MCPToolset` to connect any Haystack agent to the Transform MCP server over Streamable HTTP. The free tier includes 15,000 pages a month.
@@ -65,7 +65,7 @@ npx -y mcp-remote https://mcp.transform.unstructured.io
 
 ## Examples
 
-The snippet below connects the toolset to a Haystack `Agent` and asks it to parse and chunk a PDF end-to-end. Because `transform_files` is asynchronous, the agent's system prompt walks it through the `transform_files` -> `check_transform_status` -> `get_transform_results` polling loop:
+The snippet below connects the toolset to a Haystack `Agent` and asks it to parse and chunk a PDF end-to-end. Because `start_transform_job` is asynchronous, the agent's system prompt walks it through the `start_transform_job` -> `check_job_status` -> `get_job_results` polling loop:
 
 ```python
 from haystack.components.agents import Agent
@@ -86,9 +86,9 @@ agent = Agent(
     system_prompt="""You are a document-processing assistant with access to Unstructured Transform MCP tools.
 
 Transform jobs are asynchronous. When asked to process a document:
-1. Call `transform_files` with the file reference(s) and the requested processing stages. This returns a `job_id` immediately; the job itself runs in the background.
-2. Call `check_transform_status` with that `job_id`, repeating until the status is COMPLETED.
-3. Call `get_transform_results` with the `job_id` to fetch the rendered output, and summarize it for the user.
+1. Call `start_transform_job` with the file reference(s) and the requested processing stages. This returns a `job_id` immediately; the job itself runs in the background.
+2. Call `check_job_status` with that `job_id`, repeating until the status is COMPLETED.
+3. Call `get_job_results` with the `job_id` to fetch the rendered output, and summarize it for the user.
 """,
 )
 
