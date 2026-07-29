@@ -15,19 +15,19 @@ version: Haystack 2.0
 toc: true
 ---
 
-### Overview
+## Overview
 
 [Rubric Protocol](https://rubric-protocol.com) produces court-grade evidence of what your AI pipelines did and when. Every attestation is signed with ML-DSA-65 (FIPS 204) post-quantum cryptography and anchored to Hedera Consensus Service — a public, neutral ledger — so anyone can independently verify a pipeline's output years later at [rubric-protocol.com/verify](https://rubric-protocol.com/verify), without trusting your logs or your vendor.
 
 This matters wherever two parties need to agree on what an AI system did: regulatory examinations (EU AI Act Annex IV, SR 26-2, Illinois SB 315), insurance claims, vendor disputes, and internal audit. Unlike mutable application logs, an anchored attestation cannot be silently edited after the fact.
 
-### Installation
+## Installation
 
 ```bash
 pip install autogen-rubric
 ```
 
-### Usage
+## Usage
 
 Add the component to any pipeline. It attests each run's replies and passes them through unchanged:
 
