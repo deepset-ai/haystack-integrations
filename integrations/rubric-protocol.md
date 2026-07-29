@@ -59,6 +59,6 @@ attest(result)
 
 Each attestation returns an ID resolvable on the public verifier, with its Hedera sequence number and ML-DSA-65 signature — evidence that stands on its own.
 
-### License
+## License
 
 MIT
