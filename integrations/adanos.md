@@ -20,8 +20,7 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
   - [Component](#component)
-  - [Pipeline](#pipeline)
-  - [Agent Tool](#agent-tool)
+  - [Investment Research Agent](#investment-research-agent)
 - [License](#license)
 
 ## Overview
@@ -68,35 +67,39 @@ print(result["result"])
 
 Both synchronous `run` and asynchronous `run_async` calls are supported.
 
-### Pipeline
+### Investment Research Agent
+
+A research agent can combine private investment notes retrieved by Haystack with current external
+sentiment from Adanos. In this example, the agent searches an internal document store, calls Adanos
+for relevant stock sentiment, and keeps the two evidence sources distinct in its assessment:
 
 ```python
-from haystack import Pipeline
-from haystack_integrations.components.tools.adanos import AdanosMarketSentiment
-
-pipeline = Pipeline()
-pipeline.add_component("sentiment", AdanosMarketSentiment())
-
-result = pipeline.run(
-    {
-        "sentiment": {
-            "operation": "trending",
-            "asset_type": "stock",
-            "source": "reddit",
-            "limit": 5,
-        }
-    }
-)
-```
-
-### Agent Tool
-
-Use Haystack's `ComponentTool` to expose all supported operations to an agent:
-
-```python
+from haystack.components.agents import Agent
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
+from haystack.dataclasses import ChatMessage, Document
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.tools import ComponentTool
 from haystack_integrations.components.tools.adanos import AdanosMarketSentiment
 
+document_store = InMemoryDocumentStore()
+document_store.write_documents(
+    [
+        Document(
+            content=(
+                "NVDA research note: data-center demand remains the main growth driver, "
+                "while customer concentration is a material risk."
+            ),
+            meta={"ticker": "NVDA"},
+        )
+    ]
+)
+
+research_tool = ComponentTool(
+    component=InMemoryBM25Retriever(document_store=document_store, top_k=3),
+    name="internal_research",
+    description="Search approved internal investment research and return relevant documents.",
+)
 adanos_tool = ComponentTool(
     component=AdanosMarketSentiment(),
     name="market_sentiment",
@@ -105,6 +108,26 @@ adanos_tool = ComponentTool(
         "X / FinTwit, financial news, and Polymarket."
     ),
 )
+
+agent = Agent(
+    chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
+    tools=[research_tool, adanos_tool],
+    system_prompt=(
+        "You are an investment research assistant. Use internal_research for private notes "
+        "and market_sentiment for external sentiment evidence. Clearly distinguish the two "
+        "sources, mention conflicting signals, and do not present the result as financial advice."
+    ),
+)
+
+result = agent.run(
+    messages=[
+        ChatMessage.from_user(
+            "Assess NVDA using our internal research and external sentiment from "
+            "2026-07-21 through 2026-07-28."
+        )
+    ]
+)
+print(result["last_message"].text)
 ```
 
 See the [Adanos API reference](https://api.adanos.org/docs) and the
