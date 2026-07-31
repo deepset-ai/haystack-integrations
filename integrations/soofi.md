@@ -29,13 +29,18 @@ toc: true
 
 Preview checkpoints are on the [Soofi-Project Hugging Face organization](https://huggingface.co/Soofi-Project). Three models are available:
 
+<div class="styled-table">
+
 | Model | Role |
 | --- | --- |
 | [`Soofi-S-Instruct-Preview`](https://huggingface.co/Soofi-Project/Soofi-S-Instruct-Preview) | Instruct model |
 | [`Soofi-S-Isar-Preview`](https://huggingface.co/Soofi-Project/Soofi-S-Isar-Preview) | Reasoning model |
 | [`Soofi-S-Rhine-Preview`](https://huggingface.co/Soofi-Project/Soofi-S-Rhine-Preview) | Reasoning model |
+</div>
 
 Each model ships in several quantization variants:
+
+<div class="styled-table">
 
 | Quantization | Approx. size | Typical runtime |
 | --- | --- | --- |
@@ -46,6 +51,7 @@ Each model ships in several quantization variants:
 | FP8@2bit | ~14 GB | vLLM (EntQuant) |
 | GGUF Q8_0 | ~34 GB | Ollama / llama.cpp |
 | GGUF Q5_K_M | ~26 GB | Ollama / llama.cpp |
+</div>
 
 > **Access:** Preview weights are gated (closed beta). Request access on the model card, then authenticate before downloading.
 
