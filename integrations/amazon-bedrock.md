@@ -42,6 +42,16 @@ The integration also includes [S3Downloader](https://docs.haystack.deepset.ai/do
 
 To use this integration, set the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/docs/secret-management) arguments. 
 
+Once logged into your account, locate these keys under the IAM user’s “Security Credentials” section. For detailed guidance, refer to the documentation on [Managing access keys for IAM users](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
+
+```python
+from getpass import getpass
+
+os.environ["AWS_ACCESS_KEY_ID"] = getpass("aws_access_key_id: ")
+os.environ["AWS_SECRET_ACCESS_KEY"] = getpass("aws_secret_access_key: ")
+os.environ["AWS_DEFAULT_REGION"] = input("aws_region_name: ")
+```
+
 > Note: Make sure the region you set supports Amazon Bedrock.
 For using `S3Downloader`, you also need to set `FILE_ROOT_PATH` (path where files will be downloaded).
 

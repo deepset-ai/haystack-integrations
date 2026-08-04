@@ -8,10 +8,10 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/haystack-ai/
-repo: https://github.com/deepset-ai/haystack
+pypi: https://pypi.org/project/serperdev-haystack
+repo: https://github.com/deepset-ai/haystack-core-integrations
 type: Search & Extraction
-report_issue: https://github.com/deepset-ai/haystack/issues
+report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/serperdev.png
 version: Haystack 2.0
 toc: true
@@ -27,16 +27,16 @@ toc: true
 
 The `SerperDevWebSearch` component allows you to perform web searches using the [Serper.dev](https://serper.dev/) API. It retrieves relevant snippets and URLs that can be used directly in your Haystack applications, such as Retrieval-Augmented Generation (RAG) pipelines or with Haystack Agents.
 
-This component is part of the core `haystack-ai` package, meaning you do not need to install an external integration package to use it.
+This component is part of the `serperdev-haystack` integration package, maintained in [haystack-core-integrations](https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/serperdev).
 
 When you pass a query to `SerperDevWebSearch`, it returns a list of URLs and text snippets that are most relevant to your search.
 
 ## Installation
 
-Since the Serper.dev web search component is built into the core Haystack framework, you just need to install `haystack-ai`:
+Install the `serperdev-haystack` package:
 
 ```bash
-pip install haystack-ai
+pip install serperdev-haystack
 ```
 
 You will also need to get an API key from [Serper.dev](https://serper.dev/) and set it as an environment variable:
@@ -58,7 +58,7 @@ This integration provides the following component:
 Here is how you can use `SerperDevWebSearch` directly:
 
 ```python
-from haystack.components.websearch import SerperDevWebSearch
+from haystack_integrations.components.websearch.serperdev import SerperDevWebSearch
 from haystack.utils import Secret
 import os
 
@@ -89,7 +89,7 @@ You can integrate `SerperDevWebSearch` directly into a Generative QA pipeline to
 ```python
 import os
 from haystack import Pipeline
-from haystack.components.websearch import SerperDevWebSearch
+from haystack_integrations.components.websearch.serperdev import SerperDevWebSearch
 from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
@@ -130,4 +130,4 @@ print(response["llm"]["replies"][0].content)
 
 ## License
 
-`haystack-ai` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+`serperdev-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.

@@ -1,0 +1,4 @@
+{
+  "buildCommand": "./preview-build.sh",
+  "outputDirectory": "_site/public"
+}
