@@ -106,15 +106,18 @@ for doc in result["documents"]:
 | `pages_to_check` | `1` | How many result pages to scrape |
 | `proxy_country` | `None` | Two-letter country code for localised results |
 | `top_k` | `None` | Keep at most this many results |
+| `base_url` | `https://api.scrapeunblocker.com` | API base URL |
+| `timeout` | `180` | HTTP timeout in seconds |
 
 ### In a Pipeline
 
-Fetch a protected page and answer questions about it:
+Fetch a protected page and answer questions about it. `ScrapeUnblockerFetcher`
+already emits `Document` objects, so it connects straight to the prompt builder -
+no HTML-to-Document conversion step is needed:
 
 ```python
 from haystack import Pipeline
 from haystack.components.builders import ChatPromptBuilder
-from haystack.components.converters import HTMLToDocument
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 
@@ -130,12 +133,10 @@ prompt = [
 
 pipe = Pipeline()
 pipe.add_component("fetcher", ScrapeUnblockerFetcher())
-pipe.add_component("converter", HTMLToDocument())
 pipe.add_component("prompt_builder", ChatPromptBuilder(template=prompt, required_variables="*"))
 pipe.add_component("llm", OpenAIChatGenerator())
 
-pipe.connect("fetcher.documents", "converter.sources")
-pipe.connect("converter.documents", "prompt_builder.documents")
+pipe.connect("fetcher.documents", "prompt_builder.documents")
 pipe.connect("prompt_builder.prompt", "llm.messages")
 
 result = pipe.run(
