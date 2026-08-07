@@ -1,15 +1,16 @@
 ---
 layout: integration
 name: Live Tennis API
-description: Live tennis scores, matches and players as Haystack Documents for RAG and agent pipelines
+description: Live tennis scores, matches, players, head-to-heads, the 1968-2022 results archive, rankings and statistics as Haystack Documents for RAG and agent pipelines
 authors:
-    - name: Ben
+    - name: Live Tennis API
       socials:
-        github: bensynapse
+        github: livetennisapi
 pypi: https://pypi.org/project/livetennisapi-haystack/
 repo: https://github.com/livetennisapi/livetennisapi-haystack
 type: Data Ingestion
 report_issue: https://github.com/livetennisapi/livetennisapi-haystack/issues
+logo: /logos/livetennisapi.svg
 version: Haystack 2.0
 toc: true
 ---
@@ -21,21 +22,34 @@ toc: true
 - [Usage](#usage)
   - [LiveTennisMatchFetcher](#livetennismatchfetcher)
   - [LiveTennisPlayerSearch](#livetennisplayersearch)
+  - [LiveTennisH2HFetcher](#livetennish2hfetcher)
+  - [LiveTennisArchiveFetcher](#livetennisarchivefetcher)
+  - [LiveTennisRankingsFetcher](#livetennisrankingsfetcher)
+  - [LiveTennisMatchStatisticsFetcher](#livetennismatchstatisticsfetcher)
 - [License](#license)
 
 ## Overview
 
 The [Live Tennis API](https://livetennisapi.com) serves live scores, matches and player data
-across the ATP, WTA, Challenger, ITF and junior tours.
+across ATP, WTA, Challenger, ITF and juniors.
 
 This integration provides:
 
 - **`LiveTennisMatchFetcher`**: fetches live, upcoming or completed matches (optionally one
-  match by id, optionally filtered by tour) and returns them as Haystack `Document` objects.
-  Each Document's `content` is a clean human-readable match summary and its `meta` carries
-  the structured fields (ids, players, sets/games/points, server, winner).
+  match by id; filterable by tour, player, country and date range) and returns them as
+  Haystack `Document` objects. Each Document's `content` is a clean human-readable match
+  summary and its `meta` carries the structured fields (ids, players, sets/games/points,
+  server, winner).
 - **`LiveTennisPlayerSearch`**: searches players by name (ranked players first) and returns
   them as `Document` objects with the same content/meta split.
+- **`LiveTennisH2HFetcher`**: the head-to-head record between two players — the results
+  archive (1968-2022) plus current matches (2023-now) in one Document. BASIC tier.
+- **`LiveTennisArchiveFetcher`**: the results archive — 1,485,752 matches 1968-2022, player
+  bios and career aggregates. BASIC tier.
+- **`LiveTennisRankingsFetcher`**: a published ranking table (ATP, WTA or the ITF circuits),
+  one Document per row, optionally as of a past week. PRO tier.
+- **`LiveTennisMatchStatisticsFetcher`**: in-play statistics for one match (aces, double
+  faults, serve split, hold/break percentages, break points). ULTRA tier.
 
 You need a Live Tennis API key to use this integration (a free tier is available). The
 components read it from the `LIVETENNISAPI_KEY` environment variable via Haystack's `Secret`,
@@ -131,6 +145,65 @@ for doc in result["documents"]:
 
 - **`api_key`**: API key. Defaults to the `LIVETENNISAPI_KEY` environment variable.
 - **`limit`**: Maximum number of players to return (1-200). Defaults to 10.
+
+### LiveTennisH2HFetcher
+
+The record between two players across the results archive (1968-2022) and current matches
+(2023-now), as one Document — who leads, the surface split, and the most recent meetings.
+Players are keyed by name; a fragment matching more than one player yields a Document tagged
+`meta["error"] = "ambiguous_name"` with the candidate list. Requires the BASIC tier.
+
+```python
+from livetennisapi_haystack import LiveTennisH2HFetcher
+
+h2h = LiveTennisH2HFetcher()
+result = h2h.run(p1="federer", p2="nadal")
+print(result["documents"][0].content)
+```
+
+### LiveTennisArchiveFetcher
+
+The results archive (1968-2022) in three modes: `mode="matches"` (one Document per result,
+filterable by player name, date range, round and level), `mode="players"` (bios) and
+`mode="career"` (career aggregates for one player). Requires the BASIC tier.
+
+```python
+from livetennisapi_haystack import LiveTennisArchiveFetcher
+
+archive = LiveTennisArchiveFetcher()
+result = archive.run(name="borg", from_="1980-01-01", to="1980-12-31", round="F")
+for doc in result["documents"]:
+    print(doc.content)
+```
+
+### LiveTennisRankingsFetcher
+
+A published ranking table — `system` is `"atp"`, `"wta"`, `"itf_jt"`, `"itf_mt"` or
+`"itf_wt"` — one Document per row, optionally as of a past week (`as_of="YYYY-MM-DD"`).
+Requires the PRO tier.
+
+```python
+from livetennisapi_haystack import LiveTennisRankingsFetcher
+
+rankings = LiveTennisRankingsFetcher()
+result = rankings.run(system="wta", limit=10)
+for doc in result["documents"]:
+    print(doc.content)
+```
+
+### LiveTennisMatchStatisticsFetcher
+
+In-play statistics for one match as a single Document — aces, double faults, the serve
+split, hold/break percentages and break points, rendering only the fields the API holds.
+Requires the ULTRA tier.
+
+```python
+from livetennisapi_haystack import LiveTennisMatchStatisticsFetcher
+
+stats = LiveTennisMatchStatisticsFetcher()
+result = stats.run(match_id=12345, p1_name="Alcaraz", p2_name="Sinner")
+print(result["documents"][0].content)
+```
 
 ## License
 
