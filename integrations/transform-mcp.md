@@ -23,12 +23,14 @@ toc: true
 
 ## Overview
 
-**[Unstructured Transform](https://docs.unstructured.io/transform/overview)** turns any file into agent-ready data, called directly from your agent with no separate pipeline to wire up. It is Unstructured's document-processing pipeline, exposed as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://mcp.transform.unstructured.io`. Drop in a PDF, spreadsheet, scan, or email and get back partitioned, enriched, chunked, and embedded output ready for RAG, vector stores, or agent memory, with tables and layout intact. It exposes four tools:
+**[Unstructured Transform](https://docs.unstructured.io/transform/overview)** turns any file into agent-ready data, called directly from your agent with no separate pipeline to wire up. It is Unstructured's document-processing pipeline, exposed as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://mcp.transform.unstructured.io`. Drop in a PDF, spreadsheet, scan, or email and get back partitioned, enriched, chunked, and embedded output ready for RAG, vector stores, or agent memory, with tables and layout intact. The server exposes seven tools; the four below cover the document-processing pipeline this integration focuses on:
 
 - `start_transform_job`: submits one or more files (by URL or a previously returned reference) for processing and returns a `job_id` right away; the job runs asynchronously through configurable stages (`partition` -> `enrich` -> `chunk` -> `embed`)
 - `check_job_status`: polls a job's status until it reaches `COMPLETED`
 - `get_job_results`: fetches a completed job's rendered output as markdown, JSON, HTML, or plain text
 - `request_file_upload_url`: returns a presigned upload URL and a durable reference for a local file that isn't already reachable over HTTPS
+
+The remaining three (`start_extraction_job`, `suggest_extraction_schema_for_file`, `get_instructions`) support schema-based structured data extraction and on-demand server guidance, outside the scope of this integration page.
 
 This integration doesn't ship its own package. Instead, it uses `mcp-haystack`'s `MCPToolset` to connect any Haystack agent to the Transform MCP server over Streamable HTTP. The free tier includes 15,000 pages a month.
 
