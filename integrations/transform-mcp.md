@@ -59,13 +59,6 @@ for tool in toolset.tools:
     print(f"{tool.name}: {tool.description}")
 ```
 
-If your MCP client doesn't support native remote-MCP OAuth (or only supports local stdio servers), bridge to the hosted server with [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) instead:
-
-```bash
-npm install -g mcp-remote
-npx -y mcp-remote https://mcp.transform.unstructured.io
-```
-
 ## Examples
 
 The snippet below connects the toolset to a Haystack `Agent` and asks it to parse and chunk a PDF end-to-end. Because `start_transform_job` is asynchronous, the agent's system prompt walks it through the `start_transform_job` -> `check_job_status` -> `get_job_results` polling loop:
@@ -93,7 +86,7 @@ agent = Agent(
 
 Transform jobs are asynchronous. When asked to process a document:
 1. Call `start_transform_job` with the file reference(s) and the requested processing stages. This returns a `job_id` immediately; the job itself runs in the background.
-2. Call `check_job_status` with that `job_id`, repeating until the status is COMPLETED.
+2. Call `check_job_status` with that `job_id`, waiting a few seconds between calls, repeating until the status is COMPLETED.
 3. Call `get_job_results` with the `job_id` to fetch the rendered output, and summarize it for the user.
 """,
 )
