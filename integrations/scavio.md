@@ -153,6 +153,6 @@ a Haystack agent, use either:
 
 The endpoint reference lives at [scavio.dev/docs](https://scavio.dev/docs).
 
-### License
+## License
 
 `scavio-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
