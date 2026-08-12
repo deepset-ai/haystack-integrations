@@ -39,10 +39,10 @@ available to the key's plan.
 
 ## Installation
 
-Install the component directly from its public repository:
+Install the released component from PyPI:
 
 ```bash
-pip install "adanos-haystack @ git+https://github.com/adanos-software/adanos-haystack.git"
+pip install "adanos-haystack==0.1.1"
 ```
 
 Provide the API key through the `ADANOS_API_KEY` environment variable.
