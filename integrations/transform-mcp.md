@@ -23,14 +23,9 @@ toc: true
 
 ## Overview
 
-**[Unstructured Transform](https://docs.unstructured.io/transform/overview)** turns any file into agent-ready data, called directly from your agent with no separate pipeline to wire up. It is Unstructured's document-processing pipeline, exposed as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://mcp.transform.unstructured.io`. Drop in a PDF, spreadsheet, scan, or email and get back partitioned, enriched, chunked, and embedded output ready for RAG, vector stores, or agent memory, with tables and layout intact. The server exposes seven tools; the four below cover the document-processing pipeline this integration focuses on:
+**[Unstructured Transform](https://docs.unstructured.io/transform/overview)** turns any file into agent-ready data, called directly from your agent with no separate pipeline to wire up. It is Unstructured's document-processing pipeline, exposed as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://mcp.transform.unstructured.io`. Drop in a PDF, spreadsheet, scan, or email and get back partitioned, enriched, chunked, and embedded output ready for RAG, vector stores, or agent memory, with tables and layout intact.
 
-- `start_transform_job`: submits one or more files (by URL or a previously returned reference) for processing and returns a `job_id` right away; the job runs asynchronously through configurable stages (`partition` -> `enrich` -> `chunk` -> `embed`)
-- `check_job_status`: polls a job's status until it reaches `COMPLETED`
-- `get_job_results`: fetches a completed job's rendered output as markdown, JSON, HTML, or plain text
-- `request_file_upload_url`: returns a presigned upload URL and a durable reference for a local file that isn't already reachable over HTTPS
-
-The remaining three (`start_extraction_job`, `suggest_extraction_schema_for_file`, `get_instructions`) support schema-based structured data extraction and on-demand server guidance, outside the scope of this integration page.
+The pipeline itself runs asynchronously as a job: submit a file for processing, poll until it's done, then fetch the rendered result; a separate helper mints an upload URL for files that aren't already reachable over HTTPS. Unstructured adds tools and capabilities to this server as they ship new features, so rather than list exact tool names and a fixed count here (which would go stale the next time they do), the snippets below discover the live toolset at connect time and let the agent match tools to the task by their description.
 
 This integration doesn't ship its own package. Instead, it uses `mcp-haystack`'s `MCPToolset` to connect any Haystack agent to the Transform MCP server over Streamable HTTP. The free tier includes 15,000 pages a month.
 
@@ -63,7 +58,7 @@ for tool in toolset.tools:
 
 ## Examples
 
-The snippet below connects the toolset to a Haystack `Agent` and asks it to parse and chunk a PDF end-to-end. Because `start_transform_job` is asynchronous, the agent's system prompt walks it through the `start_transform_job` -> `check_job_status` -> `get_job_results` polling loop:
+The snippet below connects the toolset to a Haystack `Agent` and asks it to parse and chunk a PDF end-to-end. Because job submission is asynchronous, the agent's system prompt walks it through a submit -> poll -> fetch flow, described by behavior rather than by hardcoded tool name so it keeps working as Unstructured renames or adds tools:
 
 ```python
 from haystack.components.agents import Agent
@@ -84,12 +79,12 @@ toolset = MCPToolset(server_info=server_info, eager_connect=True)
 agent = Agent(
     chat_generator=AnthropicChatGenerator(model="claude-opus-4-6"),
     tools=toolset,
-    system_prompt="""You are a document-processing assistant with access to Unstructured Transform MCP tools.
+    system_prompt="""You are a document-processing assistant with access to Unstructured Transform MCP tools. Check the tools available to you and use whichever ones match the steps below by description, since exact tool names may change over time.
 
 Transform jobs are asynchronous. When asked to process a document:
-1. Call `start_transform_job` with the file reference(s) and the requested processing stages. This returns a `job_id` immediately; the job itself runs in the background.
-2. Call `check_job_status` with that `job_id`, waiting a few seconds between calls, repeating until the status is COMPLETED.
-3. Call `get_job_results` with the `job_id` to fetch the rendered output, and summarize it for the user.
+1. Submit the file reference(s) and the requested processing stages to start a processing job. This returns a job ID immediately; the job itself runs in the background.
+2. Check the job's status, waiting a few seconds between checks, until it reports as complete.
+3. Fetch the job's rendered output using its job ID, and summarize it for the user.
 """,
 )
 
