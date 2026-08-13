@@ -35,11 +35,10 @@ across ATP, WTA, Challenger, ITF and juniors.
 
 This integration provides:
 
-- **`LiveTennisMatchFetcher`**: fetches live, upcoming or completed matches (optionally one
-  match by id; filterable by tour, player, country and date range) and returns them as
-  Haystack `Document` objects. Each Document's `content` is a clean human-readable match
-  summary and its `meta` carries the structured fields (ids, players, sets/games/points,
-  server, winner).
+- **`LiveTennisMatchFetcher`**: fetches live, upcoming, or completed matches (optionally a single
+  match by ID; filterable by tour) and returns them as Haystack `Document` objects. Each
+  Document's `content` is a clean human-readable match summary and its `meta` carries the
+  structured fields (IDs, players, sets/games/points, server, winner).
 - **`LiveTennisPlayerSearch`**: searches players by name (ranked players first) and returns
   them as `Document` objects with the same content/meta split.
 - **`LiveTennisH2HFetcher`**: the head-to-head record between two players — the results
