@@ -12,6 +12,7 @@ repo: https://github.com/avish006/upstash_haystack
 report_issue: https://github.com/avish006/upstash_haystack/issues
 type: Document Store
 version: Haystack 2.0
+logo: /logos/upstash.png
 toc: true
 ---
 
@@ -89,7 +90,7 @@ Once documents are indexed, use `UpstashEmbeddingRetriever` to retrieve them in 
 from haystack import Pipeline
 from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators import OpenAIChatGenerator
 from haystack.utils import Secret
 from haystack_integrations.document_stores.upstash import UpstashDocumentStore
 from haystack_integrations.components.retrievers.upstash import UpstashEmbeddingRetriever
@@ -110,7 +111,7 @@ query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder())
 query_pipeline.add_component("retriever", UpstashEmbeddingRetriever(document_store=document_store))
 query_pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-query_pipeline.add_component("generator", OpenAIGenerator(model="gpt-4o-mini"))
+query_pipeline.add_component("generator", OpenAIChatGenerator(model="gpt-4o-mini"))
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 query_pipeline.connect("retriever.documents", "prompt_builder.documents")
 query_pipeline.connect("prompt_builder", "generator")
