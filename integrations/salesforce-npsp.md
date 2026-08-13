@@ -10,6 +10,7 @@ pypi: https://pypi.org/project/haystack-salesforce-npsp
 repo: https://github.com/PhilanthroPy-Project/salesforce-npsp-integrations
 type: Data Ingestion
 report_issue: https://github.com/PhilanthroPy-Project/salesforce-npsp-integrations/issues
+logo: /logos/salesforce-npsp.png
 version: Haystack 2.0
 toc: true
 ---
@@ -48,6 +49,11 @@ export SF_USERNAME="you@yourorg.org"
 export SF_PASSWORD="your_password"
 export SF_TOKEN="your_security_token"
 ```
+
+This is the standard SOAP username-password-security-token flow supported by
+[`simple-salesforce`](https://github.com/simple-salesforce/simple-salesforce),
+suited to trusted server-side ingestion jobs like this one. OAuth 2.0 support
+may be added in a future release.
 
 ## Usage
 
