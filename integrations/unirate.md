@@ -3,7 +3,7 @@ layout: integration
 name: UniRate
 description: Currency exchange rates, conversion, and currency listings for Haystack pipelines via the UniRate API.
 authors:
-    - name: Unirate Team
+    - name: UniRate Team
       socials:
         github: UniRate-API
 pypi: https://pypi.org/project/haystack-unirate/
