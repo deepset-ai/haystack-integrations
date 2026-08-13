@@ -23,7 +23,7 @@ toc: true
 - [Installation](#installation)
 - [Usage](#usage)
   - [AlphaAINewsFetcher](#alphaainewsfetcher)
-  - [AlphaAIInsiderNewsFetcher](#alphaainsidernewsfetcher)
+  - [AlphaAIInsiderNewsFetcher](#alphaaiinsidernewsfetcher)
   - [In a Pipeline](#in-a-pipeline)
 - [Document shape](#document-shape)
 - [License](#license)
