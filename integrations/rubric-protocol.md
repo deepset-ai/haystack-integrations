@@ -61,8 +61,23 @@ from autogen_rubric import RubricClient, rubric_haystack_callback
 
 client = RubricClient(api_key=os.environ["RUBRIC_API_KEY"], background_queue=True)
 attest = rubric_haystack_callback(client, agent_id="support-rag")
+
+result = pipeline.run({"prompt_builder": {"query": query}})
 attest(result)
 ```
+
+The callback accepts the dict returned by `Pipeline.run()`, and also a
+`PipelineSnapshot` or `PipelineState` if you use
+[pipeline breakpoints](https://docs.haystack.deepset.ai/docs/pipeline-breakpoints).
+If it cannot resolve the pipeline outputs it logs at ERROR and writes **no**
+attestation rather than anchoring an empty one - check your logs for
+`[RubricHaystack] no attestation written` if a run you expected is missing from
+the verifier.
+
+Requires `autogen-rubric >= 1.10.3`. Earlier versions resolved outputs only from
+an object exposing `.pipeline_outputs` directly, so passing the `Pipeline.run()`
+dict silently attested an empty payload.
+
 
 Each attestation returns an ID resolvable on the public verifier, with its Hedera sequence number and ML-DSA-65 signature — evidence that stands on its own.
 
