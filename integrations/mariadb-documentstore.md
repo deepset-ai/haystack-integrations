@@ -44,6 +44,16 @@ docker run -d -p 3306:3306 \
   mariadb:11.7
 ```
 
+The `mariadb` connector is a C extension built from source, so it needs the MariaDB Connector/C system library (`mariadb_config`):
+
+```bash
+# Ubuntu / Debian
+sudo apt-get install -y libmariadb-dev
+
+# macOS
+brew install mariadb-connector-c
+```
+
 Use `pip` to install `mariadb-haystack`:
 
 ```bash
@@ -88,10 +98,19 @@ print(document_store.count_documents())
 
 ### Embedding Retrieval
 
+Install the `sentence-transformers-haystack` integration to use the embedders:
+
+```bash
+pip install sentence-transformers-haystack
+```
+
 ```python
 from haystack import Pipeline
-from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 from haystack.components.writers import DocumentWriter
+from haystack_integrations.components.embedders.sentence_transformers import (
+    SentenceTransformersDocumentEmbedder,
+    SentenceTransformersTextEmbedder,
+)
 from haystack_integrations.components.retrievers.mariadb import MariaDBEmbeddingRetriever
 
 # Indexing
@@ -112,9 +131,9 @@ results = querying.run({"embedder": {"text": "vector similarity search"}})
 ### Keyword Retrieval
 
 ```python
-from haystack_integrations.components.retrievers.mariadb import MariaDBBM25Retriever
+from haystack_integrations.components.retrievers.mariadb import MariaDBKeywordRetriever
 
-retriever = MariaDBBM25Retriever(document_store=document_store, top_k=3)
+retriever = MariaDBKeywordRetriever(document_store=document_store, top_k=3)
 results = retriever.run(query="vector search")
 ```
 
