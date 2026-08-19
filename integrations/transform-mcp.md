@@ -13,6 +13,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/unstructured.svg
 version: Haystack 2.0
 toc: true
+mcp: true
 ---
 ### **Table of Contents**
 - [Overview](#overview)
@@ -61,8 +62,12 @@ for tool in toolset.tools:
 The snippet below connects the toolset to a Haystack `Agent` and asks it to parse and chunk a PDF end-to-end. Because job submission is asynchronous, the agent's system prompt walks it through a submit -> poll -> fetch flow, described by behavior rather than by hardcoded tool name so it keeps working as Unstructured renames or adds tools:
 
 ```python
+import time
+from typing import Annotated
+
 from haystack.components.agents import Agent
 from haystack.dataclasses import ChatMessage
+from haystack.tools import tool
 from haystack_integrations.components.generators.anthropic import AnthropicChatGenerator
 from haystack_integrations.tools.mcp import MCPToolset, StreamableHttpServerInfo
 from haystack.utils import Secret
@@ -76,14 +81,23 @@ server_info = StreamableHttpServerInfo(
 )
 toolset = MCPToolset(server_info=server_info, eager_connect=True)
 
+
+@tool
+def wait(seconds: Annotated[int, "How many seconds to pause before the next tool call"]) -> str:
+    """Pause execution for the given number of seconds. A chat generator can't control timing on
+    its own, so call this between status checks instead of just waiting in the response text."""
+    time.sleep(seconds)
+    return f"Waited {seconds} second(s)."
+
+
 agent = Agent(
     chat_generator=AnthropicChatGenerator(model="claude-opus-4-6"),
-    tools=toolset,
+    tools=toolset + wait,
     system_prompt="""You are a document-processing assistant with access to Unstructured Transform MCP tools. Check the tools available to you and use whichever ones match the steps below by description, since exact tool names may change over time.
 
 Transform jobs are asynchronous. When asked to process a document:
 1. Submit the file reference(s) and the requested processing stages to start a processing job. This returns a job ID immediately; the job itself runs in the background.
-2. Check the job's status, waiting a few seconds between checks, until it reports as complete.
+2. Check the job's status. If it isn't complete yet, call the wait tool for a few seconds, then check again, repeating until it reports as complete.
 3. Fetch the job's rendered output using its job ID, and summarize it for the user.
 """,
 )
