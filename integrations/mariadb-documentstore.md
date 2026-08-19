@@ -31,7 +31,7 @@ toc: true
 
 ## Installation
 
-MariaDB 11.7+ introduced a native `VECTOR` datatype with MHNSW indexing, enabling efficient vector similarity search directly in the database.
+MariaDB 11.7+ introduced a native `VECTOR` datatype with HNSW-based indexing, enabling efficient vector similarity search directly in the database.
 
 To quickly set up a MariaDB instance, you can use Docker:
 
@@ -95,6 +95,8 @@ docs = [
 document_store.write_documents(docs)
 print(document_store.count_documents())
 ```
+
+Note: the documents above have no embeddings. To store documents with embeddings for vector similarity search, use the indexing pipeline in the [Embedding Retrieval](#embedding-retrieval) section below.
 
 ### Embedding Retrieval
 
