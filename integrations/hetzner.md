@@ -27,20 +27,12 @@ toc: true
 
 The [Hetzner Inference API](https://docs.hetzner.com/general/company-and-policy/experiments/inference/) serves open-weight LLMs from Hetzner's European data centers behind an OpenAI-compatible REST API. Once installed, you get access to the `HetznerChatGenerator`, which lets you call any of the models Hetzner serves.
 
-At the time of writing, two models are available, both with a 262,144-token context window and both accepting images alongside text:
+Two models are available, both with a 262,144-token context window and both accepting images alongside text:
 
-- `Qwen/Qwen3.6-35B-A3B-FP8` (mixture-of-experts, 35B total / 3B active) — the default
-- `Qwen3.8-27B` (dense)
-
-The selection changes while the service is in its experimental phase, and the `/v1/models` endpoint of the API is definitive. To see the current list:
-
-```bash
-curl -s https://inference.hetzner.com/api/v1/models -H "Authorization: Bearer $HETZNER_API_KEY"
-```
+- `Qwen/Qwen3.6-35B-A3B-FP8` 
+- `Qwen3.8-27B`
 
 In order to follow along with this guide, you'll need a Hetzner API token for the Inference API. Add it as an environment variable, `HETZNER_API_KEY`.
-
-Note that the Inference API is offered as an experiment: it is free of charge while it keeps that status, its availability is not guaranteed, and it is rate-limited per API key (4M input tokens, 100k output tokens and 10 requests per 60 seconds).
 
 ## Installation
 
