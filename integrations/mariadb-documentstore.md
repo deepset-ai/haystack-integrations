@@ -2,6 +2,7 @@
 layout: integration
 name: MariaDB
 description: A Document Store for storing and retrieval from MariaDB 11.7+ using native VECTOR support
+logo: /logos/mariadb.svg
 authors:
     - name: deepset
       socials:
