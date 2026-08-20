@@ -47,11 +47,8 @@ You can use `HetznerChatGenerator` as a standalone component, within a [pipeline
 Here's an example of using it as a standalone component:
 
 ```python
-import os
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.hetzner import HetznerChatGenerator
-
-os.environ["HETZNER_API_KEY"] = "YOUR_HETZNER_API_KEY"
 
 client = HetznerChatGenerator()  # defaults to "Qwen/Qwen3.6-35B-A3B-FP8"
 response = client.run(
@@ -63,11 +60,8 @@ print(response["replies"][0].text)
 `HetznerChatGenerator` also supports streaming responses if you pass a streaming callback:
 
 ```python
-import os
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.hetzner import HetznerChatGenerator
-
-os.environ["HETZNER_API_KEY"] = "YOUR_HETZNER_API_KEY"
 
 def show(chunk):                              # simple streaming callback
     print(chunk.content, end="", flush=True)
@@ -84,11 +78,8 @@ client.run([ChatMessage.from_user("Summarize RAG in two lines.")])
 The served models are multimodal, so you can pass images along with your prompt:
 
 ```python
-import os
 from haystack.dataclasses import ChatMessage, ImageContent
 from haystack_integrations.components.generators.hetzner import HetznerChatGenerator
-
-os.environ["HETZNER_API_KEY"] = "YOUR_HETZNER_API_KEY"
 
 image = ImageContent.from_url(
     "https://cdn.hetzner.de/cdn/public/Uploads/Finnland_Luftaufnahme-v2.jpg"
@@ -104,13 +95,10 @@ print(response["replies"][0].text)
 And here's how to use it in a pipeline:
 
 ```python
-import os
 from haystack import Pipeline
 from haystack.components.builders import ChatPromptBuilder
 from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.hetzner import HetznerChatGenerator
-
-os.environ["HETZNER_API_KEY"] = "YOUR_HETZNER_API_KEY"
 
 pipe = Pipeline()
 pipe.add_component("builder", ChatPromptBuilder())
