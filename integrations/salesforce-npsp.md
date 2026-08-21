@@ -10,7 +10,6 @@ pypi: https://pypi.org/project/haystack-salesforce-npsp
 repo: https://github.com/PhilanthroPy-Project/salesforce-npsp-integrations
 type: Data Ingestion
 report_issue: https://github.com/PhilanthroPy-Project/salesforce-npsp-integrations/issues
-logo: /logos/salesforce-npsp.png
 version: Haystack 2.0
 toc: true
 ---
