@@ -44,26 +44,51 @@ pip install haystack-unirate
 ## Usage
 
 Set your API key in the `UNIRATE_API_KEY` environment variable (get one free at
-[unirateapi.com](https://unirateapi.com)), then:
+[unirateapi.com](https://unirateapi.com)).
+
+The components are most useful when wired alongside other Haystack building
+blocks. Here a live rate is pulled with `UniRateExchangeRate`, injected into a
+prompt, and handed to a chat generator so the model can answer using up-to-date
+FX data:
 
 ```python
 from haystack import Pipeline
 from haystack.utils import Secret
-from haystack_unirate import UniRateConverter
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack_unirate import UniRateExchangeRate
 
 pipeline = Pipeline()
 pipeline.add_component(
-    "convert", UniRateConverter(api_key=Secret.from_env_var("UNIRATE_API_KEY"))
+    "rate", UniRateExchangeRate(api_key=Secret.from_env_var("UNIRATE_API_KEY"))
 )
+pipeline.add_component(
+    "prompt",
+    ChatPromptBuilder(
+        template=[
+            ChatMessage.from_user(
+                "The current USD to EUR exchange rate is {{ rate }}. "
+                "In one sentence, tell a traveler what 100 USD is worth in EUR."
+            )
+        ],
+        required_variables=["rate"],
+    ),
+)
+pipeline.add_component("llm", OpenAIChatGenerator())  # any Haystack chat generator
 
-result = pipeline.run(
-    {"convert": {"from_currency": "USD", "to_currency": "EUR", "amount": 100}}
-)
-print(result["convert"]["result"])  # e.g. 92.5
+# Feed the live rate into the prompt, then the prompt into the chat model.
+pipeline.connect("rate.rate", "prompt.rate")
+pipeline.connect("prompt.prompt", "llm.messages")
+
+result = pipeline.run({"rate": {"from_currency": "USD", "to_currency": "EUR"}})
+print(result["llm"]["replies"][0].text)
 ```
 
-All components support `to_dict` / `from_dict` for pipeline serialization and
-use Haystack `Secret` for API-key handling.
+`UniRateConverter` (amount conversion) and `UniRateCurrencies` (list supported
+codes) slot into pipelines the same way. All three components support
+`to_dict` / `from_dict` for pipeline serialization and use Haystack `Secret`
+for API-key handling.
 
 ## License
 
