@@ -25,6 +25,12 @@ toc: true
 
 ## Overview
 
+🚧 **This integration is discontinued.**
+
+Meta is winding down the hosted Llama API (public preview) on **July 6, 2026** — after that date the service shuts down and API requests return a sunset response. Llama *models* remain available; only the hosted Llama API is being retired. The `meta-llama-haystack` integration has been archived (see [deepset-ai/haystack-core-integrations#3544](https://github.com/deepset-ai/haystack-core-integrations/issues/3544)).
+
+**You can keep using Meta Llama models with Haystack via other integrations**, for example [Ollama](https://haystack.deepset.ai/integrations/ollama), [Llama.cpp](https://haystack.deepset.ai/integrations/llama_cpp), [Hugging Face API](https://haystack.deepset.ai/integrations/huggingface-api), [Amazon Bedrock](https://haystack.deepset.ai/integrations/amazon-bedrock), or [Groq](https://haystack.deepset.ai/integrations/groq).
+
 This integration supports Meta Llama models provided through Meta’s own inferencing infrastructure. To get the `LLAMA_API_KEY`, check out [the Llama API website](https://llama.developer.meta.com?utm_source=partner-haystack&utm_medium=website).
 
 You can use Llama models with `MetaLlamaChatGenerator`.
