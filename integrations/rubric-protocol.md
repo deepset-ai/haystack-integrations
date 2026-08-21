@@ -83,9 +83,9 @@ Each attestation returns an ID resolvable on the public verifier, with its Heder
 
 ## Latency and failure behaviour
 
-`background_queue=True` hands each attestation to a background sender, so your pipeline is never waiting on network I/O. It is **off by default**: a client constructed as `RubricClient(api_key=...)` submits synchronously inside the component's `run()`, and will block that pipeline run for up to `timeout` seconds (default 15) if the API is slow to respond. Set it explicitly in production.
+`background_queue=True` hands each attestation to a background sender, so your pipeline is not waiting on network I/O for non-high-risk attestations. It is **off by default**: a client constructed as `RubricClient(api_key=...)` submits synchronously inside the component's `run()`, and will block that pipeline run for up to `timeout` seconds (default 15) if the API is slow to respond. Set it explicitly in production.
 
-Attestation never breaks a pipeline. Any failure — network, authentication, or API error — is caught, logged at `WARNING`, and the replies are returned unchanged. The corollary is worth stating plainly for an audit tool: when attestation fails the pipeline still succeeds, and the evidence for that run is simply absent. Pass `on_dead_letter=` to be notified which attestations were dropped, rather than discovering the gap when someone asks for the record.
+Attestation never breaks a pipeline. Submission failures — network, authentication, or API errors — are caught, logged at `WARNING`, and the replies are returned unchanged. The corollary is worth stating plainly for an audit tool: when attestation fails the pipeline still succeeds, and the evidence for that run is simply absent. Pass `on_dead_letter=` to be notified which attestations were dropped, rather than discovering the gap when someone asks for the record.
 
 Attestations marked `risk="high"` are always sent synchronously, queue or not, so a high-risk decision is not lost to an abrupt process exit.
 
