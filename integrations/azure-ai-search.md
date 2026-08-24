@@ -8,7 +8,7 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/azure-ai-search
+pypi: https://pypi.org/project/azure-ai-search-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/azure-ai-search
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues

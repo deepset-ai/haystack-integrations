@@ -8,7 +8,7 @@ authors:
         github: deepset-ai
         twitter: deepset_ai
         linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/brave-search-haystack
+pypi: https://pypi.org/project/brave-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations
 type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
@@ -37,7 +37,7 @@ You need a Brave Search API key to use this integration. You can get one at [bra
 ## Installation
 
 ```bash
-pip install brave-search-haystack
+pip install brave-haystack
 ```
 
 ## Usage
@@ -132,4 +132,4 @@ asyncio.run(main())
 
 ### License
 
-`brave-search-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+`brave-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
