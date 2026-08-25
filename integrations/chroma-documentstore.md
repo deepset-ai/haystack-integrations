@@ -11,7 +11,7 @@ authors:
       github: deepset-ai
       twitter: deepset_ai
       linkedin: https://www.linkedin.com/company/deepset-ai/
-pypi: https://pypi.org/project/chroma-store
+pypi: https://pypi.org/project/chroma-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/chroma
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues

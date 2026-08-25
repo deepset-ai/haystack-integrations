@@ -32,7 +32,7 @@ version: Haystack 2.0
 
 ## Installation
 
-It's possible to connect to your **MongoDB** cluster on Azure Cosmos DB through the `MongoDBAtlasDocumentStore`. For that, install the `mongo-atlas-haystack` integration.
+It's possible to connect to your **MongoDB** cluster on Azure Cosmos DB through the `MongoDBAtlasDocumentStore`. For that, install the `mongodb-atlas-haystack` integration.
 ```bash
 pip install mongodb-atlas-haystack
 ```

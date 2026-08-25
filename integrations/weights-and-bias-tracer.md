@@ -92,4 +92,4 @@ the pipeline name you specified, when creating the `WeaveConnector`.
 
 ### License
 
-`weights_biases-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
+`weave-haystack` is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
