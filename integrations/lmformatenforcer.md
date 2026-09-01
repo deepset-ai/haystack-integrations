@@ -30,6 +30,8 @@ Install the format enforcer via pip:  `pip install lm-format-enforcer`
 
 Important note: LM Format Enforcer requires a LOCAL generator - currently only Local HuggingFace transformers are supported, vLLM support is coming soon.
 
+> **Note:** `LMFormatEnforcerLocalGenerator` wraps Haystack's `HuggingFaceLocalGenerator`, which was removed in Haystack 3.0. This integration therefore only works with Haystack 2.x.
+
 ### Creating a CharacterLevelParser
 The `CharacterLevelParser` is the class that connects the output parsing to the format enforcing. Two main parsers are available : `JsonSchemaParser` for JSON Schemas, and `RegexParser` for regular expressions.
 

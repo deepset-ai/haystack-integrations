@@ -104,7 +104,7 @@ Once you have documents in your `PineconeDocumentStore`, they can be used in any
 from haystack.utils import Secret
 from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
 from haystack_integrations.components.retrievers.pinecone import PineconeEmbeddingRetriever
 
@@ -130,7 +130,7 @@ query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder())
 query_pipeline.add_component("retriever", PineconeEmbeddingRetriever(document_store=document_store))
 query_pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-query_pipeline.add_component("generator", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-4"))
+query_pipeline.add_component("generator", OpenAIChatGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-4"))
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 query_pipeline.connect("retriever.documents", "prompt_builder.documents")
 query_pipeline.connect("prompt_builder", "generator")

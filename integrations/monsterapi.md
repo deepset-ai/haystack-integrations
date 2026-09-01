@@ -42,7 +42,7 @@ from haystack.utils import Secret
 from haystack.components.fetchers import LinkContentFetcher
 from haystack.components.converters import HTMLToDocument
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 
 fetcher = LinkContentFetcher()
 converter = HTMLToDocument()
@@ -55,7 +55,7 @@ Answer the given question: {{query}}
 Answer:
 """
 prompt_builder = PromptBuilder(template=prompt_template)
-llm = OpenAIGenerator(
+llm = OpenAIChatGenerator(
     api_key=Secret.from_env_var("MONSTER_API_KEY"),
     api_base_url="https://llm.monsterapi.ai/v1/",
     model="microsoft/Phi-3-mini-4k-instruct",
@@ -69,12 +69,12 @@ pipeline.add_component("llm", llm)
 
 pipeline.connect("fetcher.streams", "converter.sources")
 pipeline.connect("converter.documents", "prompt.documents")
-pipeline.connect("prompt.prompt", "llm.prompt")
+pipeline.connect("prompt.prompt", "llm.messages")
 
 result = pipeline.run({"fetcher": {"urls": ["https://developer.monsterapi.ai/docs/"]},
               "prompt": {"query": "What are the features of MonsterAPI?"}})
 
-print(result["llm"]["replies"][0])
+print(result["llm"]["replies"][0].text)
 ```
 
 ### Using `ChatGenerator`

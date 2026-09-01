@@ -46,7 +46,6 @@ pip install watsonx-haystack
 
 Once installed, you will have access to the Haystack components:
 - [`WatsonxChatGenerator`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxchatgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for chat generation.
-- [`WatsonxGenerator`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxgenerator): Use this component with IBM watsonx models like `granite-3-2b-instruct` for simple text generation tasks.
 - [`WatsonxDocumentEmbedder`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxdocumentembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating document embeddings.
 - [`WatsonxTextEmbedder`](https://docs.haystack.deepset.ai/reference/integrations-watsonx#watsonxtextembedder): Use this component with IBM watsonx models like `slate-125m-english-rtrvr` for generating text embeddings and retrieval.
 

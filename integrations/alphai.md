@@ -84,7 +84,7 @@ for doc in fetcher.run()["documents"]:
 ```python
 from haystack import Pipeline
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 
 from alphai_haystack import AlphaAINewsFetcher
 
@@ -97,12 +97,12 @@ template = """Summarize what moved {{ symbol }} today, using only these articles
 pipeline = Pipeline()
 pipeline.add_component("news", AlphaAINewsFetcher(min_relevance=6, collapse_stories=True))
 pipeline.add_component("prompt", PromptBuilder(template=template))
-pipeline.add_component("llm", OpenAIGenerator(model="gpt-4o-mini"))
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 pipeline.connect("news.documents", "prompt.documents")
 pipeline.connect("prompt", "llm")
 
 result = pipeline.run({"news": {"symbol": "NVDA"}, "prompt": {"symbol": "NVDA"}})
-print(result["llm"]["replies"][0])
+print(result["llm"]["replies"][0].text)
 ```
 
 Both components serialize with the rest of the pipeline (`to_dict` / `from_dict`); the API key

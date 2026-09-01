@@ -49,12 +49,12 @@ mastodon_fetcher.run(username="tuana@sigmoid.social")
 from haystack import Pipeline
 from haystack.utils import Secret
 from mastodon_fetcher_haystack.mastodon_fetcher import MastodonFetcher
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.builders import PromptBuilder
 
 mastodon_fetcher = MastodonFetcher()
 prompt_builder = PromptBuilder(template='YOUR_PROMPT_TEMPLATE')
-llm = OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"))
+llm = OpenAIChatGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"))
 
 pipe = Pipeline()
 pipe.add_component("fetcher", mastodon_fetcher)
@@ -62,7 +62,7 @@ pipe.add_component("prompt_builder", prompt_builder)
 pipe.add_component("llm", llm)
 
 pipe.connect("fetcher.documents", "prompt_builder.documents")
-pipe.connect("prompt_builder.prompt", "llm.prompt")
+pipe.connect("prompt_builder.prompt", "llm.messages")
 pipe.run(data={"fetcher": {"username": "tuana@sigmoid.social"}})
 ```
 

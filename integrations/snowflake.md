@@ -135,7 +135,7 @@ Using `SnowflakeTableRetriever` within a pipeline:
 from haystack import Pipeline
 from haystack.utils import Secret
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack_integrations.components.retrievers.snowflake import SnowflakeTableRetriever
 
 executor = SnowflakeTableRetriever(
@@ -149,7 +149,7 @@ executor = SnowflakeTableRetriever(
 pipeline = Pipeline()
 pipeline.add_component("builder", PromptBuilder(template="Describe this table: {{ table }}"))
 pipeline.add_component("snowflake", executor)
-pipeline.add_component("llm", OpenAIGenerator(model="gpt-4o"))
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o"))
 
 pipeline.connect("snowflake.table", "builder.table")
 pipeline.connect("builder", "llm")

@@ -94,13 +94,13 @@ No policies needed — just add the component and get instant visibility into co
 
 ```python
 from haystack import Pipeline
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack_integrations.components.connectors.tealtiger import TealTigerGovernanceComponent
 
 pipeline = Pipeline()
 pipeline.add_component("governance", TealTigerGovernanceComponent())
-pipeline.add_component("llm", OpenAIGenerator(model="gpt-4o-mini"))
-pipeline.connect("governance.text", "llm.prompt")
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
+pipeline.connect("governance.text", "llm.messages")
 
 result = pipeline.run({"governance": {"text": "What is the capital of France?"}})
 
@@ -117,7 +117,7 @@ Add a TealEngine with policies for full governance enforcement:
 
 ```python
 from haystack import Pipeline
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from tealtiger import TealEngine
 from haystack_integrations.components.connectors.tealtiger import TealTigerGovernanceComponent
 
@@ -131,8 +131,8 @@ pipeline.add_component(
     "governance",
     TealTigerGovernanceComponent(engine=engine, mode="ENFORCE"),
 )
-pipeline.add_component("llm", OpenAIGenerator(model="gpt-4o-mini"))
-pipeline.connect("governance.text", "llm.prompt")
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
+pipeline.connect("governance.text", "llm.messages")
 
 result = pipeline.run({"governance": {"text": "Process payment for card 4111-1111-1111-1111"}})
 # PII detected → action: "DENY"
