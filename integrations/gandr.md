@@ -40,8 +40,7 @@ pip install gandr-haystack
 ## Usage
 
 Set `GANDR_API_KEY` in your environment. Keys start with `gnd_`, and a free key
-with 100,000 characters is available at [gandr.ai](https://gandr.ai) without a
-card.
+with 50,000 tokens is available at [gandr.ai](https://gandr.ai).
 
 ```python
 from gandr_haystack import GandrTTS
