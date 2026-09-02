@@ -6,11 +6,14 @@ authors:
     - name: Tendem
       socials:
         github: Toloka
+pypi: https://pypi.org/project/mcp-haystack/
 repo: https://github.com/Toloka/tendem-mcp
 report_issue: https://github.com/Toloka/tendem-mcp/issues
 type: Tool Integration
+logo: /logos/tendem.svg
 version: Haystack 2.0
 toc: true
+mcp: true
 ---
 ### **Table of Contents**
 - [Overview](#overview)
@@ -50,8 +53,8 @@ pip install mcp-haystack
 ## Usage
 
 Interactive clients authenticate with OAuth 2.0 on first use. For scripts and pipelines,
-create an API key at [agent.tendem.ai/tokens](https://agent.tendem.ai/tokens) and pass it as
-an `Authorization` header:
+create an API key at [agent.tendem.ai/mcp](https://agent.tendem.ai/mcp) (the "Agent builders"
+tab) and pass it as an `Authorization` header:
 
 ```bash
 export TENDEM_AUTH="ApiKey <your-token>"
@@ -88,7 +91,14 @@ toolset = MCPToolset(
         url="https://mcp.tendem.ai/mcp?utm_hash=b3b2da7bd9",
         headers={"Authorization": Secret.from_env_var("TENDEM_AUTH")},
     ),
-    tool_names=["create_task", "read_chat", "send_message", "get_contract", "get_task"],
+    tool_names=[
+        "create_task",
+        "read_chat",
+        "send_message",
+        "get_contract",
+        "get_task",
+        "get_task_result",
+    ],
 )
 
 agent = Agent(
