@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: OpenZoo
-description: Use OpenZoo's signup-free, pay-per-call OpenAI-compatible API in Haystack
+description: Use OpenZoo's pay-per-call OpenAI-compatible API in Haystack via the local npx openzoo proxy
 authors:
     - name: OpenZoo
       socials:
@@ -22,28 +22,32 @@ toc: true
 ## Overview
 
 [OpenZoo](https://openzoo.fun) is an OpenAI-compatible inference provider with
-no account or signup: any API key value is accepted, and usage is paid per
-request — by card, or automatically via the x402 protocol when running the
-local gateway (`npx openzoo`, serving `http://localhost:8402/v1`).
+no account or signup: a small local proxy (`npx openzoo`, serving
+`http://localhost:8402/v1`) pays for each request via the x402 protocol from a
+local burner wallet. The proxy ignores the API key, so any non-empty value
+works.
 
 Because the API is OpenAI-compatible, it works with Haystack's built-in
 `OpenAIGenerator` and `OpenAIChatGenerator` — no extra package is needed.
 
-The model catalog at
-[`https://api.openzoo.fun/v1/models`](https://api.openzoo.fun/v1/models) is
-free to fetch and includes per-model pricing and context metadata. Model ids
-are namespaced, e.g. `z-ai/glm-5.3-flash`.
+The model catalog at `http://localhost:8402/v1/models` is free to fetch and
+includes per-model pricing and context metadata. Model ids are namespaced,
+e.g. `z-ai/glm-5.3-flash`.
 
 ## Usage
 
-Install Haystack:
+Install Haystack and start the OpenZoo proxy:
 
 ```bash
 pip install haystack-ai
+npx openzoo   # serves http://localhost:8402/v1
 ```
 
+`npx openzoo address` prints the proxy's wallet — fund it with USDC on Solana
+or Base; `npx openzoo balance` shows what is left.
+
 Use OpenZoo with `OpenAIChatGenerator` by pointing `api_base_url` at the
-endpoint. The API key can be any value (there is no signup):
+proxy. The API key can be any non-empty value (the proxy ignores it):
 
 ```python
 from haystack.components.generators.chat import OpenAIChatGenerator
@@ -51,8 +55,8 @@ from haystack.dataclasses import ChatMessage
 from haystack.utils import Secret
 
 generator = OpenAIChatGenerator(
-    api_key=Secret.from_token("sk-openzoo"),  # any value works
-    api_base_url="https://api.openzoo.fun/v1",
+    api_key=Secret.from_token("sk-openzoo"),  # ignored by the proxy
+    api_base_url="http://localhost:8402/v1",
     model="z-ai/glm-5.3-flash",
 )
 
@@ -60,9 +64,9 @@ response = generator.run(messages=[ChatMessage.from_user("Explain x402 in one se
 print(response["replies"][0].text)
 ```
 
-For a fully local setup, run `npx openzoo` and set
-`api_base_url="http://localhost:8402/v1"` — the gateway pays per call from a
-local burner wallet.
+The hosted endpoint `https://api.openzoo.fun/v1` answers HTTP 402 unless the
+caller pays x402 or presents an OpenZoo subscription key (`ozk_live_…`);
+Haystack cannot pay x402 itself, so use the local proxy.
 
 Streaming works through the standard `streaming_callback` parameter, since the
 endpoint supports SSE.
