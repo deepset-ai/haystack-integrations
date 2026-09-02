@@ -28,7 +28,7 @@ or regulated systems:
 
 - **It persists.** The store is a file on disk; reopening it returns the same documents, rather than
   starting empty each process.
-- **Its delete leaves nothing behind.** `delete_documents` removes the value from the bytes on disk, and
+- **Its erasure leaves nothing behind.** `erase_documents` removes the value from the bytes on disk, and
   with receipts enabled it writes a signed, content-free tombstone — so a deletion made for a data-subject
   request is provable, not merely done.
 
