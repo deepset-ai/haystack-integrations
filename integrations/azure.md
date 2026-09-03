@@ -111,7 +111,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", AzureOpenAIChatGenerator(azure_endpoint="https://example-resource.azure.openai.com/", azure_deployment="gpt-35-turbo"))
+pipe.add_component("llm", AzureOpenAIChatGenerator(azure_endpoint="https://example-resource.azure.openai.com/", azure_deployment="gpt-4.1-mini"))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 

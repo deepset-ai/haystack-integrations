@@ -185,7 +185,7 @@ document_store = InMemoryDocumentStore()
 docs_embedder = OpenAIDocumentEmbedder()
 text_embedder = OpenAITextEmbedder()
 retriever = InMemoryEmbeddingRetriever(document_store)
-generator = OpenAIChatGenerator(model="gpt-3.5-turbo")
+generator = OpenAIChatGenerator(model="gpt-4.1-mini")
 
 # Load documents from Apify
 print("Crawling and indexing documents...")
