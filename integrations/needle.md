@@ -53,7 +53,7 @@ Use the retriever in a Haystack pipeline. Example:
 
 ```python
 from haystack import Pipeline
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.builders import PromptBuilder
 
 prompt_template = """
@@ -69,7 +69,7 @@ Answer:
 """
 
 prompt_builder = PromptBuilder(template=prompt_template)
-llm = OpenAIGenerator()
+llm = OpenAIChatGenerator()
 
 # Add components to pipeline
 pipeline = Pipeline()
@@ -93,7 +93,7 @@ result = basic_rag_pipeline.run({
 })
 
 # Print final answer
-print(result['llm']['replies'][0])
+print(result['llm']['replies'][0].text)
 ```
 
 # Support 📞

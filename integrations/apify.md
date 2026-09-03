@@ -141,7 +141,7 @@ from dotenv import load_dotenv
 from haystack import Document, Pipeline
 from haystack.components.builders import PromptBuilder
 from haystack.components.embedders import OpenAIDocumentEmbedder, OpenAITextEmbedder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.utils.auth import Secret
@@ -185,7 +185,7 @@ document_store = InMemoryDocumentStore()
 docs_embedder = OpenAIDocumentEmbedder()
 text_embedder = OpenAITextEmbedder()
 retriever = InMemoryEmbeddingRetriever(document_store)
-generator = OpenAIGenerator(model="gpt-3.5-turbo")
+generator = OpenAIChatGenerator(model="gpt-4.1-mini")
 
 # Load documents from Apify
 print("Crawling and indexing documents...")
@@ -227,7 +227,7 @@ print("Running pipeline ... ")
 response = pipe.run({"embedder": {"text": question}, "prompt_builder": {"question": question}})
 
 print(f"question: {question}")
-print(f"answer: {response['llm']['replies'][0]}")
+print(f"answer: {response['llm']['replies'][0].text}")
 
 # Other questions
 examples = [
@@ -238,7 +238,7 @@ examples = [
 for example in examples:
     response = pipe.run({"embedder": {"text": example}, "prompt_builder": {"question": example}})
     print(f"question: {question}")
-    print(f"answer: {response['llm']['replies'][0]}")
+    print(f"answer: {response['llm']['replies'][0].text}")
 ```
 
 

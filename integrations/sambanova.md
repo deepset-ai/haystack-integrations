@@ -44,7 +44,7 @@ from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 import os
 
 os.environ["SAMBANOVA_API_KEY"] = "YOUR_SAMBANOVA_API_KEY"
@@ -75,7 +75,7 @@ Context:
 Question: {{ query }}?
 """
 
-llm = OpenAIGenerator(
+llm = OpenAIChatGenerator(
     api_key=Secret.from_env_var("SAMBANOVA_API_KEY"),
     api_base_url="https://api.sambanova.ai/v1",
     model="Meta-Llama-3.3-70B-Instruct",
@@ -94,7 +94,7 @@ query = "Functionalities of Sambanova API?"
 
 response = pipe.run({"prompt_builder": {"query": query}, "retriever": {"query": query}})
 
-print(response["llm"]["replies"])
+print(response["llm"]["replies"][0].text)
 ```
 
 ### Using `ChatGenerator`
@@ -127,6 +127,6 @@ while True:
     messages.append(ChatMessage.from_user(msg))
     response = generator.run(messages=messages)
     assistant_resp = response['replies'][0]
-    print("🤖 "+assistant_resp.content)
+    print("🤖 "+assistant_resp.text)
     messages.append(assistant_resp)
 ```

@@ -68,7 +68,7 @@ Now, you can run a Haystack pipeline within the same environment, resulting in t
 ```python
 from haystack import Document, Pipeline
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 
@@ -91,7 +91,7 @@ Answer:
 
 retriever = InMemoryBM25Retriever(document_store=document_store)
 prompt_builder = PromptBuilder(template=prompt_template)
-llm = OpenAIGenerator()
+llm = OpenAIChatGenerator()
 
 rag_pipeline = Pipeline()
 rag_pipeline.add_component("retriever", retriever)

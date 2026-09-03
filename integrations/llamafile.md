@@ -70,7 +70,7 @@ This will start an OpenAI-compatible server on `http://localhost:8081`.
 ## Usage with Haystack
 
 Since llamafile runs OpenAI-compatible servers, you can use it with Haystack components that interact with OpenAI models:
-[OpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/openaitextembedder), [OpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/openaidocumentembedder), [OpenAIGenerator](https://docs.haystack.deepset.ai/docs/openaigenerator), and [OpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/openaichatgenerator).
+[OpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/openaitextembedder), [OpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/openaidocumentembedder), and [OpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/openaichatgenerator).
 
 
 Let's start with an **indexing pipeline** that uses an embedding model.
@@ -111,17 +111,16 @@ from haystack.utils import Secret
 from haystack.components.writers import DocumentWriter
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.embedders import OpenAITextEmbedder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.builders import PromptBuilder
 
 
-prompt_template = """<s>[INST]
-Given these documents, answer the question.
+prompt_template = """Given these documents, answer the question.
 Documents:
 {% for doc in documents %}
     {{ doc.content }}
 {% endfor %}
-Question: {{question}} [/INST]
+Question: {{question}}
 Answer:
 """
 
@@ -135,7 +134,7 @@ rag_pipe.add_component("text_embedder",
 rag_pipe.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
 rag_pipe.add_component("prompt_builder", PromptBuilder(template=prompt_template))
 rag_pipe.add_component("generator",
-                        OpenAIGenerator(
+                        OpenAIChatGenerator(
                             api_key=Secret.from_token("sk-no-key-required"),  # for compatibility with the OpenAI API
                             model="LLaMA_CPP",
                             api_base_url="http://localhost:8080/v1")
@@ -150,7 +149,7 @@ query = "What is the best food in the world?"
 result = rag_pipe.run({"text_embedder":{"text": query},
                        "prompt_builder": {"question": query}})
 
-print(result["generator"]["replies"][0])
+print(result["generator"]["replies"][0].text)
 
 # According to the documents, the best food in the world is pizza.
 ```

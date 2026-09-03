@@ -24,7 +24,6 @@ toc: true
 - [Usage](#usage)
   - [NvidiaTextEmbedder](#nvidiatextembedder)
   - [NvidiaDocumentEmbedder](#nvidiadocumentembedder)
-  - [NvidiaGenerator](#nvidiagenerator)
   - [NvidiaChatGenerator](#nvidiachatgenerator)
   - [NvidiaRanker](#nvidiaranker)
 - [Self-host with NVIDIA NIM](#self-host-with-nvidia-nim)
@@ -70,8 +69,6 @@ This integration introduces the following components:
   
 - [**NvidiaDocumentEmbedder**](https://docs.haystack.deepset.ai/docs/nvidiadocumentembedder): A component for embedding documents using NVIDIA embedding models.
 
-- [**NvidiaGenerator**](https://docs.haystack.deepset.ai/docs/nvidiagenerator): A component for generating text using generative models.
-
 - [**NvidiaChatGenerator**](https://docs.haystack.deepset.ai/docs/nvidiachatgenerator): A component for chat completion using NVIDIA-hosted models. Takes a list of `ChatMessage` and returns `ChatMessage` replies.
 
 - [**NvidiaRanker**](https://docs.haystack.deepset.ai/docs/nvidiaranker): A component for ranking documents using NVIDIA reranking models.
@@ -106,27 +103,6 @@ documents = [
 document_embedder = NvidiaDocumentEmbedder(model="nvidia/llama-3.2-nv-embedqa-1b-v2")
 document_embedder.run(documents=documents)
 # {'documents': [Document(id=..., content: 'Pizza is made with dough and cheese', embedding: vector of size 2048), ...], 'meta': {'usage': {'prompt_tokens': 36, 'total_tokens': 36}}}
-```
-
-### NvidiaGenerator
-
-```python
-from haystack_integrations.components.generators.nvidia import NvidiaGenerator
-
-generator = NvidiaGenerator(
-    model="meta/llama-3.1-70b-instruct",
-    model_arguments={
-        "temperature": 0.2,
-        "top_p": 0.7,
-        "max_tokens": 1024,
-    },
-)
-
-result = generator.run(prompt="When was the Golden Gate Bridge built?")
-print(result["replies"])
-print(result["meta"])
-# ['The Golden Gate Bridge was built between 1933 and 1937...']
-# [{'role': 'assistant', 'finish_reason': 'stop'}]
 ```
 
 ### NvidiaChatGenerator
@@ -226,7 +202,7 @@ from haystack import Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders import PromptBuilder
-from haystack_integrations.components.generators.nvidia import NvidiaGenerator
+from haystack_integrations.components.generators.nvidia import NvidiaChatGenerator
 from haystack_integrations.components.embedders.nvidia import NvidiaTextEmbedder
 
 prompt = """Answer the query, based on the content in the documents.
@@ -243,7 +219,7 @@ Query: {{query}}
 text_embedder = NvidiaTextEmbedder(model="nvidia/llama-3.2-nv-embedqa-1b-v2")
 retriever = InMemoryEmbeddingRetriever(document_store=document_store)
 prompt_builder = PromptBuilder(template=prompt)
-generator = NvidiaGenerator(model="meta/llama-3.1-70b-instruct")
+generator = NvidiaChatGenerator(model="meta/llama-3.1-70b-instruct")
 
 rag_pipeline = Pipeline()
 
@@ -263,8 +239,8 @@ result = rag_pipeline.run(
         "prompt_builder": {"query": question},
     }
 )
-print(result)
-# {'text_embedder': {'meta': {'usage': {'prompt_tokens': 10, 'total_tokens': 10}}}, 'generator': {'replies': ['Tilde'], 'meta': [{'role': 'assistant', 'finish_reason': 'stop'}], 'usage': {'completion_tokens': 3, 'prompt_tokens': 101, 'total_tokens': 104}}}
+print(result["generator"]["replies"][0].text)
+# Tilde
 ```
 
 ## License

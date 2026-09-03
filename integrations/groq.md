@@ -45,7 +45,7 @@ from haystack.utils import Secret
 from haystack.components.fetchers import LinkContentFetcher
 from haystack.components.converters import HTMLToDocument
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 
 fetcher = LinkContentFetcher()
 converter = HTMLToDocument()
@@ -58,7 +58,7 @@ Answer the given question: {{query}}
 Answer:
 """
 prompt_builder = PromptBuilder(template=prompt_template)
-llm = OpenAIGenerator(
+llm = OpenAIChatGenerator(
     api_key=Secret.from_env_var("GROQ_API_KEY"),
     api_base_url="https://api.groq.com/openai/v1",
     model="mixtral-8x7b-32768",
@@ -72,12 +72,12 @@ pipeline.add_component("llm", llm)
 
 pipeline.connect("fetcher.streams", "converter.sources")
 pipeline.connect("converter.documents", "prompt.documents")
-pipeline.connect("prompt.prompt", "llm.prompt")
+pipeline.connect("prompt.prompt", "llm.messages")
 
 result = pipeline.run({"fetcher": {"urls": ["https://wow.groq.com/why-groq/"]},
               "prompt": {"query": "Why should I use Groq for serving LLMs?"}})
 
-print(result["llm"]["replies"][0])
+print(result["llm"]["replies"][0].text)
 ```
 
 ### Using `ChatGenerator`

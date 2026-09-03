@@ -59,7 +59,7 @@ import os
 
 from haystack import Pipeline
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from respan import Respan
 from respan_instrumentation_haystack import HaystackInstrumentor
 
@@ -74,13 +74,13 @@ pipeline.add_component(
     "prompt_builder",
     PromptBuilder(template="Answer the following question: {{question}}"),
 )
-pipeline.add_component("generator", OpenAIGenerator(model="gpt-5-mini"))
+pipeline.add_component("generator", OpenAIChatGenerator(model="gpt-5-mini"))
 pipeline.connect("prompt_builder", "generator")
 
 result = pipeline.run(
     {"prompt_builder": {"question": "What is the capital of France?"}}
 )
-print(result["generator"]["replies"][0])
+print(result["generator"]["replies"][0].text)
 
 respan.flush()
 ```

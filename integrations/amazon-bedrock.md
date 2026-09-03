@@ -36,7 +36,7 @@ pip install amazon-bedrock-haystack
 
 ## Usage
 
-Once installed, you will have access to [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockchatgenerator) and [AmazonBedrockGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockgenerator) components that support generative language models on Amazon Bedrock. 
+Once installed, you will have access to the [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockchatgenerator) component that supports generative language models on Amazon Bedrock. 
 You will also have access to the [AmazonBedrockTextEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrocktextembedder) and [AmazonBedrockDocumentEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentembedder), which can be used to compute embeddings.
 The integration also includes [S3Downloader](https://docs.haystack.deepset.ai/docs/s3downloader) that allows downloading files from AWS S3 buckets to the local filesystem. 
 
@@ -86,22 +86,6 @@ print(response)
 Output: 
 ```js
 {'replies': [ChatMessage(_role=<ChatRole.ASSISTANT: 'assistant'>, _content=[TextContent(text='El procesamiento del lenguaje natural (PLN) es una rama de la inteligencia artificial que permite a las computadoras comprender, interpretar y generar lenguaje humano.')], _name=None, _meta={'model': 'amazon.nova-pro-v1:0', 'index': 0, 'finish_reason': 'end_turn', 'usage': {'prompt_tokens': 21, 'completion_tokens': 31, 'total_tokens': 52}})]}
-```
-
-### AmazonBedrockGenerator 
-
-Most [supported models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html) can be used with `AmazonBedrockGenerator`, but we highly recommend using the `AmazonBedrockChatGenerator` instead.
-
-```python
-from haystack_integrations.components.generators.amazon_bedrock import AmazonBedrockGenerator
-
-generator = AmazonBedrockGenerator(model="mistral.mixtral-8x7b-instruct-v0:1")
-result = generator.run("Who is the best American actor?")
-print(result)
-```
-Output: 
-```shell
-{'replies': ['It\'s subjective to determine the "best" American actor as it depends on personal preferences, critical acclaim, and the impact of their work. However, some of the most renowned and influential American actors include:\n\n1. Daniel Day-Lewis - Known for his versatility and commitment to his roles, Day-Lewis is a three-time Academy Award winner for Best Actor.\n2. Meryl Streep - With a record 21 Academy Award nominations and three wins, Streep is widely regarded as one of the greatest actresses in American film history.\n3. Jack Nicholson - A three-time Academy Award winner and 12-time nominee, Nicholson is known for his iconic roles in films like "One Flew Over the Cuckoo\'s Nest," "Terms of Endearment," and "As Good as It Gets."\n4. Robert De Niro - A two-time Academy Award winner, De Niro is known for his collaborations with Martin Scorsese and his memorable roles in films like "Taxi Driver," "Raging Bull," and "The Godfather: Part II."\n5. Leonardo DiCaprio - A four-time Academy Award nominee and one-time winner, DiCaprio has had a successful career in both blockbusters and independent films.\n\nThese are just a few examples of highly acclaimed American actors, and there are many other talented actors who could be considered for this title.'], 'meta': {'RequestId': 'ed9c8566-0b13-4c08-ba72-c88be1aecd02', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Mon, 28 Apr 2025 11:00:15 GMT', 'content-type': 'application/json', 'content-length': '1322', 'connection': 'keep-alive', 'x-amzn-requestid': 'ed9c8566-0b13-4c08-ba72-c88be1aecd02', 'x-amzn-bedrock-invocation-latency': '7065', 'x-amzn-bedrock-output-token-count': '323', 'x-amzn-bedrock-input-token-count': '16'}, 'RetryAttempts': 0}}
 ```
 
 ### Embedders

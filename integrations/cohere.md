@@ -94,16 +94,16 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 ### Generative Models (LLMs)
 
-To use `/generate` models from Cohere, initialize a [CohereGenerator](https://docs.haystack.deepset.ai/docs/coheregenerator) with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable. You can then use this `CohereGenerator` in a question answering pipeline after the `PromptBuilder`.
+To use `/chat` models from Cohere, initialize a [CohereChatGenerator](https://docs.haystack.deepset.ai/docs/coherechatgenerator) with the model name. By default, the Cohere API key with be automatically read from either the `COHERE_API_KEY` environment variable or the `CO_API_KEY` environment variable. You can then use this `CohereChatGenerator` in a question answering pipeline after the `PromptBuilder`.
 
-Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and `CohereGenerator`:
+Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and `CohereChatGenerator`:
 
 ```python
 from haystack import Pipeline
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack_integrations.components.embedders.cohere import CohereTextEmbedder
-from haystack_integrations.components.generators.cohere import CohereGenerator
+from haystack_integrations.components.generators.cohere import CohereChatGenerator
 
 template = """
 Given the following information, answer the question.
@@ -119,7 +119,7 @@ pipe = Pipeline()
 pipe.add_component("embedder", CohereTextEmbedder(model="embed-multilingual-v3.0"))
 pipe.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", CohereGenerator(model="command-light"))
+pipe.add_component("llm", CohereChatGenerator(model="command-a-03-2025"))
 pipe.connect("embedder.embedding", "retriever.query_embedding")
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
@@ -130,7 +130,7 @@ pipe.run({
 })
 ```
 
-Similar to the above example, you can also use [`CohereChatGenerator`](https://docs.haystack.deepset.ai/docs/coherechatgenerator) to use Cohere `/chat` models and features (streaming, connectors) in your pipeline.
+You can also pass a list of `ChatMessage` objects, including a system message, by combining `CohereChatGenerator` with `ChatPromptBuilder`:
 
 ```python
 from haystack import Pipeline

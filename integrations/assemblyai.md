@@ -113,14 +113,14 @@ The metadata of the transcription document contains the transcription ID and url
 ### Summarization
 You can perform summarization with `AssemblyAITranscriber` by setting `"summarization": True`. When activated, `AssemblyAITranscriber` provides both a `transcription` object and a `summarization` output.
 
-The example below illustrates a generative QA pipeline that seamlessly integrates `AssemblyAITranscriber` and `OpenAIGenerator`. This pipeline generates answers based on the given question and the summarized transcription:
+The example below illustrates a generative QA pipeline that seamlessly integrates `AssemblyAITranscriber` and `OpenAIChatGenerator`. This pipeline generates answers based on the given question and the summarized transcription:
 
 ```python
 from haystack import Pipeline
 from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
 template = """
@@ -134,7 +134,7 @@ Question: {{ question }}
 summary_qa = Pipeline()
 summary_qa.add_component("transcriber", AssemblyAITranscriber(api_key=assemblyai_api_key))
 summary_qa.add_component("prompt_builder", PromptBuilder(template=template))
-summary_qa.add_component("llm", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-3.5-turbo"))
+summary_qa.add_component("llm", OpenAIChatGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-4.1-mini"))
 summary_qa.connect("transcriber.summarization", "prompt_builder.summary")
 summary_qa.connect("prompt_builder", "llm")
 
@@ -156,7 +156,7 @@ from haystack import Pipeline
 from haystack.utils import Secret
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from assemblyai_haystack.transcriber import AssemblyAITranscriber
 
 ## Write utterances into InMemoryDocumentStore
@@ -178,7 +178,7 @@ Question: {{ question }}
 pipe = Pipeline()
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store, top_k=3))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", OpenAIGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-3.5-turbo"))
+pipe.add_component("llm", OpenAIChatGenerator(api_key=Secret.from_token("YOUR_OPENAI_API_KEY"), model="gpt-4.1-mini"))
 
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
@@ -198,11 +198,5 @@ pipe.run({
 Since this filtering only returns the text where person A was the speaker, it can't find any relevant results. Run the same pipeline for speaker B information to get results.
 
 ```shell
-{'llm': {'replies': ['The documents do not provide explicit information on who is more affected by wildfires.'],
-  'meta': [{'model': 'gpt-3.5-turbo-0613',
-    'index': 0,
-    'finish_reason': 'stop',
-    'usage': {'completion_tokens': 15,
-     'prompt_tokens': 177,
-     'total_tokens': 192}}]}}
+{'llm': {'replies': [ChatMessage(_role=<ChatRole.ASSISTANT: 'assistant'>, _content=[TextContent(text='The documents do not provide explicit information on who is more affected by wildfires.')], _name=None, _meta={'model': 'gpt-4.1-mini-2025-04-14', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 15, 'prompt_tokens': 177, 'total_tokens': 192}})]}}
 ```

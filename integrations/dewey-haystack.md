@@ -61,7 +61,7 @@ from haystack import Pipeline
 from haystack_integrations.document_stores.dewey import DeweyDocumentStore
 from haystack_integrations.components.retrievers.dewey import DeweyRetriever
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.utils import Secret
 
 store = DeweyDocumentStore(
@@ -78,16 +78,16 @@ Question: {{ query }}
 pipeline = Pipeline()
 pipeline.add_component("retriever", DeweyRetriever(document_store=store, top_k=5))
 pipeline.add_component("prompt", PromptBuilder(template=prompt_template))
-pipeline.add_component("llm", OpenAIGenerator(model="gpt-4o-mini"))
+pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 
 pipeline.connect("retriever.documents", "prompt.documents")
-pipeline.connect("prompt.prompt", "llm.prompt")
+pipeline.connect("prompt.prompt", "llm.messages")
 
 result = pipeline.run({
     "retriever": {"query": "What are the key findings?"},
     "prompt": {"query": "What are the key findings?"},
 })
-print(result["llm"]["replies"][0])
+print(result["llm"]["replies"][0].text)
 ```
 
 ### Agentic research with DeweyResearchComponent

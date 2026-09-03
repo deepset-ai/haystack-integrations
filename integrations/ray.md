@@ -81,7 +81,7 @@ While pipeline is running locally, access the dashboard in the browser at [http:
 
 Once `ray-haystack` is installed, let's demonstrate how it works by running a simple example.
 
-We will build a pipeline that fetches RSS news headlines from the list of given URLs and converts each headline to a `Document` with content equal to the headline title. We then ask LLM (`OpenAIGenerator`) to create a news summary from the list of converted Documents, given a prompt `template`.
+We will build a pipeline that fetches RSS news headlines from the list of given URLs and converts each headline to a `Document` with content equal to the headline title. We then ask LLM (`OpenAIChatGenerator`) to create a news summary from the list of converted Documents, given a prompt `template`.
 
 ```python
 import io
@@ -93,7 +93,7 @@ import ray # Import ray
 from haystack import Document, component
 from haystack.components.builders import PromptBuilder
 from haystack.components.fetchers import LinkContentFetcher
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.joiners import DocumentJoiner
 from haystack.dataclasses import ByteStream
 
@@ -151,7 +151,7 @@ pipeline.add_component("business-xml-converter", XmlConverter(category="business
 pipeline.add_component("politics-xml-converter", XmlConverter(category="politics"))
 pipeline.add_component("document_joiner", DocumentJoiner(sort_by_score=False))
 pipeline.add_component("prompt_builder", PromptBuilder(template=template))
-pipeline.add_component("generator", OpenAIGenerator())  # "gpt-4o-mini" is the default model
+pipeline.add_component("generator", OpenAIChatGenerator())  # "gpt-4o-mini" is the default model
 
 pipeline.connect("tech-news-fetcher", "tech-xml-converter.sources")
 pipeline.connect("business-news-fetcher", "business-xml-converter.sources")
@@ -160,7 +160,7 @@ pipeline.connect("tech-xml-converter", "document_joiner")
 pipeline.connect("business-xml-converter", "document_joiner")
 pipeline.connect("politics-xml-converter", "document_joiner")
 pipeline.connect("document_joiner", "prompt_builder")
-pipeline.connect("prompt_builder", "generator.prompt")
+pipeline.connect("prompt_builder", "generator.messages")
 
 # Draw pipeline and save it to `pipe.png`
 # pipeline.draw("pipe.png")
@@ -197,7 +197,7 @@ pipeline_inputs = {
 result = pipeline.run(pipeline_inputs)
 
 # Print response from LLM
-print("RESULT: ", result["generator"]["replies"][0])
+print("RESULT: ", result["generator"]["replies"][0].text)
 ```
 
 Key takeways from the example:

@@ -43,7 +43,6 @@ To work with Azure components, you will need an Azure OpenAI API key, an [Azure 
 
 ### Components
 
-- [AzureOpenAIGenerator](https://docs.haystack.deepset.ai/docs/azureopenaigenerator)
 - [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/azureopenaichatgenerator)
 - [AzureOpenAITextEmbedder](https://docs.haystack.deepset.ai/docs/azureopenaitextembedder)
 - [AzureOpenAIDocumentEmbedder](https://docs.haystack.deepset.ai/docs/azureopenaidocumentembedder)
@@ -83,17 +82,17 @@ indexing_pipeline.run({"embedder": {"documents": documents}})
 
 ### Generative Models (LLMs)
 
-You can leverage Azure OpenAI models through two components: [AzureOpenAIGenerator](https://docs.haystack.deepset.ai/docs/azureopenaigenerator) and [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/azureopenaichatgenerator).
+You can leverage Azure OpenAI models through the [AzureOpenAIChatGenerator](https://docs.haystack.deepset.ai/docs/azureopenaichatgenerator) component.
 
-To use OpenAI models deployed through Azure services for text generation, initialize a `AzureOpenAIGenerator` with `azure_deployment` and `azure_endpoint`. You can then use the `AzureOpenAIGenerator` instance in a pipeline after the `PromptBuilder`.  
+To use OpenAI models deployed through Azure services for text generation, initialize an `AzureOpenAIChatGenerator` with `azure_deployment` and `azure_endpoint`. You can then use the `AzureOpenAIChatGenerator` instance in a pipeline after the `PromptBuilder`.  
 
-Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and  `AzureOpenAIGenerator`:
+Below is the example of generative questions answering pipeline using RAG with `PromptBuilder` and `AzureOpenAIChatGenerator`:
 
 ```python
 from haystack import Pipeline
 from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
 from haystack.components.builders.prompt_builder import PromptBuilder
-from haystack.components.generators import AzureOpenAIGenerator
+from haystack.components.generators.chat import AzureOpenAIChatGenerator
 
 os.environ["AZURE_OPENAI_API_KEY"] = "Your Azure OpenAI API key"
 os.environ["AZURE_OPENAI_AD_TOKEN"] = "Your Azure Active Directory Token"
@@ -112,7 +111,7 @@ pipe = Pipeline()
 
 pipe.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
 pipe.add_component("prompt_builder", PromptBuilder(template=template))
-pipe.add_component("llm", AzureOpenAIGenerator(azure_endpoint="https://example-resource.azure.openai.com/", azure_deployment="gpt-35-turbo"))
+pipe.add_component("llm", AzureOpenAIChatGenerator(azure_endpoint="https://example-resource.azure.openai.com/", azure_deployment="gpt-4.1-mini"))
 pipe.connect("retriever", "prompt_builder.documents")
 pipe.connect("prompt_builder", "llm")
 

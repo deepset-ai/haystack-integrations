@@ -116,7 +116,7 @@ from haystack import Pipeline
 from haystack.utils import Secret
 from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.builders import PromptBuilder
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack_integrations.components.retrievers.oracle import OracleEmbeddingRetriever
 
 prompt_template = """Answer the following query based on the provided context. If the context does
@@ -133,7 +133,7 @@ query_pipeline = Pipeline()
 query_pipeline.add_component("text_embedder", SentenceTransformersTextEmbedder())
 query_pipeline.add_component("retriever", OracleEmbeddingRetriever(document_store=document_store, top_k=5))
 query_pipeline.add_component("prompt_builder", PromptBuilder(template=prompt_template))
-query_pipeline.add_component("generator", OpenAIGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY"), model="gpt-4o"))
+query_pipeline.add_component("generator", OpenAIChatGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY"), model="gpt-4o"))
 
 query_pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
 query_pipeline.connect("retriever.documents", "prompt_builder.documents")

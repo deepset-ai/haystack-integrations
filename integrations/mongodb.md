@@ -65,7 +65,7 @@ and a generative pipeline that can be used for question answering.
 from haystack import Pipeline, Document
 from haystack.document_stores.types import DuplicatePolicy
 from haystack.components.writers import DocumentWriter
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder
 from haystack_integrations.document_stores.mongodb_atlas import MongoDBAtlasDocumentStore
@@ -98,7 +98,7 @@ indexing_pipe.connect("doc_embedder.documents", "doc_writer.documents")
 indexing_pipe.run({"doc_embedder": {"documents": documents}})
 
 # Build a RAG pipeline with a Retriever to get documents relevant to 
-# the query, a PromptBuilder to create a custom prompt and the OpenAIGenerator (LLM)
+# the query, a PromptBuilder to create a custom prompt and the OpenAIChatGenerator (LLM)
 prompt_template = """
 Given these documents, answer the question.\nDocuments:
 {% for doc in documents %}
@@ -112,7 +112,7 @@ rag_pipeline = Pipeline()
 rag_pipeline.add_component(instance=query_embedder, name="query_embedder")
 rag_pipeline.add_component(instance=MongoDBAtlasEmbeddingRetriever(document_store=document_store), name="retriever")
 rag_pipeline.add_component(instance=PromptBuilder(template=prompt_template), name="prompt_builder")
-rag_pipeline.add_component(instance=OpenAIGenerator(), name="llm")
+rag_pipeline.add_component(instance=OpenAIChatGenerator(), name="llm")
 rag_pipeline.connect("query_embedder", "retriever.query_embedding")
 rag_pipeline.connect("embedding_retriever", "prompt_builder.documents")
 rag_pipeline.connect("prompt_builder", "llm")
