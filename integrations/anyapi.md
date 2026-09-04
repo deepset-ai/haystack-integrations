@@ -6,6 +6,7 @@ authors:
   - name: AnyAPI
     socials:
       github: getanyapi-com
+pypi: https://pypi.org/project/anyapi-haystack/
 repo: https://github.com/getanyapi-com/integrations/tree/main/anyapi-haystack
 report_issue: https://github.com/getanyapi-com/integrations/issues
 type: Tool Integration
@@ -53,10 +54,8 @@ export ANYAPI_API_KEY="..."
 
 ## Installation
 
-The package is not on PyPI yet. Install it from its directory in the source repository:
-
 ```bash
-pip install "git+https://github.com/getanyapi-com/integrations.git#subdirectory=anyapi-haystack"
+pip install anyapi-haystack
 ```
 
 It requires Python 3.10 or newer and installs `haystack-ai` and the `getanyapi` SDK.
