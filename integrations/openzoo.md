@@ -31,8 +31,9 @@ Because the API is OpenAI-compatible, it works with Haystack's built-in
 `OpenAIGenerator` and `OpenAIChatGenerator` — no extra package is needed.
 
 The model catalog at `http://localhost:8402/v1/models` is free to fetch and
-includes per-model pricing and context metadata. Model ids are namespaced,
-e.g. `z-ai/glm-5.3-flash`.
+includes per-model pricing and context metadata. Model ids are bare model
+names, e.g. `claude-sonnet-5` or `gpt-4o-mini`; `auto` lets the proxy pick a
+model per request.
 
 ## Usage
 
@@ -57,7 +58,7 @@ from haystack.utils import Secret
 generator = OpenAIChatGenerator(
     api_key=Secret.from_token("sk-openzoo"),  # ignored by the proxy
     api_base_url="http://localhost:8402/v1",
-    model="z-ai/glm-5.3-flash",
+    model="auto",
 )
 
 response = generator.run(messages=[ChatMessage.from_user("Explain x402 in one sentence.")])
