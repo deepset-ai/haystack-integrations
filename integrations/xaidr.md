@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: xaidr
-description: Scan Haystack Agent inputs, tool calls, and outputs for prompt injection, jailbreaks, and leaked secrets — locally, with no backend.
+description: Scan Haystack Agent inputs, tool calls, and outputs for prompt injection, jailbreaks, and leaked secrets. Runs locally, with no backend.
 authors:
     - name: Delphi Security
       socials:
