@@ -10,6 +10,7 @@ pypi: https://pypi.org/project/xaidr/
 repo: https://github.com/delphisecurity/xaidr
 type: Monitoring Tool
 report_issue: https://github.com/delphisecurity/xaidr/issues
+logo: /logos/xaidr.png
 version: Haystack 2.0
 toc: true
 ---
