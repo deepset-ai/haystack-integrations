@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Reserp
-description: Minimal Google Search API passthrough for Haystack
+description: Google Search API v2 URL index for Haystack
 authors:
     - name: Reserp
       socials:
@@ -19,9 +19,9 @@ toc: true
 
 ## Overview
 
-[`Reserp`](https://reserp.ai/) is a Google Search API that accepts a complete Google Search URL and returns visible result blocks as structured JSON.
+[`Reserp`](https://reserp.ai/) is a Google Search API that accepts a complete Google Search URL. API v2 offers a flat URL index and a separate structured SERP response.
 
-`ReserpWebSearch` preserves Reserp as an unopinionated primitive inside Haystack. One component invocation makes one API request and exposes the public JSON response. Retries, timeouts, task queues, concurrency, caching, observability, and pagination remain under the pipeline's control.
+`ReserpWebSearch` uses `POST /v2/serp/urls`. One component invocation makes one API request and exposes the public JSON response. Its `urls[]` array is flat, page ordered, and deduplicated, with optional visible text for each URL. Retries, timeouts, task queues, concurrency, caching, observability, and pagination remain under the pipeline's control.
 
 ## Installation
 
@@ -39,18 +39,24 @@ export RESERP_API_KEY='your-api-key'
 
 ### Components
 
-- `ReserpWebSearch`: sends one complete Google Search URL to Reserp and exposes the public response under the `response` output.
+- `ReserpWebSearch`: sends one complete Google Search URL to the v2 URL-index endpoint and exposes the public response under the `response` output.
 
 ```python
 from haystack_integrations.components.websearch.reserp import ReserpWebSearch
 
 search = ReserpWebSearch()
-result = search.run(
+response = search.run(
     url="https://www.google.com/search?q=haystack+ai&gl=us&hl=en"
-)
+)["response"]
 
-print(result["response"])
+if response["ok"]:
+    for item in response["urls"]:
+        print(item.get("text"), item["url"])
 ```
+
+Every successful response includes `pagination.next_url`. Submit it in a later component call to advance, but do not treat its presence as proof that another page contains results or infer pagination from `len(response["urls"])`.
+
+Version 0.2 replaces the v1 recursive `results[]` response with the v2 flat `urls[]` index. It also exposes the v2 field names `request.url`, `page.url`, `pagination.next_url`, and `billing_source`. For typed result families, SERP features, and explicit positions, use Reserp's structured v2 endpoint or an official Reserp SDK.
 
 See the complete [Reserp API documentation](https://reserp.ai/docs) for request, response, errors, and pagination.
 
