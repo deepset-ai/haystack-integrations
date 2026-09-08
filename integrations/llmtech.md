@@ -46,7 +46,6 @@ export LLMTECH_API_KEY="your-api-key"
 ### Using `OpenAIGenerator`
 
 ```python
-import os
 from haystack.components.generators import OpenAIGenerator
 from haystack.utils import Secret
 
@@ -56,7 +55,7 @@ generator = OpenAIGenerator(
     model="unsloth/Qwen3.8-27B-NVFP4",
 )
 
-response = generator.run("What is the capital of Finland?")
+response = generator.run(prompt="What is the capital of Finland?")
 print(response["replies"][0])
 ```
 
@@ -74,7 +73,7 @@ generator = OpenAIChatGenerator(
 )
 
 messages = [ChatMessage.from_user("Summarise the following contract clause: ...")]
-response = generator.run(messages)
+response = generator.run(messages=messages)
 print(response["replies"][0].text)
 ```
 
