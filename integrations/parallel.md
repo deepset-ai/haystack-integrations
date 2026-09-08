@@ -10,7 +10,7 @@ authors:
         linkedin: https://www.linkedin.com/company/deepset-ai/
 pypi: https://pypi.org/project/parallel-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/parallel
-type: Model Provider
+type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/parallel.png
 version: Haystack 2.0
