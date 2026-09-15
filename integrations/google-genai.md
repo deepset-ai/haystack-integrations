@@ -28,7 +28,7 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Chat Generation with `gemini-3.1-flash-lite-preview`](#chat-generation-with-gemini-31-flash-lite-preview)
+  - [Chat Generation with `gemini-3.8-flash`](#chat-generation-with-gemini-38-flash)
   - [Streaming Chat Generation](#streaming-chat-generation)
   - [Function calling](#function-calling)
   - [Embeddings](#embeddings)
@@ -40,9 +40,9 @@ toc: true
 [Google Gen AI](https://ai.google.dev/) provides access to Google's Gemini models through the new Google Gen AI SDK. This integration enables the usage of Google's latest generative models via the updated API interface.
 Google Gen AI is compatible with both the Gemini Developer API and the Vertex AI API.
 
-Haystack supports the latest [Gemini models](https://ai.google.dev/models/gemini) for tasks such as **chat completion**, **function calling**, **streaming responses** and **embedding generation**.
+Haystack supports the latest [Gemini models](https://ai.google.dev/gemini-api/docs/models) for tasks such as **chat completion**, **function calling**, **streaming responses** and **embedding generation**.
 
-**Generative models:** `gemini-3.1-flash-lite-preview`, `gemini-3.1-pro-preview`, `gemini-3-flash-preview`, `gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-2.5-flash-lite`, and the Gemini 2.0 series (e.g. `gemini-2.0-flash`).
+**Generative models:** `gemini-3.8-flash`, `gemini-3.7-flash`, `gemini-3.6-flash`, `gemini-3.5-flash`, `gemini-3.5-flash-lite`, `gemini-3.1-flash-lite`, `gemini-3.1-pro-preview`, `gemini-3-flash-preview`, `gemini-2.5-flash`, `gemini-2.5-pro`, and `gemini-2.5-flash-lite`.
 
 **Embedding models:** `gemini-embedding-2` (multimodal, multilingual) and `gemini-embedding-001` (multilingual).
 
@@ -60,7 +60,7 @@ pip install google-genai-haystack
 
 Once installed, you will have access to the Haystack Chat components:
 
-- [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations), such as **gemini-3.1-flash-lite-preview** or **gemini-2.5-pro** for chat completion and function calling.
+- [`GoogleGenAIChatGenerator`](https://docs.haystack.deepset.ai/docs/googlegenaichatgenerator): Use this component with [Gemini models](https://ai.google.dev/gemini-api/docs/models), such as **gemini-3.8-flash** or **gemini-3.1-pro-preview** for chat completion and function calling.
 - [`GoogleGenAIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaidocumentembedder): Use this component with [Google GenAI embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-001** for generating embeddings for documents.
 - [`GoogleGenAITextEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaitextembedder): Use this component with [Google GenAI embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-001** for generating embeddings for text.
 - [`GoogleGenAIMultimodalDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/googlegenaimultimodaldocumentembedder): Use this component with [Google GenAI multimodal embedding models](https://ai.google.dev/gemini-api/docs/embeddings#embeddings-models), such as **gemini-embedding-2** for generating embeddings for text, image, PDF, video and audio.
@@ -101,9 +101,9 @@ from haystack_integrations.components.generators.google_genai import GoogleGenAI
 chat_generator = GoogleGenAIChatGenerator(api="vertex")
 ```
 
-### Chat Generation with `gemini-3.1-flash-lite-preview`
+### Chat Generation with `gemini-3.8-flash`
 
-To use Gemini model for chat generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAIChatGenerator` with `"gemini-3.1-flash-lite-preview"`:
+To use Gemini model for chat generation, set the `GOOGLE_API_KEY` or `GEMINI_API_KEY` environment variable and then initialize a `GoogleGenAIChatGenerator` with `"gemini-3.8-flash"`:
 
 ```python
 import os
@@ -113,7 +113,7 @@ from haystack_integrations.components.generators.google_genai import GoogleGenAI
 os.environ["GOOGLE_API_KEY"] = "YOUR-GOOGLE-API-KEY"
 
 # Initialize the chat generator
-chat_generator = GoogleGenAIChatGenerator(model="gemini-3.1-flash-lite-preview")
+chat_generator = GoogleGenAIChatGenerator(model="gemini-3.8-flash")
 
 # Generate a response
 messages = [ChatMessage.from_user("Tell me about the future of AI")]
@@ -144,7 +144,7 @@ def streaming_callback(chunk: StreamingChunk):
 
 # Initialize with streaming callback
 chat_generator = GoogleGenAIChatGenerator(
-    model="gemini-3.1-flash-lite-preview",
+    model="gemini-3.8-flash",
     streaming_callback=streaming_callback
 )
 
@@ -185,7 +185,7 @@ weather_tool = Tool(
 
 # Initialize chat generator with tools
 chat_generator = GoogleGenAIChatGenerator(
-    model="gemini-3.1-flash-lite-preview",
+    model="gemini-3.8-flash",
     tools=[weather_tool]
 )
 
