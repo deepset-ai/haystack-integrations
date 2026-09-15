@@ -26,10 +26,10 @@ and resumes in another process, plus offline checks for refusal and retry behavi
 
 ## Installation
 
-Install the versioned GitHub package:
+Install the versioned PyPI package:
 
 ```bash
-pip install 'pushary-haystack @ git+https://github.com/Pushary/pushary-haystack.git@v0.1.0'
+pip install pushary-haystack==0.1.0
 ```
 
 Phone delivery requires a Pushary Partner account, a server-side `PUSHARY_API_KEY`,
