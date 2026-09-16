@@ -10,6 +10,7 @@ authors:
 repo: https://github.com/Continuum-AI-Corp/OrcaReplay
 type: Monitoring Tool
 report_issue: https://github.com/Continuum-AI-Corp/OrcaReplay/issues
+logo: /logos/orcareplay.png
 version: Haystack 2.0
 toc: true
 ---
@@ -93,6 +94,14 @@ orca show last      # the timeline: model turns, tool calls, exit codes, files c
 orca graph last     # which event caused which
 ```
 
+**Embeddings replay too.** An earlier draft of this page said they did not — that `/v1/embeddings` was passed through to the live provider and absent from the recording. That was wrong, and the check written to confirm it disproved it instead. The ordinary RAG shape — `OpenAIDocumentEmbedder` to build the store, `OpenAITextEmbedder` on the query, `InMemoryEmbeddingRetriever`, then the generator — records and replays completely offline:
+
+```text
+info replay.done reused=1/1 exact=1 divergences=0 unmatched=0 retrieval=2/2 exit=0
+```
+
+`retrieval=2/2` is the part that matters, and it is reported separately for a reason: embeddings are not model exchanges, so `exact=1` says nothing about them. A replay that served the chat turn and refused both embedding calls would print the same `exact=1`. Both embedder components reach the proxy exactly as the generator does, because both leave `api_base_url` to the OpenAI client.
+
 Verified against `haystack-ai` 3.1.1 on Python 3.12, for both a standalone `OpenAIChatGenerator` and the full `Pipeline` above, using a deterministic local origin standing in for a provider so that "byte for byte" is a real comparison rather than a model happening to repeat itself.
 
 One version note: `OpenAIGenerator` (the non-chat one) no longer exists in 3.1.x — `haystack.components.generators.chat.openai.OpenAIChatGenerator` is the path that does.
@@ -102,7 +111,6 @@ One version note: `OpenAIGenerator` (the non-chat one) no longer exists in 3.1.x
 Stated up front rather than discovered later.
 
 - **`egress=blocked` means model-provider egress, not network isolation.** Replay serves the model's answers from the trace and calls no provider, but the rest of the pipeline still runs for real — a retriever still hits your document store, a custom component still makes its own calls. It is not a sandbox; run it inside one if that matters.
-- **Embedding calls are not captured.** The recorder claims the chat and messages paths; `/v1/embeddings` is passed through to the live provider and is absent from the recording, so a replay refuses it with an explicit error rather than serving a wrong vector. A pipeline that embeds at query time cannot be fully replayed today; one whose index is built beforehand and whose query path is chat-only replays fine.
 - **A matching replay is not a determinism result.** The model is not being re-asked — its recorded answers are served back. Whether a *fresh* run would behave the same way is a different question that replay cannot answer.
 - **A trace is a full transcript.** It holds whatever the run held, including anything pasted into a prompt. Scrubbing is best-effort — it matches known key shapes and high-entropy strings, and cannot know that a particular hostname or customer name is confidential — so review a trace before sharing it.
 
