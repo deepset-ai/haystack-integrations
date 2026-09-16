@@ -16,6 +16,7 @@ toc: true
 
 ### **Table of Contents**
 - [Overview](#overview)
+- [The rules](#the-rules)
 - [Installation](#installation)
 - [Material at ingest](#material-at-ingest)
 - [The turn the model answers](#the-turn-the-model-answers)
@@ -48,8 +49,19 @@ The two sets are disjoint, and neither is a stricter version of the other - this
 sensitivity knob. Pick by role: material is what the model works on, the request is what it answers.
 Your code knows which is which; it puts them in different places when it assembles the call.
 
-The check is a rule, not a model: no GPU, no network, no key, a few hundred kilobytes of base, and a
-fraction of a millisecond per turn on one core.
+## The rules
+
+A rule is a signature over words and the order they come in: an instruction aimed at the model,
+standing beside something it could act on. One rule covers many wordings, so the set is not a list
+of known phrases.
+
+The rules are built automatically from a large corpus of injected and clean text. What decides which
+ones are kept is the false-alarm rate: the whole set has to stay under about 0.1% of clean text, one
+alarm per thousand documents. A rule that pushes it over is dropped, whatever it catches.
+
+The base ships inside the package as one binary file of a few hundred kilobytes
+(`aicordon/picket/data/*.bin`). There is no rule server and nothing to download. A newer base comes
+with a new release, and `aicordon picket version` prints the one you have.
 
 ## Installation
 
@@ -101,17 +113,16 @@ in any mode: a typed jailbreak is not spliced into anything - it *is* the turn.
 
 ## What it does with your text
 
-The check is a **rule base, not a model**: a few hundred kilobytes of signatures compiled into the
-package and matched against the text. No inference, no GPU, no key. Before anything is matched the
-text is normalised - homoglyphs, zero-width characters, full-width forms and padded spacing are
-folded away - and the offsets reported still point into your original document.
+Before anything is matched the text is normalised - homoglyphs, zero-width characters, full-width
+forms and padded spacing are folded away - and the offsets reported still point into your original
+document.
 
 What that means for a pipeline it sits in:
 
-- **Nothing leaves the process.** The package imports no HTTP client and opens no socket. The base
-  is a file inside the installed package, read once when the component warms up; a base written to
-  a layout this build does not know is refused rather than read as best it can. There is no
-  telemetry to switch off.
+- **Nothing leaves the process.** The package imports no HTTP client and opens no socket, and needs
+  no GPU and no key. The base is read once when the component warms up; one written to a layout this
+  build does not know is refused rather than read as best it can. There is no telemetry to switch
+  off.
 - **Nothing is written anywhere.** No file is created, no log file is opened. On a finding the
   components emit one `logger.warning` through Haystack's own logger, carrying the threat names and
   the mode in force - never the text, never the matched span.
