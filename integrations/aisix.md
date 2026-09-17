@@ -7,7 +7,7 @@ authors:
       socials:
         github: Yilialinn
 repo: https://github.com/api7/aisix
-type: AI Gateway
+type: Custom Component
 report_issue: https://github.com/api7/aisix/issues
 version: Haystack 3.1
 toc: true
