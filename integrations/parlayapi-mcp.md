@@ -44,11 +44,11 @@ import os
 import sys
 
 
-def make_toolset():
+def make_toolset(tool_names=None):
     os.environ["HAYSTACK_TELEMETRY_ENABLED"] = "false"
     from haystack_integrations.tools.mcp import MCPToolset, StdioServerInfo
 
-    allowed = [
+    allowed = tool_names if tool_names is not None else [
         "parlayapi_live_sports",
         "parlayapi_source_quality",
         "parlayapi_book_coverage",
@@ -60,6 +60,7 @@ def make_toolset():
             "PARLAYAPI_BASE_URL": "https://parlay-api.com",
             "PARLAYAPI_KEY": "",
             "PARLAY_API_KEY": "",
+            "OPENAI_API_KEY": "",
         },
         max_retries=0,
     )
@@ -84,7 +85,69 @@ if __name__ == "__main__":
         toolset.close()
 ```
 
-## Read public sport counts with one explicit call
+## Use public sport metadata in a Haystack agent
+
+Save this example as `parlayapi_agent.py` alongside `parlayapi_discovery.py`.
+Set `OPENAI_API_KEY` in your local environment, then run `python parlayapi_agent.py`.
+The public sport metadata tool needs no ParlayAPI key. The model requires an
+OpenAI API key and may incur usage charges; its key is not passed to the MCP
+subprocess.
+
+The [Agent](https://docs.haystack.deepset.ai/docs/2.31/agent) receives an
+`MCPToolset` containing only `parlayapi_live_sports`. It can request the metadata,
+read the tool result and produce a short answer. The step limit bounds the loop,
+and `finally` closes the MCP connection even if the model or tool fails.
+
+```python
+import os
+
+os.environ["HAYSTACK_TELEMETRY_ENABLED"] = "false"
+
+from haystack.components.agents import Agent
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from haystack.utils import Secret
+
+from parlayapi_discovery import make_toolset
+
+toolset = make_toolset(tool_names=["parlayapi_live_sports"])
+try:
+    agent = Agent(
+        chat_generator=OpenAIChatGenerator(
+            model="gpt-5-mini",
+            api_key=Secret.from_env_var("OPENAI_API_KEY"),
+            timeout=30,
+            max_retries=0,
+        ),
+        tools=toolset,
+        system_prompt=(
+            "Use parlayapi_live_sports once to answer the question. "
+            "Report only sport keys and their reported event_count values, "
+            "for at most five sports. If the tool fails or returns no sports, "
+            "say so; do not invent counts. These counts do not establish "
+            "exhaustive coverage or odds freshness."
+        ),
+        exit_conditions=["text"],
+        max_agent_steps=3,
+        raise_on_tool_invocation_failure=True,
+    )
+    agent.warm_up()
+    result = agent.run(
+        messages=[ChatMessage.from_user("Which sports currently report events?")]
+    )
+    answer = result["last_message"].text
+    if not answer:
+        raise RuntimeError("Agent stopped before returning a text answer")
+    print(answer)
+finally:
+    toolset.close()
+```
+
+The agent flow was checked locally with a deterministic test generator and
+mocked metadata through the installed MCP server. No paid model call was made
+during that check; a live model's tool choices and wording may vary.
+
+## Read public sport counts without a model
 
 After saving the first example, save the following alongside it and run it when
 you want current public metadata. It makes one no-key call, prints only sport
@@ -127,8 +190,7 @@ Haystack 2.31.0, `mcp-haystack` 1.5.1 and `parlayapi-mcp` 0.3.7.
 
 ## Use the toolset in private research
 
-Once you choose to make API calls, use the initialized toolset with a Haystack
-[Agent](https://docs.haystack.deepset.ai/docs/agent) or
+Adapt the agent above or use the initialized toolset with a Haystack
 [ToolInvoker](https://docs.haystack.deepset.ai/docs/toolinvoker) before closing it.
 Each tool exposes its input schema; only invoke the specific operation your
 workflow needs.
