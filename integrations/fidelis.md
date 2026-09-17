@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Fidelis Memory
-description: Local-first, zero-LLM agent memory for Haystack agents — BM25, dense-vector, and reciprocal-rank-fusion retrieval that returns original passages verbatim through a Model Context Protocol server.
+description: Local-first, zero-LLM agent memory for Haystack agents, with dense-vector and optional BM25 plus reciprocal-rank-fusion retrieval through a Model Context Protocol server.
 authors:
     - name: Hermes Labs
       socials:
@@ -22,17 +22,21 @@ mcp: true
 
 ## Overview
 
-[Fidelis](https://github.com/hermes-labs-ai/fidelis) is a local-first memory and retrieval service for AI agents. It stores notes and session context locally (`~/.cogito/`) and retrieves them with BM25, dense-vector, and reciprocal-rank-fusion (RRF) scoring, returning the original stored passages verbatim rather than paraphrasing them. The default retrieval path makes no LLM call.
+[Fidelis](https://github.com/hermes-labs-ai/fidelis) is a local-first memory and retrieval service for AI agents. It stores notes and session context locally (`~/.cogito/`) and supports dense-vector retrieval plus optional BM25 and reciprocal-rank-fusion (RRF) scoring. The default retrieval path makes no LLM call. Its MCP recall and query tools return evidence excerpts from the stored passages rather than generated summaries.
 
-Fidelis ships as an MCP server (`fidelis mcp serve`, stdio transport) and is already published on the [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.hermes-labs-ai%2Ffidelis-memory/versions/0.1.0) as `io.github.hermes-labs-ai/fidelis-memory`. A Haystack agent can connect to it the same way it connects to any other MCP server, using Haystack's own `mcp-haystack` integration (`MCPTool`/`MCPToolset` with `StdioServerInfo`), to give the agent a private, verbatim-recall memory backend instead of a hosted memory platform.
+Fidelis ships as an MCP server (`fidelis mcp serve`, stdio transport) and is already published on the [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.hermes-labs-ai%2Ffidelis-memory/versions/0.1.0) as `io.github.hermes-labs-ai/fidelis-memory`. A Haystack agent can connect to it the same way it connects to any other MCP server, using Haystack's own `mcp-haystack` integration (`MCPTool`/`MCPToolset` with `StdioServerInfo`), to give the agent a private, locally stored memory backend instead of a hosted memory platform.
 
 On a checked-in 470-question LongMemEval-S retrieval run, Fidelis measured 83.2% R@1.
 
 ## Installation
 
 ```bash
-pip install fidelis-memory mcp-haystack
+pip install "fidelis-memory[hybrid]==0.1.0" mcp-haystack
+fidelis init
+fidelis health
 ```
+
+`fidelis init` configures and starts the local `fidelis-server` used by the MCP bridge. Follow the [Fidelis quickstart](https://github.com/hermes-labs-ai/fidelis#quickstart) first to install its local Ollama embedding prerequisite.
 
 ## Usage
 
@@ -40,10 +44,10 @@ pip install fidelis-memory mcp-haystack
 from haystack_integrations.tools.mcp import MCPTool, StdioServerInfo
 
 server_info = StdioServerInfo(
-    command="uvx",
-    args=["--from", "fidelis-memory", "fidelis", "mcp", "serve"],
+    command="fidelis",
+    args=["mcp", "serve"],
 )
-tool = MCPTool(name="fidelis_memory", server_info=server_info)
+tool = MCPTool(name="fidelis_recall", server_info=server_info)
 
 # Use directly, or add `tool` to a Haystack Agent's tools list
 result = tool.invoke(query="what did we decide about the retrieval backend?")
