@@ -11,7 +11,7 @@ repo: https://github.com/delphisecurity/xaidr
 type: Monitoring Tool
 report_issue: https://github.com/delphisecurity/xaidr/issues
 logo: /logos/xaidr.png
-version: Haystack 2.0
+version: Haystack 3.0
 toc: true
 ---
 
@@ -148,6 +148,7 @@ give it a branch:
 
 ```python
 from haystack.components.routers import ConditionalRouter
+from haystack.dataclasses import ChatMessage
 from xaidr.integrations.haystack import EXIT_REASON_BLOCKED
 
 router = ConditionalRouter(routes=[
@@ -192,7 +193,11 @@ from xaidr import Sensor
 sensor = Sensor(agent_id="ops-agent", enforcement_mode="monitor")
 sensor.block_tools(["drop_database"])
 
-agent = Agent(chat_generator=..., tools=[...], hooks=delphi_hooks(sensor=sensor))
+agent = Agent(
+    chat_generator=OpenAIChatGenerator(),
+    tools=[run_shell],
+    hooks=delphi_hooks(sensor=sensor),
+)
 ```
 
 ### Catching a leaked secret on output
@@ -215,7 +220,11 @@ hooks = delphi_hooks(agent_id="ops-agent", enforcement_mode="block")
 hooks.setdefault("before_llm", []).append(my_compaction_hook)
 hooks["before_tool"].append(my_confirmation_hook)
 
-agent = Agent(chat_generator=..., tools=[...], hooks=hooks)
+agent = Agent(
+    chat_generator=OpenAIChatGenerator(),
+    tools=[run_shell],
+    hooks=hooks,
+)
 ```
 
 Hooks at a point run in list order, so a `before_tool` hook you append sees the
@@ -231,6 +240,7 @@ explicit opt-in, since Haystack will not deserialize a class whose module is not
 on its trusted list:
 
 ```python
+from haystack import Pipeline
 from haystack.core.serialization import allow_deserialization_module
 
 allow_deserialization_module("xaidr.integrations.haystack")
@@ -249,20 +259,38 @@ internal fault lets the run proceed rather than taking your agent down.
 **Not covered, by design:**
 
 - **Tool results.** Only tool *arguments* are scanned. A tool that returns an
-  injected payload reaches the model verbatim. Haystack offers the seam, so you
-  can close this yourself:
+  injected payload reaches the model verbatim, in both modes.
+
+  Haystack does expose an `after_tool` seam, and you can use it to **record**
+  what a tool returned. Be clear about what that buys you: it is an audit trail,
+  not a control. The scan runs and emits its event, and the payload still
+  reaches the model on the next step.
 
   ```python
+  import logging
+
+  from haystack.components.agents.state import State
   from haystack.hooks import hook
 
-  @hook
-  def scan_tool_results(state):
-      for message in state.data.get("messages", []):
-          if message.is_from("tool"):
-              sensor.scan(message.tool_call_result.result, direction="input")
+  logger = logging.getLogger(__name__)
 
-  hooks.setdefault("after_tool", []).append(scan_tool_results)
+
+  @hook
+  def audit_tool_results(state: State) -> None:
+      for message in state.get("messages", []):
+          if message.is_from("tool"):
+              verdict = sensor.scan(message.tool_call_result.result, direction="input")
+              if verdict.is_blocked:
+                  logger.warning(
+                      "xaidr: tool result flagged (%s) - not blocked", verdict.category
+                  )
+
+  hooks.setdefault("after_tool", []).append(audit_tool_results)
   ```
+
+  Acting on that verdict means replacing the offending message in `state` — a
+  hook influences the run only by mutating `State` in place, so Haystack's API
+  supports it. This page does not document a blocking version.
 
 - **A `Pipeline` with no `Agent` in it.** These are the *Agent's* hooks. A RAG
   pipeline of retrievers, builders and generators has no Agent boundary for them
