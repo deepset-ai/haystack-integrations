@@ -14,6 +14,7 @@ type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 [![PyPI - Version](https://img.shields.io/pypi/v/pgvector-haystack.svg)](https://pypi.org/project/pgvector-haystack/)

@@ -14,6 +14,7 @@ report_issue: https://github.com/ArcadeData/arcadedb-haystack/issues
 logo: /logos/arcadedb.png
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 ### Table of Contents

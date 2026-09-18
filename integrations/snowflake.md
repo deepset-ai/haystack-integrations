@@ -17,6 +17,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 type: Data Ingestion
 logo: /logos/snowflake.png
 version: Haystack 2.0
+enterprise: true
 ---
 
 [![PyPI - Version](https://img.shields.io/pypi/v/snowflake-haystack.svg)](https://pypi.org/project/snowflake-haystack)

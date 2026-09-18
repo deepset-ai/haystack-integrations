@@ -14,6 +14,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/edenai.svg
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 ### **Table of Contents**
 - [Overview](#overview)

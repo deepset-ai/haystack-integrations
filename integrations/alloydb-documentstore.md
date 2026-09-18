@@ -21,6 +21,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/alloydb.png
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 [![PyPI - Version](https://img.shields.io/pypi/v/alloydb-haystack.svg)](https://pypi.org/project/alloydb-haystack/)
