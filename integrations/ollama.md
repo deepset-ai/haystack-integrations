@@ -22,6 +22,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/ollama.png
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 ### Table of Contents

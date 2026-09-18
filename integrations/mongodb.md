@@ -15,6 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/mongodb.png
 toc: true
 version: Haystack 2.0
+enterprise: true
 ---
 
 ### Table of Contents
