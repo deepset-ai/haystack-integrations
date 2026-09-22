@@ -121,7 +121,8 @@ toolset = MCPToolset(
     server_info=StreamableHttpServerInfo(
         url="https://mcp.usestring.ai/v1/mcp",
         token=Secret.from_env_var("STRING_API_KEY"),
-    )
+    ),
+    tool_names=["web_access_search", "web_access_fetch"],
 )
 
 agent = Agent(
@@ -139,8 +140,8 @@ result = agent.run(
 print(result["messages"][-1].text)
 ```
 
-Because the toolset is discovered from the server at connect time, no code changes when String adds a tool —
-the agent sees it on the next run.
+`tool_names` limits this agent to searching and fetching. `web_access_request` sends `POST`, `PUT` and `PATCH`
+requests that can change data on the target site, so give it only to an agent that is meant to write.
 
 ## License
 
