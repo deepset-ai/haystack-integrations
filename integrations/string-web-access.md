@@ -145,5 +145,5 @@ the agent sees it on the next run.
 ## License
 
 `mcp-haystack` is distributed under the terms of the
-[Apache-2.0](https://github.com/deepset-ai/haystack-core-integrations/blob/main/LICENSE.txt) license.
+[Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
 The String Web Access API is a commercial service; see [usestring.ai](https://usestring.ai) for its terms.
