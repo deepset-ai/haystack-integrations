@@ -13,7 +13,7 @@ repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integra
 type: Document Store
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/azure.png
-version: Haystack 2.0
+version: Haystack 3.0
 toc: true
 ---
 
