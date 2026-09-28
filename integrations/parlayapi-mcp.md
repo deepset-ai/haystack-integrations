@@ -29,7 +29,7 @@ billing and preference changes.
 Use Python 3.10 or newer in a private virtual environment:
 
 ```bash
-pip install "haystack-ai==2.31.0" "mcp-haystack==1.5.1" "parlayapi-mcp==0.3.7"
+pip install haystack-ai mcp-haystack parlayapi-mcp
 ```
 
 ## Discover tools without an account or model
@@ -93,7 +93,7 @@ The public sport metadata tool needs no ParlayAPI key. The model requires an
 OpenAI API key and may incur usage charges; its key is not passed to the MCP
 subprocess.
 
-The [Agent](https://docs.haystack.deepset.ai/docs/2.31/agent) receives an
+The [Agent](https://docs.haystack.deepset.ai/docs/agent) receives an
 `MCPToolset` containing only `parlayapi_live_sports`. It can request the metadata,
 read the tool result and produce a short answer. The step limit bounds the loop,
 and `finally` closes the MCP connection even if the model or tool fails.
@@ -185,8 +185,8 @@ finally:
 
 The public metadata call was tested through the published MCP server. Counts
 describe that endpoint's response, not exhaustive coverage or price freshness.
-Discovery alone does not validate API access. Tested versions: Python 3.12,
-Haystack 2.31.0, `mcp-haystack` 1.5.1 and `parlayapi-mcp` 0.3.7.
+Discovery alone does not validate API access. Example checks used Python 3.12,
+Haystack 3.2.0, `mcp-haystack` 1.5.1 and `parlayapi-mcp` 0.3.7.
 
 ## Use the toolset in private research
 
