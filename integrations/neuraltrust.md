@@ -103,7 +103,7 @@ The chat component accepts a nonempty list of system, user, and assistant messag
 
 ## Configuration and serialization
 
-Optional constructor settings include `api_base`, `direction`, `on_violation`, `timeout`, `max_retries`, and the `collector_key` identifier for service-token authentication. Run calls accept `session_id`, `consumer_id`, and JSON-compatible `attributes`.
+Constructor settings include `api_key` (a Haystack `Secret`, defaulting to `Secret.from_env_var("TRUSTGUARD_API_KEY")`), `api_base`, `direction`, `on_violation`, `timeout`, and `max_retries`. The optional `collector_key` identifies a collector when using a service token; it is not an API credential. Run calls accept `session_id`, `consumer_id`, and JSON-compatible `attributes`.
 
 The default environment-based Haystack Secret supports `Pipeline.dumps()` and `Pipeline.loads()` without serializing the API key value. Configure the same credential environment in the restoring process. Token-based Secrets are intentionally not serializable.
 
