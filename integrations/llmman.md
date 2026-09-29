@@ -22,6 +22,7 @@ toc: true
   - [Tool Calling](#tool-calling)
   - [Embedders](#embedders)
   - [Using the OpenAI-compatible API](#using-the-openai-compatible-api)
+  - [License](#license)
 
 ## Introduction
 
@@ -33,20 +34,39 @@ Because llmman speaks the Ollama API, you do not need a dedicated Haystack packa
 
 ## Installation
 
-Install llmman:
+Install llmman with a package manager:
+
+```bash
+# Homebrew (Linux / macOS)
+brew install llmmanorg/tap/llmman
+
+# Prebuilt binary via Cargo
+cargo binstall llmman
+
+# Windows (Scoop)
+scoop bucket add llmman https://github.com/llmmanorg/scoop-bucket
+scoop install llmman
+```
+
+Or download the installer, inspect it, then run it:
 
 ```bash
 # Linux / macOS
-curl -fsSL https://llmmanorg.github.io/install.sh | sh
-
-# Windows (PowerShell)
-irm https://llmmanorg.github.io/install.ps1 | iex
+curl -fsSLO https://llmmanorg.github.io/install.sh
+less install.sh
+sh install.sh
 ```
 
-Start the server and pull a model:
+```powershell
+# Windows (PowerShell)
+irm https://llmmanorg.github.io/install.ps1 -OutFile install.ps1
+notepad install.ps1
+.\install.ps1
+```
+
+Pull a model (this starts a background llmman daemon if none is running):
 
 ```bash
-llmman serve
 llmman pull gemma4
 ```
 
@@ -182,3 +202,7 @@ generator = OpenAIChatGenerator(
 response = generator.run([ChatMessage.from_user("What's Natural Language Processing?")])
 print(response["replies"][0].text)
 ```
+
+### License
+
+llmman is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
