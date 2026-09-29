@@ -37,10 +37,10 @@ Install llmman:
 
 ```bash
 # Linux / macOS
-curl -fsSL https://raw.githubusercontent.com/llmmanorg/llmman/main/install.sh | sh
+curl -fsSL https://llmmanorg.github.io/install.sh | sh
 
 # Windows (PowerShell)
-irm https://raw.githubusercontent.com/llmmanorg/llmman/main/install.ps1 | iex
+irm https://llmmanorg.github.io/install.ps1 | iex
 ```
 
 Start the server and pull a model:
