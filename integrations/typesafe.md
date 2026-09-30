@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/typesafe-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/typesafe
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/typesafe.png
 version: Haystack 2.0
 toc: true
 ---
