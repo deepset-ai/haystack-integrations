@@ -43,3 +43,7 @@ Note that there should be at least one of either the `pypi` or `repo` fields for
 Then, please add as much information and instructions about your Integration as possible as the body of your `.md` file.
 
 Open a Pull Request, and congrats, if all goes well, you will see your integration on the integrations page in no time 🥳
+
+## License
+
+This repository is licensed under the [Apache License 2.0](LICENSE).
