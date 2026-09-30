@@ -15,6 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 version: Haystack 2.0
 toc: true
 logo: /logos/llama_cpp.png
+enterprise: true
 ---
 
 ### Table of Contents

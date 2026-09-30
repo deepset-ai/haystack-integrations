@@ -15,6 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/jina.png
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 This integration allows users of Haystack to seamlessly use Jina AI's `jina-embeddings`and [reranking models](https://jina.ai/reranker/) in their pipelines. Haystack also integrates the [Jina Reader API](https://jina.ai/reader/).

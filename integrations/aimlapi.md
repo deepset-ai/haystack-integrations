@@ -20,6 +20,7 @@ logo: /logos/aimlapi.svg
 type: Model Provider
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 ### Table of Contents
