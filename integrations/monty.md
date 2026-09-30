@@ -12,6 +12,7 @@ pypi: https://pypi.org/project/monty-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/monty
 type: Tool Integration
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
+logo: /logos/pydantic.png
 version: Haystack 2.0
 toc: true
 ---
