@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Monty
-description: Let a Haystack Agent run Python code in Monty, a minimal and secure Python sandbox written in Rust by Pydantic
+description: Let a Haystack Agent run Python code in Monty, a minimal Python sandbox written in Rust by Pydantic
 authors:
     - name: deepset
       socials:
@@ -32,7 +32,7 @@ toc: true
 
 ## Overview
 
-[Monty](https://pydantic.dev/docs/monty/) is a minimal, secure Python interpreter written in Rust by
+[Monty](https://pydantic.dev/docs/monty/) is a minimal Python interpreter written in Rust by
 [Pydantic](https://pydantic.dev/), built to run code written by AI. It avoids the latency, complexity, and cost of a
 container-based sandbox: a new sandbox starts in under a millisecond from a running pool, on your own machine, with no
 service to set up and no API key.
