@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Monty
-description: Let a Haystack Agent run Python code in Monty, a minimal and secure Python sandbox written in Rust by Pydantic
+description: Run Python code in a minimal Python sandbox written in Rust by Pydantic
 authors:
     - name: deepset
       socials:
@@ -13,7 +13,7 @@ repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integra
 type: Tool Integration
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/pydantic.png
-version: Haystack 2.0
+version: Haystack 3.0
 toc: true
 ---
 
