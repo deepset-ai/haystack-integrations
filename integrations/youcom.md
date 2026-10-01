@@ -12,7 +12,7 @@ pypi: https://pypi.org/project/youcom-haystack
 repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integrations/youcom
 type: Search & Extraction
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
-logo: /logos/youcom.svg
+logo: /logos/youcom.png
 version: Haystack 2.0
 toc: true
 ---
