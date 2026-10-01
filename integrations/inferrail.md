@@ -39,39 +39,29 @@ works with it as-is, so no Haystack-specific package is needed. You
 point the generator at Inferrail and attach two headers to each run.
 
 The example below was validated with Haystack 3.2.0 and Inferrail
-0.4.7.
+0.4.9.
 
 ## Installation
 
 ```bash
-pip install haystack-ai inferrail==0.4.7
+pip install haystack-ai "inferrail>=0.4.9"
 ```
 
 ## Start Inferrail
 
-Inferrail holds the provider key; the Haystack process only needs the
-gateway URL. Save as `inferrail.yaml`:
+Inferrail runs inside your Haystack process. With your provider key in
+the environment (`export OPENAI_API_KEY=...`):
 
-```yaml
-providers:
-  openai: {type: openai, api_key_env: OPENAI_API_KEY}
-routes:
-  default: {provider: openai, model: gpt-4o-mini}
-receipts: {sink: sqlite, path: ./receipts.db}
-budgets: {enabled: true, path: ./budgets.db}
+```python
+import inferrail
+
+base_url = inferrail.start()   # the gateway on a background thread, on a free local port
 ```
 
-```bash
-export OPENAI_API_KEY=...              # only the gateway process sees it
-inferrail serve --config inferrail.yaml
-```
-
-In the Haystack process:
-
-```bash
-export INFERRAIL_BASE_URL="http://127.0.0.1:8000"
-export INFERRAIL_GATEWAY_TOKEN="unused"   # or your INFERRAIL_GATEWAY_TOKEN, if you set one
-```
+There's no config file and no second process. Receipts and budgets are
+kept in SQLite files in your user data directory. To run Inferrail as a
+separate gateway instead (for example one shared by several services),
+see [the recipe](https://github.com/domondi1/inferrail/blob/main/docs/recipes/agent-run-budget.md?ref=haystack-integrations#1-start-inferrail-with-budgets-on).
 
 ## Give each pipeline run a budget
 
@@ -79,8 +69,6 @@ Build the pipeline once. Each `pipeline.run(...)` passes its own run id
 and budget as request headers through `generation_kwargs`:
 
 ```python
-import os
-
 from haystack import Document, Pipeline
 from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
@@ -112,9 +100,9 @@ pipeline.add_component(
 pipeline.add_component(
     "llm",
     OpenAIChatGenerator(
-        api_key=Secret.from_env_var("INFERRAIL_GATEWAY_TOKEN"),
-        model="default",  # an Inferrail route name
-        api_base_url=f"{os.environ['INFERRAIL_BASE_URL'].rstrip('/')}/v1",
+        api_key=Secret.from_token("unused"),  # the provider key stays with Inferrail
+        model="gpt-4o-mini",
+        api_base_url=base_url,
         generation_kwargs={"max_tokens": 300},
     ),
 )
@@ -145,23 +133,25 @@ calls from an agent loop, shares that budget.
 Read the run's total cost afterwards:
 
 ```bash
-inferrail work support-ticket-4812 --config inferrail.yaml
+inferrail work support-ticket-4812
 ```
 
 ## When a run reaches its budget
 
 When the run's remaining budget can't cover a call, Inferrail refuses it
 with HTTP 402 before it reaches the provider. `OpenAIChatGenerator`
-raises it as `openai.APIStatusError` with `status_code == 402`, so you
-can stop the run or return a fallback answer:
+raises `openai.APIStatusError` with `status_code == 402`; inside
+`pipeline.run(...)` Haystack wraps it in `PipelineRuntimeError`. Catch
+that to stop the run or return a fallback answer:
 
 ```python
+from haystack.core.errors import PipelineRuntimeError
 from openai import APIStatusError
 
 try:
     answer = run_with_budget(question, run_id, budget_usd="0.05")
-except APIStatusError as e:
-    if e.status_code != 402:
+except PipelineRuntimeError as e:
+    if not (isinstance(e.__cause__, APIStatusError) and e.__cause__.status_code == 402):
         raise
     answer = "This request reached its budget."
 ```
