@@ -29,7 +29,7 @@ and resumes in another process, plus offline checks for refusal and retry behavi
 Install the versioned PyPI package:
 
 ```bash
-pip install pushary-haystack==0.1.0
+pip install pushary-haystack==0.1.1
 ```
 
 Phone delivery requires a Pushary Partner account, a server-side `PUSHARY_API_KEY`,
