@@ -22,6 +22,11 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Components](#components)
+  - [Chat Generation](#chat-generation)
+  - [Dense Embedding Models](#dense-embedding-models)
+  - [Sparse Embedding Models](#sparse-embedding-models)
+  - [Ranking Models](#ranking-models)
 
 ## Overview
 
@@ -49,8 +54,10 @@ Unless you are using a self-hosted TGI/TEI server, set your Hugging Face token a
 
 This integration provides several components to interact with Hugging Face APIs:
 - [`HuggingFaceAPIChatGenerator`](https://docs.haystack.deepset.ai/docs/huggingfaceapichatgenerator): chat generation with LLMs.
-- [`HuggingFaceAPITextEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapitextembedder): creates an embedding for text (used in query/RAG pipelines).
-- [`HuggingFaceAPIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapidocumentembedder): enriches documents with embeddings (used in indexing pipelines).
+- [`HuggingFaceAPITextEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapitextembedder): creates a dense embedding for text (used in query/RAG pipelines).
+- [`HuggingFaceAPIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapidocumentembedder): enriches documents with dense embeddings (used in indexing pipelines).
+- [`HuggingFaceTEISparseTextEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceteisparsetextembedder): creates a sparse embedding for text using a TEI endpoint (used in query pipelines).
+- [`HuggingFaceTEISparseDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceteisparsedocumentembedder): enriches documents with sparse embeddings using a TEI endpoint (used in indexing pipelines).
 - [`HuggingFaceTEIRanker`](https://docs.haystack.deepset.ai/docs/huggingfaceteiranker): ranks documents based on their similarity to the query, using a TEI endpoint.
 
 ### Chat Generation
@@ -58,7 +65,6 @@ This integration provides several components to interact with Hugging Face APIs:
 Use [`HuggingFaceAPIChatGenerator`](https://docs.haystack.deepset.ai/docs/huggingfaceapichatgenerator) with the Serverless Inference API (Inference Providers):
 
 ```python
-from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.huggingface_api import HuggingFaceAPIChatGenerator
 
 generator = HuggingFaceAPIChatGenerator(
@@ -79,7 +85,7 @@ generator = HuggingFaceAPIChatGenerator(
 )
 ```
 
-### Embedding Models
+### Dense Embedding Models
 
 To create semantic embeddings for documents, use [`HuggingFaceAPIDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapidocumentembedder) in your indexing pipeline. For generating embeddings for queries, use [`HuggingFaceAPITextEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceapitextembedder).
 
@@ -95,7 +101,7 @@ print(text_embedder.run("I love pizza!"))
 # {'embedding': [0.017020374536514282, -0.023255806416273117, ...]}
 ```
 
-Both embedders also work with a self-hosted TEI server:
+Both embedders also work with a self-hosted TEI server and support HTTP or gRPC:
 
 ```python
 text_embedder = HuggingFaceAPITextEmbedder(
@@ -104,9 +110,28 @@ text_embedder = HuggingFaceAPITextEmbedder(
 )
 ```
 
+### Sparse Embedding Models
+
+To create sparse embeddings for queries, use [`HuggingFaceTEISparseTextEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceteisparsetextembedder). For documents, use [`HuggingFaceTEISparseDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/huggingfaceteisparsedocumentembedder), which stores the embeddings in each document's `sparse_embedding` field.
+
+Both components support HTTP or gRPC and require a TEI server running a compatible sparse embedding model with SPLADE pooling.
+
+```python
+from haystack_integrations.components.embedders.huggingface_api import (
+    HuggingFaceTEISparseTextEmbedder,
+)
+
+embedder = HuggingFaceTEISparseTextEmbedder(
+    api_base_url="http://localhost:8080",
+)
+result = embedder.run(text="Who lives in Berlin?")
+print(result["sparse_embedding"])
+# SparseEmbedding(indices=[1755, 2141, 2160, ...], values=[0.062120, 0.214147, 0.183626, ...])
+```
+
 ### Ranking Models
 
-Use [`HuggingFaceTEIRanker`](https://docs.haystack.deepset.ai/docs/huggingfaceteiranker) to rank documents with a reranking model served by a TEI endpoint:
+Use [`HuggingFaceTEIRanker`](https://docs.haystack.deepset.ai/docs/huggingfaceteiranker) to rank documents with a reranking model served by a TEI endpoint. It supports HTTP or gRPC:
 
 ```python
 from haystack import Document
