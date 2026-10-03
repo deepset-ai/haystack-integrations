@@ -18,7 +18,7 @@ toc: true
 ## Installation
 
 ```bash
-python -m pip install "ismalicious-haystack @ git+https://github.com/hexablob/ismalicious-haystack.git@v0.1.0"
+python -m pip install "ismalicious-haystack @ git+https://github.com/hexablob/ismalicious-haystack.git@v0.1.1"
 ```
 
 The repository also publishes a wheel with the tagged GitHub release. Haystack 3.3 or later is required
