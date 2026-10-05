@@ -27,7 +27,7 @@ toc: true
 
 Transcripts are fetched by the API on its own servers, so the component works from cloud servers and serverless functions, where direct requests to YouTube are often blocked.
 
-You need a GetYouTubeTranscript API key, which you can create at [getyoutubetranscript.com/dashboard](https://getyoutubetranscript.com/dashboard). By default the component reads it from the `GETYOUTUBETRANSCRIPT_API_KEY` environment variable.
+You need a GetYouTubeTranscript API key, which you can create at [getyoutubetranscript.com/developers](https://getyoutubetranscript.com/developers). By default the component reads it from the `GETYOUTUBETRANSCRIPT_API_KEY` environment variable.
 
 ## Installation
 
