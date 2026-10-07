@@ -42,9 +42,9 @@ pip install mistral-haystack
 ### Components
 This integration introduces 4 components:
 - The `MistralOCRDocumentConverter`: Extracts text from documents using Mistral's OCR API, with optional structured annotations for image regions and full documents.
-- The [`MistralDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/mistraldocumentembedder): Creates embeddings for Haystack Documents using Mistral embedding models (currently only `mistral-embed`).
-- The [`MistralTextEmbedder`](https://docs.haystack.deepset.ai/docs/mistraltextembedder): Creates embeddings for texts (such as queries) using Mistral embedding models (currently only `mistral-embed`)
-- The [`MistralChatGenerator`](https://docs.haystack.deepset.ai/docs/mistralchatgenerator): Uses Mistral chat completion models such as `mistral-tiny` (default).
+- The [`MistralDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/mistraldocumentembedder): Creates embeddings for Haystack Documents using Mistral embedding models such as `mistral-embed` (default) and `codestral-embed`.
+- The [`MistralTextEmbedder`](https://docs.haystack.deepset.ai/docs/mistraltextembedder): Creates embeddings for texts (such as queries) using Mistral embedding models such as `mistral-embed` (default) and `codestral-embed`.
+- The [`MistralChatGenerator`](https://docs.haystack.deepset.ai/docs/mistralchatgenerator): Uses Mistral chat completion models such as `mistral-large-4` and `mistral-small-latest` (default).
   
 ### Use Mistral Generative Models
 ```python
@@ -53,7 +53,7 @@ from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.mistral import MistralChatGenerator
 
 os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
-model = "mistral-medium"
+model = "mistral-large-4"
 
 client = MistralChatGenerator(model=model)
 
@@ -64,7 +64,7 @@ response = client.run(
 print(response)
 ```
 ```bash
-{'replies': [ChatMessage(content='The "best" French cheese is subjective and depends on personal taste...', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'mistral-medium', 'index': 0, 'finish_reason': 'stop', 'usage': {'completion_tokens': 231, 'prompt_tokens': 16, 'total_tokens': 247}})]}
+{'replies': [ChatMessage(content='There is no objectively "best" French cheese—it depends entirely on your taste...', role=<ChatRole.ASSISTANT: 'assistant'>, name=None, meta={'model': 'mistral-large-4', 'index': 0, 'finish_reason': 'stop', 'usage': {'prompt_tokens': 10, 'total_tokens': 717, 'completion_tokens': 707}})]}
 ```
 Mistral LLMs also support streaming responses if you pass a callback into the `MistralChatGenerator` like so:
 
@@ -76,7 +76,7 @@ from haystack.dataclasses import ChatMessage
 from haystack_integrations.components.generators.mistral import MistralChatGenerator
 
 os.environ["MISTRAL_API_KEY"] = "YOUR_MISTRAL_API_KEY"
-model = "mistral-medium"
+model = "mistral-large-4"
 
 client = MistralChatGenerator(
     model=model,
