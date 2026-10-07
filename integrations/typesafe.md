@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: TypeSafe
-description: Classify documents and route text with TypeSafe's System One decision models, such as Jev, in Haystack pipelines.
+description: Classify documents and route text with TypeSafe's System One decision models, such as Jev, in Haystack applications.
 authors:
     - name: deepset
       socials:
