@@ -15,6 +15,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/arangodb.png
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 [![PyPI - Version](https://img.shields.io/pypi/v/arangodb-haystack.svg)](https://pypi.org/project/arangodb-haystack/)

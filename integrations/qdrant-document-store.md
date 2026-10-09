@@ -19,6 +19,7 @@ report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/qdrant.png
 version: Haystack 2.0
 toc: true
+enterprise: true
 ---
 
 An integration of [Qdrant](https://qdrant.tech) vector database with [Haystack](https://haystack.deepset.ai/)
