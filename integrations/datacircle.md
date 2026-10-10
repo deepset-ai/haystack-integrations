@@ -31,7 +31,7 @@ Step 1: Query your favorite B2B data APIs through us. Same request, same price, 
 
 Step 2: You're DONE. Every morning, you get the flat file of your data plus everyone else's.
 
-Right now we have 2 live LinkedIn profile APIs that we trust: Up2Data and HarvestAPI. Each request goes to the provider and gets the profile as it is today.
+Right now we have 3 live LinkedIn profile APIs that we trust: Up2Data, HarvestAPI and Fetchin. Each request goes to the provider and gets the profile as it is today.
 
 This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect a Haystack agent to Datacircle's MCP server, `https://api.datacircle.dev/mcp`, over Streamable HTTP. Its tools are `get_linkedin_profile`, `get_balance`, `list_files`, `get_download_link`, `add_funds` and `get_invite_link` ([docs](https://docs.datacircle.dev/mcp-server)).
 
