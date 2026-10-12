@@ -28,7 +28,7 @@ enterprise: true
 
 This integration supports Anthropic Claude models such as Claude Haiku 3.5, Claude Sonnet 3.7, and Claude Sonnet 4.5 through Anthropic’s inference infrastructure. For a complete list of available models, check out [the Anthropic Claude documentation](https://docs.claude.com/en/docs/about-claude/models/overview).
 
-You can use Anthropic models with [`AnthropicChatGenerator`](https://docs.haystack.deepset.ai/docs/anthropicchatgenerator).
+You can use Anthropic models with [`AnthropicChatGenerator`](https://docs.haystack.deepset.ai/docs/anthropicchatgenerator). To use Claude models deployed on [Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry), use [`AnthropicFoundryChatGenerator`](https://docs.haystack.deepset.ai/docs/anthropicfoundrychatgenerator).
 
 ## Installation
 
@@ -93,4 +93,18 @@ rag_pipeline.run(
         "prompt_builder": {"template_variables": {"query": question}, "template": messages},
     }
 )
+```
+
+### Using `AnthropicFoundryChatGenerator`
+
+To call Claude models deployed on Microsoft Foundry, set the `ANTHROPIC_FOUNDRY_API_KEY` and `ANTHROPIC_FOUNDRY_RESOURCE` environment variables. Alternatively, pass an `azure_ad_token_provider` and an `endpoint`.
+
+```python
+from haystack.dataclasses import ChatMessage
+
+from haystack_integrations.components.generators.anthropic import AnthropicFoundryChatGenerator
+
+generator = AnthropicFoundryChatGenerator(model="claude-sonnet-4-5")
+result = generator.run(messages=[ChatMessage.from_user("What is Microsoft Foundry?")])
+print(result["replies"][0].text)
 ```
