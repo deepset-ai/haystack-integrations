@@ -7,6 +7,7 @@ authors:
       socials:
         github: send21io
 repo: https://github.com/send21io/send21-haystack
+pypi: https://pypi.org/project/send21-haystack
 report_issue: https://github.com/send21io/send21-haystack/issues
 type: Tool Integration
 version: Haystack 2.0
@@ -24,14 +25,14 @@ toc: true
 
 Use an API key with the `drafts:write` scope only. That key can prepare a payment request but cannot move funds, so an agent using this component can ask for a payment but cannot make one.
 
-The package also includes `verify_send21_signature` for checking send21 webhooks (`X-Send21-Signature`, HMAC-SHA256 of the raw body), so a pipeline can continue once a payment is confirmed.
+The package also includes `verify_send21_webhook` for checking send21 webhooks, so a pipeline can continue once a payment is confirmed. It verifies `X-Send21-Signature-V2` first (HMAC-SHA256 of `"<timestamp>.<delivery id>.<raw body>"`, refusing deliveries older than 5 minutes) and uses the legacy body-only `X-Send21-Signature` only as a fallback when no V2 header is present.
 
 This is a community integration maintained by send21. See the [repository](https://github.com/send21io/send21-haystack) for details and open questions.
 
 ## Installation
 
 ```bash
-pip install git+https://github.com/send21io/send21-haystack
+pip install send21-haystack
 ```
 
 ## Usage
@@ -39,7 +40,7 @@ pip install git+https://github.com/send21io/send21-haystack
 This integration introduces 1 component and a helper:
 
 - `Send21PaymentRequest`: calls the `create_payment_request` tool on the send21 MCP server (`https://send21.io/mcp`) and outputs `id`, `pay_link` and `raw`.
-- `verify_send21_signature(raw_body, signature_header, secret)`: constant-time check of a send21 webhook signature.
+- `verify_send21_webhook(raw_body, headers, secret)`: constant-time check of a send21 webhook: `X-Send21-Signature-V2` first (5-minute window), legacy `X-Send21-Signature` only as fallback. Returns `(valid, scheme)`.
 
 ### Use Send21PaymentRequest in a pipeline
 
@@ -61,10 +62,11 @@ print(out["payment"]["pay_link"])
 ### Verify a webhook
 
 ```python
-from send21_haystack import verify_send21_signature
+from send21_haystack import verify_send21_webhook
 
-if not verify_send21_signature(raw_body, headers.get("X-Send21-Signature"), signing_secret):
-    raise PermissionError("invalid signature")
+valid, scheme = verify_send21_webhook(raw_body, headers, signing_secret)  # V2 first, legacy fallback
+if not valid:
+    raise PermissionError("invalid, expired or missing signature")
 ```
 
 ### License
