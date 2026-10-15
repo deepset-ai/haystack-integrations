@@ -7,9 +7,9 @@ authors:
       socials:
         github: Specstreamai
 pypi: https://pypi.org/project/specstream-haystack
-repo: https://github.com/Specstreamai/specstream-tools/tree/main/packages/specstream-haystack
+repo: https://github.com/specstream/specstream-tools/tree/main/packages/specstream-haystack
 type: Search & Extraction
-report_issue: https://github.com/Specstreamai/specstream-tools/issues
+report_issue: https://github.com/specstream/specstream-tools/issues
 logo: /logos/specstream.png
 version: Haystack 2.0
 toc: true
@@ -124,4 +124,4 @@ print(result["last_message"].text)
 
 ### License
 
-`specstream-haystack` is distributed under the terms of the [MIT license](https://github.com/Specstreamai/specstream-tools/blob/main/packages/specstream-haystack/LICENSE).
+`specstream-haystack` is distributed under the terms of the [MIT license](https://github.com/specstream/specstream-tools/blob/main/packages/specstream-haystack/LICENSE).
