@@ -5,7 +5,7 @@ description: Give a Haystack pipeline or agent any list from the live web, as Do
 authors:
     - name: SpecStream
       socials:
-        github: Specstreamai
+        github: specstream
 pypi: https://pypi.org/project/specstream-haystack
 repo: https://github.com/specstream/specstream-tools/tree/main/packages/specstream-haystack
 type: Search & Extraction
