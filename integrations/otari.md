@@ -13,7 +13,7 @@ repo: https://github.com/deepset-ai/haystack-core-integrations/tree/main/integra
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack-core-integrations/issues
 logo: /logos/otari.svg
-version: Haystack 2.0
+version: Haystack 3.0
 toc: true
 ---
 
@@ -29,7 +29,7 @@ toc: true
 
 You can use [otari.ai](https://otari.ai), the gateway that mozilla.ai runs, or run Otari yourself. By default, the components call otari.ai at `https://api.otari.ai/api/v1`. For an account in otari.ai's EU region, whose API keys start with `otk_v1_eu_`, set `api_base_url` to `https://eu.api.otari.ai/api/v1`. For a gateway you run yourself, set `api_base_url` to its address followed by `/api/v1`, for example `http://localhost:8000/api/v1`.
 
-Models are named with selectors that the gateway accepts, such as `openai:gpt-5-mini` or `anthropic:claude-sonnet-4-6`. The gateway needs a credential for each provider you use: a provider key in your otari.ai organization, or a provider configured on your own gateway.
+Models are named with selectors that the gateway accepts, such as `openai:gpt-5-mini` or `anthropic:claude-sonnet-4-6`. The gateway needs a credential for each provider you use. On otari.ai, add a provider key on your organization's Providers page. On a gateway you run yourself, add the provider on the Providers page of its dashboard, or declare it in the gateway's `config.yml` as described in [Configuring a provider](https://github.com/mozilla-ai/otari/blob/main/docs/models.md#configuring-a-provider).
 
 To follow along with this guide, create an Otari API key and expose it as an environment variable, `OTARI_API_KEY`.
 
@@ -62,8 +62,11 @@ client = OtariChatGenerator(model="openai:gpt-5-mini")
 response = client.run([ChatMessage.from_user("What are Agentic Pipelines? Be brief.")])
 
 print(response["replies"][0].text)
+# >> Agentic pipelines are workflows in which an LLM-driven agent decides which steps
+# >> to take, such as calling tools or retrieving data, to complete a task.
 # The cost of the request in US dollars, when the gateway prices it
 print(response["replies"][0].meta["usage"]["cost_usd"])
+# >> 0.000279
 ```
 
 To stream the response, pass a callback:
@@ -109,6 +112,7 @@ docs = [
 ]
 result = ranker.run(query="What is the capital of France?", documents=docs)
 print(result["documents"][0].content)
+# >> The capital of France is Paris.
 ```
 
 ## License
