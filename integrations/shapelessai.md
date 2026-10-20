@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: ShapelessAI
-description: "Give a Haystack agent a social media team: list connected accounts, draft, schedule and publish posts to LinkedIn, X, Instagram, TikTok, YouTube, Facebook, Threads and Bluesky, and generate the images and video for them, through the ShapelessAI MCP server"
+description: "Give a Haystack agent a social media team: list connected accounts, draft, schedule and publish posts to LinkedIn, X, Instagram, TikTok, YouTube, Facebook, Threads, Bluesky, Telegram, Discord, Pinterest and Mastodon, and generate the images and video for them, through the ShapelessAI MCP server"
 authors:
     - name: ShapelessAI
       socials:
@@ -24,7 +24,7 @@ mcp: true
 
 ## Overview
 
-**[ShapelessAI](https://shapelessai.com)** is an agentic social media team with a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://shapelessai.com/mcp`. Connected to a Haystack agent, it lets the agent read the social accounts you connected, draft posts for your approval, schedule them into each account's next free queue slot or publish them now, and make the media that goes with them (images, carousels, narrated short video, thumbnails). It publishes to LinkedIn (profiles and Pages), X, Instagram, TikTok, YouTube, Facebook, Threads and Bluesky, and checks each network's limits before a post leaves.
+**[ShapelessAI](https://shapelessai.com)** is an agentic social media team with a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://shapelessai.com/mcp`. Connected to a Haystack agent, it lets the agent read the social accounts you connected, draft posts for your approval, schedule them into each account's next free queue slot or publish them now, and make the media that goes with them (images, carousels, narrated short video, thumbnails). It publishes to 12 networks: LinkedIn (profiles and Pages), X, Instagram, TikTok, YouTube, Facebook, Threads, Bluesky, Telegram, Discord, Pinterest and Mastodon, and checks each network's limits before a post leaves.
 
 This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect a Haystack agent to the ShapelessAI MCP server over Streamable HTTP. The server describes its tools at connect time, so the snippets below discover them instead of hardcoding a list. The API, CLI and MCP server are on the Free plan (no card); see the [API docs](https://shapelessai.com/docs/api) and [MCP docs](https://shapelessai.com/docs/mcp).
 
