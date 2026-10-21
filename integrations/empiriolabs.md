@@ -1,16 +1,16 @@
 ---
 layout: integration
 name: EmpirioLabs AI
-description: Use open and proprietary models served by EmpirioLabs
+description: Use open and proprietary models served by EmpirioLabs AI
 authors:
-    - name: EmpirioLabs Team
+    - name: EmpirioLabs AI Team
       socials:
-        github: EmpirioLabs-ai
+        github: EmpirioLabs-AI
 pypi: https://pypi.org/project/haystack-ai/
 repo: https://github.com/deepset-ai/haystack
 type: Model Provider
 report_issue: https://github.com/deepset-ai/haystack/issues
-logo: /logos/empiriolabs.svg
+logo: /logos/empiriolabs.png
 version: Haystack 2.0
 toc: true
 ---
@@ -22,17 +22,17 @@ toc: true
 
 ## Overview
 
-**EmpirioLabs** is a multi-model API platform that hosts open and proprietary models (Qwen, DeepSeek, GLM, Kimi, MiniMax, Gemma, and more) behind one OpenAI-compatible API with pay-as-you-go pricing.
+**[EmpirioLabs AI](https://empiriolabs.ai)** is a specialized AI inference and integration provider. It hosts open-source models on GPU infrastructure it manages, runs optimized endpoints for proprietary models, helps teams ship their own models, and offers on-demand GPU Cloud instances and hosted AI agents. Its model catalog spans text, image, audio, video, transcription, embedding, reranking, research, and 3D models.
 
-To start using EmpirioLabs, create an API key in the [EmpirioLabs dashboard](https://platform.empiriolabs.ai/dashboard/api-keys). The full model catalog with per-model context windows and pricing is at [empiriolabs.ai/models](https://empiriolabs.ai/models).
+To start using EmpirioLabs AI, create an API key in the [EmpirioLabs AI dashboard](https://platform.empiriolabs.ai/dashboard/api-keys). The full model catalog with per-model context windows and pricing is at [empiriolabs.ai/models](https://empiriolabs.ai/models), and the [EmpirioLabs AI documentation](https://docs.empiriolabs.ai/integrations#haystack) covers the Haystack setup.
 
 ## Usage
 
-The EmpirioLabs API is OpenAI compatible, making it easy to use in Haystack via the OpenAI Generators and Embedders.
+The EmpirioLabs AI API is OpenAI compatible, making it easy to use in Haystack via the OpenAI Generators and Embedders.
 
 ### Using `ChatGenerator`
 
-Here's an example of chatting with a model served via EmpirioLabs using the `OpenAIChatGenerator`.
+Here's an example of chatting with a model served via EmpirioLabs AI using the `OpenAIChatGenerator`.
 You need to set the environment variable `EMPIRIOLABS_API_KEY` and choose a model from the [catalog](https://empiriolabs.ai/models).
 
 ```python
@@ -54,7 +54,7 @@ print(result["replies"][0].text)
 
 ### Using `TextEmbedder`
 
-EmpirioLabs serves OpenAI-compatible embedding models too, so the OpenAI Embedders work the same way:
+EmpirioLabs AI serves OpenAI-compatible embedding models too, so the OpenAI Embedders work the same way:
 
 ```python
 import os
