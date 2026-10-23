@@ -24,8 +24,6 @@ toc: true
 
 ## Overview
 
-Stop choosing AI models manually. Let live benchmarks choose the best model for coding, reasoning, or agent tasks—using your own provider keys, with zero token markup.
-
 [AI Stupid Level](https://aistupidlevel.info) benchmarks models from OpenAI, Anthropic, Google, DeepSeek, Moonshot (Kimi) and Z.ai (GLM) on coding, reasoning and tool use. Its Smart Router is an OpenAI-compatible endpoint, `https://aistupidlevel.info/v1`, that uses the measured scores to choose the model for each request.
 
 - **Your own provider keys.** You add your provider keys to your AI Stupid Level account. The router calls the chosen model with your key, so the provider bills you directly and AI Stupid Level adds zero token markup.
