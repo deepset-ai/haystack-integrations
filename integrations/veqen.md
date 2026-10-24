@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Veqen
-description: Record AI costs from OpenAI-compatible Haystack chat replies, attributed to customers and features, without sending prompt or response content.
+description: See what your Haystack AI requests cost and which customer or feature they served, without sending their content to Veqen.
 authors:
   - name: Keyveve, Inc.
     socials:
@@ -16,7 +16,9 @@ toc: true
 
 ## Overview
 
-[Veqen](https://veqen-app.com/integrations/haystack?utm_source=haystack&utm_medium=integration&utm_campaign=launch-v1-5) is an AI inference cost ledger. Its `VeqenOpenAICostTracker` component reads OpenAI-shaped usage metadata from a completed chat generation, prices the usage with the SDK's versioned price book, and passes replies through unchanged.
+[Veqen](https://veqen-app.com/integrations/haystack?utm_source=haystack&utm_medium=integration&utm_campaign=launch-v1-5) helps you scale AI inference without losing track of the bill. See what your Haystack requests cost and who they were for, then check the totals against your provider bills in the optional dashboard.
+
+The `VeqenOpenAICostTracker` component reads token counts from an OpenAI-compatible chat reply, calculates its cost and passes the reply through unchanged. Your prompt and response content are not sent to Veqen.
 
 Local cost recording needs no Veqen account. Optional hosted reporting adds spending breakdowns, provider-bill reconciliation and shared budgets. The component sends usage and allocation tags only; it does not send message content to Veqen.
 
