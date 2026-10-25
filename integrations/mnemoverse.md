@@ -33,7 +33,7 @@ This integration doesn't ship its own package. It uses the `MCPToolset` from `mc
 | `memory_write` | Store a memory that should persist across sessions: a preference, decision, lesson or project fact |
 | `memory_read` | Search memory with a natural-language query before answering or starting a task |
 | `memory_list_recent` | List the newest memories first, filtered by domain and time window, without a query |
-| `memory_feedback` | Report whether a recalled memory helped, so useful memories rank higher next time |
+| `memory_feedback` | Rate a recalled memory; rating a recalled memory as helpful or misleading re-ranks what comes back next |
 | `memory_stats` | Show how many memories are stored and which domains exist |
 | `memory_graph` | Read the association graph the memory has formed around given concepts |
 | `memory_create_room` | Create a shared memory room (beta) |
