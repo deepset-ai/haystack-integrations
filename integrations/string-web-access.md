@@ -138,7 +138,7 @@ agent = Agent(
 result = agent.run(
     messages=[ChatMessage.from_user("What does String Web Access charge per search?")]
 )
-print(result["messages"][-1].text)
+print(result["last_message"].text)
 ```
 
 `tool_names` limits this agent to searching and fetching. `web_access_request` sends `POST`, `PUT` and `PATCH`
