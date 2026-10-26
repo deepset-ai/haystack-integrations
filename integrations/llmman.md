@@ -22,7 +22,7 @@ toc: true
   - [Tool Calling](#tool-calling)
   - [Embedders](#embedders)
   - [Using the OpenAI-compatible API](#using-the-openai-compatible-api)
-  - [License](#license)
+- [License](#license)
 
 ## Introduction
 
@@ -203,6 +203,6 @@ response = generator.run([ChatMessage.from_user("What's Natural Language Process
 print(response["replies"][0].text)
 ```
 
-### License
+## License
 
 llmman is distributed under the terms of the [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) license.
