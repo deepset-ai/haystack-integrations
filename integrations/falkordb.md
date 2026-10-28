@@ -26,6 +26,7 @@ enterprise: true
   - [Writing documents](#writing-documents)
   - [Retrieving documents](#retrieving-documents)
   - [Graph queries with Cypher](#graph-queries-with-cypher)
+  - [Natural-language graph queries](#natural-language-graph-queries)
 - [License](#license)
 
 ## Overview
@@ -34,11 +35,12 @@ An integration of [FalkorDB](https://www.falkordb.com/) with [Haystack](https://
 
 FalkorDB is a high-performance graph database optimized for GraphRAG workloads. It stores documents as graph nodes and supports native vector search — no APOC is required. All bulk writes use `UNWIND` + `MERGE` for safe, idiomatic OpenCypher upserts.
 
-The library provides a `FalkorDBDocumentStore` that implements the Haystack [DocumentStore protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol), plus two pipeline-ready retriever components:
+The library provides a `FalkorDBDocumentStore` that implements the Haystack [DocumentStore protocol](https://docs.haystack.deepset.ai/docs/document-store#documentstore-protocol), plus three pipeline-ready retriever components:
 
 - **FalkorDBDocumentStore** — stores Documents as labeled graph nodes in a named FalkorDB graph, with `meta` fields stored flat alongside `id` and `content`. Embeddings are indexed using FalkorDB's native vector index.
 - **FalkorDBEmbeddingRetriever** — a [retriever component](https://docs.haystack.deepset.ai/docs/retrievers) that queries the native vector index to find Documents by dense similarity, with support for metadata filtering.
 - **FalkorDBCypherRetriever** — a power-user retriever for executing arbitrary [OpenCypher](https://opencypher.org/) queries, enabling graph traversal and multi-hop queries in GraphRAG pipelines.
+- **FalkorDBTextToCypherRetriever** — a retriever that uses a Chat Generator to translate natural-language queries into read-only OpenCypher, grounded in a sampled graph schema.
 
 ```text
                                    +-----------------------------+
@@ -189,6 +191,44 @@ retriever = FalkorDBCypherRetriever(
 result = retriever.run(parameters={"topic": "GraphRAG"})
 documents = result["documents"]
 ```
+
+### Natural-language graph queries
+
+`FalkorDBTextToCypherRetriever` uses a Chat Generator to translate a natural-language query into OpenCypher, grounded in a graph schema sampled at warm-up. Queries run through FalkorDB's read-only command, and `top_k` and `timeout` bound the results and their runtime. Configure the generator for structured output with `RESPONSE_SCHEMA`:
+
+```python
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack_integrations.document_stores.falkordb import FalkorDBDocumentStore
+from haystack_integrations.components.retrievers.falkordb import FalkorDBTextToCypherRetriever
+
+document_store = FalkorDBDocumentStore(host="localhost", port=6379)
+
+generator = OpenAIChatGenerator(
+    model="gpt-4o-mini",
+    generation_kwargs={
+        "response_format": {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "cypher_query",
+                "strict": True,
+                "schema": FalkorDBTextToCypherRetriever.RESPONSE_SCHEMA,
+            },
+        },
+    },
+)
+
+retriever = FalkorDBTextToCypherRetriever(
+    document_store=document_store,
+    chat_generator=generator,
+    top_k=5,
+    timeout=1000,
+)
+
+result = retriever.run(query="Find documents about GraphRAG")
+documents = result["documents"]
+```
+
+You can pass a custom `system_prompt` with a `{graph_schema}` placeholder to add domain hints or example queries. The user query and sampled schema are sent to the generator's provider.
 
 ## License
 
