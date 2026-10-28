@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: TypeSafe
-description: Classify documents and route text with TypeSafe's System One decision models, such as Jev, in Haystack applications.
+description: Classify documents, rank documents, and route text with TypeSafe's System One decision models, such as Jev, in Haystack applications.
 authors:
     - name: deepset
       socials:
@@ -32,12 +32,13 @@ enterprise: true
 - `score`: rates the text on ordered levels.
 - `noul`: returns the probability that a yes/no question is true.
 
-The `typesafe-haystack` package brings these models to Haystack through two components:
+The `typesafe-haystack` package brings these models to Haystack through three components:
 
 - `TypeSafeDocumentClassifier` answers typed questions about each document and stores the answers in its metadata.
+- `TypeSafeRanker` ranks documents by their relevance to a query, scoring each one with a `score` question.
 - `TypeSafeTextRouter` routes a text to the output of the label the model picks for it, with an optional `low_confidence` output for uncertain answers.
 
-Both components also work with servers that implement the TypeSafe API, such as [Ollaya](https://ollaya.dev), which runs open decision models on your own machine.
+All three components also work with servers that implement the TypeSafe API, such as [Ollaya](https://ollaya.dev), which runs open decision models on your own machine.
 
 To use TypeSafe's hosted models, you'll need an API key from the [TypeSafe console](https://console.typesafe.ai). Add it as an environment variable, `TYPESAFE_API_KEY`. For more information, see [the TypeSafe docs](https://docs.typesafe.ai).
 
@@ -132,6 +133,38 @@ print({output: [document.content for document in documents] for output, document
 #  'unmatched': []}
 ```
 
+### Rank documents
+
+`TypeSafeRanker` scores each document's relevance to the query from 0 to 1 and returns the documents sorted from most to least relevant. The raw answer is stored under `meta["typesafe"]["relevance"]`, next to any answers from a `TypeSafeDocumentClassifier`. Each document is a separate request, so place the ranker after a retriever with a small `top_k`.
+
+```python
+from haystack import Document, Pipeline
+from haystack.components.retrievers.in_memory import InMemoryBM25Retriever
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack_integrations.components.rankers.typesafe import TypeSafeRanker
+
+document_store = InMemoryDocumentStore()
+document_store.write_documents(
+    [
+        Document(content="Paris is the capital of France."),
+        Document(content="France borders Spain, Italy, and Germany."),
+        Document(content="Berlin is the capital of Germany."),
+    ]
+)
+
+pipeline = Pipeline()
+pipeline.add_component("retriever", InMemoryBM25Retriever(document_store=document_store))
+pipeline.add_component("ranker", TypeSafeRanker())
+pipeline.connect("retriever.documents", "ranker.documents")
+
+query = "What is the capital of France?"
+result = pipeline.run({"retriever": {"query": query, "top_k": 3}, "ranker": {"query": query, "top_k": 1}})
+print(result["ranker"]["documents"][0].content)
+# Paris is the capital of France.
+```
+
+To change how relevance is judged, pass your own `instructions` and `criteria`, the relevance levels from least to most relevant. Both can refer to the `query` and the `passage`. Use `meta_fields_to_embed` to show the model metadata fields, such as a title, next to the text.
+
 ### Route text
 
 `TypeSafeTextRouter` has one output per label. With `min_confidence` set, texts whose answer is less confident than the threshold go to the `low_confidence` output instead, so you can send them to a fallback such as an LLM or a human.
@@ -161,7 +194,7 @@ docker run -d --name ollaya -p 11435:11435 -v ollaya:/home/ollaya/.ollaya ghcr.i
 docker exec ollaya ollaya pull laya:en
 ```
 
-Then point either component at the server with `api_base_url` and pick one of its models. Ollaya accepts any non-empty API key unless it is configured with one:
+Then point any of the components at the server with `api_base_url` and pick one of its models. Ollaya accepts any non-empty API key unless it is configured with one:
 
 ```python
 from haystack.utils import Secret
