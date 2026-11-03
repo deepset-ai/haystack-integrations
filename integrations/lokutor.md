@@ -7,6 +7,7 @@ authors:
       socials:
         github: lokutor-ai
 repo: https://github.com/lokutor-ai/lokutor-haystack
+pypi: https://pypi.org/project/lokutor-haystack/
 type: Model Provider
 report_issue: https://github.com/lokutor-ai/lokutor-haystack/issues
 logo: /logos/lokutor.svg
@@ -38,7 +39,7 @@ Get an API key at [app.lokutor.com](https://app.lokutor.com). API documentation:
 ## Installation
 
 ```bash
-pip install git+https://github.com/lokutor-ai/lokutor-haystack.git
+pip install lokutor-haystack
 ```
 
 Set your key in the `LOKUTOR_API_KEY` environment variable. The components take it as a Haystack `Secret`, so it is never written into a serialized pipeline.
