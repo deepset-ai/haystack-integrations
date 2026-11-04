@@ -6,9 +6,9 @@ authors:
   - name: Sankalp Gilda
     socials:
       github: astrogilda
-repo: https://github.com/probityai/agent-evidence-observer
+repo: https://github.com/probityai/probity/tree/8892c6acdf4776ceecbbdfefe48026f316c6c1e0/packages/agent-evidence-observer
 type: Monitoring Tool
-report_issue: https://github.com/probityai/agent-evidence-observer/issues
+report_issue: https://github.com/probityai/probity/issues
 version: Haystack 3.3.0
 toc: true
 ---
@@ -39,7 +39,7 @@ The integration includes:
   fault cases without publishing them.
 
 The reference covers one tool per step and local file writes. The
-[profile contract](https://github.com/probityai/agent-evidence-observer/blob/1be320b6614da07bde513b237d61d59c85b91c8c/interop/haystack-native-2026-10-03/PROFILE.md)
+[profile contract](https://github.com/probityai/probity/blob/8892c6acdf4776ceecbbdfefe48026f316c6c1e0/packages/agent-evidence-observer/interop/haystack-native-2026-10-03/PROFILE.md)
 sets out the measured cases, policy inputs, and observation coverage.
 
 ## Installation
@@ -53,9 +53,10 @@ uses `uv` 0.8.22 and Python 3.13; `uv` can download Python 3.13 if needed. The
 reference CI runs on Ubuntu 24.04.
 
 ```bash
-git clone https://github.com/probityai/agent-evidence-observer.git
-cd agent-evidence-observer
-git checkout --detach 1be320b6614da07bde513b237d61d59c85b91c8c
+git clone https://github.com/probityai/probity.git
+cd probity
+git checkout --detach 8892c6acdf4776ceecbbdfefe48026f316c6c1e0
+cd packages/agent-evidence-observer
 
 verification_root="$(mktemp -d)"
 python3 -m venv "$verification_root/runner"
@@ -101,12 +102,12 @@ consumer, supply the trusted policy and its digest through your own trusted
 channel rather than accepting policy or keys chosen by a candidate record.
 
 For the implementation, see the
-[native Haystack producer](https://github.com/probityai/agent-evidence-observer/blob/1be320b6614da07bde513b237d61d59c85b91c8c/interop/haystack-native-2026-10-03/probity_haystack/producer.py)
-and [installed reader](https://github.com/probityai/agent-evidence-observer/blob/1be320b6614da07bde513b237d61d59c85b91c8c/interop/haystack-native-2026-10-03/probity_haystack/reader.py).
-The [passing native CI run](https://github.com/probityai/agent-evidence-observer/actions/runs/37139952519)
+[native Haystack producer](https://github.com/probityai/probity/blob/8892c6acdf4776ceecbbdfefe48026f316c6c1e0/packages/agent-evidence-observer/interop/haystack-native-2026-10-03/probity_haystack/producer.py)
+and [installed reader](https://github.com/probityai/probity/blob/8892c6acdf4776ceecbbdfefe48026f316c6c1e0/packages/agent-evidence-observer/interop/haystack-native-2026-10-03/probity_haystack/reader.py).
+The [passing native CI run](https://github.com/probityai/probity/actions/runs/41571856980)
 retains the complete verification artifacts.
 
 ## License
 
 Probity Agent Evidence Observer and this reference integration use
-[Apache-2.0](https://github.com/probityai/agent-evidence-observer/blob/1be320b6614da07bde513b237d61d59c85b91c8c/LICENSE).
+[Apache-2.0](https://github.com/probityai/probity/blob/8892c6acdf4776ceecbbdfefe48026f316c6c1e0/packages/agent-evidence-observer/LICENSE).
