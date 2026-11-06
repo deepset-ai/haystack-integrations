@@ -10,6 +10,7 @@ pypi: https://pypi.org/project/scrapedo-haystack
 repo: https://github.com/bugrahansss/scrapedo-haystack
 type: Data Ingestion
 report_issue: https://github.com/bugrahansss/scrapedo-haystack/issues
+logo: /logos/scrapedo.png
 version: Haystack 2.0
 toc: true
 ---
