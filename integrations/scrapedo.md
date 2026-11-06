@@ -76,14 +76,13 @@ print(doc.content)
 
 ### Use in a RAG pipeline
 
-Fetch pages, split them, and answer a question from their content:
+Fetch pages and answer a question from their content:
 
 ```python
 import os
 from haystack import Pipeline
 from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.components.preprocessors import DocumentSplitter
 from haystack.dataclasses import ChatMessage
 
 from scrapedo_haystack import ScrapeDoFetcher
@@ -106,12 +105,10 @@ Question: {{ question }}"""
 
 pipe = Pipeline()
 pipe.add_component("fetcher", ScrapeDoFetcher(render=True))
-pipe.add_component("splitter", DocumentSplitter(split_by="word", split_length=300))
 pipe.add_component("prompt", ChatPromptBuilder(template=template, required_variables=["question"]))
 pipe.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 
-pipe.connect("fetcher.documents", "splitter.documents")
-pipe.connect("splitter.documents", "prompt.documents")
+pipe.connect("fetcher.documents", "prompt.documents")
 pipe.connect("prompt.prompt", "llm.messages")
 
 result = pipe.run({
