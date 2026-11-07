@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: cloro
-description: Search Google with the AI Overview, and get ChatGPT, Google AI Mode and Gemini answers with their cited sources, through the cloro API
+description: Search Google with the AI Overview, and get ChatGPT, Google AI Mode, Gemini and Bing AI Mode answers with their cited sources, through the cloro API
 authors:
     - name: cloro
       socials:
@@ -30,14 +30,14 @@ toc: true
 [cloro](https://cloro.dev/?utm_source=haystack-integrations&utm_medium=byok) is an API that returns the results of Google Search and the answers of AI search engines as structured JSON. This integration provides two components:
 
 - `CloroWebSearch`: searches Google and returns the organic results as Haystack `Document` objects, with their links. It can also return the Google AI Overview as the first `Document`.
-- `CloroAIAnswer`: sends a query to ChatGPT, Google AI Mode or Gemini and returns the answer as Markdown, with one `Document` for each source that the answer cites.
+- `CloroAIAnswer`: sends a query to ChatGPT, Google AI Mode, Gemini or Bing AI Mode and returns the answer as Markdown, with one `Document` for each source that the answer cites.
 
 You need a cloro API key. You can get one at [dashboard.cloro.dev](https://dashboard.cloro.dev/api-keys?utm_source=haystack-integrations&utm_medium=byok). The free plan includes 500 credits each month.
 
 | Component | Credits per run |
 |---|--:|
 | `CloroWebSearch` | 5, or 7 with the AI Overview |
-| `CloroAIAnswer` | ChatGPT 7, Google AI Mode 6, Gemini 6 |
+| `CloroAIAnswer` | ChatGPT 7, Google AI Mode 6, Gemini 6, Bing AI Mode 6 |
 
 ## Installation
 
@@ -77,7 +77,7 @@ Parameters:
 ```python
 from haystack_integrations.components.websearch.cloro import CloroAIAnswer
 
-ai_answer = CloroAIAnswer(engine="aimode")  # "chatgpt", "aimode" or "gemini"
+ai_answer = CloroAIAnswer(engine="aimode")  # "chatgpt", "aimode", "gemini" or "bing_aimode"
 
 result = ai_answer.run(query="What is retrieval-augmented generation?")
 print(result["replies"][0])
@@ -85,6 +85,8 @@ print(result["links"])
 ```
 
 An answer can take 15 to 60 seconds. The default timeout is 180 seconds.
+
+With `engine="bing_aimode"`, the query can have a maximum of 3,500 characters after URL encoding, and fewer for non-Latin scripts. To send the query from a US state, set `search_params={"state": "CA"}` with `country="US"` (2 more credits).
 
 ### In a Pipeline
 
