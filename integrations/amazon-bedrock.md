@@ -39,7 +39,7 @@ pip install amazon-bedrock-haystack
 
 Once installed, you will have access to the [AmazonBedrockChatGenerator](https://docs.haystack.deepset.ai/docs/amazonbedrockchatgenerator) component that supports generative language models on Amazon Bedrock. 
 You will also have access to the [AmazonBedrockTextEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrocktextembedder) and [AmazonBedrockDocumentEmbedder](https://docs.haystack.deepset.ai/docs/amazonbedrockdocumentembedder), which can be used to compute embeddings.
-The integration also includes [S3Downloader](https://docs.haystack.deepset.ai/docs/s3downloader) that allows downloading files from AWS S3 buckets to the local filesystem, and [BedrockKnowledgeBaseRetriever](https://docs.haystack.deepset.ai/docs/bedrockknowledgebaseretriever) that retrieves documents from an Amazon Bedrock Managed Knowledge Base.
+The integration also includes [S3Downloader](https://docs.haystack.deepset.ai/docs/s3downloader) that allows downloading files from AWS S3 buckets to the local filesystem, and [AmazonBedrockKnowledgeBaseRetriever](https://docs.haystack.deepset.ai/docs/amazonbedrockknowledgebaseretriever) that retrieves documents from an Amazon Bedrock Managed Knowledge Base.
 
 To use this integration, set the AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`) as environment variables or passed as [Secret](https://docs.haystack.deepset.ai/docs/secret-management) arguments. 
 
@@ -224,15 +224,15 @@ documents = [
 result = pipe.run({"downloader": {"documents": documents}})
 ```
 
-### BedrockKnowledgeBaseRetriever
+### AmazonBedrockKnowledgeBaseRetriever
 
 Before using this component, you need to set up an [Amazon Bedrock Knowledge Base](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html) and note its ID.
 
 ```python
 from haystack.utils import Secret
-from haystack_integrations.components.retrievers.amazon_bedrock import BedrockKnowledgeBaseRetriever
+from haystack_integrations.components.retrievers.amazon_bedrock import AmazonBedrockKnowledgeBaseRetriever
 
-retriever = BedrockKnowledgeBaseRetriever(
+retriever = AmazonBedrockKnowledgeBaseRetriever(
     knowledge_base_id="ABCDEFGHIJ",
     aws_region_name=Secret.from_token("eu-central-1"),
 )
