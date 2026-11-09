@@ -28,7 +28,7 @@ toc: true
 
 **Arize Phoenix** is the open-source observability and evaluation platform from [Arize AI](https://arize.com/?utm_source=haystack-docs&utm_medium=partner&utm_campaign=partner-docs&utm_content=integrations-arize-phoenix). Use it to trace, evaluate, and experiment with LLM applications and AI agents in local, OSS, or self-hosted workflows.
 
-For the full-featured production platform built for AI-native teams and enterprises, use [Arize AX](https://arize.com/products/ax/), available as managed cloud or enterprise self-hosted deployment. The Arize [agent evaluation guide](https://arize.com/guides/ai-agent-handbook/agent-evaluation/) and [LLM evaluation guide](https://arize.com/resources/llm-evaluation/) cover how trace data becomes eval datasets, judge scores, and quality signals.
+For the full-featured production platform built for AI-native teams and enterprises, use [Arize AX](https://arize.com/products/ax/), available as managed cloud or enterprise self-hosted deployment. The Arize [agent evaluation guide](https://arize.com/ai-agents/agent-evaluation/) and [LLM evaluation guide](https://arize.com/resources/llm-evaluation/) cover how trace data becomes eval datasets, judge scores, and quality signals.
 
 For a detailed integration guide, see the [documentation for Phoenix + Haystack](https://arize.com/docs/phoenix/integrations/python/haystack/haystack-tracing).
 
