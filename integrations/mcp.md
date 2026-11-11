@@ -97,7 +97,36 @@ The example creates an MCPTool that uses stdio transport with StdioServerInfo, w
 
 This demonstrates how MCPTool can work with local programs without running a separate server process, using standard input/output for communication.
 
-### Example 3: MCPTool in a Haystack Pipeline
+### Example 3: MCPTool with a Haystack Agent
+
+MCP servers are most commonly used to give an [`Agent`](https://docs.haystack.deepset.ai/docs/agent) access to external tools. This example shows an `Agent` that can check the current time using the `mcp-server-time` MCP server:
+
+```python
+from haystack.components.agents import Agent
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+
+from haystack_integrations.tools.mcp import MCPTool, StdioServerInfo
+
+time_tool = MCPTool(
+    name="get_current_time",
+    server_info=StdioServerInfo(command="uvx", args=["mcp-server-time", "--local-timezone=Europe/Berlin"]),
+)
+
+agent = Agent(
+    chat_generator=OpenAIChatGenerator(),
+    tools=[time_tool],
+    system_prompt="You are a helpful assistant that can check the current time in any city.",
+)
+
+result = agent.run(messages=[ChatMessage.from_user("What is the time in New York? Be brief.")])
+
+print(result["last_message"].text)
+```
+
+The `Agent` decides on its own when to call `get_current_time`, invokes it through the MCP server, and uses the result to answer the question, looping until it has a final response.
+
+### Example 4: MCPTool in a Haystack Pipeline
 
 This [example](https://github.com/deepset-ai/haystack-core-integrations/blob/main/integrations/mcp/examples/time_pipeline.py) showcases how to integrate MCPTool into a Haystack pipeline along with an LLM:
 
