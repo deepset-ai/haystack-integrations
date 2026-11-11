@@ -1,0 +1,12 @@
+<svg width="512" height="512" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Zambo mark</title>
+  <desc id="desc">A geometric Z signal mark for zambo.dev</desc>
+  <rect width="64" height="64" rx="18" fill="#080907"/>
+  <path
+    d="M16 15.5H48V23L28.5 41H48V48.5H16V41L35.5 23H16V15.5Z"
+    fill="#C8F135"
+  />
+  <path d="M35.5 23H48V29.5H35.5L29 35.5H16V29.5H29L35.5 23Z" fill="#080907"/>
+  <circle cx="16" cy="15.5" r="2.5" fill="#C8F135"/>
+  <circle cx="48" cy="48.5" r="2.5" fill="#C8F135"/>
+</svg>
