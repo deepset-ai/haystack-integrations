@@ -129,11 +129,11 @@ can be saved to and loaded from YAML.
 ### Supported Python
 
 Monty supports a subset of Python: functions, lambdas, closures, comprehensions, simple classes, dataclasses,
-`try`/`except`, f-strings, and `async`/`await`. Class inheritance, generators, `match`, `del`, method decorators, and
+`try`/`except`, f-strings, `match`, and `async`/`await`. Class inheritance, generators, `del`, method decorators, and
 third-party packages are not supported. Only these standard library modules can be imported, some of them partially:
-`asyncio`, `base64`, `binascii`, `collections`, `copy`, `dataclasses`, `datetime`, `functools`, `itertools`, `json`,
-`math`, `random`, `re`, `sys`, `time`, `typing`, `unicodedata`. Variables, functions, and imports don't persist between
-calls.
+`asyncio`, `base64`, `binascii`, `bisect`, `collections`, `copy`, `dataclasses`, `datetime`, `functools`, `itertools`,
+`json`, `math`, `random`, `re`, `sys`, `time`, `typing`, `unicodedata`. Variables, functions, and imports don't persist
+between calls.
 
 ## Security model
 
