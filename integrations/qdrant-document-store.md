@@ -45,7 +45,7 @@ poetry add qdrant-haystack
 
 ## Usage
 
-Once installed, you can already start using `QdrantDocumentStore` as any other store that supports
+Once installed, you can already start using [`QdrantDocumentStore`](https://docs.haystack.deepset.ai/docs/qdrant-document-store) as any other store that supports
 embeddings.
 
 ```python
@@ -127,3 +127,12 @@ document_store = QdrantDocumentStore(
 ```
 
 There is no difference in terms of functionality between local instances and cloud clusters.
+
+### Supported Retrievers
+
+The integration provides the following Retrievers for `QdrantDocumentStore`:
+
+- [`QdrantEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/qdrantembeddingretriever): retrieves documents using dense embeddings.
+- [`QdrantSparseEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/qdrantsparseembeddingretriever): retrieves documents using sparse embeddings.
+- [`QdrantHybridRetriever`](https://docs.haystack.deepset.ai/docs/qdranthybridretriever): combines dense and sparse embedding retrieval.
+- [`QdrantMultivectorEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/qdrantmultivectorembeddingretriever): retrieves documents using MaxSim scoring over multivector embeddings.
