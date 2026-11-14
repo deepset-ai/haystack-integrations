@@ -28,11 +28,10 @@ mcp: true
 or send it a request, and map a site's URLs — all returned as clean, LLM-ready Markdown.
 
 It is exposed as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at
-`https://mcp.usestring.ai/v3/mcp`, over Streamable HTTP.
+`https://mcp.usestring.ai?login`, over Streamable HTTP.
 
 This integration does not ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect a Haystack
-agent or pipeline to that server, so the toolset is discovered at connect time. The `/v3` tool set is fixed:
-String adds new tools on a new endpoint rather than changing this one, so the table below stays accurate.
+agent or pipeline to that server, so the toolset is discovered at connect time. With an API key, the server lists these tools:
 
 | Tool | What it does |
 | --- | --- |
@@ -42,9 +41,11 @@ String adds new tools on a new endpoint rather than changing this one, so the ta
 | `web_access_sitemap_quote` | Quote a crawl of one site. Creates a job waiting for approval and crawls nothing. |
 | `web_access_sitemap_start` | Start a quoted crawl. This is the step that spends your balance. |
 | `web_access_sitemap_status` | Check a crawl's progress and, once it has ended, page through the URLs it found. |
+| `web_access_balance` | Read the account's balance and remaining credit. Free to call. |
+| `web_access_product_help` | Answer questions about String's products and pricing from its public docs, with source links. |
 
 Every tool carries MCP annotations saying whether it only reads, and the
-[`/v3` reference](https://portal.usestring.ai/docs/mcp/v3) lists each tool's inputs, outputs and billing.
+[hosted MCP docs](https://portal.usestring.ai/docs/mcp/remote) cover setup and authentication.
 
 ## Installation
 
@@ -68,7 +69,7 @@ from haystack_integrations.tools.mcp import MCPToolset, StreamableHttpServerInfo
 os.environ["STRING_API_KEY"] = "YOUR_STRING_API_KEY"
 
 server_info = StreamableHttpServerInfo(
-    url="https://mcp.usestring.ai/v3/mcp",
+    url="https://mcp.usestring.ai?login",
     token=Secret.from_env_var("STRING_API_KEY"),
 )
 toolset = MCPToolset(server_info=server_info, eager_connect=True)
@@ -96,7 +97,7 @@ from haystack.utils import Secret
 from haystack_integrations.tools.mcp import MCPTool, StreamableHttpServerInfo
 
 server_info = StreamableHttpServerInfo(
-    url="https://mcp.usestring.ai/v3/mcp",
+    url="https://mcp.usestring.ai?login",
     token=Secret.from_env_var("STRING_API_KEY"),
 )
 
@@ -120,7 +121,7 @@ from haystack_integrations.tools.mcp import MCPToolset, StreamableHttpServerInfo
 
 toolset = MCPToolset(
     server_info=StreamableHttpServerInfo(
-        url="https://mcp.usestring.ai/v3/mcp",
+        url="https://mcp.usestring.ai?login",
         token=Secret.from_env_var("STRING_API_KEY"),
     ),
     tool_names=["web_access_search", "web_access_fetch"],
