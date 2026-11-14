@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: SpecStream
-description: Give a Haystack pipeline or agent any list from the live web, as Documents with the page every row came from
+description: Live web search, page extraction and structured rows for Haystack pipelines and agents, as Documents with their source URL
 authors:
     - name: SpecStream
       socials:
@@ -20,20 +20,24 @@ toc: true
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [SpecStreamWebSearch](#specstreamwebsearch)
+  - [SpecStreamExtractor](#specstreamextractor)
   - [SpecStreamListFetcher](#specstreamlistfetcher)
   - [SpecStreamListTool](#specstreamlisttool)
 - [License](#license)
 
 ## Overview
 
-[SpecStream](https://specstream.ai) is a live web data engine for teams and agents. Search components hand a pipeline pages to read; SpecStream hands it the finished list. You describe a list in plain words (companies, local businesses, people, grants, tenders, products, papers, repositories) and get back every row that matches, each with the page it was read from. It is priced per match, and the price ceiling is quoted before anything runs.
+[SpecStream](https://specstream.ai) is the live web data engine for teams and agents. It has three products on one key: a Search API that answers a question from the live web in a few seconds, an Extract API that returns the main text of web pages, PDF, Word and Excel files, and Deep Search, which turns a request in plain words (companies, local businesses, people, grants, tenders, products, papers, repositories) into structured rows, each with the page it was read from. Search is $5 per 1,000 searches of up to 10 results, or $1 on the fast tier. Extract is $0.80 per 1,000 pages. Deep Search is priced per delivered row, and the price ceiling is quoted before anything runs.
 
 This integration provides:
 
+- `SpecStreamWebSearch`: a component that searches the live web and returns one `Document` per result, with `title`, `source_url` and `published` in the metadata, plus an `answer` when the question has one.
+- `SpecStreamExtractor`: a component that reads the main text of 1 to 20 URLs and returns one `Document` per page, as Markdown or plain text.
 - `SpecStreamListFetcher`: a component that turns a plain-English request into Haystack `Document` objects, one per matching row. The content is the row as JSON. The metadata holds `source_url` (the page the row was read from), `checked_at`, `list_id`, `list_link` and the row's `fields`.
 - `SpecStreamListTool`: the same fetcher as a `ComponentTool` for a Haystack `Agent`. The model writes the request and picks how many rows. You set the price ceiling in code, and the model can't raise it.
 
-You need a SpecStream API key (Agents & API in your SpecStream workspace). A free account comes with $10 of work to use within 30 days and needs no card: [specstream.ai/signup](https://specstream.ai/signup). The API reference is at [api.specstream.ai/openapi.json](https://api.specstream.ai/openapi.json).
+You need a SpecStream API key (Agents & API in your SpecStream workspace). A free account comes with $10 of credit and needs no card: [specstream.ai/signup](https://specstream.ai/signup). The API reference is at [api.specstream.ai/openapi.json](https://api.specstream.ai/openapi.json).
 
 ## Installation
 
@@ -48,6 +52,35 @@ export SPECSTREAM_API_KEY="ss_live_..."
 ```
 
 ## Usage
+
+### SpecStreamWebSearch
+
+```python
+from haystack_integrations.components.fetchers.specstream import SpecStreamWebSearch
+
+search = SpecStreamWebSearch()
+result = search.run(q="latest stable release of PostgreSQL")
+
+print(result["answer"])
+for doc in result["documents"]:
+    print(doc.meta["source_url"], doc.content)
+```
+
+Each `Document` is one result. `content` is the snippet, and `meta` carries `title`, `source_url` and `published`. Pass `passages=True` to get the passages each answer was read from.
+
+### SpecStreamExtractor
+
+```python
+from haystack_integrations.components.fetchers.specstream import SpecStreamExtractor
+
+extractor = SpecStreamExtractor()
+result = extractor.run(urls=["https://www.postgresql.org/docs/release/"])
+
+for doc in result["documents"]:
+    print(doc.meta["status"], doc.meta["title"], len(doc.content))
+```
+
+`content` is the page's main text as Markdown (`format="text"` for plain text). `meta["status"]` is `ok` for a page that was read.
 
 ### SpecStreamListFetcher
 
