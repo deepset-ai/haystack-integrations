@@ -66,7 +66,7 @@ for doc in result["documents"]:
     print(doc.meta["source_url"], doc.content)
 ```
 
-Each `Document` is one result. `content` is the snippet, and `meta` carries `title`, `source_url` and `published`. Pass `passages=True` to get the passages each answer was read from.
+Each `Document` is one result. `content` is the snippet, and `meta` carries `title`, `source_url` and `published`.
 
 ### SpecStreamExtractor
 
