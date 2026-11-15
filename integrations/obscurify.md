@@ -24,9 +24,10 @@ toc: true
 
 [Obscurify.ai](https://obscurify.ai/?utm_source=haystack) is a privacy-focused
 AI provider with an OpenAI-compatible API. Accounts are a random 16-digit
-account number with no email, prompts and responses are not stored on the
-server, and requests only use zero-data-retention routes. It can be paid with
-Monero, Bitcoin, Lightning or a card.
+account number with no email, and prompts and responses are not stored on the
+server. Models tagged Zero retention in `/v1/models` are zero-data-retention;
+other models may not be. It can be paid with Monero, Bitcoin, Lightning or a
+card.
 
 The API serves 200+ models, including open models such as
 `deepseek/deepseek-v4-flash`, `z-ai/glm-5.3`, `moonshotai/kimi-k2-0905` and
@@ -34,7 +35,7 @@ The API serves 200+ models, including open models such as
 `anthropic/claude-sonnet-5.5` on the Casual and Pro plans. Streaming and tool
 calling are supported. The model list with context lengths and prices is public
 at `https://obscurify.ai/v1/models` (no key needed) and on the
-[model cards page](https://obscurify.ai/model_cards).
+[model cards page](https://obscurify.ai/models).
 
 ## Usage
 
