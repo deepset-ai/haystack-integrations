@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Chopper
-description: Cut the exact quotes that answer the query out of retrieved documents with a local mmBERT context compressor
+description: Rerank retrieved documents and cut the exact quotes that answer the query out of them, in one pass of a local mmBERT model
 authors:
     - name: wiiiktor
       socials:
@@ -31,6 +31,11 @@ It runs locally on CPU or GPU with a fine-tuned mmBERT encoder:
 On multi-hop MuSiQue questions, Qwen3-14B answers 4-hop questions correctly 29% of the time from the chops, against 12% from
 all 20 retrieved snippets, with about 11× fewer tokens.
 
+**It can also replace a ranker.** With `mode="rerank"` the component outputs the input documents, most relevant first
+(`top_k` of them), with the model's relevance as their `score`, computed in the same single pass. On an 8-language
+held-out set (400 queries, 16 documents each) it ranks with nDCG@10 0.973, against 0.984 for bge-reranker-v2-m3 and 0.986
+for Qwen3-Reranker-4B, at the speed of bge-reranker-v2-m3 (0.20 s per query on an RTX 3090).
+
 ## Installation
 
 ```bash
@@ -50,6 +55,14 @@ pipe.connect("retriever.documents", "chopper.documents")
 out = pipe.run({"retriever": {"query": q}, "chopper": {"query": q}})
 print([d.content for d in out["chopper"]["documents"]], out["chopper"]["decision"])
 ```
+
+As a ranker (whole documents, most relevant first), e.g. in place of a cross-encoder ranker:
+
+```python
+pipe.add_component("ranker", ChopperDocumentCompressor(variant="base", mode="rerank", top_k=5))
+```
+
+Requires `chopper-rag` 0.1.4 or later.
 
 ## License
 
