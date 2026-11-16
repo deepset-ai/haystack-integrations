@@ -48,7 +48,7 @@ export SOCIALSCRAPE_API_KEY="ss_live_..."
 
 This integration introduces three components:
 
-- The `SocialScrapeTranscriptFetcher`: takes a list of video URLs (YouTube, TikTok, Instagram and other video links) and returns one `Document` per URL with the transcript as its content, and the title, platform, language and duration in `meta` where the API returns them. A URL that fails is reported in the `errors` output and does not fail the batch.
+- The `SocialScrapeTranscriptsFetcher`: takes a list of video URLs (YouTube, TikTok, Instagram and other video links) and returns one `Document` per URL with the transcript as its content, and the title, platform, language and duration in `meta` where the API returns them. A URL that fails is reported in the `errors` output and does not fail the batch.
 - The `SocialScrapeFetcher`: runs any SocialScrape endpoint by id with its parameters and returns `Document`s, one per item for list endpoints (a profile's posts, a video's comments, a search) and one otherwise.
 - The `SocialScrapeToolset`: a Haystack `Toolset` for `Agent`, with eight tools: profile, posts, one post, comments, transcript, search, endpoint lookup and call-any-endpoint.
 
@@ -64,12 +64,12 @@ from haystack.components.preprocessors import DocumentSplitter
 from haystack.components.writers import DocumentWriter
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 
-from socialscrape_haystack import SocialScrapeTranscriptFetcher
+from socialscrape_haystack import SocialScrapeTranscriptsFetcher
 
 store = InMemoryDocumentStore()
 
 pipeline = Pipeline()
-pipeline.add_component("fetcher", SocialScrapeTranscriptFetcher())
+pipeline.add_component("fetcher", SocialScrapeTranscriptsFetcher())
 pipeline.add_component("splitter", DocumentSplitter(split_by="word", split_length=300, split_overlap=30))
 pipeline.add_component("writer", DocumentWriter(document_store=store))
 pipeline.connect("fetcher.documents", "splitter.documents")
@@ -94,7 +94,7 @@ from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 
-from socialscrape_haystack import SocialScrapeTranscriptFetcher
+from socialscrape_haystack import SocialScrapeTranscriptsFetcher
 
 template = [ChatMessage.from_user(
     "Summarize the main points of each video.\n"
@@ -102,7 +102,7 @@ template = [ChatMessage.from_user(
 )]
 
 pipeline = Pipeline()
-pipeline.add_component("fetcher", SocialScrapeTranscriptFetcher())
+pipeline.add_component("fetcher", SocialScrapeTranscriptsFetcher())
 pipeline.add_component("prompt", ChatPromptBuilder(template=template, required_variables=["documents"]))
 pipeline.add_component("llm", OpenAIChatGenerator(model="gpt-4o-mini"))
 pipeline.connect("fetcher.documents", "prompt.documents")
