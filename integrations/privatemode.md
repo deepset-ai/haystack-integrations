@@ -108,52 +108,6 @@ documents = [
     Document(content="The office is closed on public holidays in Berlin."),
 ]
 document_store.write_documents(document_embedder.run(documents)["documents"])
-
-template = [
-    ChatMessage.from_user(
-        """Answer the question using only the context.
-
-Context:
-{% for document in documents %}
-- {{ document.content }}
-{% endfor %}
-
-Question: {{ question }}"""
-    )
-]
-
-rag = Pipeline()
-rag.add_component(
-    "text_embedder",
-    OpenAITextEmbedder(
-        api_key=API_KEY, api_base_url=PRIVATEMODE_URL, model="qwen3-embedding-4b"
-    ),
-)
-rag.add_component(
-    "retriever", InMemoryEmbeddingRetriever(document_store=document_store, top_k=2)
-)
-rag.add_component(
-    "prompt_builder",
-    ChatPromptBuilder(template=template, required_variables=["question", "documents"]),
-)
-rag.add_component(
-    "llm",
-    OpenAIChatGenerator(
-        api_key=API_KEY,
-        api_base_url=PRIVATEMODE_URL,
-        model="glm-flash-latest",
-        generation_kwargs={"reasoning_effort": "high"},
-    ),
-)
-rag.connect("text_embedder.embedding", "retriever.query_embedding")
-rag.connect("retriever.documents", "prompt_builder.documents")
-rag.connect("prompt_builder.prompt", "llm.messages")
-
-question = "How many days per week can I work from home?"
-result = rag.run(
-    {"text_embedder": {"text": question}, "prompt_builder": {"question": question}}
-)
-print(result["llm"]["replies"][0].text)
 ```
 
 ### Use with a Haystack Agent
