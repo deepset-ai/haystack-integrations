@@ -25,6 +25,7 @@ enterprise: true
   - [Serving a model with vLLM](#serving-a-model-with-vllm)
   - [VLLMChatGenerator](#vllmchatgenerator)
   - [VLLMTextEmbedder and VLLMDocumentEmbedder](#vllmtextembedder-and-vllmdocumentembedder)
+  - [VLLMMultivectorTextEmbedder and VLLMMultivectorDocumentEmbedder](#vllmmultivectortextembedder-and-vllmmultivectordocumentembedder)
   - [VLLMRanker](#vllmranker)
 - [End-to-end example](#end-to-end-example)
 - [License](#license)
@@ -56,6 +57,10 @@ This integration introduces the following components:
 
 - [**VLLMDocumentEmbedder**](https://docs.haystack.deepset.ai/docs/vllmdocumentembedder): A component for embedding a list of `Document` objects using an embedding model served by vLLM.
 
+- [**VLLMMultivectorTextEmbedder**](https://docs.haystack.deepset.ai/docs/vllmmultivectortextembedder): A component for embedding a single string (e.g., a query) into token-level multivector embeddings using a model served by vLLM.
+
+- [**VLLMMultivectorDocumentEmbedder**](https://docs.haystack.deepset.ai/docs/vllmmultivectordocumentembedder): A component for enriching a list of `Document` objects with token-level embeddings in their `multivector_embedding` field using a model served by vLLM.
+
 - [**VLLMRanker**](https://docs.haystack.deepset.ai/docs/vllmranker): A component for reranking documents using a ranking model (cross-encoder or late interaction) served by vLLM.
 
 ## Usage
@@ -72,6 +77,13 @@ vllm serve "Qwen/Qwen3-0.6B" --port 8000 \
 ```
 
 Embedding and ranking models are served the same way. Just point `vllm serve` at the relevant model (e.g., `sentence-transformers/all-MiniLM-L6-v2` or `BAAI/bge-reranker-base`).
+
+For multivector embeddings, serve a model with the `token_embed` task:
+
+```bash
+vllm serve answerdotai/answerai-colbert-small-v1 \
+    --runner pooling --pooler-config '{"task":"token_embed"}'
+```
 
 ### VLLMChatGenerator
 
@@ -141,6 +153,66 @@ for doc in result["retriever"]["documents"]:
     print(doc.score, doc.content)
 # 0.668... My name is Wolfgang and I live in Berlin
 # 0.602... Germany has many big cities
+```
+
+### VLLMMultivectorTextEmbedder and VLLMMultivectorDocumentEmbedder
+
+Use the two multivector embedders together to build a late-interaction retrieval pipeline with Qdrant. First, install the Qdrant integration:
+
+```bash
+pip install qdrant-haystack
+```
+
+This example uses Qdrant in memory:
+
+```python
+from haystack import Document, Pipeline
+from haystack_integrations.components.embedders.vllm import (
+    VLLMMultivectorDocumentEmbedder,
+    VLLMMultivectorTextEmbedder,
+)
+from haystack_integrations.components.retrievers.qdrant import (
+    QdrantMultivectorEmbeddingRetriever,
+)
+from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+
+# answerai-colbert-small-v1 produces 96-dimensional token vectors.
+document_store = QdrantDocumentStore(location=":memory:", multivector_embedding_dim=96)
+
+docs = [
+    Document(content="My name is Wolfgang and I live in Berlin"),
+    Document(content="My name is Luca and I live in Milan"),
+    Document(content="Germany has many big cities"),
+    Document(content="Italy is a country in Europe"),
+]
+
+document_embedder = VLLMMultivectorDocumentEmbedder(
+    model="answerdotai/answerai-colbert-small-v1",
+    api_base_url="http://localhost:8000",
+)
+document_store.write_documents(document_embedder.run(docs)["documents"])
+
+query_pipeline = Pipeline()
+query_pipeline.add_component(
+    "text_embedder",
+    VLLMMultivectorTextEmbedder(
+        model="answerdotai/answerai-colbert-small-v1",
+        api_base_url="http://localhost:8000",
+    ),
+)
+query_pipeline.add_component(
+    "retriever",
+    QdrantMultivectorEmbeddingRetriever(document_store=document_store, top_k=2),
+)
+query_pipeline.connect(
+    "text_embedder.multivector_embedding", "retriever.query_multivector_embedding"
+)
+
+result = query_pipeline.run({"text_embedder": {"text": "Who lives in Berlin?"}})
+for doc in result["retriever"]["documents"]:
+    print(doc.score, doc.content)
+# 6.767... My name is Wolfgang and I live in Berlin
+# 6.347... My name is Luca and I live in Milan
 ```
 
 ### VLLMRanker
