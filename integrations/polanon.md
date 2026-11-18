@@ -46,6 +46,10 @@ pip install "polanon[haystack]"
 Set the key, 32 random bytes in hexadecimal, in the `POLANON_KEY` environment variable:
 `python -c "import secrets; print(secrets.token_hex(32))"`.
 
+Haystack reports how its pipelines are used to its own servers unless
+`HAYSTACK_TELEMETRY_ENABLED=False` is set; polanon sends nothing. Where nothing but the masked
+calls should leave the machine, set it.
+
 ## Usage
 
 ### Components
