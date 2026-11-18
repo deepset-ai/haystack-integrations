@@ -94,10 +94,14 @@ from haystack.dataclasses import ChatMessage
 llm = VLLMChatGenerator(
     model="Qwen/Qwen3-0.6B",
     api_base_url="http://localhost:8000/v1",
-    generation_kwargs={"extra_body": {"chat_template_kwargs": {"enable_thinking": True}}},
+    generation_kwargs={
+        "extra_body": {"chat_template_kwargs": {"enable_thinking": True}}
+    },
 )
 
-response = llm.run(messages=[ChatMessage.from_user("Write Python code to reverse a string.")])
+response = llm.run(
+    messages=[ChatMessage.from_user("Write Python code to reverse a string.")]
+)
 print(response["replies"][0].text)
 
 # When reasoning is enabled, the reasoning trace is available separately:
@@ -177,7 +181,9 @@ from haystack_integrations.components.retrievers.qdrant import (
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 
 # answerai-colbert-small-v1 produces 96-dimensional token vectors.
-document_store = QdrantDocumentStore(location=":memory:", multivector_embedding_dim=96)
+document_store = QdrantDocumentStore(
+    location=":memory:", multivector_embedding_dim=96
+)
 
 docs = [
     Document(content="My name is Wolfgang and I live in Berlin"),
