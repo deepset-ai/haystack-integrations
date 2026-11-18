@@ -50,13 +50,14 @@ from haystack_integrations.tools.mcp import MCPToolset, StdioServerInfo
 
 server_info = StdioServerInfo(
     command="uvx",
-    args=["--from", "schemagate[mcp]==1.15.4", "schemagate-mcp"],
+    args=["--from", "schemagate[mcp]==1.18.3", "schemagate-mcp"],
     env={"SCHEMAGATE_DATABASE_URL": "demo"},
 )
 toolset = MCPToolset(
     server_info=server_info,
     tool_names=["select_schema", "run_query"],
     eager_connect=True,
+    connection_timeout=120,  # the first run downloads schemagate
 )
 
 select_schema = next(t for t in toolset if t.name == "select_schema")
@@ -91,11 +92,12 @@ os.environ["ANTHROPIC_API_KEY"] = "YOUR_ANTHROPIC_API_KEY"
 toolset = MCPToolset(
     server_info=StdioServerInfo(
         command="uvx",
-        args=["--from", "schemagate[mcp]==1.15.4", "schemagate-mcp"],
+        args=["--from", "schemagate[mcp]==1.18.3", "schemagate-mcp"],
         env={"SCHEMAGATE_DATABASE_URL": "demo"},
     ),
     tool_names=["select_schema", "run_query", "describe_object"],
     eager_connect=True,
+    connection_timeout=120,  # the first run downloads schemagate
 )
 
 agent = Agent(
