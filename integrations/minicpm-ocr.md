@@ -19,6 +19,7 @@ toc: true
 
 ### **Table of Contents**
 - [Overview](#overview)
+- [Components](#components)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
