@@ -30,9 +30,6 @@ Install this source revision of the SDK:
 python -m pip install "clickhouse-loom[haystack] @ git+https://github.com/ClickHouse/loom.git@5135c7f13444fa01fce58169f2631bf26f28cec8#subdirectory=sdk/python"
 ```
 
-This command installs a Git revision. The published `clickhouse-loom` 1.2.0
-package does not contain this adapter.
-
 Use a Loom server built from the same source revision. The pinned
 [local development guide](https://github.com/ClickHouse/loom/blob/5135c7f13444fa01fce58169f2631bf26f28cec8/docs/development/local-development.md)
 describes running that source. Create a namespace-scoped token with access to the
