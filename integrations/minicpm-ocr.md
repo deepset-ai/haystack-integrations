@@ -56,6 +56,34 @@ llama-server -hf openbmb/MiniCPM-OCR-1.0-gguf:Q4_K_M --host 127.0.0.1 --port 808
 
 For llama.cpp, initialize the converter with `server_url="http://127.0.0.1:8080"` and `backend="llamacpp"`.
 
+You can also serve the quantized weights with Ollama. Download the model and its vision projector, then register them with a Modelfile:
+
+```shell
+mkdir minicpm-ocr && cd minicpm-ocr
+hf download openbmb/MiniCPM-OCR-1.0-gguf MiniCPM-OCR-1_0-Q8_0.gguf mmproj-model-f16-4x.gguf --local-dir .
+
+cat > Modelfile <<'EOF'
+FROM ./MiniCPM-OCR-1_0-Q8_0.gguf
+FROM ./mmproj-model-f16-4x.gguf
+PARAMETER num_ctx 8192
+PARAMETER temperature 0
+EOF
+
+ollama create minicpm-ocr -f Modelfile
+```
+
+Then point the converter at the Ollama server:
+
+```python
+from haystack_integrations.components.converters.minicpm_ocr import MiniCPMOCRDocumentConverter
+
+converter = MiniCPMOCRDocumentConverter(
+    server_url="http://localhost:11434",
+    backend="ollama",
+    model="minicpm-ocr",
+)
+```
+
 ## Usage
 
 ### How to use the `MiniCPMOCRDocumentConverter`
