@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Haystack docs
+    url: https://docs.haystack.deepset.ai/docs/integrations
+    about: Read about integrations before proposing one.
