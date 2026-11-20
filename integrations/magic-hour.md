@@ -9,7 +9,7 @@ authors:
 repo: https://github.com/magichourhq/magic-hour-haystack
 report_issue: https://github.com/magichourhq/magic-hour-haystack/issues
 type: Custom Component
-version: Haystack 3.4
+version: Haystack 3.0
 toc: true
 ---
 
@@ -25,10 +25,10 @@ The initial integration creates one square image at up to 640 pixels. It does no
 
 ## Installation
 
-Requires Python 3.11+ and Haystack 3.4. Install from the versioned source repository:
+Requires Python 3.11+ and Haystack 3.0 or newer.
 
 ```bash
-python -m pip install "git+https://github.com/magichourhq/magic-hour-haystack.git@8fe6474d48da71b5ef9d32b5c2c05ad8ed453ad5"
+pip install magic-hour-haystack
 ```
 
 Create a Magic Hour API key in the [Developer Hub](https://magichour.ai/developer) and provide it through your secret manager as `MAGIC_HOUR_API_KEY`. Keys use Haystack's environment-backed `Secret`; serialized pipelines contain the variable name, not its value.
@@ -68,7 +68,7 @@ result = recover.run({"wait": {"project_id": receipt["project_id"]}})
 image_bytes = result["download"]["images"][0].data
 ```
 
-The repository's [runnable example](https://github.com/magichourhq/magic-hour-haystack/blob/8fe6474d48da71b5ef9d32b5c2c05ad8ed453ad5/examples/image_pipeline.py) saves downloaded images and safe receipts with sizes and hashes. Its `--submit-only` option stops after ID persistence; rerunning without the flag resumes the same project.
+The repository's [runnable example](https://github.com/magichourhq/magic-hour-haystack/blob/main/examples/image_pipeline.py) saves downloaded images and safe receipts with sizes and hashes. Its `--submit-only` option stops after ID persistence; rerunning without the flag resumes the same project.
 
 If submission loses its response, the API may already have accepted it. Inspect the Developer Hub before creating another job. A polling timeout does not cancel the accepted job. Keep its ID and resume. Temporary media URLs are refreshed through another project lookup.
 
