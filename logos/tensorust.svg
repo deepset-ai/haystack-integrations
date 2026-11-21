@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Tensorust Ontology</title>
+  <rect width="64" height="64" fill="#0A0B0F"/>
+  <g stroke="#F2EDE4" stroke-width="2.5" fill="none">
+    <line x1="14" y1="16" x2="50" y2="16"/>
+    <line x1="32" y1="16" x2="32" y2="48"/>
+    <line x1="32" y1="34" x2="48" y2="46"/>
+    <line x1="32" y1="34" x2="16" y2="46"/>
+  </g>
+  <g fill="#E8613F">
+    <rect x="9" y="11" width="10" height="10"/>
+    <rect x="45" y="11" width="10" height="10"/>
+    <rect x="27" y="29" width="10" height="10"/>
+    <rect x="27" y="45" width="10" height="10"/>
+  </g>
+  <g fill="#F2EDE4">
+    <rect x="12" y="42" width="8" height="8"/>
+    <rect x="44" y="42" width="8" height="8"/>
+  </g>
+</svg>
