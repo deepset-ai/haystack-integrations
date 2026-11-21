@@ -29,7 +29,7 @@ mcp: true
 
 Use it when your agent has to answer questions about recent events, releases or prices, or when it has to cite its sources.
 
-This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect any Haystack agent to the NestDaddy MCP server over Streamable HTTP. A free plan with 1,000 credits a month is available.
+This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect any Haystack agent to the NestDaddy MCP server over Streamable HTTP. New accounts get 1,000 free credits, with no card.
 
 ## Installation
 
