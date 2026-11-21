@@ -51,5 +51,5 @@ result = generator.run(
     prompt="a paper lantern drifting over a calm river at dusk",
     image_url="https://example.com/lantern.jpg",
 )
-print(result["url"])
+print(result["videos"][0])
 ```
