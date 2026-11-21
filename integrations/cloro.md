@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: cloro
-description: Search Google with the AI Overview, and get ChatGPT, Google AI Mode, Gemini and Bing AI Mode answers with their cited sources, through the cloro API
+description: Search Google or Bing with the AI Overview, and get ChatGPT, Google AI Mode, Gemini and Bing AI Mode answers with their cited sources, through the cloro API
 authors:
     - name: cloro
       socials:
@@ -27,9 +27,9 @@ toc: true
 
 ## Overview
 
-[cloro](https://cloro.dev/?utm_source=haystack-integrations&utm_medium=byok) is an API that returns the results of Google Search and the answers of AI search engines as structured JSON. This integration provides two components:
+[cloro](https://cloro.dev/?utm_source=haystack-integrations&utm_medium=byok) is an API that returns the results of Google Search and Bing Search and the answers of AI search engines as structured JSON. This integration provides two components:
 
-- `CloroWebSearch`: searches Google and returns the organic results as Haystack `Document` objects, with their links. It can also return the Google AI Overview as the first `Document`.
+- `CloroWebSearch`: searches Google or Bing and returns the organic results as Haystack `Document` objects, with their links. It can also return the AI Overview as the first `Document`.
 - `CloroAIAnswer`: sends a query to ChatGPT, Google AI Mode, Gemini or Bing AI Mode and returns the answer as Markdown, with one `Document` for each source that the answer cites.
 
 You need a cloro API key. You can get one at [dashboard.cloro.dev](https://dashboard.cloro.dev/api-keys?utm_source=haystack-integrations&utm_medium=byok). The free plan includes 500 credits each month.
@@ -61,7 +61,7 @@ documents = result["documents"]
 links = result["links"]
 ```
 
-Each organic result is a `Document`. Its content is the Google snippet, and its meta has `title`, `link` and `position`. The AI Overview `Document` has `meta["source"] == "google_ai_overview"` and the URLs it cites in `meta["links"]`.
+Each organic result is a `Document`. Its content is the result snippet, and its meta has `title`, `link` and `position`. The AI Overview `Document` has `meta["source"] == "google_ai_overview"` (or `"bing_ai_overview"`) and the URLs it cites in `meta["links"]`.
 
 Parameters:
 
@@ -69,8 +69,15 @@ Parameters:
 - **`top_k`**: Maximum number of organic results. Defaults to 10. One request returns one page of Google results.
 - **`country`**: ISO 3166-1 alpha-2 country code. Defaults to `"US"`.
 - **`allowed_domains`**: Domains to limit the search to.
-- **`include_ai_overview`**: Return the Google AI Overview as the first `Document`. Defaults to `False`.
-- **`search_params`**: Other request fields, such as `device`, `location`, `hl` or `pages`.
+- **`include_ai_overview`**: Return the AI Overview as the first `Document`. Defaults to `False`.
+- **`search_params`**: Other request fields, such as `device`, `location`, `hl` or `pages` for Google.
+- **`engine`**: `"google"` (Google Search) or `"bing"` (Bing Search). Defaults to `"google"`.
+
+With `engine="bing"`, the component searches Bing. The country sets the Bing market. Bing Search accepts all countries except CN, KR and RU. It has no `device`, `location`, `hl` or `pages` fields and returns one page of results. The query can have a maximum of 3,500 characters after URL encoding, and fewer for non-Latin scripts.
+
+```python
+web_search = CloroWebSearch(engine="bing", country="GB", include_ai_overview=True)
+```
 
 ### CloroAIAnswer
 
