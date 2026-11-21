@@ -1,0 +1,13 @@
+<!-- Generated from scripts/build-string-logo.ts geometry (mark box) - static, no orbit animation. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 152.94 152.94" width="152.94" height="152.94" role="img" aria-label="String mark"><title>String mark</title><defs>
+<linearGradient id="sg" x1="0" y1="28.676" x2="152.941" y2="124.265" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2E97FA"/><stop offset="1" stop-color="#1113DF"/></linearGradient>
+<clipPath id="sb"><circle cx="76.471" cy="76.471" r="39.49"/></clipPath>
+</defs><g fill="none" stroke="url(#sg)" stroke-linecap="round">
+<circle cx="76.471" cy="76.471" r="40.625" stroke-width="2.27"/>
+<g clip-path="url(#sb)" stroke-width="1.374"><circle cx="0" cy="0" r="68.107"/><circle cx="0" cy="0" r="78.114"/><circle cx="0" cy="0" r="88.12"/><circle cx="0" cy="0" r="98.127"/><circle cx="0" cy="0" r="108.134"/><circle cx="0" cy="0" r="118.141"/><circle cx="0" cy="0" r="128.148"/><circle cx="0" cy="0" r="138.155"/><circle cx="0" cy="0" r="148.162"/></g>
+<g class="orbit">
+<path d="M 107.371 28.153 A 57.353 57.353 0 1 0 133.117 85.443" stroke-width="2.629"/>
+<circle cx="120.405" cy="39.605" r="4.301" fill="url(#sg)" stroke="none"/>
+<circle cx="133.811" cy="75.269" r="2.27" fill="url(#sg)" stroke="none"/>
+</g>
+</g></svg>
