@@ -69,7 +69,7 @@ print(result["last_message"].text)
 toolset.close()
 ```
 
-`create_phone` waits until the phone is ready, which usually takes about 20 seconds, so the example raises `invocation_timeout` from the default 30 seconds. Phones are billed per minute while they run ([pricing](https://mobilebox.dev/pricing)), which is why the system prompt asks the agent to delete its phone at the end. To give the agent fewer tools, pass `tool_names`, for example `tool_names=["create_phone", "observe", "act", "delete_phone"]`.
+`create_phone` waits until the phone is ready, which usually takes under 2 seconds (the phone comes pre-booted) and about 20 seconds when it boots fresh, such as a large phone, so the example raises `invocation_timeout` from the default 30 seconds. Phones are billed per minute while they run ([pricing](https://mobilebox.dev/pricing)), which is why the system prompt asks the agent to delete its phone at the end. To give the agent fewer tools, pass `tool_names`, for example `tool_names=["create_phone", "observe", "act", "delete_phone"]`.
 
 ## License
 
