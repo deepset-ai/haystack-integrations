@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: Mobilebox
-description: Give a Haystack agent cloud Android phones over MCP. It creates a phone, reads the screen, taps, types, swipes and installs APKs, then parks or deletes the phone.
+description: Give a Haystack agent cloud Android phones and iPhone simulators over MCP. It creates a phone, reads the screen, taps, types, swipes and installs apps, then parks or deletes the phone.
 authors:
     - name: Mobilebox
       socials:
@@ -24,7 +24,7 @@ mcp: true
 
 ## Overview
 
-[Mobilebox](https://mobilebox.dev) runs cloud Android phones that an AI agent controls through a hosted [MCP](https://modelcontextprotocol.io/) server at `https://mobilebox.dev/mcp`. The agent reads the screen as a numbered list of elements, acts with taps, typing and swipes, installs apps from an APK URL, and parks the phone to keep its apps, data and logins. Typical uses are testing your own Android app (install a build, walk a flow, check each screen) and running tasks in apps that have no web version or API.
+[Mobilebox](https://mobilebox.dev) runs cloud Android phones and iPhone simulators that an AI agent controls through a hosted [MCP](https://modelcontextprotocol.io/) server at `https://mobilebox.dev/mcp`. The agent reads the screen as a numbered list of elements, acts with taps, typing and swipes, installs apps from a URL (an APK, or a zipped iOS simulator `.app`), and parks an Android phone to keep its apps, data and logins. Typical uses are testing your own mobile app (install a build, walk a flow, check each screen) and running tasks in apps that have no web version or API. `create_phone` takes `platform: "ios"` for an iPhone.
 
 This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect a Haystack `Agent` to the server over Streamable HTTP. The 19 tools include `create_phone`, `observe`, `act`, `screenshot`, `install_app`, `park_phone` and `delete_phone`; the [Android MCP server page](https://mobilebox.dev/android-mcp-server) lists them all.
 
