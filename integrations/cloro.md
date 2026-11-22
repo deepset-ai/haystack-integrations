@@ -66,14 +66,14 @@ Each organic result is a `Document`. Its content is the result snippet, and its 
 Parameters:
 
 - **`api_key`**: cloro API key. Defaults to the `CLORO_API_KEY` environment variable.
-- **`top_k`**: Maximum number of organic results. Defaults to 10. One request returns one page of Google results.
+- **`top_k`**: Maximum number of organic results. Defaults to 10. One request returns one page of results. Set `search_params={"pages": 2}` for more (2 credits for each extra page).
 - **`country`**: ISO 3166-1 alpha-2 country code. Defaults to `"US"`.
 - **`allowed_domains`**: Domains to limit the search to.
 - **`include_ai_overview`**: Return the AI Overview as the first `Document`. Defaults to `False`.
-- **`search_params`**: Other request fields, such as `device`, `location`, `hl` or `pages` for Google.
+- **`search_params`**: Other request fields, such as `device`, `location`, `hl` or `pages` for Google, and `pages` or `first` for Bing.
 - **`engine`**: `"google"` (Google Search) or `"bing"` (Bing Search). Defaults to `"google"`.
 
-With `engine="bing"`, the component searches Bing. The country sets the Bing market. Bing Search accepts all countries except CN, KR and RU. It has no `device`, `location`, `hl` or `pages` fields and returns one page of results. The query can have a maximum of 3,500 characters after URL encoding, and fewer for non-Latin scripts.
+With `engine="bing"`, the component searches Bing. The country sets the Bing market. Bing Search accepts all countries except CN, KR and RU. It has no `device`, `location` or `hl` fields. Bing shows its AI summary only on the first page, so there is no AI Overview with `first` above 1. The query can have a maximum of 3,500 characters after URL encoding, and fewer for non-Latin scripts.
 
 ```python
 web_search = CloroWebSearch(engine="bing", country="GB", include_ai_overview=True)
