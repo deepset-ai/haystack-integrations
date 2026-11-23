@@ -26,9 +26,9 @@ mcp: true
 
 **[Publora](https://publora.com)** publishes and schedules social media posts. It exposes its API as a hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://mcp.publora.com/mcp`, so a Haystack agent can write a post and send it to LinkedIn, X, Instagram, Threads, TikTok, YouTube, Facebook, Bluesky, Mastodon or Telegram at the time you pick.
 
-The tools cover the connected social accounts, posts (create, schedule, list, update, delete), media uploads, post and profile stats for Bluesky and Mastodon, and LinkedIn comments, reactions and reshares. A post created without a scheduled time stays a draft and is never published, so the agent can write freely and a person can approve before anything goes out. Instagram, TikTok and YouTube need an image or video attached.
+The tools cover the connected social accounts, posts (create, schedule, list, update, delete), media uploads, post and profile stats for Bluesky and Mastodon on plans that include analytics, and LinkedIn comments, reactions and reshares. A post created without a scheduled time stays a draft and is never published, so the agent can write freely and a person can approve before anything goes out. Publishing immediately takes an explicit `publishNow: true`. Instagram, TikTok and YouTube need an image or video attached.
 
-This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect a Haystack agent to the Publora MCP server over Streamable HTTP. You need a Publora account with at least one social account connected in the Publora dashboard; the free Starter plan includes API and MCP access, 3 social accounts and 15 posts a month on every network except X.
+This integration doesn't ship its own package. It uses `mcp-haystack`'s `MCPToolset` to connect a Haystack agent to the Publora MCP server over Streamable HTTP. You need a Publora account with at least one social account connected in the Publora dashboard; the free Starter plan includes API and MCP access, 3 social accounts and 15 posts a month on every network except X, with up to 3 posts scheduled at a time and up to 7 days ahead.
 
 ## Installation
 
@@ -38,7 +38,7 @@ pip install mcp-haystack
 
 ## Usage
 
-The Publora MCP server supports two ways to authenticate: interactive browser OAuth (for clients that speak remote MCP natively), and a Publora API key sent as an `Authorization: Bearer` header (for headless frameworks like Haystack). Create an API key in the Publora dashboard under **Settings → API Keys** and pass it through `StreamableHttpServerInfo`'s `token` parameter:
+The Publora MCP server supports two ways to authenticate: interactive browser OAuth (for clients that speak remote MCP natively), and a Publora API key sent as an `Authorization: Bearer` header (for headless frameworks like Haystack). Create an API key in the Publora dashboard under **API** in the sidebar and pass it through `StreamableHttpServerInfo`'s `token` parameter:
 
 ```python
 import os
