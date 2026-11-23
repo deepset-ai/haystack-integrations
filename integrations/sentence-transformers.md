@@ -49,6 +49,8 @@ Haystack provides several components based on Sentence Transformers:
     - [`SentenceTransformersDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/sentencetransformersdocumentembedder): enriches documents with dense embeddings (used in indexing pipelines).
     - [`SentenceTransformersSparseTextEmbedder`](https://docs.haystack.deepset.ai/docs/sentencetransformerssparsetextembedder): creates a sparse embedding for text (used in query/RAG pipelines).
     - [`SentenceTransformersSparseDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/sentencetransformerssparsedocumentembedder): enriches documents with sparse embeddings (used in indexing pipelines).
+    - [`SentenceTransformersMultivectorTextEmbedder`](https://docs.haystack.deepset.ai/docs/sentencetransformersmultivectortextembedder): creates a multivector embedding for text (used in query/RAG pipelines).
+    - [`SentenceTransformersMultivectorDocumentEmbedder`](https://docs.haystack.deepset.ai/docs/sentencetransformersmultivectordocumentembedder): enriches documents with multivector embeddings (used in indexing pipelines).
     - [`SentenceTransformersDocumentImageEmbedder`](https://docs.haystack.deepset.ai/docs/sentencetransformersdocumentimageembedder): enriches documents with embeddings computed from their images.
 - Rankers:
     - [`SentenceTransformersSimilarityRanker`](https://docs.haystack.deepset.ai/docs/sentencetransformerssimilarityranker): ranks documents based on their similarity to the query, using cross-encoder models.
@@ -96,6 +98,22 @@ text_embedder = SentenceTransformersSparseTextEmbedder()
 print(text_embedder.run("I love pizza!"))
 # {'sparse_embedding': SparseEmbedding(indices=[999, 1045, ...], values=[0.918, 0.867, ...])}
 ```
+
+### Multivector Embedding Models
+
+Multivector embedding models like ColBERT represent text with multiple token-level vectors for fine-grained matching between queries and documents. You can use these embeddings with a compatible multivector Retriever, such as [`QdrantMultivectorEmbeddingRetriever`](https://docs.haystack.deepset.ai/docs/qdrantmultivectorembeddingretriever), or rerank retrieved candidates with [`MaxSimRanker`](https://docs.haystack.deepset.ai/docs/maxsimranker).
+
+```python
+from haystack_integrations.components.embedders.sentence_transformers import SentenceTransformersMultivectorTextEmbedder
+
+model = "answerdotai/answerai-colbert-small-v1"
+text_embedder = SentenceTransformersMultivectorTextEmbedder(model=model)
+
+print(text_embedder.run(text="How do solar panels generate electricity?"))
+# {"multivector_embedding": [[-0.073875, 0.046260, -0.039445, ...], [-0.042440, 0.011050, -0.026692, ...], ...]}
+```
+
+Use `SentenceTransformersMultivectorDocumentEmbedder` with the same model to embed documents during indexing.
 
 ### Ranking Models
 
