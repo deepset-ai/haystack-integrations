@@ -6,6 +6,7 @@ authors:
     - name: Phase
       socials:
         github: devcells
+pypi: https://pypi.org/project/haystack-ai/
 repo: https://github.com/devcells/phase-router-skills
 type: Model Provider
 report_issue: https://github.com/devcells/phase-router-skills/issues
@@ -53,15 +54,7 @@ result = generator.run(messages=[ChatMessage.from_user("What is Haystack in one 
 print(result["replies"][0].text)
 ```
 
-### Automatic model selection
-
-```python
-generator = OpenAIChatGenerator(
-    api_key=Secret.from_env_var("PHASE_API_KEY"),
-    api_base_url="https://router.phase.xyz/v1",
-    model="auto",
-)
-```
+To let the router pick the model for each request, pass `model="auto"`.
 
 ### In a pipeline
 
