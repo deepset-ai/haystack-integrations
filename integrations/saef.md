@@ -24,7 +24,7 @@ version: Haystack 2.0
 
 ## Overview
 
-`saef` estimates the carbon (kg CO2e), energy (kWh) and water (litres) behind LLM API calls from their token usage. It applies open per-token emission factors by model class and cloud region (SAEF, CC BY 4.0, [doi 10.5281/zenodo.24160409](https://doi.org/10.5281/zenodo.24160409)), with a low and high case for each estimate. Cached input tokens are credited separately from fresh input and output. The method is published in Sustainable Production and Consumption 70 (2026) 320-347, [doi 10.1016/j.spc.2026.11.003](https://doi.org/10.1016/j.spc.2026.11.003).
+`saef` estimates the carbon (kg CO2e), energy (kWh) and water (litres) behind LLM API calls from their token usage. It applies per-token emission factors by model class and cloud region (SAEF, [doi 10.5281/zenodo.24160409](https://doi.org/10.5281/zenodo.24160409)), with a low and high case for each estimate. Cached input tokens are credited separately from fresh input and output. The method is published in Sustainable Production and Consumption 70 (2026) 320-347, [doi 10.1016/j.spc.2026.11.003](https://doi.org/10.1016/j.spc.2026.11.003).
 
 `SaefTracker` is a pass-through component. Place it after a Generator or ChatGenerator. It reads the model and token usage from each reply's `meta`, returns the replies unchanged plus a `saef` list with one estimate per reply, and keeps running totals for the pipeline.
 
@@ -62,4 +62,4 @@ For a text Generator such as `OpenAIGenerator`, also connect its `meta` output: 
 
 ## License
 
-`saef` is MIT licensed. The SAEF emission factor dataset is CC BY 4.0.
+`saef` 3.7.0 and later is licensed under PolyForm Noncommercial 1.0.0, and the SAEF dataset from v3.3.0 under the SAEF Data Licence 1.0 (Non-Commercial). Both are free for personal, academic and non-commercial use; companies need a commercial licence (https://somaai.earth/licensing). Earlier releases remain MIT (code) and CC BY 4.0 (data).
