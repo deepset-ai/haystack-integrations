@@ -31,13 +31,22 @@ body:
     attributes:
       label: Integration type
       options:
-        - Document Store
         - Model Provider
+        - Document Store
         - Data Ingestion
         - Monitoring Tool
-        - Evaluation Framework
         - Custom Component
+        - Search & Extraction
         - Tool Integration
+        - Memory Store
+        - Evaluation Framework
+        - UI
+        - Distributed Computing
+        - Connector
+        - Data Integration
+        - Framework
+        - Preprocessor
+        - Ranker
         - Other
     validations:
       required: true
