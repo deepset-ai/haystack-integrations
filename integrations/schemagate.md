@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: schemagate
-description: "Save tokens on text-to-SQL: give a Haystack agent only the tables a question needs (about 91% fewer schema tokens on 50+ table databases) and only the ones the caller may read. 74.34 EX on BIRD's hidden test set."
+description: "Use schemagate to save tokens on text-to-SQL"
 authors:
     - name: Ashish Sinha
       socials:
@@ -31,7 +31,7 @@ mcp: true
 - **Per-user scope:** the agent only sees the tables and columns the caller may read (a policy file or the database's own GRANTs). `run_query` refuses writes, multiple statements and any table outside that scope, including inside subqueries.
 - **One server for every engine:** PostgreSQL, MySQL, SQLite, SQL Server, Oracle, Snowflake, BigQuery and DuckDB.
 
-schemagate is an MCP server, so this integration uses `mcp-haystack`'s `MCPToolset` to connect it to any Haystack agent over stdio. It is also available as `langchain-schemagate` (listed in LangChain's retriever integrations) and as a LlamaIndex retriever.
+schemagate is an MCP server, so this integration uses `mcp-haystack`'s `MCPToolset` to connect it to any Haystack agent over stdio.
 
 ## Installation
 
