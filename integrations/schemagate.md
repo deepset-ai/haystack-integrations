@@ -1,7 +1,7 @@
 ---
 layout: integration
 name: schemagate
-description: "Save tokens on text-to-SQL: give a Haystack agent only the tables a question needs (about 91% fewer schema tokens on 50+ table databases) and only the ones the caller may read. #1 on the BIRD Mini-Dev leaderboard."
+description: "Save tokens on text-to-SQL: give a Haystack agent only the tables a question needs (about 91% fewer schema tokens on 50+ table databases) and only the ones the caller may read. 74.34 EX on BIRD's hidden test set."
 authors:
     - name: Ashish Sinha
       socials:
@@ -27,7 +27,7 @@ mcp: true
 **[schemagate](https://github.com/ashishsinha1602/schemagate)** saves tokens on text-to-SQL. Most text-to-SQL setups paste the whole database schema into the prompt, or let the agent browse it table by table. On a database with hundreds of tables that is most of the prompt, on every question. schemagate ranks the tables for each question (keyword and embedding retrieval, foreign-key expansion, join-table recovery) and hands the agent DDL for only the ones it needs.
 
 - **About 91% fewer schema tokens** on databases with 50+ tables (median, Spider 2.0-lite; [BENCHMARKS.md](https://github.com/ashishsinha1602/schemagate/blob/main/BENCHMARKS.md)).
-- **Accuracy kept:** #1 on the official [BIRD Mini-Dev leaderboard](https://bird-bench.github.io/) in SQLite, PostgreSQL and MySQL (81.0 / 72.6 / 72.4 execution accuracy), and 74.34 on BIRD's hidden test set, scored by the BIRD team.
+- **Accuracy:** 74.34 execution accuracy on BIRD's hidden test set, scored by the BIRD team ([leaderboard](https://bird-bench.github.io/)). On BIRD Mini-Dev it scored 81.0 / 72.6 / 72.4 (SQLite / PostgreSQL / MySQL), #1 on that board before BIRD's 2026-10-28 update, which moved it to the legacy table.
 - **Per-user scope:** the agent only sees the tables and columns the caller may read (a policy file or the database's own GRANTs). `run_query` refuses writes, multiple statements and any table outside that scope, including inside subqueries.
 - **One server for every engine:** PostgreSQL, MySQL, SQLite, SQL Server, Oracle, Snowflake, BigQuery and DuckDB.
 
