@@ -3,14 +3,14 @@ layout: integration
 name: Membase
 description: Add persistent, cross-session long-term memory to Haystack agents and pipelines with Membase
 authors:
-    - name: Unibase
+    - name: Membase
       socials:
-        github: unibaseio
-        twitter: Unibase_AI
+        github: membaseai
+        twitter: Membase_
 pypi: https://pypi.org/project/membase-haystack/
-repo: https://github.com/unibaseio/membase/tree/main/integrations/haystack
+repo: https://github.com/membaseai/membase/tree/main/integrations/haystack
 type: Memory Store
-report_issue: https://github.com/unibaseio/membase/issues
+report_issue: https://github.com/membaseai/membase/issues
 logo: /logos/membase.png
 version: Haystack 2.0
 toc: true
@@ -36,7 +36,7 @@ More information:
 
 - [Membase website](https://membase.com)
 - [Membase documentation](https://docs.membase.com)
-- [membase-haystack source](https://github.com/unibaseio/membase/tree/main/integrations/haystack)
+- [membase-haystack source](https://github.com/membaseai/membase/tree/main/integrations/haystack)
 
 ## Installation
 
@@ -122,7 +122,7 @@ print(result["llm"]["replies"][0].text)
 
 A Membase key belongs to one person's account, so one `MembaseMemoryStore` serves one person. In a multi-user app, build the store per user from that user's own key, for example `MembaseMemoryStore(api_key=Secret.from_token(user_key))`.
 
-For local mode, more options and the full API, see the [package README](https://github.com/unibaseio/membase/tree/main/integrations/haystack#readme).
+For local mode, more options and the full API, see the [package README](https://github.com/membaseai/membase/tree/main/integrations/haystack#readme).
 
 ## License
 
