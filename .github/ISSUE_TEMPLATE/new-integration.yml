@@ -1,0 +1,81 @@
+name: Propose or discuss an integration
+description: Discuss the need for an integration, or propose one that already exists, before opening a PR.
+title: "[Integration]: "
+labels: ["new-integration"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Open this issue **before** submitting a PR that adds an integration page.
+        A maintainer will review and label it `approved` once it's ready for a PR.
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage
+      description: Is the integration already built, or are you floating the idea first?
+      options:
+        - "Discussion: no integration yet, checking if there's a need"
+        - "Ready: integration exists and works, proposing to list it"
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Integration or project name
+      description: The tool/project this would integrate with, even if nothing's built yet.
+      placeholder: e.g. Acme Vector Store
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Integration type
+      options:
+        - Model Provider
+        - Document Store
+        - Data Ingestion
+        - Monitoring Tool
+        - Custom Component
+        - Search & Extraction
+        - Tool Integration
+        - Memory Store
+        - Evaluation Framework
+        - UI
+        - Distributed Computing
+        - Connector
+        - Data Integration
+        - Framework
+        - Preprocessor
+        - Ranker
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: package
+    attributes:
+      label: Published package or repo (if it exists)
+      description: Link to the PyPI package and/or GitHub repo, if there's already one to install.
+      placeholder: https://pypi.org/project/... and/or https://github.com/...
+    validations:
+      required: false
+  - type: textarea
+    id: proof
+    attributes:
+      label: Need or proof of use
+      description: >
+        Either: show it works — link to a project that imports it in a real
+        pipeline, or describe the production use case. Or, if it doesn't
+        exist yet: describe why Haystack users would want it.
+      placeholder: |
+        - Repo using it: https://github.com/.../blob/main/pipeline.py
+        - Or: "In our production RAG pipeline we use this to ..."
+        - Or: "We'd want this because ..."
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Short description
+      description: What does it do (or would it do), and why would a Haystack user want it?
+    validations:
+      required: true
