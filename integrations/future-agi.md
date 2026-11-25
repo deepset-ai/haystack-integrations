@@ -12,7 +12,7 @@ repo: https://github.com/future-agi/traceAI/tree/main/python/frameworks/haystack
 type: Monitoring Tool
 report_issue: https://github.com/future-agi/traceAI/issues
 logo: /logos/future-agi.png
-version: Haystack 2.0
+version: Haystack 3.0
 toc: true
 ---
 ### **Table of Contents**
@@ -39,6 +39,10 @@ For the example pipeline below, you also need:
 ```bash
 pip install haystack-ai trafilatura
 ```
+
+### Supported versions
+
+`traceAI-haystack` requires `haystack-ai` 2.10 or later and works with Haystack 3. The example below was run with `traceAI-haystack` 0.1.9 on `haystack-ai` 3.4.1 and 2.31.0. `traceAI-haystack` supports Python 3.10 to 3.12, and Haystack 3 needs Python 3.11 or later, so use Python 3.11 or 3.12 with Haystack 3.
 
 ## Usage
 
@@ -127,6 +131,10 @@ The pipeline run, every component, the LLM call, and token usage are captured as
 
 ![Future AGI dashboard showing a Haystack pipeline trace](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/future-agi-ui.png)
 
+### Agents
+
+`traceAI-haystack` instruments `Pipeline.run` and the components a pipeline runs. To trace an `Agent`, add it to a `Pipeline` and run the pipeline: the pipeline run and the agent run are recorded in one trace. It does not yet instrument the model and tool calls an agent makes internally, a standalone `Agent.run()` call, or async runs (`Pipeline.run_async()` on Haystack 3, `AsyncPipeline` on Haystack 2).
+
 ## Resources
 
 - Sign up at [app.futureagi.com](https://app.futureagi.com) to get your `FI_API_KEY` and `FI_SECRET_KEY`
@@ -136,4 +144,4 @@ The pipeline run, every component, the LLM call, and token usage are captured as
 
 ### License
 
-`traceAI-haystack` is released under the [MIT License](https://github.com/future-agi/traceAI/blob/main/LICENSE).
+`traceAI-haystack` is released under the [Apache-2.0 License](https://github.com/future-agi/traceAI/blob/main/LICENSE).
