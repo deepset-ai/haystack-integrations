@@ -54,6 +54,10 @@ a client assertion (RFC 7523) taken from a `client_assertion_source`. For certif
 
 Both synchronous (`run`) and asynchronous (`run_async`) execution are supported.
 
+Not sure which token source fits your setup? Follow the decision guide below.
+
+![Which OAuth token source do I need?](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/oauth-token-source-guide.svg)
+
 ## Installation
 
 ```bash
