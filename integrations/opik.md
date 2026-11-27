@@ -99,7 +99,7 @@ response = pipe.run(
 print(response)
 ```
 
-![Opik Gif](/images/opik-demo.gif)
+![Opik Gif](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/opik-demo.gif)
 
 ## License
 
