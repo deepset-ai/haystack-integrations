@@ -133,11 +133,11 @@ What that means for a pipeline it sits in:
   on your own material. Say it plainly: in the default mode nothing is prevented - the component
   reads and reports, and the injection still reaches the index, the prompt and the model.
   Protection starts when you name a mode.
-- **Findings go into metadata, and they are written every time.** `ipi_flagged`, `ipi_action` and
-  `ipi_base` - which build of the rule base decided - are set on every document that was read,
-  clean ones included; the threats, the spans and the characters removed are added when something
-  fired. A field that appeared only on flagged texts could not be filtered on, and "checked and
-  clean" would be indistinguishable from "never checked".
+- **Findings go into metadata, and they are written every time.** Documents use `ipi_flagged`, `ipi_action` and
+  `ipi_base`; messages read by `PromptInjectionGuard` use `picket_flagged`, `picket_action` and
+  `picket_base` by default. These fields are set on clean inputs too; the threats, spans and
+  characters removed are added when something fired. A field that appeared only on flagged texts
+  could not be filtered on, and "checked and clean" would be indistinguishable from "never checked".
 - **Your objects are not mutated.** Documents and messages come back as copies: the same list may
   be connected to a second branch of the pipeline.
 
