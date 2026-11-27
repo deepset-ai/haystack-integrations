@@ -40,7 +40,7 @@ See this notebook tutorial for a full example
 [Google Colab](https://colab.research.google.com/github/DAGWorks-Inc/burr/blob/main/examples/haystack-integration/notebook.ipynb)
 )
 
-![Burr UI](../images/burr-ui.png)
+![Burr UI](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/burr-ui.png)
 
 ## Installation
 

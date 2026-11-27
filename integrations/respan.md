@@ -152,15 +152,15 @@ For a runnable example that creates and deploys the managed prompt from code wit
 
 After a Haystack pipeline run, Respan shows the trace tree with Haystack workflow, component, and LLM spans.
 
-![Respan trace view for a Haystack pipeline](/images/respan-observability-tracing-result.png)
+![Respan trace view for a Haystack pipeline](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/respan-observability-tracing-result.png)
 
 The managed prompt can be created programmatically and then referenced by `prompt_id` in the Haystack run.
 
-![Managed prompt created from the Haystack example](/images/respan-managed-prompt-created-by-code.png)
+![Managed prompt created from the Haystack example](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/respan-managed-prompt-created-by-code.png)
 
 Managed prompts are visible in the Respan prompt management page.
 
-![Respan managed prompts page](/images/respan-managed-prompts-page.png)
+![Respan managed prompts page](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/respan-managed-prompts-page.png)
 
 ## License
 

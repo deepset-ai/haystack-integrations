@@ -100,7 +100,7 @@ hayhooks run --with-chainlit --pipelines-dir ./pipelines
 
 Navigate to [`http://localhost:1416/chat`](http://localhost:1416/chat) in your browser. You'll see your deployed pipeline and can start chatting!
 
-![Chainlit UI](../images/hayhooks-chainlit.gif)
+![Chainlit UI](https://raw.githubusercontent.com/deepset-ai/haystack-integrations/main/images/hayhooks-chainlit.gif)
 
 ### Examples
 Learn how to build an end-to-end agent example with Haystack, Hayhooks and Chainlit in [Chainlit Weather Agent Example](https://github.com/deepset-ai/hayhooks/tree/main/examples/pipeline_wrappers/chainlit_weather_agent)
